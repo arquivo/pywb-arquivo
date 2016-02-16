@@ -46,7 +46,6 @@ class OpenSearchCDXServer(CDXServer):
         query = quote_plus(query) + self.CLOSEST_QUERY_FIXED
         full_url = self.opensearch_query + '?query=' + query
         print('QUERY', full_url)
-
         output = params.get('output', 'text')
         url = params.get('url')
         urlkey = canonicalize(url)
@@ -67,6 +66,8 @@ class OpenSearchCDXServer(CDXServer):
         cdx_list = [self.convert_to_cdx(item, urlkey, url) for item in items]
 
         if not cdx_list:
+            print 'NOT FOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUND'
+            print results
             raise NotFoundException('url {0} not found'.format(url))
 
         if closest:
@@ -100,7 +101,7 @@ class OpenSearchCDXServer(CDXServer):
     def _get_closest_query(self, params):
         closest = params.get('closest')
         closest = pad_timestamp(closest, EARLIEST_DATE)
-        query = 'closestdate:{0} exacturl:{1}'.format(closest,
+        query = 'closestdate:{0} exacturlexpand:{1}'.format(closest,
                                                       params.get('url'))
         return query
 
@@ -142,4 +143,6 @@ def gettext(item, name):
     if elem is not None:
         return elem.text
     else:
+        print 'I did not find it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+        print name
         return '-'

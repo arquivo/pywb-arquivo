@@ -1,0 +1,21 @@
+<script type="text/javascript">
+var tokens = "{{ wbrequest.wb_prefix }}".split('\/');
+//dirty hack to get the path without the name of the collection e.g http://arquivo.pt/pywb/replay/  --> http://arquivo.pt/pywb/
+pathWithoutCollectionName = "";
+for (i = 0; i < tokens.length-2; i++) {
+  pathWithoutCollectionName+= tokens[i] + "\/";
+}
+</script>
+<script type="text/javascript">
+document.write("<script src="+ pathWithoutCollectionName+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
+</script> <!-- Plugin for cookie to choose language-->
+<script>
+	var language = Cookies.get('language');
+	if( language == 'EN'){
+		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsEN.js"><\/script>');
+	}
+	else{
+		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsPT.js"><\/script>');
+	}
+</script>
+<h2><script type="text/javascript">document.write(Content.notArchived)</script></h2>

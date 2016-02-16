@@ -1,0 +1,252 @@
+<html>
+<head>
+<script type="text/javascript">
+var tokens = "{{prefix}}".split('\/');
+//dirty hack to get the path without the name of the collection e.g http://arquivo.pt/pywb/replay/  --> http://arquivo.pt/pywb/
+pathWithoutCollectionName = "";
+for (i = 0; i < tokens.length-2; i++) {
+	pathWithoutCollectionName+= tokens[i] + "\/";
+}
+</script>
+
+<script type="text/javascript">
+document.write("<script src="+ pathWithoutCollectionName+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
+</script> <!-- Plugin for cookie to choose language-->
+
+
+<script>
+	var language = Cookies.get('language');
+	if( language == 'EN'){
+		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsEN.js"><\/script>');
+	}
+	else{
+		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsPT.js"><\/script>');
+	}
+</script>
+
+<script> //Global Vars Date Related
+	today = new Date();
+	dd = today.getDate();
+	mm = today.getMonth()+1; //January is 0!
+	yyyy = today.getFullYear();
+	numberofVersions = yyyy - 1996;
+</script>
+<script>
+function createResultsPage(){
+		$('body').append('<div class="clear">&nbsp;</div>');
+		$('body').append('<div id="resultados-url">'+Content.resultsQuestion+' <a href="search.jsp?query=%22{{url}}%22">{{url}}</a>?</div>');
+		$('body').append('<div class="wrap">' +
+						 '	<div id="intro">' +
+						 '		<h1 style="text-align: center;">'+Content.versionsStored+'</h1>' +
+						 '		<span class="texto-1" style="text-align: center;">{{ cdx_lines | length }} '+ Content.versionsPage+ ' {{url}} '+
+						 		'</span>' +
+						 '	</div>' +
+						 '</div>');
+		$('body').append('<div id="conteudo-versoes">'+
+						 '	<div id="resultados-lista">'+
+						 '		<table class="tabela-principal">'+
+						 '			<thead>'+
+						 '				<tr id="years">'+
+						 '				</tr>'+
+						 '			</thead>'+
+						 '			<tbody id="tableBody">'+
+						 '			</tbody>'+
+						 '		</table>'+
+						 '	</div>'+
+						 '</div>');
+		createMatrix();			
+}
+</script>
+<script>
+function createMatrix(){
+	matrix = new Array(numberofVersions);
+	for (var i = 0; i < matrix.length; i++) {
+	  matrix[i] = [];
+	  var yearStr = (1996+i).toString();
+	  // add the headers for each year
+	  $("#years").append('<th id="th_'+yearStr+'">'+yearStr+'<span id="versions_'+yearStr+'" class="versoes-num">0</span></th>');
+	}
+	{% for cdx in cdx_lines  %}
+		var timestamp = {{cdx.timestamp}};
+		var timestampStr = timestamp.toString();
+		var url = "{{ cdx['url']}}";
+		var pos = getYearPosition(timestampStr);
+		var dateFormated = getDateSpaceFormated(timestampStr);
+		var shortDateFormated= getShortDateSpaceFormated(timestampStr);				
+		var tdtoInsert = '<td><a href="{{ prefix }}{{ cdx.timestamp }}/{{ cdx.url }}" title="'+dateFormated+'">'+shortDateFormated+'</a></td>';
+		matrix[pos].push(tdtoInsert);
+	{% endfor %}
+	//find which is the biggest number of versions per year and create empty tds in the other years
+	var maxLength = 0;
+	for (var i = 0; i < matrix.length; i++) {
+		lengthi = matrix[i].length;
+		var yearStr = (1996+i).toString();
+		if(lengthi == 0){
+			$("#th_"+yearStr).addClass("inactivo");
+		}
+		else{
+			$("#versions_"+yearStr).text(lengthi);
+		}
+		if(lengthi > maxLength){
+			maxLength = lengthi;
+		}
+	}
+	//iterate again to create empty tds
+	for (var i = 0; i < matrix.length; i++) {
+		lengthi = matrix[i].length;
+		if(maxLength > lengthi){
+			for(var j=0; j<(maxLength - lengthi); j++){
+				matrix[i].push('<td>&nbsp;</td>');
+			}
+		}
+	}
+	//create each row of the table
+	for (var i=0; i<maxLength; i++){
+		rowString ="";
+		for (var j = 0; j < matrix.length; j++) {
+			rowString+= matrix[j][i];
+		}
+		var rowId = (i+1).toString()
+		$("#tableBody").append('<tr id="'+rowId+'">'+rowString+'<tr>');
+	}
+	$('#1 td:nth-child('+String(matrix.length)+')').html('<a href="'+Content.embargoUrl+'">'+Content.embargo+'</a>');
+}
+</script>
+<script>
+function createErrorPage(){
+	$('body').append('<div id="conteudo-resultado">'+
+					 '	<div id="first-column">&nbsp;</div>'+
+					 '	<div id="second-column">'+
+					 '		<div id="search_stats"></div>'+
+					 '		<div id="conteudo-pesquisa-erro">'+
+					 			'<h2>'+Content.noResultsFound+' </h2> <h3>{{url}}</h3>'+
+					 			'<div id="sugerimos-que">'+
+					 					'<p>'+Content.suggestions+'</p>'+
+					 				'<ul>'+
+					 					'<li>'+Content.checkSpelling+'</li>'+
+										'<li><a style="padding-left: 0px;" href="'+Content.suggestUrl+'{{url}}">'+Content.suggest+'</a> '+Content.suggestSiteArchived+'</li>'+					 					
+					 					'<li>'+Content.internetArchive+'<a href="http://wayback.archive.org/web/*/{{url}}">Internet Archive</a>.</li>'+
+					 					'<li><a href="http://timetravel.mementoweb.org/list/2010/{{url}}" style="padding-left: 0px;">'+Content.mementoFind+'</a>.</li>'+					 					
+									'</ul>'+
+								'</div>'+
+								'</div>'+
+							'</div>'+
+					 '</div>');										 					
+
+					 			
+					 /*
+<div id="conteudo-resultado"> 
+				<div id="first-column">
+				        &nbsp;
+				</div>
+				<div id="second-column">
+					<div id="search_stats"></div>
+                        
+
+                        
+				
+
+
+
+
+					
+			
+ 
+
+	
+
+
+
+
+
+
+
+
+	<div id="conteudo-pesquisa-erro">
+		<h2>Não foram encontrados resultados para a sua pesquisa:</h2>
+		<h3>site.com/idontexist</h3>
+
+		<div id="sugerimos-que">
+				<p>Sugerimos que:</p>
+			<ul>
+				<li>Verifique que todas as palavras estão escritas corretamente.</li>
+				<li>Aumente o intervalo de tempo sobre o qual está a pesquisar.</li>
+				<li>Tente utilizar outras palavras-chave.</li>
+				<li>Tente palavras mais gerais.</li>
+				
+				
+				<li>Tente encontrar no <a href="http://wayback.archive.org/web/asterisco/site.com/idontexist">Internet Archive</a>.</li>
+				<li><a href="http://sobre.arquivo.pt/colaboracoes/sugerir-um-sitio?endereco-a-sugerir=site.com/idontexist">Sugira</a> a página para que seja arquivada.</li>
+				
+			</ul>
+		</div>
+		<div class="voltar-erro"><a href="http://arquivo.pt/">← Voltar à página anterior</a></div>
+	</div>
+
+
+
+
+                 
+
+</div>
+
+			</div>
+*/
+}
+</script>
+<script>
+function getDateSpaceFormated(ts){
+	var year = ts.substring(0, 4);
+	var month = ts.substring(4, 6);
+	month = Content.months[month];
+	var day = ts.substring(6, 8);
+	return day + " "+ month + " " +year;
+
+}
+</script>
+
+<script>
+function getShortDateSpaceFormated(ts){
+	var year = ts.substring(0, 4);
+	var month = ts.substring(4, 6);
+	month = Content.shortMonths[month];
+	var day = ts.substring(6, 8);
+	return day + " "+ month;
+
+}
+</script>
+
+
+<script>
+function getYearTs(ts){
+	return ts.substring(0, 4);
+}
+</script>
+
+<script>
+function getYearPosition(ts){
+	return parseInt(getYearTs(ts)) - 1996;
+}
+</script>
+
+<script>
+function getDateFormated(){
+	var strMonth = mm.toString();
+	var result = dd + ' ' + Content.months[mm.toString()]+', '+yyyy ;
+	return result;
+}
+</script>
+</head>
+<body>
+	<script>
+		var numberofResults= {{ cdx_lines | length }};
+		if(numberofResults > 0){
+			createResultsPage();		 				  	
+		}
+		else{
+			createErrorPage();
+		}	
+	</script>
+
+</body>
+</html>
