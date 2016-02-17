@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head>	
 <style>
 html, body
 {
@@ -29,7 +29,6 @@ document.write("<script src="+ pathWithoutCollectionName+"static\/resources\/dep
 </script> <!-- Plugin for cookie to choose language-->
 
 <script>
-	//get language
 	var language = Cookies.get('language');
 	if( language == 'EN'){
 		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsEN.js"><\/script>');
@@ -414,13 +413,40 @@ function set_state(state) {
 
     //$('#a_reconstruct').attr('href', 'http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
 
-    addthis.update('share', 'url', '{{wbrequest.wb_prefix}}'+ts+'/'+url); 
-    addthis.url = '{{wbrequest.wb_prefix}}'+ts+'/'+url; 
+   // addthis.update('share', 'url', '{{wbrequest.wb_prefix}}'+ts+'/'+url); 
+    //addthis.url = '{{wbrequest.wb_prefix}}'+ts+'/'+url; 
+
+	//addthis_share = {url:"http://www.google.pt"};
+	//addthis.url = "http://yahoo.com";
+	//addthis.toolbox(".addthis_toolbox");
+
+	theurl= '{{wbrequest.wb_prefix}}'+ts+'/'+url;
+	addthis.update('share', 'url', theurl);
+
+
+    var title = $("#replay_iframe").contents().find("meta[property='og:title']").attr("content");
+    if(title === undefined || title === null) // there is no og:title meta tag in this iframe
+ 	{
+    	title = $("#replay_iframe").contents().find("title").html(); //search for a title tag in the iframe
+	    if (!title.length){ //there is no title
+	    	//top.alert("No title");
+	    	title = "arquivo.pt";
+	    }
+	}
+	addthis.update('share', 'title', title);
+	addthis.toolbox('.addthis_toolbox', addthis_config, addthis_share);
+	$('meta[property="og:url"]').attr('content', theurl);
+
+
+
+
+//top.alert(addthis.url);
+
     $("#data2").html(ts_to_daymonthyearFormated(ts) + "&nbsp;<span id=\"at2\" class=\"as\">"+Content.at+"</span>&nbsp;" + ts_to_hoursminutes(ts));
     //document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ url + "&btnSubmit=Pesquisar");
 
     $("#data1").html(ts_to_daymonthyearFormated(ts) + "&nbsp;<span id=\"at1\" class=\"as\">"+Content.at+"</span>&nbsp;" + ts_to_hoursminutes(ts));
-    addthis.update('share', 'title', Content.shareMessage); //TODO: think about share message maybe with original title of the webpage?
+  //  addthis.update('share', 'title', Content.shareMessage); //TODO: think about share message maybe with original title of the webpage?
 
     //List the versions of current url in the side bar
     	 
@@ -453,23 +479,25 @@ function set_state(state) {
 		<title>Arquivo.pt</title>
 <!-- facebook share configs 
 		<meta property="og:url"           content="location.href" /> -->
+<!--		
 		<meta property="og:type"          content="website" />
 		<meta property="og:title"         content="Arquivo.pt" />
 		<meta property="og:description"   content="Arquivo.pt - pesquise páginas do passado" />
 		<meta property="og:image"         content="http://arquivo.pt/img/logo-home-pt.png" />
+-->		
 <!-- end of facebook configs -->
+        <meta property="og:url"           content="location.href" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="Content-Language" content="pt-PT">
 		<meta http-equiv="Content-Script-Type" content="text/javascript">
 		<meta http-equiv="Content-Style-Type" content="text/css">	
-		<meta name="Keywords" content="site experimental">
-		<meta name="Description" content="site experimental">
+		<meta name="Keywords" content="Arquivo.pt">
+		<meta name="Description" content="Pesquise páginas do passado">
 
 		<script type="text/javascript">
 				document.write("<link rel='stylesheet' title='Estilo principal' type='text/css' href ='"+ pathWithoutCollectionName+"static/resources/barra_ficheiros/style.css'"+ "\/>");
 				document.write("<script src="+ pathWithoutCollectionName+"static/resources/dependencies/jquery-latest.min.js"+ "><\/script>");
 		</script>
-
 		<script type="text/javascript">
 			$(document).ready(function() {
 				var language = Cookies.get('language');
@@ -546,10 +574,14 @@ function set_state(state) {
 				document.write("<script src="+ pathWithoutCollectionName+"static/resources/barra_ficheiros/slidedown-menu.html"+ "><\/script>");
 		</script>
 <!-- end of the head of barra -->
-
 </head>
 <body style="margin: 0px; padding: 0px;">
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317" async="async"></script>
+<script type="text/javascript">
+var addthis_config = addthis_config||{};
+    addthis_config.data_track_addressbar = false;
+    addthis_config.data_track_clickback = false;
+</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317" async="async"></script>	
 <!-- beggining div barra -->
 		<div id="barra" style="display: none;" class="noprint" >
 			<script type="text/javascript">
@@ -619,6 +651,11 @@ function set_state(state) {
 					<li class="ul-espaco"></li>
 
 					<SCRIPT TYPE="text/javascript">
+
+							var addthis_share = {
+							   url: "http://www.tvi24.iol.pt/internacional/praias/praia-portuguesa-entre-as-melhores-do-mundo",
+							}
+
 							document.write("<li id='facebook_share'><a class='addthis_button_facebook'><img src='"+ pathWithoutCollectionName+"static/resources/barra_ficheiros/fb2.png' alt='' height='20' border='0'"+ "\/><\/a><\/li>");
 					</SCRIPT>	
 					<SCRIPT TYPE="text/javascript">
