@@ -7,7 +7,7 @@ collections:
 
 # configure path to warcs here
 archive_paths:
-    - http://p58.arquivo.pt:8080/arcproxy/arcproxy/
+    - http://p62.arquivo.pt:8080/arcproxy/arcproxy/
 
 enable_cdx_api: true
 framed_replay: true
