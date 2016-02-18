@@ -594,7 +594,9 @@ var addthis_config = addthis_config||{};
 			<div id="esquerda" class="noprint">
 				<div id = "esquerda-logo" class="noprint"> 
 					<a id="logoA" href= "" >
-						<img src="http://arquivo.pt/img/logo-pt.png" alt="Arquivo da Web Portuguesa" class="logo" height="60" border="0"/>
+						<script type="text/javascript">
+									document.write("<img src='"+ pathWithoutCollectionName+"static/resources/barra_ficheiros/expdble-logo.png' alt='' height='40' border='0' class='logo' "+ "\/>");					
+						</script>
 					</a>
 						<script>$('#logoA').attr('href',"{{ wbrequest.user_metadata.search_location }}/?l="+Content.language );
 						</script>					
@@ -678,10 +680,19 @@ var addthis_config = addthis_config||{};
 
 				</div> -->
 				<div id="historico" class="noprint">
-					<a id="versionsTable" href="">
-						<script>document.write(Content.otherDates); document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
+					<a id="newSearch" href="">
+						<script>
+							document.write(Content.newSearch);
+							$('#newSearch').attr('alt',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
 						</script>
-					</a></span>
+					</a>					
+
+					<div id="vTableDiv">
+						<a id="versionsTable" href="">
+							<script>document.write(Content.otherDates); document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
+							</script>
+						</a>
+					</div>
 					<div id="slidedown_menu" class="noprint">
 						<ul id = "yearList" style=" list-style: none;">
 

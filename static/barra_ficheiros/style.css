@@ -307,7 +307,7 @@ li.grouped { padding-left: 38px; }
 /*HERE*/
 #barra-expandida { width: 99.8%; margin: 0 auto; height: 61px;  background-color: #F2F2F2; border-bottom: 0px solid #7F8081; border-left: 0px solid #7F8081; display: none; clear: both; min-width: 99.8%; position: relative; overflow:hidden; }
 #barra-expandida #esquerda { float: left; overflow:hidden;}
-#barra-expandida #esquerda .logo { float: left; padding: 5px 0px 0px 20px; }
+#barra-expandida #esquerda .logo { float: left; padding: 15px 0px 0px 20px; }
 #barra-expandida #esquerda #info-expandida { float: left; padding: 13px 15px 0 53px; }
 
 #barra-expandida #esquerda .data { padding-top: 4px; font-size: 1.4em; display: block; }
@@ -392,6 +392,9 @@ a.yearHover{background-color: #FFFFFF;  list-style: none; margin-left:-20px; pad
 .sombra-exp-2 { background: url("../images/barra-sombra-vert.png") repeat-y scroll 0 bottom transparent; float: right; left: 154px; margin-top: 67px; position: absolute; z-index: 1000; }
 
 #versionsTable { color: #005DB4; text-decoration: underline; font-size: 1.4em; padding-left: 20px; font-weight: normal; }
+#newSearch { color: #005DB4; text-decoration: underline; font-size: 1.4em; padding-left: 20px; font-weight: normal;}
+#vTableDiv{padding-top: 10px; padding-bottom: 10px;}
+
 
 @media print
 {
