@@ -411,15 +411,6 @@ function set_state(state) {
 
     $('#a_print').attr('href','javascript:getImageToPrint("'+urlEncoded+'")'); //TODO:: Check This
 
-    //$('#a_reconstruct').attr('href', 'http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
-
-   // addthis.update('share', 'url', '{{wbrequest.wb_prefix}}'+ts+'/'+url); 
-    //addthis.url = '{{wbrequest.wb_prefix}}'+ts+'/'+url; 
-
-	//addthis_share = {url:"http://www.google.pt"};
-	//addthis.url = "http://yahoo.com";
-	//addthis.toolbox(".addthis_toolbox");
-
 	theurl= '{{wbrequest.wb_prefix}}'+ts+'/'+url;
 	addthis.update('share', 'url', theurl);
 
@@ -436,9 +427,6 @@ function set_state(state) {
 	addthis.update('share', 'title', title);
 	addthis.toolbox('.addthis_toolbox', addthis_config, addthis_share);
 	$('meta[property="og:url"]').attr('content', theurl);
-
-
-
 
 //top.alert(addthis.url);
 
@@ -651,11 +639,6 @@ var addthis_config = addthis_config||{};
 					<li class="ul-espaco"></li>
 
 					<SCRIPT TYPE="text/javascript">
-
-							var addthis_share = {
-							   url: "http://www.tvi24.iol.pt/internacional/praias/praia-portuguesa-entre-as-melhores-do-mundo",
-							}
-
 							document.write("<li id='facebook_share'><a class='addthis_button_facebook'><img src='"+ pathWithoutCollectionName+"static/resources/barra_ficheiros/fb2.png' alt='' height='20' border='0'"+ "\/><\/a><\/li>");
 					</SCRIPT>	
 					<SCRIPT TYPE="text/javascript">
