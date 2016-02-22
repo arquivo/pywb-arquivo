@@ -66,7 +66,7 @@ class OpenSearchCDXServer(CDXServer):
         cdx_list = [self.convert_to_cdx(item, urlkey, url) for item in items]
 
         if not cdx_list:
-            print 'NOT FOUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUND'
+            print 'NOT FOUND'
             print results
             raise NotFoundException('url {0} not found'.format(url))
 
@@ -143,6 +143,6 @@ def gettext(item, name):
     if elem is not None:
         return elem.text
     else:
-        print 'I did not find it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+        print 'I did not find it!'
         print name
         return '-'

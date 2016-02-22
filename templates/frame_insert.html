@@ -83,13 +83,15 @@ function setLang(lang) {
 	if(lang == 'EN')
 	 {
 		Cookies.set('language', 'EN', { expires: 30, path: '/', domain: 'p27.arquivo.pt'  });
+		window.location.reload();
 	 }
 	else //default language Portuguese
 	{
 		Cookies.set('language', 'PT', { expires: 30, path: '/', domain: 'p27.arquivo.pt'  });	
+		window.location.reload();
 	}
 	
-	top.alert('lingua:  ' + Cookies.get('language'));
+	//top.alert('lingua:  ' + Cookies.get('language'));
 }
 </script>
 
@@ -651,9 +653,13 @@ var addthis_config = addthis_config||{};
 					<script>document.write('<li class="email" id="liEmail"><a id="sendEmail" href="mailto:?subject= '+Content.emailMessage+' [sub]" onclick="this.href = this.href.replace(\'[sub]\',window.location)"><img src="'+pathWithoutCollectionName+'static/resources/barra_ficheiros/expdble-email.png" alt="" height="20" border="0" width="27"\/><\/a><\/li>');
 					</script>
 																				
+					<li class="ul-espaco"><a href="javascript:setLang('PT')">PT</a></li>
+					<li><a href="javascript:setLang('EN')">EN</a></li>
+
+
 					<li class="ul-espaco"><a id="help" href="" title=""><script>document.write(Content.help)</script></a></li><script>$('#help').attr('href', Content.helpHref); $('#help').attr('title',Content.help);</script>
-					<!--<li><a href="javascript:setLang('PT')">PT</a></li>
-					<li><a href="javascript:setLang('EN')">EN</a></li> -->
+
+
 				</ul>
 				<div id="minimizar" class="noprint">
 					<script type="text/javascript">
