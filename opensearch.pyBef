@@ -17,7 +17,6 @@ except:
     print('Not using LXML')
 
 from urllib import quote_plus
-import urlparse
 
 import requests
 
@@ -47,7 +46,6 @@ class OpenSearchCDXServer(CDXServer):
         query = quote_plus(query) + self.CLOSEST_QUERY_FIXED
         full_url = self.opensearch_query + '?query=' + query
         print('QUERY', full_url)
-
         output = params.get('output', 'text')
         url = params.get('url')
         urlkey = canonicalize(url)
@@ -68,6 +66,8 @@ class OpenSearchCDXServer(CDXServer):
         cdx_list = [self.convert_to_cdx(item, urlkey, url) for item in items]
 
         if not cdx_list:
+            print 'NOT FOUND'
+            print results
             raise NotFoundException('url {0} not found'.format(url))
 
         if closest:
@@ -128,7 +128,14 @@ class OpenSearchCDXServer(CDXServer):
         if not url:
             raise WbException('url= param is missing!')
 
-        params['url'] = format_url(url)
+        if url.startswith(('http://', 'https://')):
+            return
+        elif url.startswith('//'):
+            url = 'http:' + url
+        else:
+            url = 'http://' + url
+
+        params['url'] = url
 
 
 def gettext(item, name):
@@ -136,44 +143,6 @@ def gettext(item, name):
     if elem is not None:
         return elem.text
     else:
+        print 'I did not find it!'
+        print name
         return '-'
-
-
-def format_url(url):
-    """
-    >>> format_url('example.com')
-    'http://example.com'
-
-    >>> format_url('http://example.com:80/blah')
-    'http://example.com/blah'
-
-    >>> format_url('https://example.com:80/foo')
-    'https://example.com:80/foo'
-
-    >>> format_url('example.com:8080')
-    'http://example.com:8080'
-
-    >>> format_url('https://example.com:443/path?foo=bar#abc')
-    'https://example.com/path?foo=bar#abc'
-
-    >>> format_url('http://example.com:443/path?foo=bar#abc')
-    'http://example.com:443/path?foo=bar#abc'
-
-    """
-    if url.startswith(('http://', 'https://')):
-        pass
-    elif url.startswith('//'):
-        url = 'http:' + url
-    else:
-        url = 'http://' + url
-
-    parts = urlparse.urlsplit(url)
-    if ((parts.scheme == 'http' and parts.netloc.endswith(':80')) or
-        (parts.scheme == 'https' and parts.netloc.endswith(':443'))):
-        parts = list(parts)
-        parts[1] = parts[1].split(':')[0]
-        url = urlparse.urlunsplit(parts)
-
-    return url
-
-

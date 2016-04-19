@@ -395,6 +395,9 @@ a.yearHover{background-color: #FFFFFF;  list-style: none; margin-left:-20px; pad
 #newSearch { color: #005DB4; text-decoration: underline; font-size: 1.4em; padding-left: 20px; font-weight: normal;}
 #vTableDiv{padding-top: 10px; padding-bottom: 10px;}
 
+.blue {
+    color: blue;
+}
 
 @media print
 {
