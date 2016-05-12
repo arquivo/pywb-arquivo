@@ -11,11 +11,11 @@
   wbinfo.is_live = {{ "true" if cdx.is_live else "false" }};
   wbinfo.coll = "{{ wbrequest.coll }}";
   wbinfo.proxy_magic = "{{ wbrequest.env.pywb_proxy_magic }}";
-  wbinfo.static_prefix = "{{ wbrequest.host_prefix }}/pywb/{{ static_path }}";
+  wbinfo.static_prefix = "{{ wbrequest.host_prefix }}/wayback/{{ static_path }}";
 </script>
 
 {% if rule.js_rewrite_location != 'urls' and include_wombat %}
-<script src='{{ wbrequest.host_prefix }}/pywb/{{ static_path }}/wombat.js'> </script>
+<script src='{{ wbrequest.host_prefix }}/wayback/{{ static_path }}/wombat.js'> </script>
 <script>
 {% set urlsplit = cdx.url | urlsplit %}
   wbinfo.wombat_ts = "{{ cdx['timestamp'] if include_ts else ''}}";
@@ -32,8 +32,8 @@
 </script>
 {% endif %}
 
-<script src='{{ wbrequest.host_prefix }}/pywb/{{ static_path }}/wb.js'> </script>
-<script src='{{ wbrequest.host_prefix }}/pywb/{{ static_path }}/vidrw.js'> </script>
+<script src='{{ wbrequest.host_prefix }}/wayback/{{ static_path }}/wb.js'> </script>
+<script src='{{ wbrequest.host_prefix }}/wayback/{{ static_path }}/vidrw.js'> </script>
 
 {% include banner_html ignore missing %}
 

@@ -1,5 +1,5 @@
 collections:
-    replay:
+    '':
         index_paths: 'http://p27.arquivo.pt/nutchwax/opensearch'
 
         server_cls: !!python/name:opensearch.OpenSearchCDXServer

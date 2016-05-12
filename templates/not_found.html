@@ -1,21 +1,24 @@
-<script type="text/javascript">
-var tokens = "{{ wbrequest.wb_prefix }}".split('\/');
-//dirty hack to get the path without the name of the collection e.g http://arquivo.pt/pywb/replay/  --> http://arquivo.pt/pywb/
-pathWithoutCollectionName = "";
-for (i = 0; i < tokens.length-2; i++) {
-  pathWithoutCollectionName+= tokens[i] + "\/";
-}
+<script>
+        document.write("<link href=\""+ "{{ wbrequest.wb_prefix }}"+"static/resources/css/Style.css\" rel =\"stylesheet\" >");
 </script>
+
+
 <script type="text/javascript">
-document.write("<script src="+ pathWithoutCollectionName+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
+document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
 </script> <!-- Plugin for cookie to choose language-->
 <script>
 	var language = Cookies.get('language');
 	if( language == 'EN'){
-		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsEN.js"><\/script>');
+		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsEN.js"><\/script>');
 	}
 	else{
-		document.write('<script type="text/javascript" language="JavaScript" src="'+pathWithoutCollectionName+'static/resources/properties/ConstantsPT.js"><\/script>');
+		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsPT.js"><\/script>');
 	}
 </script>
-<h2><script type="text/javascript">document.write(Content.notArchived)</script></h2>
+<script type="text/javascript">
+	document.write('<h2><a style="padding-left: 23px;"  id="notArchived" href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'">'+ Content.notArchived+'</a></h2>'); 
+</script>
+<script type="text/javascript">
+document.write('<a style="padding-left: 5px;" href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/logo-pt2.png" /></a>')
+</script>
+

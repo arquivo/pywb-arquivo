@@ -1,0 +1,289 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3/border-radius";
+@import "compass/typography/text/replacement";
+@import "ionicons";
+
+// colors
+$color-black: 		#000;
+$color-replay-bck:	#252525;
+$color-white: 		#fff;
+$color-m-gray: 		#999;
+$color-d-gray: 		#666;
+$color-dkr-gray: 	#2E2E2E;
+$color-brd: 		#3E3E3E;
+$color-label:		#2E4151;
+$color-active-day: 	#4A90E2;
+
+// utilities
+$sidebar-width: 200px;
+
+// mixins 
+
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;	
+}
+
+
+body {
+	font: 62.5% 'Helvetica', Arial, sans;
+	line-height: 1.5;
+	color: $color-d-gray;
+	}
+
+h1 {
+	//display: block;
+	font-size: 2.4rem;
+	@include replace-text("AnW_logo.png");
+	}
+
+h2 {
+	font-size: 2.1rem;
+	margin: .5em 0;	
+	}
+
+
+ul, p, a {
+	font-size: 1rem;
+	}
+
+p {
+	margin-bottom: 1em;
+	}
+
+#wrapper { 
+	padding-left:0;
+	-webkit-transition:all .5s ease;
+	-moz-transition:all .5s ease;
+	-o-transition:all .5s ease;
+	transition:all .5s ease;
+
+	&.toggled {
+		padding-left: $sidebar-width;
+		}
+	}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#sidebar-wrapper {
+	background: $color-replay-bck;
+	position: fixed;
+	left: $sidebar-width;
+	width: 0;
+	height: 100%;
+	margin-left: -$sidebar-width;
+	overflow-y: auto;
+	z-index: 1000;
+
+	// transitions
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease; transition: all .5s ease;
+	}
+
+#wrapper.toggled #sidebar-wrapper { 
+	width: $sidebar-width;
+	}
+
+#page-content-wrapper { 
+	width: 100%;
+	position: absolute;
+	//padding: 15px; 
+	}
+
+#wrapper.toggled #page-content-wrapper { 
+	position: absolute;
+	margin-right: -$sidebar-width;
+	}
+
+#topbar {
+	background: $color-replay-bck;
+	border-left: 1px solid $color-white;
+
+	.url {
+		width: 40%;
+		// background: yellow;
+		display: inline-block;
+		p {
+			display: inline-block;
+			font-size: 1.6em;
+			color: $color-white;
+			border-bottom: 1px solid #999;
+			margin: 1.5em;
+			}
+		}
+	.toolbar {
+		width: 59%;
+		display: inline-block;
+		// background: yellow;
+		}
+
+	.utilities {
+		text-align: right;
+		//background: red;
+		//margin: 1.5em;
+
+		a {
+			font-size: 0.75rem;
+			font-weight: 700;
+			color: $color-d-gray;
+			text-decoration: none;
+			text-transform: uppercase;
+			&:hover {
+				color: $color-white;
+				}
+			}
+
+		li {
+			display: inline-block;
+			padding: 1.5em 1.5em 1.5em 0;
+
+			&.print, &.mail, &.help, &.lang {
+				border-right: 1px solid $color-brd;
+				}
+
+			&.save_img, &.facebook, &.help, &.lang {
+				padding-left: 1.5em;
+				}
+
+			&.lang {
+				border: 0;
+				}
+
+			}
+		}	
+	}
+
+.sidebar-functions {
+	list-style-type: none;
+	margin-top: 30px;
+	width: 8.75em; 
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+
+
+	li {
+		display: inline-block;
+		margin: 0 1em;
+		}
+	}
+
+.sidebar-nav { 
+	position: absolute;
+	top: 120px;
+	width: $sidebar-width;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	}
+
+.sidebar-nav li {	
+	text-indent: 2em;
+	a {
+		border-bottom: 1px solid $color-brd;
+		color: $color-m-gray; 
+		display: block;
+		font-size: 1.2rem;
+		text-decoration: none;
+		padding: .4em 0;
+		&:hover {
+			text-decoration: none;
+			color: $color-white;
+			background: rgba($color-white, .2);
+			}
+		&:active, &:focus {
+			text-decoration: none; 
+			}
+		}
+
+		.active {
+			font-weight: 700;
+			color: $color-white;	
+			}
+
+	ul.months {
+		background: $color-dkr-gray;
+		padding: 1em 0;
+		border: 1px solid $color-brd;
+		}
+	
+	 ul.months li {
+		text-indent: 3em;
+	 	a {
+			font-size: 1rem;
+			border-bottom: 0;
+			padding: .3em 0;
+	 		}
+
+		.active-day {
+			color: $color-active-day;
+			display: inline;
+			padding: 4px 8px 2px;
+			background: $color-label;
+			@include border-radius(12px);
+			}
+	 	}
+
+	ul.days li {
+		text-indent: 4em;
+		}
+	ul.hours li {
+		text-indent: 5em;
+		}
+
+	}
+
+.sidebar-nav>.sidebar-brand { 
+//	height: 65px; 
+	font-size: 18px; 
+//	line-height: 60px;
+	a {
+		color: $color-m-gray;
+		&:hover {
+			color: $color-white;
+			background: none;
+			}
+		} 
+	}
+
+
+@media (min-width:768px){
+
+#wrapper {
+	padding-left: $sidebar-width;
+	&.toggled {
+	padding-left: 0;
+		}
+	}
+
+#sidebar-wrapper {
+	width: $sidebar-width;
+	}
+
+#wrapper.toggled #sidebar-wrapper {
+	width: 0;
+	}
+
+#page-content-wrapper {
+//	padding: 20px; 
+	position: relative; 
+	}
+
+#wrapper.toggled #page-content-wrapper { 
+	position: relative;
+	margin-right: 0;
+	}
+}

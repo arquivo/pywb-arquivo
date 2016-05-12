@@ -87,13 +87,9 @@ class OpenSearchCDXServer(CDXServer):
 
     def convert_to_cdx(self, item, urlkey, url):
         cdx = CDXObject()
+        cdx['urlkey'] = canonicalize(url)
         cdx['timestamp'] = gettext(item, 'tstamp')[:14]
-        for elem in item.iter():
-            if(elem.tag == "source"):
-                url = elem.attrib['url']
         cdx['url'] = url
-        cdx['urlkey'] = canonicalize(url)                
-        #print("URL?" + etree.tostring(item))        
         cdx['mime'] = gettext(item, 'primaryType') + '/' + gettext(item, 'subType')
         cdx['status'] = '-'
         cdx['digest'] = gettext(item, 'digest')
@@ -101,7 +97,6 @@ class OpenSearchCDXServer(CDXServer):
         cdx['length'] = '-'
         cdx['offset'] = gettext(item, 'arcoffset')
         cdx['filename'] = gettext(item, 'arcname') + '.arc.gz'
-        
         return cdx
 
     def _get_closest_query(self, params):

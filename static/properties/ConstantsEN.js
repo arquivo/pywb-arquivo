@@ -55,5 +55,14 @@ Content = {
     mementoFind:"Search other web archives",
     embargo:"Embargo",
     embargoUrl:"http://sobre.arquivo.pt/help/access-to-archived-contents#section-6",
-    notArchived:"Not Archived"   
+    notArchived:"Not Archived",
+    otherLanguage: "PT" ,
+    preservedByArquivo: " - preserved by Arquivo.pt" ,
+    faceTitle: "Share On Facebook",
+    twitterTitle: "Share On Twitter",
+    mailTitle: "Share by Email",
+    screenTitle: "Take a Screenshot",
+    printTitle: "Print the Page",
+    changeLanguageTitle: "Mudar para Portugu&#234;s",
+    versionsStoredTable:"Table of Versions",
 };
