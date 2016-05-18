@@ -428,8 +428,8 @@ function set_state(state) {
     /*Truncates large URL in the replay bar*/
     function truncateUrl(url)
     {   
-        if (url.length > 80){
-                var newUrl = url.substring(0, 40) + "..."+ url.substring((url.length - 37),url.length);
+        if (url.length > 40){
+                var newUrl = url.substring(0, 20) + "..."+ url.substring((url.length - 17),url.length);
                 return newUrl
             return url.substring(0,77) + "..."
         }
@@ -495,61 +495,22 @@ function set_state(state) {
         addthis_config.data_track_clickback = false;
     </script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317" async="async">
-    </script>    
-    <div id="wrapper" class="noprint">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper" class="noprint">
-            <script type="text/javascript">
-            /*    document.write("<h1 style=\"background-image: url("+  
-                    "{{ wbrequest.wb_prefix }}"+"static/resources/img/arquivoGrey2.png"
-                    +")\"> Arquivo.pt </h1>");*/
-            </script>
-          
-              <img alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivoGrey2.png"/>
-            
-            
-            <ul class="sidebar-functions">
+    </script>
+    <div id="page">
+            <div id="pageWrapper" style="height: 100%; position:absolute;">
+              <div id="topbar" class="noprint">
+                  <div class="logoDiv">
+                    <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivoGrey2.png" width="75px"/>
+                  </div>  
+                  <div class="url" id = "urlTopbarDiv" class="noprint">
+                      <p id="update1">                
+                          <script type="text/javascript">
+                              document.write(truncateUrl("{{url}}"))
+                          </script>
+                      </p>
+                  </div>
 
-                <li>
-                    <a id="newSearch" href="" class="search">
-                        <script>
-                            $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
-                            $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
-
-
-                        </script>
-                        <i class="ion ion-search"></i>
-                    </a>
-                   <!-- <a href="#" class="search"><i class="ion ion-search"></i></a>-->
-                </li>
-                <li>
-                    <a id="versionsTable" href="" class="versions-table">
-                        <script>
-                            $('#versionsTable').attr('title',Content.versionsStoredTable);
-                            document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
-                            $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
-                        </script>
-                        <i class="ion ion-grid"></i>
-                    </a>                    
-                    <!-- <a href="#" class="versions-table"><i class="ion ion-grid"></i></a> -->
-                </li>
-            </ul>
-            <ul class="sidebar-nav" id ="yearList" style="list-style: none;">
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper" class="noprint">
-            <div id="topbar" class="noprint">
-                <div class="url" class="noprint">
-                    <p id="update1">                
-                        <script type="text/javascript">
-                            document.write(truncateUrl("{{url}}"))
-                        </script>
-                    </p>
-                </div>
-                <div class="toolbar noprint">
+                  <div class="toolbar noprint" id="toolBar">
                     <ul class="utilities">
 
 
@@ -589,12 +550,23 @@ function set_state(state) {
                         </li>                      
                     </ul>
                 </div>
-            </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="noprint">
             <script>
               updateVersionsOfUrl('{{url}}')
             </script>
+
+            <script type="text/javascript">
+            /*top.alert($('#toolBar').height());
+              top.alert(screen.height);*/
+            </script>
+
             <div class="container-fluid" class = "noprint">
-                <iframe style="border: none; position: absolute; height: 847px; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">
+                <script type="text/javascript">
+                  document.write('<iframe style=";border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; position: absolute; height: '+screen.height+'px; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">')
+                </script>
+                
 
                 <script>
                     window.onunload = function() {
@@ -608,8 +580,100 @@ function set_state(state) {
         </div>
         <!-- /#page-content-wrapper -->
 
+
+    <div id="wrapper" class="noprint">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="noprint">
+          <script>
+            $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+          </script>
+              <ul class="sidebar-functions">
+
+                            <li>
+                                <a id="newSearch" href="" class="search">
+                                    <script>
+                                        $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
+                                        $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
+
+
+                                    </script>
+                                    <i class="ion ion-search"></i>
+                                </a>
+                               <!-- <a href="#" class="search"><i class="ion ion-search"></i></a>-->
+                            </li>
+                            <li>
+                                <a id="versionsTable" href="" class="versions-table">
+                                    <script>
+                                        $('#versionsTable').attr('title',Content.versionsStoredTable);
+                                        document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
+                                        $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
+                                    </script>
+                                    <i class="ion ion-grid"></i>
+                                </a>                    
+                                <!-- <a href="#" class="versions-table"><i class="ion ion-grid"></i></a> -->
+                            </li>
+                </ul>          
+            <ul class="sidebar-nav" id ="yearList" style="list-style: none;">
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+
     </div>
+
+  </div>
     <!-- /#wrapper -->
+
+
+
+            </div>
+          </div>  
+          
+
+<script type="text/javascript">
+  var mode = 0;
+  resize(); 
+
+  function resize() { 
+     
+    //mode = 0  Big Screen
+    //mode = 1 Tablet Mode
+
+
+    if(window.innerWidth >= 1024){
+      if(mode != 0){
+        top.alert("mode big screen");
+        mode = 0;
+      }
+    }
+
+    else if(window.innerWidth < 1024 && window.innerWidth > 584){
+          $('#wrapper').hide();
+          $('#page-content-wrapper').css('left','0%');
+          $('#page-content-wrapper').css('width','100%');
+          $('#toolBar').css('margin-left','-33.6%');
+          $('#toolBar').css('width','81.6%');
+          $('#update1').hide();
+          $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+          $('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+          mode=1;
+        
+    }
+
+    else if(window.innerWidth <= 584 ){
+       top.alert("redirect to Small Screen");
+       mode=2;
+
+    }
+
+  }
+
+  window.onresize = resize;
+</script>
+
+
+
+
 
 <script type="text/javascript">
     document.write('<div class="printIframe" id="divPrintMe" style="display: block;"></div>' );
