@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=12.0, minimum-scale=.25, user-scalable=yes"/>
+
 <html lang="pt">
 <head>
     <script>
@@ -25,6 +27,14 @@
     <script type="text/javascript">
     document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
     </script> <!-- Plugin for cookie to choose language-->
+
+    <script type="text/javascript">
+    document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/jquery.nicescroll.min.js"+ "><\/script>");
+    </script> <!-- Plugin for Sidebar Scroll-->
+
+
+
+
 
     <script>
         var language = Cookies.get('language');
@@ -442,6 +452,7 @@ function set_state(state) {
     <script type="text/javascript">
         $(document).ready(function() {
             var language = Cookies.get('language');
+            $("#sidebar-wrapper").niceScroll({cursorwidth: '10px', autohidemode: false, zindex: 999 });
             /*var url = window.location;  
                 $('#fb-share-button').attr('data-href', url);
             */
@@ -483,6 +494,104 @@ function set_state(state) {
                 }
                 return false;
             });             
+        
+            var mode = 0;
+            resize(); 
+
+            function resize() { 
+               
+              //mode = 0  Big Screen
+              //mode = 1 Tablet Mode
+
+
+              if(window.innerWidth >= 1024){
+                    $('#wrapper').show();
+                    $('#logodiv').css("width","16%");
+                    $('#logodiv').css("position","fixed");
+                    $('#logodiv').css("height","auto");
+                    $('#logodiv').css("margin-top","20px");
+                    $('#logodiv').css("margin-bottom","0%");
+                    $('#arquivoImg').css("width","75px");
+                    $('#arquivoImg').css("height","auto"); 
+                    $('#arquivoImg').css("margin-top","0%");           
+                    $('#page-content-wrapper').css('left','16%');
+                    $('#page-content-wrapper').css('width','84%');
+                    $('#toolBar').show();
+                    $('#toolBar').css('margin-left','0%');
+                    $('#toolBar').css('width','48%');
+                    $('#update1').show();
+                    $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    $('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    $('#replay_iframe').css("width", (window.innerWidth*.84)  +"px");
+                    $('#urlTopbarDiv').show();
+                    $('#urlTopbarDiv').css("visibility","visible");
+                    $('#utilitiesUl').show();
+                    $("#sidebar-wrapper").getNiceScroll().resize();
+                
+              }
+
+              else if(window.innerWidth < 1024 && window.innerWidth > 600){
+                    $('#wrapper').hide();
+                    $('#logodiv').css("width","16%");
+                    $('#logodiv').css("position","fixed");
+                    $('#logodiv').css("height","auto");
+                    $('#logodiv').css("margin-top","20px");
+                    $('#logodiv').css("margin-bottom","0%");
+                    $('#arquivoImg').css("width","75px");  
+                    $('#arquivoImg').css("height","auto");  
+                    $('#arquivoImg').css("margin-top","0%");  
+                
+                    $('#page-content-wrapper').css('left','0%');
+                    $('#page-content-wrapper').css('width','100%');
+                    $('#toolBar').show();
+                    $('#toolBar').css('margin-left','-33.6%');
+                    $('#toolBar').css('width','81.6%');
+                    $('#update1').hide();
+                    $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    $('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    $('#replay_iframe').css("width", window.innerWidth  +"px");
+                    $('#urlTopbarDiv').show();
+                    $('#urlTopbarDiv').css("visibility","hidden");
+                    $('#utilitiesUl').show();
+                    $("#sidebar-wrapper").getNiceScroll().resize();
+                  
+              }
+
+              else if(window.innerWidth <= 600 ){
+                 $('#wrapper').hide();
+                 $('#page-content-wrapper').css('left','0%');
+                 $('#page-content-wrapper').css('width','100%');
+                 $('#toolBar').css('margin-left','-33.6%');
+                 $('#toolBar').css('width','81.6%');
+                 $('#urlTopbarDiv').css("visibility","hidden");
+                 $('#arquivoImg').css("margin-top","0%");
+
+                 $('#urlTopbarDiv').hide();
+                 $('#utilitiesUl').hide();
+                 $('#logodiv').css("width","100%");
+                 $('#logodiv').css("position","relative");
+                 $('#logodiv').css("height","10%");
+                 $('#logodiv').css("margin-top","3.5%");
+                 $('#logodiv').css("margin-bottom","3.5%");
+                 $('#arquivoImg').css("width","auto");
+                 $('#arquivoImg').css("height","100%");
+                 $('#arquivoImg').css("margin-top","0%");
+                 $('#toolBar').hide();
+                 $('#update1').hide();
+                 $('#replay_iframe').css("width", window.innerWidth  +"px");
+                 $('#sidebar-wrapper').css("height", (window.innerHeight* 0.83)  +"px");
+                 $('#replay_iframe').css("height", (window.innerHeight * 0.83)  +"px");
+                 $("#sidebar-wrapper").getNiceScroll().resize();
+
+
+                 mode=2;
+
+              }
+
+            }
+
+            window.onresize = resize;
+
         });
     </script>
 
@@ -499,8 +608,14 @@ function set_state(state) {
     <div id="page">
             <div id="pageWrapper" style="height: 100%; position:absolute;">
               <div id="topbar" class="noprint">
-                  <div class="logoDiv">
-                    <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivoGrey2.png" width="75px"/>
+                  <div class="logoDiv" id="logodiv">
+                    <a>
+                      <script>
+                          $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
+                          $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
+                      </script>                      
+                      <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="75px"/>
+                    </a>  
                   </div>  
                   <div class="url" id = "urlTopbarDiv" class="noprint">
                       <p id="update1">                
@@ -511,7 +626,7 @@ function set_state(state) {
                   </div>
 
                   <div class="toolbar noprint" id="toolBar">
-                    <ul class="utilities">
+                    <ul class="utilities" id="utilitiesUl">
 
 
                         <script type="text/javascript">
@@ -564,7 +679,7 @@ function set_state(state) {
 
             <div class="container-fluid" class = "noprint">
                 <script type="text/javascript">
-                  document.write('<iframe style=";border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; position: absolute; height: '+screen.height+'px; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">')
+                  document.write('<iframe style="background-color: #fff;border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; position: absolute; height: '+screen.height+'px; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">')
                 </script>
                 
 
@@ -594,8 +709,6 @@ function set_state(state) {
                                     <script>
                                         $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
                                         $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
-
-
                                     </script>
                                     <i class="ion ion-search"></i>
                                 </a>
@@ -631,44 +744,6 @@ function set_state(state) {
           
 
 <script type="text/javascript">
-  var mode = 0;
-  resize(); 
-
-  function resize() { 
-     
-    //mode = 0  Big Screen
-    //mode = 1 Tablet Mode
-
-
-    if(window.innerWidth >= 1024){
-      if(mode != 0){
-        top.alert("mode big screen");
-        mode = 0;
-      }
-    }
-
-    else if(window.innerWidth < 1024 && window.innerWidth > 584){
-          $('#wrapper').hide();
-          $('#page-content-wrapper').css('left','0%');
-          $('#page-content-wrapper').css('width','100%');
-          $('#toolBar').css('margin-left','-33.6%');
-          $('#toolBar').css('width','81.6%');
-          $('#update1').hide();
-          $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-          $('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-          mode=1;
-        
-    }
-
-    else if(window.innerWidth <= 584 ){
-       top.alert("redirect to Small Screen");
-       mode=2;
-
-    }
-
-  }
-
-  window.onresize = resize;
 </script>
 
 

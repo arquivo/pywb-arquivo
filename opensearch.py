@@ -91,6 +91,7 @@ class OpenSearchCDXServer(CDXServer):
         for elem in item.iter():
             if(elem.tag == "source"):
                 url = elem.attrib['url']
+        
         cdx['url'] = url
         cdx['urlkey'] = canonicalize(url)                
         #print("URL?" + etree.tostring(item))        

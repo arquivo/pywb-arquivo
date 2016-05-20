@@ -3840,6 +3840,7 @@ p {
   bottom: 0;
   margin-left: -16%;
   overflow-y: auto;
+  overflow-x: hidden;
   z-index: 1000;
   -webkit-transition: all .5s ease;
   -moz-transition: all .5s ease;
@@ -4041,3 +4042,4 @@ p {
   margin-top: 7%;
 
 }
+
