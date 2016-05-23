@@ -64,7 +64,7 @@ Content = {
     screenTitle: "Guarde como Imagem",
     printTitle: "Imprima a P&#225gina" ,
     changeLanguageTitle: "Change to English language" ,
-    versionsStoredTable:"Tabela de Versoes", 
+    versionsStoredTable:"Tabela de Vers&#245es", 
     suggestArchive: "Sugira o Arquivo desta página",
     ups: "Ups...",
     theWebsite: "O Website",
