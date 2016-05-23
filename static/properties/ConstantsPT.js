@@ -37,7 +37,7 @@ Content = {
     lessOptions:"Menos op&#231;&#245;es",
     help:"Ajuda",
     helpHref:"http://sobre.arquivo.pt/ajuda",
-    newSearch:"Nova pesquisa",
+    newSearch:"Nova Pesquisa",
     at:"&#224;s",
     shareMessage:"Arquivo.pt",
     language:"pt",
@@ -64,10 +64,11 @@ Content = {
     screenTitle: "Guarde como Imagem",
     printTitle: "Imprima a P&#225gina" ,
     changeLanguageTitle: "Change to English language" ,
-    versionsStoredTable:"Tabela de versoes", 
+    versionsStoredTable:"Tabela de Versoes", 
     suggestArchive: "Sugira o Arquivo desta página",
     ups: "Ups...",
     theWebsite: "O Website",
     notArchivedYet: "ainda não foi arquivado.",
-    searchTitle: "Pesquise no Arquivo"
+    searchTitle: "Pesquise no Arquivo",
+    otherArchives: "Pesquise noutros arquivos"
 };
