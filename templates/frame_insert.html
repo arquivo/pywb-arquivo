@@ -658,8 +658,11 @@ function set_state(state) {
                         <li class="help"><a href="#" id="help"><script>document.write(Content.help);$('#help').attr('href', Content.helpHref); $('#help').attr('title',Content.help);</script></a></li>
                         <li class="lang">
                           <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
-                          <script>document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
-                                Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: 'p27.arquivo.pt'  });
+                          <script>
+                              
+                              document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
+                                var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
+                                Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: httpURLTokens[2]  });
                                 window.location.reload();
                                 return false; });</script></a>
                         </li>                      
