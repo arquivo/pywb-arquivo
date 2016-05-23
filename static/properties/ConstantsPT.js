@@ -65,4 +65,9 @@ Content = {
     printTitle: "Imprima a P&#225gina" ,
     changeLanguageTitle: "Change to English language" ,
     versionsStoredTable:"Tabela de versoes", 
+    suggestArchive: "Sugira o Arquivo desta página",
+    ups: "Ups...",
+    theWebsite: "O Website",
+    notArchivedYet: "ainda não foi arquivado.",
+    searchTitle: "Pesquise no Arquivo"
 };
