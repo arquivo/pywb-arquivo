@@ -3829,7 +3829,13 @@ p {
   -o-transition: all .5s ease;
   transition: all .5s ease; }
 
-
+#searchArquivoDiv{
+  position: relative;
+  left: 16.1%;
+  border-left: 1px solid #fff;
+  border-top: 1px solid #fff;
+   
+}
 
 #sidebar-wrapper {
   background: #252525;
@@ -4041,5 +4047,14 @@ p {
   margin-right: auto; 
   margin-top: 7%;
 
+}
+
+#loginForm{
+  text-align: center;
+
+}
+
+#sInputText{
+  width: 50%;
 }
 

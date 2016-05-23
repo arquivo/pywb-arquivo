@@ -65,4 +65,9 @@ Content = {
     printTitle: "Print the Page",
     changeLanguageTitle: "Mudar para Portugu&#234;s",
     versionsStoredTable:"Table of Versions",
+    suggestArchive: "Suggest this website for archive",
+    ups: "Ups...",
+    theWebsite: "The Website",
+    notArchivedYet: "wasn't archived yet.",
+    searchTitle: "search in Arquivo.pt"
 };

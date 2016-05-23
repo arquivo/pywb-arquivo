@@ -16,9 +16,31 @@ document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/d
 	}
 </script>
 <script type="text/javascript">
-	document.write('<h2><a style="padding-left: 23px;"  id="notArchived" href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'">'+ Content.notArchived+'</a></h2>'); 
+	document.write('<h2 align="center" style="font-size: 2.6em; padding-bottom: 1em; margin-top: 20px;"><a style="padding-left: 23px;"  id="notArchived" href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'">'+ Content.notArchived+'</a></h2>'); 
 </script>
 <script type="text/javascript">
-document.write('<a style="padding-left: 5px;" href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/logo-pt2.png" /></a>')
+var tokens = window.location.toString().split('/');
+theURL = '';
+var i;
+for( i = 5; i<tokens.length; i ++){
+	if(i == 5){
+		theURL = tokens[i];
+	}
+	else{
+		theURL= theURL + "/" + tokens[i];
+	}
+}
+document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img style="display: block; margin: auto; padding-top: 5px;" src="{{ wbrequest.wb_prefix }}static/resources/logo-pt2.png" /></a>');
+
+
+document.write('<h2 align="center" style="font-size: 2.6em; padding-bottom: 1em; margin-top: 100px;color:#f44800">'+Content.ups+'</h2>')
+
+document.write('<h2 align="center" style="font-size: 2.6em; padding-bottom: 1em; color: #000000"> '+Content.theWebsite+' ' +'<a href="'+theURL+'">'+ theURL+'</a>' +' '+ Content.notArchivedYet  + ' </h2>');
+
+
+document.write('<h2 align="center" style="font-size: 2.6em; padding-bottom: 1em; margin-top: 100px;"><a href="'+Content.suggestUrl+theURL+'">'+Content.suggestArchive+'</a></h2>');
+
+
+
 </script>
 
