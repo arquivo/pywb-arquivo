@@ -617,9 +617,14 @@ function set_state(state) {
                       <script>
                           $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
                           $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
-                      </script>                      
-                      <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="75px"/>
+                      </script> 
                     </a>  
+                      <script type="text/javascript">
+                        document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
+                      </script>
+                                           
+                      <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="75px"/> 
+                      <script type="text/javascript"> document.write("</a>")</script> 
                   </div>  
                   <div class="url" id = "urlTopbarDiv" class="noprint">
                       <p id="update1">                
