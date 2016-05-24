@@ -151,7 +151,7 @@
                                           $('#'+'ul_'+year+'_'+month+'_'+day).append(   
                                                     '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+year+' '+month + ' ' + day +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         ''
                                           +                 '</li>');                       
                         }
@@ -162,7 +162,7 @@
                                           +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'" style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
                                           +                         '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+year+' '+month + ' ' + day +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         '</li>'
                                           +                     '</ul>'
                                           +                 '</li>');               
@@ -179,7 +179,7 @@
                                           +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'"  style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
                                           +                         '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+year+' '+month + ' ' + day +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         '</li>'
                                           +                     '</ul>'
                                           +                 '</li>'
@@ -200,7 +200,7 @@
                                           +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'"  style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
                                           +                         '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+year+' '+month + ' ' + day +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         '</li>'
                                           +                     '</ul>'
                                           +                 '</li>'
@@ -453,6 +453,10 @@ function set_state(state) {
         $(document).ready(function() {
             var language = Cookies.get('language');
             $("#sidebar-wrapper").niceScroll({cursorwidth: '10px', autohidemode: false, zindex: 999 });
+            $("#sidebar-wrapper").addClass("noprint");
+            $("#ascrail2000").addClass("noprint");
+            $("#ascrail2000 > div").first().addClass("noprint");
+            
             /*var url = window.location;  
                 $('#fb-share-button').attr('data-href', url);
             */
@@ -658,8 +662,11 @@ function set_state(state) {
                         <li class="help"><a href="#" id="help"><script>document.write(Content.help);$('#help').attr('href', Content.helpHref); $('#help').attr('title',Content.help);</script></a></li>
                         <li class="lang">
                           <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
-                          <script>document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
-                                Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: 'p27.arquivo.pt'  });
+                          <script>
+                              
+                              document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
+                                var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
+                                Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: httpURLTokens[2]  });
                                 window.location.reload();
                                 return false; });</script></a>
                         </li>                      
@@ -715,9 +722,9 @@ function set_state(state) {
                                <!-- <a href="#" class="search"><i class="ion ion-search"></i></a>-->
                             </li>
                             <li>
-                                <a id="versionsTable" href="" class="versions-table">
+                              <script type="text/javascript">document.write('<a id="versionsTable" href="" class="versions-table" title="'+Content.versionsStoredTable+'">')</script>
+                                
                                     <script>
-                                        $('#versionsTable').attr('title',Content.versionsStoredTable);
                                         document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
                                         $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
                                     </script>

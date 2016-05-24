@@ -37,7 +37,7 @@ Content = {
     lessOptions:"Less options",
     help:"Help",
     helpHref:"http://sobre.arquivo.pt/help/faq?set_language=en",
-    newSearch:"New search",
+    newSearch:"New Search",
     at:"at",
     shareMessage:"Arquivo.pt: search pages from the past.",
     language:"en",
@@ -69,5 +69,6 @@ Content = {
     ups: "Ups...",
     theWebsite: "The Website",
     notArchivedYet: "wasn't archived yet.",
-    searchTitle: "search in Arquivo.pt"
+    searchTitle: "search in Arquivo.pt",
+    otherArchives: "Search in other archives" 
 };
