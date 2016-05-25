@@ -9,7 +9,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-21825027-6', 'auto');
+      ga('create', 'UA-21825027-1', 'auto');
       ga('send', 'pageview');
     </script>
 
@@ -28,8 +28,8 @@
     document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
     </script> <!-- Plugin for cookie to choose language-->
 
-    <script type="text/javascript">
-    document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/jquery.nicescroll.min.js"+ "><\/script>");
+    <script type="text/javascript">/*
+    document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/jquery.nicescroll.min.js"+ "><\/script>");*/
     </script> <!-- Plugin for Sidebar Scroll-->
 
 
@@ -452,10 +452,12 @@ function set_state(state) {
     <script type="text/javascript">
         $(document).ready(function() {
             var language = Cookies.get('language');
-            $("#sidebar-wrapper").niceScroll({cursorwidth: '10px', autohidemode: false, zindex: 999 });
-            $("#sidebar-wrapper").addClass("noprint");
-            $("#ascrail2000").addClass("noprint");
-            $("#ascrail2000 > div").first().addClass("noprint");
+            //$("#sidebar-wrapper").niceScroll({cursorwidth: '10px', autohidemode: false, zindex: 999 });
+            //$("#sidebar-wrapper").addClass("noprint");
+            //$("#ascrail2000").addClass("noprint");
+            //$("#ascrail2000 > div").first().addClass("noprint");
+            //$("#sidebar-wrapper").getNiceScroll().resize();
+            //$('#ascrail2000').show();
             
             /*var url = window.location;  
                 $('#fb-share-button').attr('data-href', url);
@@ -530,7 +532,7 @@ function set_state(state) {
                     $('#urlTopbarDiv').show();
                     $('#urlTopbarDiv').css("visibility","visible");
                     $('#utilitiesUl').show();
-                    $("#sidebar-wrapper").getNiceScroll().resize();
+                    //$("#sidebar-wrapper").getNiceScroll().resize();
                 
               }
 
@@ -557,7 +559,7 @@ function set_state(state) {
                     $('#urlTopbarDiv').show();
                     $('#urlTopbarDiv').css("visibility","hidden");
                     $('#utilitiesUl').show();
-                    $("#sidebar-wrapper").getNiceScroll().resize();
+                    //$("#sidebar-wrapper").getNiceScroll().resize();
                   
               }
 
@@ -585,7 +587,7 @@ function set_state(state) {
                  $('#replay_iframe').css("width", window.innerWidth  +"px");
                  $('#sidebar-wrapper').css("height", (window.innerHeight* 0.83)  +"px");
                  $('#replay_iframe').css("height", (window.innerHeight * 0.83)  +"px");
-                 $("#sidebar-wrapper").getNiceScroll().resize();
+                 //$("#sidebar-wrapper").getNiceScroll().resize();
 
 
                  mode=2;
@@ -741,7 +743,7 @@ function set_state(state) {
             <ul class="sidebar-nav" id ="yearList" style="list-style: none;">
             </ul>
         </div>
-        <script type="text/javascript">$('#scroll-area').getNiceScroll().resize();</script>
+        <script type="text/javascript">/*$('#scroll-area').getNiceScroll().resize();*/</script>
         <!-- /#sidebar-wrapper -->
 
 
