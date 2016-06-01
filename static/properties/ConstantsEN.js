@@ -11,7 +11,7 @@ Content = {
 			 '09': "September",
 			 '10': "October",
 			 '11': "November",
-			 '12': "Dezember",
+			 '12': "December",
 		},
     shortMonths: 
 		{ 	 '01': "Jan",
@@ -25,7 +25,7 @@ Content = {
 			 '09': "Sep",
 			 '10': "Oct",
 			 '11': "Nov",
-			 '12': "Dez",
+			 '12': "Dec",
 		},
     savedInArchive:"We archived",
     versionsStored:"Versions table",
