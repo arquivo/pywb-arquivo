@@ -69,12 +69,12 @@
         function setLang(lang) {
             if(lang == 'EN')
              {
-                Cookies.set('language', 'EN', { expires: 30, path: '/', domain: 'p27.arquivo.pt'  });
+                Cookies.set('language', 'EN', { expires: 30, path: '/', domain: '{{ wbrequest.user_metadata.search_location }}'  });
                 window.location.reload();
              }
             else //default language Portuguese
             {
-                Cookies.set('language', 'PT', { expires: 30, path: '/', domain: 'p27.arquivo.pt'  });   
+                Cookies.set('language', 'PT', { expires: 30, path: '/', domain: '{{ wbrequest.user_metadata.search_location }}'  });   
                 window.location.reload();
             }   
         }
