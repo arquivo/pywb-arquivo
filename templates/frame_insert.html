@@ -67,16 +67,16 @@
 
     <script>
         function setLang(lang) {
-              var hostwithHttp = "{{ wbrequest.user_metadata.search_location }}";
-              var cHost = hostwithHttp.substring(7);
+            hostwithHttp = "{{ wbrequest.user_metadata.search_location }}";
+            var cHost = hostwithHttp.substring(7);
             if(lang == 'EN')
              {
-                Cookies.set('language', 'EN', { expires: 30, path: '/', domain: cHost.toString()  });
+                Cookies.set('language', 'EN', { expires: 30, path: '/', domain: cHost  });
                 window.location.reload();
              }
             else //default language Portuguese
             {
-                Cookies.set('language', 'PT', { expires: 30, path: '/', domain: cHost.toString()  });   
+                Cookies.set('language', 'PT', { expires: 30, path: '/', domain: cHost  });   
                 window.location.reload();
             }   
         }
