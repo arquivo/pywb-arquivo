@@ -454,6 +454,10 @@ function set_state(state) {
     <script type="text/javascript">
         $(document).ready(function() {
             var language = Cookies.get('language');
+            if (! ('ontouchstart' in document.documentElement)) {
+                // if you are not in a touch device (hide scroll on the div in top of the iframe)
+                $('#iframeBox').css('overflow-y','hidden');
+            }    
             //$("#sidebar-wrapper").niceScroll({cursorwidth: '10px', autohidemode: false, zindex: 999 });
             //$("#sidebar-wrapper").addClass("noprint");
             //$("#ascrail2000").addClass("noprint");
@@ -529,8 +533,10 @@ function set_state(state) {
                     $('#toolBar').css('width','48%');
                     $('#update1').show();
                     $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#replay_iframe').css("width", (window.innerWidth*.84)  +"px");
+                    $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    //$('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    $('#iframeBox').css("width", (window.innerWidth*.84)  +"px");
+                    //$('#replay_iframe').css("width", (window.innerWidth*.84)  +"px");
                     $('#urlTopbarDiv').show();
                     $('#urlTopbarDiv').css("visibility","visible");
                     $('#utilitiesUl').show();
@@ -556,8 +562,10 @@ function set_state(state) {
                     $('#toolBar').css('width','81.6%');
                     $('#update1').hide();
                     $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#replay_iframe').css("width", window.innerWidth  +"px");
+                    $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");                  
+                    //$('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+                    //$('#replay_iframe').css("width", window.innerWidth  +"px");
+                    $('#iframeBox').css("width", window.innerWidth  +"px");
                     $('#urlTopbarDiv').show();
                     $('#urlTopbarDiv').css("visibility","hidden");
                     $('#utilitiesUl').show();
@@ -586,9 +594,12 @@ function set_state(state) {
                  $('#arquivoImg').css("margin-top","0%");
                  $('#toolBar').hide();
                  $('#update1').hide();
-                 $('#replay_iframe').css("width", window.innerWidth  +"px");
+                 $('#iframeBox').css("width", window.innerWidth  +"px");
+                 //$('#replay_iframe').css("width", window.innerWidth  +"px");
                  $('#sidebar-wrapper').css("height", (window.innerHeight* 0.83)  +"px");
-                 $('#replay_iframe').css("height", (window.innerHeight * 0.83)  +"px");
+                 //$('#replay_iframe').css("height", (window.innerHeight * 0.83)  +"px");
+                 $('#iframeBox').css("height", (window.innerHeight * 0.83)  +"px");
+
                  //$("#sidebar-wrapper").getNiceScroll().resize();
 
 
@@ -693,9 +704,9 @@ function set_state(state) {
               top.alert(screen.height);*/
             </script>
 
-            <div class="container-fluid" class = "noprint">
+            
                 <script type="text/javascript">
-                  document.write('<iframe style="background-color: #fff;border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; position: absolute; height: '+screen.height+'px; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">')
+                  document.write('<div id="iframeBox" class="container-fluid" class = "noprint" style="height: '+(window.innerHeight - $('#toolBar').height()) +'px;"><iframe style="background-color: #fff;border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; height:100%; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >')
                 </script>
                 
 

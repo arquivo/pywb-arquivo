@@ -3792,11 +3792,13 @@ p {
   }
 
 .container-fluid {
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  overflow-y: scroll;
   padding-right: 0px;
   padding-left: 1px;
   margin-right: auto;
   margin-left: auto; 
-  overflow: hidden;
   width:100%;
   height:100%;
 }
