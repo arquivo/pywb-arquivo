@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=.5, maximum-scale=12.0, minimum-scale=.25, user-scalable=yes"/>
 
-<html lang="pt">
+<meta name=viewport content="width=device-width, initial-scale=1">
+
+<html lang="pt" ng-app="ionic">
 <head>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -15,7 +16,8 @@
 
 
     <script type="text/javascript">
-    sideMenuVersion = false;
+      sideMenuVersion = false;
+      printLoading = false;
     </script>
 
     <!-- Jquery-->
@@ -28,13 +30,72 @@
     document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
     </script> <!-- Plugin for cookie to choose language-->
 
-    <script type="text/javascript">/*
-    document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/jquery.nicescroll.min.js"+ "><\/script>");*/
-    </script> <!-- Plugin for Sidebar Scroll-->
+    <!-- ionicons-->
+    <script type="text/javascript">
+                document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static/resources/dependencies/ionic.bundle.min.js"+ "><\/script>");
+    </script>
 
+    <!-- plugin Dialog to Download Screenshot -->
+    <script type="text/javascript">
+                document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static/resources/dependencies/remodal.js"+ "><\/script>");
+                document.write("<link rel=\"stylesheet\" href={{ wbrequest.wb_prefix }}static/resources/dependencies/remodal.css>");
+                document.write("<link rel=\"stylesheet\" href={{ wbrequest.wb_prefix }}static/resources/dependencies/remodal-default-theme.css>");
+    </script>    
+    <!-- style relative to the dialog plugin - Move this to css in the future -->
+    <style> 
+      .remodal-bg.with-red-theme.remodal-is-opening,
+      .remodal-bg.with-red-theme.remodal-is-opened {
+        filter: none;
+      }
 
+      .remodal-overlay.with-red-theme {
+        background-color: #f44336;
+      }
 
+      .remodal.with-red-theme {
+        background: #fff;
+      }
+    </style>
+    <!-- Events of the Dialog Plugin - Check if Really Needed -->
+    <script>
+      $(document).on('opening', '.remodal', function () {
+        console.log('opening');
+      });
 
+      $(document).on('opened', '.remodal', function () {
+        console.log('opened');
+      });
+
+      $(document).on('closing', '.remodal', function (e) {
+        console.log('closing' + (e.reason ? ', reason: ' + e.reason : ''));
+      });
+
+      $(document).on('closed', '.remodal', function (e) {
+        console.log('closed' + (e.reason ? ', reason: ' + e.reason : ''));
+      });
+
+      $(document).on('confirmation', '.remodal', function () {
+        console.log('confirmation');
+      });
+
+      $(document).on('cancellation', '.remodal', function () {
+        console.log('cancellation');
+      });
+
+    //  Usage:
+    //  $(function() {
+    //
+    //    // In this case the initialization function returns the already created instance
+    //    var inst = $('[data-remodal-id=modal]').remodal();
+    //
+    //    inst.open();
+    //    inst.close();
+    //    inst.getState();
+    //    inst.destroy();
+    //  });
+
+      //  The second way to initialize:
+    </script>
 
     <script>
         var language = Cookies.get('language');
@@ -64,6 +125,34 @@
           return t;
         }(document, "script", "twitter-wjs"));
     </script>
+    <script type="text/javascript">
+      function minimizeMaximize(){
+        if($('#hbarMinimized').css('display') == 'none'){
+            /*The bar is Expanded - Let's minimize the bar*/
+            $('#hbar').css('display','none');
+            $('#hbarMinimized').css('display','inline-block');
+            /*Hide the Left Side Menu*/
+            $('#sidebar-wrapper').css('display','none');
+
+            $("#page-content-wrapper").css("cssText", "width: 100% !important;");
+            $("#page-content-wrapper").css("cssText", "left: 0% !important;");
+
+
+            /*resize vertically*/
+            resize();
+        }    
+        else{ 
+            /*The bar is Minimized - Let's expand the bar*/
+            $('#hbarMinimized').css('display','none');  
+            $('#hbar').css('display','inherit');
+
+            /*resize vertically*/
+            resize();            
+                     
+        }
+
+      }
+    </script>
 
     <script>
         function setLang(lang) {
@@ -86,7 +175,7 @@
     function jumpToVersion (url, currentTs){
         var frameSrc = "{{ wbrequest.wb_prefix }}" + currentTs + 'mp_/' + url;
 
-        $('#a_'+ts).css('font-style', 'normal') //remove the italic from the previous version
+        $('#a_'+ts).css('font-weight', 'normal') //remove the italic from the previous version
         $('#a_'+ts).removeClass('active-day'); // remove the Selected Day CSS class
 
         var year = ts.substring(0, 4);
@@ -112,7 +201,7 @@
           day = day.charAt(1);
         }
 
-        $('#a_'+ts).css('font-style','italic'); //italic the new selected timestamp
+        $('#a_'+ts).css('font-weight','bold'); //italic the new selected timestamp
         $('#a_'+ts).addClass('active-day'); // add the Selected Day CSS class
 
         $('#'+year).addClass('active');
@@ -233,7 +322,7 @@
                 $('#ul_'+year).css('list-style','none'); $('#ul_'+year).css('display','block');
                 $('#ul_'+year+'_'+month).css('list-style','none'); $('#ul_'+year+'_'+month).css('display','block');
                 $('#ul_'+year+'_'+month+'_'+day).css('list-style','none'); $('#ul_'+year+'_'+month+'_'+day).css('display','block');
-                $('#a_'+timestamp).css('font-style','italic');
+                $('#a_'+timestamp).css('font-weight','bold');
 
             }
                 
@@ -249,6 +338,8 @@
     var url1;
 
     var requestURL = "{{ wbrequest.wb_prefix }}"+"-cdx"
+    var tryCount = 0;
+    var retryLimit = 3;
 
     $.ajax({
     // example request to the cdx-server api - 'http://arquivo.pt/pywb/replay-cdx?url=http://www.sapo.pt/index.html&output=json&fl=url,timestamp'
@@ -256,10 +347,14 @@
        data: {
           output: 'json',
           url: urlsource,
-          fl: 'url,timestamp'
+          fl: 'url,timestamp',
        },
        error: function() {
-         //top.alert('error: ' + urlsource);
+         tryCount++;
+         if (tryCount <= retryLimit) {
+                $.ajax(this);
+                return;
+            }            
        },
        dataType: 'text',
        success: function(data) {
@@ -268,8 +363,7 @@
             if(this != ""){
                 var version = jQuery.parseJSON(this);
                 createVersion(version.timestamp, version.url); 
-            }
-            
+            } 
         }); 
 
        },
@@ -289,6 +383,8 @@
     {
         var requestURL = "{{ wbrequest.user_metadata.search_location }}/print/";
         //top.alert(requestURL);
+
+        printLoading = true;
         $.ajax({
         // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
            url: requestURL,
@@ -296,7 +392,7 @@
               url: encodedURLToPrint
            },
            error: function() {
-             top.alert('error: ' + requestURL);
+             top.alert('error printing');
            },
            dataType: 'text',
            success: function(data) {
@@ -344,6 +440,9 @@ function set_state(state) {
     url = state.url;
     var truncatedUrl = truncateUrl(url);
     $("#update1").text(truncatedUrl);
+    $("#update2").text(truncatedUrl);
+    $("#update1").attr('title',url);
+    $("#update2").attr('title',url);    
  /*   $("#update2").text(truncatedUrl); 
 
     //update the link to be sent in the email
@@ -357,8 +456,20 @@ function set_state(state) {
     //TODO:: Update the URL to generate screenshots
   */  
     ts = state.timestamp; //global variable timestamp
-    var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/'+ts+'/'+url)
-    $('#a_screenshot').attr('href', '{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded);
+
+    //update the date on minimized bar
+    $('#timeMinimized').html(getDatets()+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>');                      
+
+
+
+    var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/'+ts+'/'+url);
+//    $('#a_screenshot').attr('href', '{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded);
+    $('#dlImgLink').attr('onClick', 'window.open(\'{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded+'\')')
+
+
+
+    /*Update Reconstruct anchor*/
+    $('#a_reconstruct').attr('href', 'http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
 
     $('#a_print').attr('href','javascript:getImageToPrint("'+urlEncoded+'")');
 
@@ -393,7 +504,10 @@ function set_state(state) {
     */     
     if(sideMenuVersion != true){ // TODO:: improve this Dirty hack global var to define a leftMenu version and preserve leftMenu state
         //top.alert("Updating the Versions on the Side Menu :)");
-        updateVersionsOfUrl(url);
+        setTimeout(updateVersionsOfUrl(url), 800000);
+
+       // updateVersionsOfUrl(url);
+
     }
     sideMenuVersion =false;
 
@@ -436,18 +550,93 @@ function set_state(state) {
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript">
+      function getDatets(){
+                    var year = ts.substring(0, 4);
+                    var month = ts.substring(4, 6);
+                    var day = ts.substring(6, 8);
+                    if(day.charAt(0) == '0'){
+                      day = day.charAt(1);
+                    }
+
+        return day+" "+ Content.months[month]+", "+year
+      }
+    </script>
+    <script type="text/javascript">
+      function getHoursMinutes(){
+          var hours= ts.substring(8,10);
+          var minutes= ts.substring(10,12);
+          return hours+":"+minutes
+      }
+    </script>
+
     <script>
     /*Truncates large URL in the replay bar*/
     function truncateUrl(url)
-    {   
+    {   /*remove https and http*/
+        if(url.startsWith("https://")){
+          url = url.substring(8,url.length);
+        }else if (url.startsWith("http://")){
+          url = url.substring(7,url.length);
+        }       
         if (url.length > 40){
-                var newUrl = url.substring(0, 20) + "..."+ url.substring((url.length - 17),url.length);
-                return newUrl
-            return url.substring(0,77) + "..."
+                var newUrl = url.substring(0, 26) + "..."+ url.substring((url.length - 11),url.length);
+                return newUrl;
         }
         else
             return url
     }
+    </script>
+    <script type="text/javascript">
+      function resize() {
+        var expanded=false;
+        if($('#hbarMinimized').css('display') == 'none')
+            expanded=true; /*The bar is Expanded*/ 
+
+
+        if(window.innerWidth >= 1024){
+          if(expanded){
+              $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+              $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+              $('#iframeBox').css("width", (window.innerWidth*.84)  +"px");
+              $('#sidebar-wrapper').css('display','inherit');
+              $("#page-content-wrapper").css("cssText", "width: 84% !important;");
+              $("#page-content-wrapper").css("cssText", "left: 16% !important;");
+
+          }
+          else{ /*The bar is minimized*/
+              $('#iframeBox').css("height", (window.innerHeight - $('#hbarMinimized').height())  +"px");
+              $('#iframeBox').css("width", (window.innerWidth)  +"px");
+              $('#timeMinimized').show();            
+          }    
+        }
+
+        else if(window.innerWidth < 1024 && window.innerWidth > 600){
+          if(expanded){
+              $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
+              $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");      
+              $('#iframeBox').css("width", window.innerWidth  +"px");
+              $('#sidebar-wrapper').css('display','none');
+              $("#page-content-wrapper").css("cssText", "width: 100% !important;");
+              $("#page-content-wrapper").css("cssText", "left: 0% !important;");
+          }
+          else{/*The bar is minimized*/
+              $('#iframeBox').css("height", (window.innerHeight - $('#hbarMinimized').height())  +"px");      
+              $('#iframeBox').css("width", window.innerWidth  +"px");
+              $('#timeMinimized').show();
+              if(window.innerWidth < 750){ /* Hide the date if between 600 and 750*/
+                $('#timeMinimized').hide();
+              }  
+
+          }                    
+        }
+
+        else if(window.innerWidth <= 600 ){
+          var newPrefix = "{{ wbrequest.wb_prefix }}".replace("wayback", "noFrame/replay");
+          window.location.replace(newPrefix+ts+"/"+"{{url}}");
+          //redirecting to the noFrame version
+        }
+      }
     </script>
 
 
@@ -510,105 +699,6 @@ function set_state(state) {
             var mode = 0;
             resize(); 
 
-            function resize() { 
-               
-              //mode = 0  Big Screen
-              //mode = 1 Tablet Mode
-
-
-              if(window.innerWidth >= 1024){
-                    $('#wrapper').show();
-                    $('#logodiv').css("width","16%");
-                    $('#logodiv').css("position","fixed");
-                    $('#logodiv').css("height","auto");
-                    $('#logodiv').css("margin-top","20px");
-                    $('#logodiv').css("margin-bottom","0%");
-                    $('#arquivoImg').css("width","75px");
-                    $('#arquivoImg').css("height","auto"); 
-                    $('#arquivoImg').css("margin-top","0%");           
-                    $('#page-content-wrapper').css('left','16%');
-                    $('#page-content-wrapper').css('width','84%');
-                    $('#toolBar').show();
-                    $('#toolBar').css('margin-left','0%');
-                    $('#toolBar').css('width','48%');
-                    $('#update1').show();
-                    $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    //$('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#iframeBox').css("width", (window.innerWidth*.84)  +"px");
-                    //$('#replay_iframe').css("width", (window.innerWidth*.84)  +"px");
-                    $('#urlTopbarDiv').show();
-                    $('#urlTopbarDiv').css("visibility","visible");
-                    $('#utilitiesUl').show();
-                    //$("#sidebar-wrapper").getNiceScroll().resize();
-                
-              }
-
-              else if(window.innerWidth < 1024 && window.innerWidth > 600){
-                    $('#wrapper').hide();
-                    $('#logodiv').css("width","16%");
-                    $('#logodiv').css("position","fixed");
-                    $('#logodiv').css("height","auto");
-                    $('#logodiv').css("margin-top","20px");
-                    $('#logodiv').css("margin-bottom","0%");
-                    $('#arquivoImg').css("width","75px");  
-                    $('#arquivoImg').css("height","auto");  
-                    $('#arquivoImg').css("margin-top","0%");  
-                
-                    $('#page-content-wrapper').css('left','0%');
-                    $('#page-content-wrapper').css('width','100%');
-                    $('#toolBar').show();
-                    $('#toolBar').css('margin-left','-33.6%');
-                    $('#toolBar').css('width','81.6%');
-                    $('#update1').hide();
-                    $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");                  
-                    //$('#replay_iframe').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-                    //$('#replay_iframe').css("width", window.innerWidth  +"px");
-                    $('#iframeBox').css("width", window.innerWidth  +"px");
-                    $('#urlTopbarDiv').show();
-                    $('#urlTopbarDiv').css("visibility","hidden");
-                    $('#utilitiesUl').show();
-                    //$("#sidebar-wrapper").getNiceScroll().resize();
-                  
-              }
-
-              else if(window.innerWidth <= 600 ){
-                 $('#wrapper').hide();
-                 $('#page-content-wrapper').css('left','0%');
-                 $('#page-content-wrapper').css('width','100%');
-                 $('#toolBar').css('margin-left','-33.6%');
-                 $('#toolBar').css('width','81.6%');
-                 $('#urlTopbarDiv').css("visibility","hidden");
-                 $('#arquivoImg').css("margin-top","0%");
-
-                 $('#urlTopbarDiv').hide();
-                 $('#utilitiesUl').hide();
-                 $('#logodiv').css("width","100%");
-                 $('#logodiv').css("position","relative");
-                 $('#logodiv').css("height","10%");
-                 $('#logodiv').css("margin-top","3.5%");
-                 $('#logodiv').css("margin-bottom","3.5%");
-                 $('#arquivoImg').css("width","auto");
-                 $('#arquivoImg').css("height","100%");
-                 $('#arquivoImg').css("margin-top","0%");
-                 $('#toolBar').hide();
-                 $('#update1').hide();
-                 $('#iframeBox').css("width", window.innerWidth  +"px");
-                 //$('#replay_iframe').css("width", window.innerWidth  +"px");
-                 $('#sidebar-wrapper').css("height", (window.innerHeight* 0.83)  +"px");
-                 //$('#replay_iframe').css("height", (window.innerHeight * 0.83)  +"px");
-                 $('#iframeBox').css("height", (window.innerHeight * 0.83)  +"px");
-
-                 //$("#sidebar-wrapper").getNiceScroll().resize();
-
-
-                 mode=2;
-
-              }
-
-            }
-
             window.onresize = resize;
 
         });
@@ -616,7 +706,7 @@ function set_state(state) {
 
 
 </head>
-<body>
+<body >  
     <script type="text/javascript">
     var addthis_config = addthis_config||{};
         addthis_config.data_track_addressbar = false;
@@ -627,76 +717,97 @@ function set_state(state) {
     <div id="page">
             <div id="pageWrapper" style="height: 100%; position:absolute;">
               <div id="topbar" class="noprint">
-                  <div class="logoDiv" id="logodiv">
-                    <a>
-                      <script>
-                          $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
-                          $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
-                      </script> 
-                    </a>  
-                      <script type="text/javascript">
-                        document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
-                      </script>
-                                           
-                      <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="75px"/> 
-                      <script type="text/javascript"> document.write("</a>")</script> 
-                  </div>  
-                  <div class="url" id = "urlTopbarDiv" class="noprint">
-                      <p id="update1">                
-                          <script type="text/javascript">
-                              document.write(truncateUrl("{{url}}"))
-                          </script>
-                      </p>
-                  </div>
-
-                  <div class="toolbar noprint" id="toolBar">
-                    <ul class="utilities" id="utilitiesUl">
-
-
-                        <script type="text/javascript">
-                            document.write("<li id='screenshot' class=\"save_img\"><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class=\"ion ion-camera\"></i><\/a><\/li>");
-                           //define the href to take the screenShot
-                           var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');
-                           $('#a_screenshot').attr('href', '{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded);
-                        </script>
-
-                        <!--<li class="print"><a href="#"><i class="ion ion-android-print"></i></a></li>-->
-
-                        <script>
-                                //var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');                   
-                                document.write("<li class='print'><a title='"+Content.printTitle+"' id='a_print' href='javascript:getImageToPrint(\""+urlEncoded+"\")'><i class='ion ion-android-print'></i></a></li>");
-
-                        </script>
-
-
-                        <script>
-                            document.write("<li id='facebook_share' class='facebook'><a title='"+Content.faceTitle+"' class='addthis_button_facebook' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook'><\/i><\/a><\/li>");
-                        </script>   
-                        <script>
-                            document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class='addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter'></i><\/a><\/li>");
-                        </script>
-                        <script>
-                            document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',window.location); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email"></i><\/a><\/li>');
-                        </script>                        
-                       <!-- <li class="mail"><a href="#"><i class="ion ion-email"></i></a></li>-->
-                        <li class="help"><a href="#" id="help"><script>document.write(Content.help);$('#help').attr('href', Content.helpHref); $('#help').attr('title',Content.help);</script></a></li>
-                        <li class="lang">
-                          <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
+                <div id="hbarMinimized">
+                        <div id="logoDivMinimized"><img id="logoMinimized" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="40px" alt="Arquivo.pt"></img></div>
+                        <div id="urlDivMinimized"><p id="update2">                
+                            <script type="text/javascript">
+                                document.write(truncateUrl("{{url}}"));
+                                $("#update2").attr('title', "{{url}}");
+                            </script></p>
+                        </div>
+                        <div id="timeDivMinimized">
                           <script>
-                              
-                              document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
-                                var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
-                                Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: httpURLTokens[2]  });
-                                window.location.reload();
-                                return false; });</script></a>
-                        </li>                      
-                    </ul>
+                            document.write('<p id="timeMinimized">'+getDatets()+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>'+'</p>');
+                          </script>
+                        </div>
                 </div>
+                  <!--the below anchor is the button to minimize/maximize the replayBars it is a fixed element -->
+                  <a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em;
+height: 40px;"/></a>                  
+                  <div id="hbar">
+                    <div class="logoDiv" id="logodiv">
+                      <a>
+                        <script type="text/javascript">
+                          document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
+                        </script>
+                                             
+                        <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="75px"/> 
+                        <script type="text/javascript"> document.write("</a>")</script> 
+                    </div>  
+                    <div class="url" id = "urlTopbarDiv" class="noprint">
+                        <p id="update1">                
+                            <script type="text/javascript">
+                                document.write(truncateUrl("{{url}}"))
+                                $("#update1").attr('title', "{{url}}");
+                            </script>
+                        </p>
+                    </div>
+
+                    <div class="toolbar noprint" id="toolBar">
+                      <ul class="utilities" id="utilitiesUl">
+                          <script type="text/javascript">
+                              document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a title='"+Content.completePage+"' id='a_reconstruct' href='http://timetravel.mementoweb.org/reconstruct/{{ wbrequest.wb_url.timestamp }}/{{url}}' target=\"_blank\" onClick=\"\"><img id=\"reconstructImg\" src=\"{{wbrequest.wb_prefix}}static/resources/img/reconstruct.png\"/><\/a><\/li>");
+                          </script>
+
+                          <script type="text/javascript">
+                              document.write("<li id='screenshot' class=\"\"><a title='"+Content.screenTitle+"' id='a_screenshot' href='#downloadImage' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class=\"ion ion-camera\"></i><\/a><\/li>");
+                             //define the href to take the screenShot
+                             
+                             //var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');
+                             //$('#a_screenshot').attr('href', '{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded);
+                          </script>
+
+                          <!--<li class="print"><a href="#"><i class="ion ion-android-print"></i></a></li>-->
+
+                          <script>
+                                  var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');                   
+                                  document.write("<li class='print' id='printLi'><a title='"+Content.printTitle+"' id='a_print' href='javascript:getImageToPrint(\""+urlEncoded+"\")'><i id='printIon' class='ion ion-android-print menu-icon'></i></a><ion-spinner icon='android' class='spinner spinner-android' id='printLoading' style='display:none'></li>");
+
+                          </script>
+
+
+                          <script>
+                              document.write("<li id='facebook_share' class='facebook'><a title='"+Content.faceTitle+"' class='addthis_button_facebook' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook'><\/i><\/a><\/li>");
+                          </script>   
+                          <script>
+                              document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class='addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter'></i><\/a><\/li>");
+                          </script>
+                          <script>
+                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',window.location); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email"></i><\/a><\/li>');
+                          </script>
+
+                         <!--
+                          <li class="help"><a href="#" id="help"><script>document.write(Content.help);$('#help').attr('href', Content.helpHref); $('#help').attr('title',Content.help);</script></a></li>
+                        -->
+                          <li class="lang">
+                            <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
+                            <script>
+                                
+                                document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
+                                  var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
+                                  Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: httpURLTokens[2]  });
+                                  window.location.reload();
+                                  return false; });</script></a>
+                          </li>                      
+                      </ul>
+                  </div>
+                </div>  
 
         <!-- Page Content -->
         <div id="page-content-wrapper" class="noprint">
             <script>
-              updateVersionsOfUrl('{{url}}')
+              setTimeout(updateVersionsOfUrl('{{url}}'), 800000);
+              //updateVersionsOfUrl('{{url}}')
             </script>
 
             <script type="text/javascript">
@@ -729,30 +840,63 @@ function set_state(state) {
           <script>
             $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
           </script>
+
+              <div class="remodal" data-remodal-id="downloadImage" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+                <div>
+                  <script type="text/javascript">document.write('<h2 id="modal1Title">'+Content.downloadTitle+'</h2>')</script>
+                  <script type="text/javascript">document.write('<p id="modal1Desc">'+Content.downloadDescription+'</p>')</script>                  
+                </div>
+                <br>
+                <script type="text/javascript">document.write('<button data-remodal-action="cancel" class="remodal-cancel">'+Content.downloadCancel+'</button>')</script>
+                <script type="text/javascript">document.write('<button data-remodal-action="confirm" class="remodal-confirm" id="dlImgLink">'+Content.downloadMessage+'</button>')</script>                
+              </div>
+
               <ul class="sidebar-functions">
 
-                            <li>
-                                <a id="newSearch" href="" class="search">
-                                    <script>
-                                        $('#newSearch').attr('title',Content.newSearch);$('#newSearch').attr('href','{{ wbrequest.user_metadata.search_location }}?l='+Content.language);
-                                        $('#newSearch').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'New Search link\', \'arquivo.pt\');');
-                                    </script>
-                                    <i class="ion ion-search"></i>
-                                </a>
-                               <!-- <a href="#" class="search"><i class="ion ion-search"></i></a>-->
-                            </li>
-                            <li>
-                              <script type="text/javascript">document.write('<a id="versionsTable" href="" class="versions-table" title="'+Content.versionsStoredTable+'">')</script>
-                                
+                            <li id="tableofVersionsSpinnerLi"><ion-spinner icon="android" class="spinner spinner-android" id="tableofVersionsSpinner"></ion-spinner></li>
+                            <li id="sidebarli">
+                              <script type="text/javascript">document.write('<a id="versionsTable" href="" class="versions-table" title="'+Content.versionsStoredTable+'" style="text-decoration:none;color:#fff">')</script>
                                     <script>
                                         document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
                                         $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
                                     </script>
-                                    <i class="ion ion-grid"></i>
+                                    <i class="ion ion-grid" style=""></i>
+                                      <script type="text/javascript">
+                                        document.write('<span id="tableOfVersionsSpan" style="vertical-align: bottom">'+Content.table+'</span>');
+                                      </script>
                                 </a>                    
                                 <!-- <a href="#" class="versions-table"><i class="ion ion-grid"></i></a> -->
                             </li>
-                </ul>          
+                </ul>
+ <!--
+                          <script type="text/javascript">
+                                      document.write('<img id="loadingVersions" style="margin-left: 40%; padding-top: 10%" alt ="Loading Table of Versions" src="{{wbrequest.wb_prefix}}static/resources/img/loaderTV.gif" width="20%"/>' );
+                          </script>              
+-->                          
+                          <script>
+                             $(document)
+                               .ajaxStart(function () {
+                                  if(!printLoading){
+                                    $('#tableofVersionsSpinnerLi').css('display','block');
+                                  }
+                                  else{                                    
+                                    $('#a_print').hide();
+                                    $('#printLoading').show();
+                                    /*$('#printLoading').css('display','inline-block');*/
+                                  }  
+                               })
+                             .ajaxStop(function () {
+                                  if(!printLoading){
+                                    $('#tableofVersionsSpinnerLi').css('display','none');
+                                  }
+                                  else{
+                                    $('#printLoading').hide();
+                                    $('#a_print').show();          
+                                    printLoading="false";                                    
+                                  }
+                              });
+                          </script>
             <ul class="sidebar-nav" id ="yearList" style="list-style: none;">
             </ul>
         </div>

@@ -70,5 +70,18 @@ Content = {
     theWebsite: "The Website",
     notArchivedYet: "wasn't archived yet.",
     searchTitle: "search in Arquivo.pt",
-    otherArchives: "Search in other archives" 
+    otherArchives: "Search in other archives",
+    table: "Table",
+    completePage: "Complete the Page", 
+    downloadTitle: "Download Screenshot",
+    downloadDescription: "Download Screenshot of this archived Web Page?",
+    downloadMessage: "Download",
+    downloadCancel: "Cancel",
+    title500: "Ooops! An error has occured",
+    subtitle500: "We are sorry for this unexpected behaviour.",
+    suggestionsTitle500: "You can:",
+    suggestionsFeedback500: "Warn us about this missing page",
+    goHome500: "Return to the homepage",
+    homePagetitle: "Go to the homepage", 
+    contact: "contact?set_language=en"   
 };

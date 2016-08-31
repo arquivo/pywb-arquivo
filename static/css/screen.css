@@ -306,7 +306,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .ion-funnel:before,
 .ion-gear-a:before,
 .ion-gear-b:before,
-.ion-grid:before,
 .ion-hammer:before,
 .ion-happy:before,
 .ion-happy-outline:before,
@@ -801,11 +800,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .ion-woman:before,
 .ion-wrench:before,
 .ion-xbox:before {
-  color: #cacaca;
+  color: #fff;
   display: inline-block;
   font-family: "Ionicons";
   speak: none;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -813,10 +812,34 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding-right: .3em;
   text-transform: none;
   text-rendering: auto;
-  vertical-align: middle;
-  line-height: 1;
+  /*vertical-align: middle;*/
+  line-height: 0.58;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+.ion-grid:before{
+    color: #fff;
+    display: inline-block;
+    font-family: "Ionicons";
+    speak: none;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    height: 24px;
+    /* padding-right: 1em; */
+    padding-left: 0.5em;
+    text-transform: none;
+    text-rendering: auto;
+    vertical-align: top;
+    padding-top: 0.1em;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }  
+}
+
+
+
   .ion:hover, .ionicons:hover,
   .ion-alert:hover:before,
   .ion-alert-circled:hover:before,
@@ -3752,6 +3775,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .ion-xbox:before {
   content: ""; }
 
+/* Hack for ionicicons v2 (no animation code) */
+.ion-spin-animation { -webkit-animation: spin 1s infinite linear; -moz-animation: spin 1s infinite linear; -o-animation: spin 1s infinite linear; animation: spin 1s infinite linear; }
+
+@-moz-keyframes spin { 0% { -moz-transform: rotate(0deg); }
+    100% { -moz-transform: rotate(359deg); } }
+@-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(359deg); } }
+@-o-keyframes spin { 0% { -o-transform: rotate(0deg); }
+    100% { -o-transform: rotate(359deg); } }
+@-ms-keyframes spin { 0% { -ms-transform: rotate(0deg); }
+    100% { -ms-transform: rotate(359deg); } }
+@keyframes spin { 0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); } }
+.ion-load-a.ion-spin-animation { -webkit-animation-timing-function: steps(8, start); -moz-animation-timing-function: steps(8, start); animation-timing-function: steps(8, start); }
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -3886,22 +3924,24 @@ p {
     margin-left: 16.1%;
     width: 33.6%;
     display: inline-block;
-    border-left: 1px solid #fff;
-    padding-bottom: 0.2em;  
     }
     #topbar .url p {
       display: inline-block;
       font-size: 1.6em;
       color: #fff;
       /*border-bottom: 1px solid #999;*/
-      margin: 1.5em; }
+    }
   #topbar .toolbar {
     width: 48%;
     display: inline-block; }
   #topbar .utilities {
-    text-align: right; }
+    text-align: right; 
+    height: 74px;
+    line-height: 74px;
+    vertical-align: middle;
+  }
     #topbar .utilities a {
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: 700;
       color: #666;
       text-decoration: none;
@@ -3910,25 +3950,26 @@ p {
         color: #fff; }
     #topbar .utilities li {
       display: inline-block;
-      padding: 1.5em 1.5em 1.5em 0; }
+      padding: 0em 1.0em 1.5em 0; }
       #topbar .utilities li.print, #topbar .utilities li.mail, #topbar .utilities li.help, #topbar .utilities li.lang {
         border-right: 1px solid #3E3E3E; }
       #topbar .utilities li.save_img, #topbar .utilities li.facebook, #topbar .utilities li.help, #topbar .utilities li.lang {
         padding-left: 1.5em; }
       #topbar .utilities li.lang {
+        padding-right: 2.5em;
         border: 0; }
 
 .sidebar-functions {
   list-style-type: none;
   padding-top: 5%;
   padding-bottom: 3%;
-  margin-left: 16%;
-  width: 8.75em;
+  /*margin-left: 16%;*/
+  /*width: 8.75em;*/
   /*margin-right: auto;*/
-  text-align: center; }
+  /*text-align: center;*/ }
   .sidebar-functions li {
     display: inline-block;
-    margin: 0 1em; }
+    /*margin: 0 1em;*/ }
 
 .sidebar-nav {
   position: relative;
@@ -4005,6 +4046,97 @@ p {
       color: #fff;
       background: none; }
 
+
+
+
+
+@media only screen and (max-width: 600px) {
+  /*Styles for browsers up to 600 px*/
+  /* Now it is redirecting to noFrame Version so no need for custom css*/
+  #topbar { 
+    display:none;
+  }
+}
+
+@media only screen and (min-width:601px) and (max-width:1023px){
+        /* styles for browsers between 601px and 1023px; */
+        #wrapper{ display: none;}
+        #logodiv{
+          width: 16%
+          position: fixed;
+          height: auto;
+          margin-top: 20px;
+          margin-bottom: 0%;
+        }
+        #arquivoImg{
+          width: 75px;
+          height: auto;
+          margin-top: 0%!important;
+        }
+        #page-content-wrapper{
+          left: 0%!important;
+          width: 100%!important;
+        }
+        #toolBar{
+          visibility: visible;
+          display: inline-block!important;
+          margin-left: -33.6%!important;
+          width: 81.6%!important;          
+        }
+        #update1{
+         /* visibility: hidden;*/
+          display: none!important;
+        }
+        #urlTopbarDiv{
+          display: inline-block;
+          visibility: hidden;
+        }
+        #utilitiesUl{
+          visibility: visible;
+        }
+
+}
+@media only screen and (min-width:1024px){
+        #wrapper{ display: block;}
+        #logodiv{
+          width: 16%;
+          position: fixed;
+          height: auto;
+          margin-top: 20px;
+          margin-bottom: 0%;
+        }
+        #arquivoImg{
+          width: 75px;
+          height: auto;
+          margin-top: 0%!important;
+        }
+        #page-content-wrapper{
+          left: 16%!important;
+          width: 84%!important;
+        }
+        #toolbar{
+          visibility: visible;
+          display: inline-block!important;
+          margin-left: 0%!important;
+          width: 48%!important;
+        }
+        #update1{
+          visibility: visible;
+          display: inline-block!important;
+        }
+        #urlTopbarDiv{
+          visibility: visible!important;
+          display: inline-block;
+        }
+        #utilitiesUl{
+          visibility: visible;
+          display: block;
+        }
+ 
+        /* styles for browsers larger or equal to 1024px; */
+}
+
+
 @media (min-width: 768px) {
   #wrapper {
     /*padding-left: 16%;*/ }
@@ -4060,3 +4192,128 @@ p {
   width: 50%;
 }
 
+#hbarMinimized{
+  display: none;
+  width: 100%;
+  font-size: 0px;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  border-bottom: 1px solid#fff;
+  line-height: 3;
+}
+#update2{
+      display: inline-block;
+      color: #fff;
+      margin-bottom: 0.2em;
+}
+
+#logoDivMinimized{
+    width: 16%;
+    display: inherit;
+    height: 30px;
+    vertical-align: middle;
+    /*background: #248769;*/
+}
+
+#urlDivMinimized{
+    /*background-color: #f32712;*/
+    display: inherit;
+    width: 40%;
+
+}
+
+#timeDivMinimized{
+    width: 44%;
+    display: inherit;
+    text-align: right;
+    padding-right: 10%;
+}
+
+#logoMinimized{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align:middle; 
+    text-align:center;
+}
+#timeMinimized{
+    color: #fff;
+    margin-bottom: 0;
+}
+
+#timeMinimized span{
+  color:  #fff;
+}
+
+#reconstructImg{
+    height: 20px;
+    width: 25px;
+    /*vertical-align: text-top;*/
+}
+
+.spinner-table {
+  max-width: 280px;
+}
+.spinner-table tbody > tr > th, .spinner-table tbody > tr > td {
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+}
+.spinner {
+  stroke: #444;
+  fill: #444; }
+  .spinner svg {
+    padding-top: 5px;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle; 
+  }
+  .spinner.spinner-inverse {
+    stroke: #fff;
+    fill: #fff; }
+
+.spinner-android {
+  stroke: #4b8bf4; }
+
+.spinner-ios, .spinner-ios-small {
+  stroke: #69717d; }
+
+.spinner-spiral .stop1 {
+  stop-color: #fff;
+  stop-opacity: 0; }
+.spinner-spiral.spinner-inverse .stop1 {
+  stop-color: #000; }
+.spinner-spiral.spinner-inverse .stop2 {
+  stop-color: #fff; }
+
+.spinner-android{
+  stroke: #fff;
+  /*vertical-align: text-top;*/
+}
+#tableofVersionsSpinner{
+    display: block;
+    margin-bottom: 20px;
+}
+
+#tableofVersionsSpinner svg{
+    width:  40px;
+    height: 40px;
+    vertical-align: middle;   
+}
+
+#tableofVersionsSpinnerLi{
+    display: block;
+    text-align: center;
+}
+
+#printLoading{
+  padding-right: 0.5em;
+  padding-left: 0.48em
+
+}
+#sidebarli{
+margin-left: 25px;
+}
+#tableOfVersionsSpan{
+  font-weight: 700;
+}
