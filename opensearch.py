@@ -110,7 +110,7 @@ class OpenSearchCDXServer(CDXServer):
         closest = pad_timestamp(closest, EARLIEST_DATE)
 #        query = 'closestdate:{0} exacturlexpand:{1}'.format(closest,
 #                                                      params.get('url'))
-        query = 'exacturlexpand:{0} date:19960101000000-20591222163016'.format(params.get('url'))
+        query = 'exacturlexpand:{0} date:19960101000000-20291222163016'.format(params.get('url'))
         print 'novo date search'
         return query
 
