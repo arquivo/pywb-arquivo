@@ -3936,8 +3936,8 @@ p {
     display: inline-block; }
   #topbar .utilities {
     text-align: right; 
-    height: 74px;
-    line-height: 74px;
+    height: 100px;
+    line-height: 100px;
     vertical-align: middle;
   }
     #topbar .utilities a {
@@ -4069,7 +4069,7 @@ p {
           margin-bottom: 0%;
         }
         #arquivoImg{
-          width: 75px;
+          width: auto;
           height: auto;
           margin-top: 0%!important;
         }
@@ -4106,7 +4106,7 @@ p {
           margin-bottom: 0%;
         }
         #arquivoImg{
-          width: 75px;
+          /*width: 75px;*/
           height: auto;
           margin-top: 0%!important;
         }
@@ -4123,6 +4123,7 @@ p {
         #update1{
           visibility: visible;
           display: inline-block!important;
+          color: white;
         }
         #urlTopbarDiv{
           visibility: visible!important;
@@ -4180,6 +4181,8 @@ p {
   margin-left:auto;
   margin-right: auto; 
   margin-top: 7%;
+  margin-top: 5px!important;
+  margin-left: 34px;
 
 }
 
@@ -4190,6 +4193,10 @@ p {
 
 #sInputText{
   width: 50%;
+}
+
+#hbar{
+  height: 100px;
 }
 
 #hbarMinimized{
@@ -4203,8 +4210,9 @@ p {
 }
 #update2{
       display: inline-block;
-      color: #fff;
+      color: white;
       margin-bottom: 0.2em;
+
 }
 
 #logoDivMinimized{
@@ -4263,10 +4271,10 @@ p {
   stroke: #444;
   fill: #444; }
   .spinner svg {
-    padding-top: 5px;
+    /*padding-top: 5px;*/
     width: 25px;
     height: 25px;
-    vertical-align: middle; 
+    /*vertical-align: middle;*/ 
   }
   .spinner.spinner-inverse {
     stroke: #fff;
@@ -4315,5 +4323,33 @@ p {
 margin-left: 25px;
 }
 #tableOfVersionsSpan{
-  font-weight: 700;
+  /*font-weight: 700;*/
 }
+
+.home-submit, .search-submit {
+    background: url(/img/search-submit.gif) no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    height: 36px;
+    text-align: center;
+    text-decoration: none;
+    width: 193px;
+    cursor: pointer;
+    font-size: 1.6em;
+    border: none;    
+}
+.home-submit:hover, .search-submit:hover  { background-position: 0 -36px; }
+.home-submit:active, .search-submit:active { background-position: 0 -72px; }
+
+.cancel-download{
+    background: url(/img/cancel-download.png) no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    height: 36px;
+    text-align: center;
+    text-decoration: none;
+    width: 193px;
+    cursor: pointer;
+    font-size: 1.6em;
+    border: none;    
+}
+.cancel-download:hover{ background-position: 0 -36px; }
+.cancel-download:active{ background-position: 0 -72px; }

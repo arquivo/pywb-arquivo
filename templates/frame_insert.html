@@ -40,7 +40,8 @@
                 document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static/resources/dependencies/remodal.js"+ "><\/script>");
                 document.write("<link rel=\"stylesheet\" href={{ wbrequest.wb_prefix }}static/resources/dependencies/remodal.css>");
                 document.write("<link rel=\"stylesheet\" href={{ wbrequest.wb_prefix }}static/resources/dependencies/remodal-default-theme.css>");
-    </script>    
+    </script> 
+
     <!-- style relative to the dialog plugin - Move this to css in the future -->
     <style> 
       .remodal-bg.with-red-theme.remodal-is-opening,
@@ -82,19 +83,6 @@
         console.log('cancellation');
       });
 
-    //  Usage:
-    //  $(function() {
-    //
-    //    // In this case the initialization function returns the already created instance
-    //    var inst = $('[data-remodal-id=modal]').remodal();
-    //
-    //    inst.open();
-    //    inst.close();
-    //    inst.getState();
-    //    inst.destroy();
-    //  });
-
-      //  The second way to initialize:
     </script>
 
     <script>
@@ -145,7 +133,6 @@
             /*The bar is Minimized - Let's expand the bar*/
             $('#hbarMinimized').css('display','none');  
             $('#hbar').css('display','inherit');
-
             /*resize vertically*/
             resize();            
                      
@@ -220,9 +207,7 @@
         //add version with timestamp to the left side menu
         {
             if (timestamp.length < 14) {
-                //TODO: add some error message when timestamp is wrong?
-                //TODO: REMOVE ALERT?
-                //top.alert("Timestamp Error: Invalid Timestamp "+ timestamp);
+              console.log("Invalid Timestamp: " + timestamp);
             }
             else{
                     var year = timestamp.substring(0, 4);
@@ -242,7 +227,7 @@
                                           $('#'+'ul_'+year+'_'+month+'_'+day).append(   
                                                     '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\'); jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         ''
                                           +                 '</li>');                       
                         }
@@ -253,7 +238,7 @@
                                           +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'" style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
                                           +                         '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         '</li>'
                                           +                     '</ul>'
                                           +                 '</li>');               
@@ -270,7 +255,7 @@
                                           +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'"  style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
                                           +                         '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         '</li>'
                                           +                     '</ul>'
                                           +                 '</li>'
@@ -291,7 +276,7 @@
                                           +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'"  style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
                                           +                         '<li style="list-style: none;" id = "'+timestamp+'">'
                                           +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');" href="javascript:jumpToVersion(\''+url+'\', \''+timestamp+'\')" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
+                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
                                           +                         '</li>'
                                           +                     '</ul>'
                                           +                 '</li>'
@@ -370,20 +355,15 @@
        type: 'GET'
     });
 
-
-
     }
     </script>
-
-
 
 
     <script>
     function getImageToPrint(encodedURLToPrint)
     {
         var requestURL = "{{ wbrequest.user_metadata.search_location }}/print/";
-        //top.alert(requestURL);
-
+       //top.alert(requestURL);
         printLoading = true;
         $.ajax({
         // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
@@ -441,43 +421,31 @@ function set_state(state) {
     var truncatedUrl = truncateUrl(url);
     $("#update1").text(truncatedUrl);
     $("#update2").text(truncatedUrl);
-    $("#update1").attr('title',url);
-    $("#update2").attr('title',url);    
- /*   $("#update2").text(truncatedUrl); 
+ 
+    $('#update1').attr('title', url);
+    $("#update2").attr('title', url);  
 
-    //update the link to be sent in the email
-    $("#sendEmail").attr('href', 'mailto:?subject='+Content.emailMessage+ ' [sub]');
+    $("#update1").attr('href',url);
+    $("#update2").attr('href',url); 
 
-    //update link to list all versions of url in arquivo
-    //document.getElementById("historyBack").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ url + "&btnSubmit=Pesquisar");
-    // current timestamp
-    
-
-    //TODO:: Update the URL to generate screenshots
-  */  
     ts = state.timestamp; //global variable timestamp
+
+    ga('set', 'page', '/wayback/'+ ts + '/'+ url);
+    ga('send', 'pageview');    
 
     //update the date on minimized bar
     $('#timeMinimized').html(getDatets()+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>');                      
 
-
-
     var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/'+ts+'/'+url);
-//    $('#a_screenshot').attr('href', '{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded);
     $('#dlImgLink').attr('onClick', 'window.open(\'{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded+'\')')
-
-
 
     /*Update Reconstruct anchor*/
     $('#a_reconstruct').attr('href', 'http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
 
     $('#a_print').attr('href','javascript:getImageToPrint("'+urlEncoded+'")');
-
-
    
     theurl= '{{wbrequest.wb_prefix}}'+ts+'/'+url;
     addthis.update('share', 'url', theurl);
-
 
     var title = $("#replay_iframe").contents().find("meta[property='og:title']").attr("content");
     if(title === undefined || title === null) // there is no og:title meta tag in this iframe
@@ -493,24 +461,14 @@ function set_state(state) {
     addthis.update('share', 'title', title);
     addthis.toolbox('.addthis_toolbox', addthis_config, addthis_share);
     $('meta[property="og:url"]').attr('content', theurl);
-    /*
-
-    $("#data2").html(ts_to_daymonthyearFormated(ts) + "&nbsp;<span id=\"at2\" class=\"as\">"+Content.at+"</span>&nbsp;" + ts_to_hoursminutes(ts));
-    //document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ url + "&btnSubmit=Pesquisar");
-
-    $("#data1").html(ts_to_daymonthyearFormated(ts) + "&nbsp;<span id=\"at1\" class=\"as\">"+Content.at+"</span>&nbsp;" + ts_to_hoursminutes(ts));
 
     //List the versions of current url in the side bar
-    */     
     if(sideMenuVersion != true){ // TODO:: improve this Dirty hack global var to define a leftMenu version and preserve leftMenu state
         //top.alert("Updating the Versions on the Side Menu :)");
         setTimeout(updateVersionsOfUrl(url), 800000);
-
        // updateVersionsOfUrl(url);
-
     }
     sideMenuVersion =false;
-
     //the following code is the original code of pywb...
     var capture_info = document.getElementById("_wb_capture_info");
     if (capture_info) {
@@ -531,7 +489,6 @@ function set_state(state) {
 </script>
 <!--end pywb changes -->
 
-    <!--<meta charset="utf-8"> -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -641,26 +598,13 @@ function set_state(state) {
 
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function() {     
             var language = Cookies.get('language');
             if (! ('ontouchstart' in document.documentElement)) {
                 // if you are not in a touch device (hide scroll on the div in top of the iframe)
                 $('#iframeBox').css('overflow-y','hidden');
-            }    
-            //$("#sidebar-wrapper").niceScroll({cursorwidth: '10px', autohidemode: false, zindex: 999 });
-            //$("#sidebar-wrapper").addClass("noprint");
-            //$("#ascrail2000").addClass("noprint");
-            //$("#ascrail2000 > div").first().addClass("noprint");
-            //$("#sidebar-wrapper").getNiceScroll().resize();
-            //$('#ascrail2000').show();
-            
-            /*var url = window.location;  
-                $('#fb-share-button').attr('data-href', url);
-            */
-          /*  if ($('#slidedown_menu').length) {
-                $('#slidedown_menu ul ul').hide();
             }
-          */
+
             $(document).on('click', '#yearList > li > a, #yearList > li > ul > li > a', function() {
                 if ($(this).next().hasClass('open')) {
                     $(this).removeClass('activeItem');
@@ -688,10 +632,10 @@ function set_state(state) {
                     $(this).parent().css('list-style','none');
                     $(this).parent().off('hover');  
                     $(this).off('hover');
-
                     /*Removed span after li:first*/
                     var versiontoGoTo = $(this).next().find('> li:first > a').attr("id");
-                    $('#'+versiontoGoTo)[0].click();
+                    $('#'+versiontoGoTo).click();               
+
                 }
                 return false;
             });             
@@ -719,11 +663,11 @@ function set_state(state) {
               <div id="topbar" class="noprint">
                 <div id="hbarMinimized">
                         <div id="logoDivMinimized"><img id="logoMinimized" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="40px" alt="Arquivo.pt"></img></div>
-                        <div id="urlDivMinimized"><p id="update2">                
+                        <div id="urlDivMinimized"><a id="update2" href="" target="_blank">                
                             <script type="text/javascript">
                                 document.write(truncateUrl("{{url}}"));
                                 $("#update2").attr('title', "{{url}}");
-                            </script></p>
+                            </script></a>
                         </div>
                         <div id="timeDivMinimized">
                           <script>
@@ -741,16 +685,16 @@ height: 40px;"/></a>
                           document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
                         </script>
                                              
-                        <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="75px"/> 
+                        <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/ArquivoVertical100.png" /> 
                         <script type="text/javascript"> document.write("</a>")</script> 
                     </div>  
                     <div class="url" id = "urlTopbarDiv" class="noprint">
-                        <p id="update1">                
+                        <a id="update1" href="" target="_blank">                
                             <script type="text/javascript">
-                                document.write(truncateUrl("{{url}}"))
+                                document.write(truncateUrl("{{url}}"));
                                 $("#update1").attr('title', "{{url}}");
                             </script>
-                        </p>
+                        </a>
                     </div>
 
                     <div class="toolbar noprint" id="toolBar">
@@ -760,39 +704,27 @@ height: 40px;"/></a>
                           </script>
 
                           <script type="text/javascript">
-                              document.write("<li id='screenshot' class=\"\"><a title='"+Content.screenTitle+"' id='a_screenshot' href='#downloadImage' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class=\"ion ion-camera\"></i><\/a><\/li>");
-                             //define the href to take the screenShot
-                             
-                             //var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');
-                             //$('#a_screenshot').attr('href', '{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded);
+                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='#downloadImage' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class=\"ion ion-camera\"></i><\/a><\/li>");
                           </script>
-
-                          <!--<li class="print"><a href="#"><i class="ion ion-android-print"></i></a></li>-->
 
                           <script>
                                   var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');                   
                                   document.write("<li class='print' id='printLi'><a title='"+Content.printTitle+"' id='a_print' href='javascript:getImageToPrint(\""+urlEncoded+"\")'><i id='printIon' class='ion ion-android-print menu-icon'></i></a><ion-spinner icon='android' class='spinner spinner-android' id='printLoading' style='display:none'></li>");
-
                           </script>
 
-
                           <script>
-                              document.write("<li id='facebook_share' class='facebook'><a title='"+Content.faceTitle+"' class='addthis_button_facebook' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook'><\/i><\/a><\/li>");
+                              document.write("<li id='facebook_share' class='facebook' title=''><a class='addthis_button_facebook' title='"+Content.faceTitle+"'  href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook'><\/i><\/a><\/li>");
                           </script>   
                           <script>
-                              document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class='addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter'></i><\/a><\/li>");
+                              document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class=' addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter'></i><\/a><\/li>");
                           </script>
                           <script>
-                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',window.location); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email"></i><\/a><\/li>');
+                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ getDatets() +'%0D%0A %0D%0A\' + window.location ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email"></i><\/a><\/li>');
                           </script>
 
-                         <!--
-                          <li class="help"><a href="#" id="help"><script>document.write(Content.help);$('#help').attr('href', Content.helpHref); $('#help').attr('title',Content.help);</script></a></li>
-                        -->
                           <li class="lang">
                             <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
                             <script>
-                                
                                 document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
                                   var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
                                   Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: httpURLTokens[2]  });
@@ -809,13 +741,7 @@ height: 40px;"/></a>
               setTimeout(updateVersionsOfUrl('{{url}}'), 800000);
               //updateVersionsOfUrl('{{url}}')
             </script>
-
-            <script type="text/javascript">
-            /*top.alert($('#toolBar').height());
-              top.alert(screen.height);*/
-            </script>
-
-            
+           
                 <script type="text/javascript">
                   document.write('<div id="iframeBox" class="container-fluid" class = "noprint" style="height: '+(window.innerHeight - $('#toolBar').height()) +'px;"><iframe style="background-color: #fff;border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; height:100%; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >')
                 </script>
@@ -831,8 +757,6 @@ height: 40px;"/></a>
                 </iframe>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
-
 
     <div id="wrapper" class="noprint">
         <!-- Sidebar -->
@@ -842,14 +766,13 @@ height: 40px;"/></a>
           </script>
 
               <div class="remodal" data-remodal-id="downloadImage" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
                 <div>
-                  <script type="text/javascript">document.write('<h2 id="modal1Title">'+Content.downloadTitle+'</h2>')</script>
-                  <script type="text/javascript">document.write('<p id="modal1Desc">'+Content.downloadDescription+'</p>')</script>                  
+                  <script type="text/javascript">document.write('<h2 id="modal1Title">'+Content.downloadPopup+'</h2>')</script>              
                 </div>
                 <br>
-                <script type="text/javascript">document.write('<button data-remodal-action="cancel" class="remodal-cancel">'+Content.downloadCancel+'</button>')</script>
-                <script type="text/javascript">document.write('<button data-remodal-action="confirm" class="remodal-confirm" id="dlImgLink">'+Content.downloadMessage+'</button>')</script>                
+
+                <script type="text/javascript">document.write('<button data-remodal-action="confirm" class="home-submit" id="dlImgLink">'+Content.downloadMessage+'</button>')</script>
+                <script type="text/javascript">document.write('<button data-remodal-action="cancel" class="cancel-download" id="dlImgLink">'+Content.downloadCancel+'</button>')</script>                        
               </div>
 
               <ul class="sidebar-functions">
@@ -866,14 +789,8 @@ height: 40px;"/></a>
                                         document.write('<span id="tableOfVersionsSpan" style="vertical-align: bottom">'+Content.table+'</span>');
                                       </script>
                                 </a>                    
-                                <!-- <a href="#" class="versions-table"><i class="ion ion-grid"></i></a> -->
                             </li>
-                </ul>
- <!--
-                          <script type="text/javascript">
-                                      document.write('<img id="loadingVersions" style="margin-left: 40%; padding-top: 10%" alt ="Loading Table of Versions" src="{{wbrequest.wb_prefix}}static/resources/img/loaderTV.gif" width="20%"/>' );
-                          </script>              
--->                          
+                </ul>                     
                           <script>
                              $(document)
                                .ajaxStart(function () {
@@ -883,7 +800,6 @@ height: 40px;"/></a>
                                   else{                                    
                                     $('#a_print').hide();
                                     $('#printLoading').show();
-                                    /*$('#printLoading').css('display','inline-block');*/
                                   }  
                                })
                              .ajaxStop(function () {
@@ -903,26 +819,13 @@ height: 40px;"/></a>
         <script type="text/javascript">/*$('#scroll-area').getNiceScroll().resize();*/</script>
         <!-- /#sidebar-wrapper -->
 
-
-
     </div>
 
   </div>
     <!-- /#wrapper -->
-
-
-
             </div>
           </div>  
           
-
-<script type="text/javascript">
-</script>
-
-
-
-
-
 <script type="text/javascript">
     document.write('<div class="printIframe" id="divPrintMe" style="display: block;"></div>' );
 </script>
