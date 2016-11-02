@@ -10,7 +10,7 @@
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-21825027-1', 'auto');
+      ga('create', 'UA-21825027-6', 'auto');
       ga('send', 'pageview');
     </script>
 
@@ -363,7 +363,6 @@
     function getImageToPrint(encodedURLToPrint)
     {
         var requestURL = "{{ wbrequest.user_metadata.search_location }}/print/";
-       //top.alert(requestURL);
         printLoading = true;
         $.ajax({
         // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
@@ -458,6 +457,7 @@ function set_state(state) {
     }
     title = title + Content.preservedByArquivo;
     document.title = title;
+
     addthis.update('share', 'title', title);
     addthis.toolbox('.addthis_toolbox', addthis_config, addthis_share);
     $('meta[property="og:url"]').attr('content', theurl);
@@ -469,6 +469,7 @@ function set_state(state) {
        // updateVersionsOfUrl(url);
     }
     sideMenuVersion =false;
+
     //the following code is the original code of pywb...
     var capture_info = document.getElementById("_wb_capture_info");
     if (capture_info) {
@@ -483,7 +484,6 @@ function set_state(state) {
             label.innerHTML = _wb_js.banner_labels.REPLAY_MSG;
         }
     }
-
     curr_state = state;
 }
 </script>
@@ -531,9 +531,9 @@ function set_state(state) {
     /*Truncates large URL in the replay bar*/
     function truncateUrl(url)
     {   /*remove https and http*/
-        if(url.startsWith("https://")){
+        if(url.substring(0, "https://".length) === "https://"){
           url = url.substring(8,url.length);
-        }else if (url.startsWith("http://")){
+        }else if (url.substring(0, "http://".length) === "http://"){
           url = url.substring(7,url.length);
         }       
         if (url.length > 40){
