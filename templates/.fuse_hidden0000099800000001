@@ -685,7 +685,7 @@ height: 40px;"/></a>
                           document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
                         </script>
                                              
-                        <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivo100v.png" /> 
+                        <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/ArquivoVertical100.png" /> 
                         <script type="text/javascript"> document.write("</a>")</script> 
                     </div>  
                     <div class="url" id = "urlTopbarDiv" class="noprint">
