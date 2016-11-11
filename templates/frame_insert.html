@@ -88,10 +88,10 @@
     <script>
         var language = Cookies.get('language');
         if( language == 'EN'){
-            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js"><\/script>');
+            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=Hercules"><\/script>');
         }
         else{
-            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js"><\/script>');
+            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js?release=Hercules"><\/script>');
         }
     </script>
     <!-- Twitter js -->
