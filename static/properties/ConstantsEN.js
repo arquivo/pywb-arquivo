@@ -83,5 +83,15 @@ Content = {
     suggestionsFeedback500: "Warn us about this missing page",
     goHome500: "Return to the homepage",
     homePagetitle: "Go to the homepage", 
-    contact: "contact?set_language=en"   
+    contact: "contact?set_language=en" ,
+    iongrid: "Table of versions icon" ,
+    reconstructImg: "Complete the page icon"  ,
+    screenshotIcon: "Download Screenshot icon",
+    printIcon: "Print the page icon",
+    facebookIcon: "Share on Facebook icon" ,
+    twitterIcon: "Share on Twitter icon",
+    emailIcon: "Share by email icon",
+    minimizeMaximizeTitle: "Minimize or maximize toolbar",
+    minimizeMaximizeIcon: "Minimize or maximize toolbar icon"
+
 };

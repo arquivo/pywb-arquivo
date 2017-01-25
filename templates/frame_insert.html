@@ -4,6 +4,7 @@
 
 <html lang="pt" ng-app="ionic">
 <head>
+	<!-- Google Analytics-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -12,12 +13,6 @@
 
       ga('create', 'UA-21825027-1', 'auto');
       ga('send', 'pageview');
-    </script>
-
-
-    <script type="text/javascript">
-      sideMenuVersion = false;
-      printLoading = false;
     </script>
 
     <!-- Jquery-->
@@ -29,6 +24,9 @@
     <script type="text/javascript">
     document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
     </script> <!-- Plugin for cookie to choose language-->
+
+    <!-- Javascript code for this page-->
+    <script type="text/javascript" src="{{ wbrequest.wb_prefix }}static/resources/js/frameInsert.js"> </script>
 
     <!-- ionicons-->
     <script type="text/javascript">
@@ -88,11 +86,56 @@
     <script>
         var language = Cookies.get('language');
         if( language == 'EN'){
+        	$('html').attr('lang', 'en');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=Hercules"><\/script>');
         }
         else{
+        	$('html').attr('lang', 'pt');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js?release=Hercules"><\/script>');
         }
+    </script>
+    <script type="text/javascript">
+		function jumpToVersion (url, currentTs){
+		    var frameSrc = "{{ wbrequest.wb_prefix }}" + currentTs + 'mp_/' + url;
+
+		    $('#a_'+ts).css('font-weight', 'normal') //remove the italic from the previous version
+		    $('#a_'+ts).removeClass('active-day'); // remove the Selected Day CSS class
+
+		    var year = ts.substring(0, 4);
+		    var month = ts.substring(4, 6);
+		    var day = ts.substring(6, 8);
+
+		    if(day.charAt(0) == '0'){
+		      day = day.charAt(1);
+		    }
+
+		    $('#'+year).removeClass('active');
+		    $('#'+year+'_'+month).removeClass('active');
+		    $('#'+year+'_'+month+'_'+day).removeClass('active');
+
+
+		    ts = currentTs; //update current Timestamp
+
+		    year = ts.substring(0, 4);
+		    month = ts.substring(4, 6);
+		    day = ts.substring(6, 8);
+
+		    if(day.charAt(0) == '0'){
+		      day = day.charAt(1);
+		    }
+
+		    $('#a_'+ts).css('font-weight','bold'); //italic the new selected timestamp
+		    $('#a_'+ts).addClass('active-day'); // add the Selected Day CSS class
+
+		    $('#'+year).addClass('active');
+		    $('#'+year+'_'+month).addClass('active');
+		    $('#'+year+'_'+month+'_'+day).addClass('active');
+
+
+		    $('#replay_iframe').attr('src', frameSrc); //update the iframe to the new version
+
+		    sideMenuVersion = true; // TODO:: improve this Dirty hack global var to define a leftMenu version and preserve leftMenu state
+		}    	
     </script>
     <!-- Twitter js -->
     <script>
@@ -112,206 +155,6 @@
          
           return t;
         }(document, "script", "twitter-wjs"));
-    </script>
-    <script type="text/javascript">
-      function minimizeMaximize(){
-        if($('#hbarMinimized').css('display') == 'none'){
-            /*The bar is Expanded - Let's minimize the bar*/
-            $('#hbar').css('display','none');
-            $('#hbarMinimized').css('display','inline-block');
-            /*Hide the Left Side Menu*/
-            $('#sidebar-wrapper').css('display','none');
-
-            $("#page-content-wrapper").css("cssText", "width: 100% !important;");
-            $("#page-content-wrapper").css("cssText", "left: 0% !important;");
-
-
-            /*resize vertically*/
-            resize();
-        }    
-        else{ 
-            /*The bar is Minimized - Let's expand the bar*/
-            $('#hbarMinimized').css('display','none');  
-            $('#hbar').css('display','inherit');
-            /*resize vertically*/
-            resize();            
-                     
-        }
-
-      }
-    </script>
-
-    <script>
-        function setLang(lang) {
-            hostwithHttp = "{{ wbrequest.user_metadata.search_location }}";
-            var cHost = hostwithHttp.substring(7);
-            if(lang == 'EN')
-             {
-                Cookies.set('language', 'EN', { expires: 30, path: '/', domain: cHost  });
-                window.location.reload();
-             }
-            else //default language Portuguese
-            {
-                Cookies.set('language', 'PT', { expires: 30, path: '/', domain: cHost  });   
-                window.location.reload();
-            }   
-        }
-    </script>
-
-    <script type="text/javascript">
-    function jumpToVersion (url, currentTs){
-        var frameSrc = "{{ wbrequest.wb_prefix }}" + currentTs + 'mp_/' + url;
-
-        $('#a_'+ts).css('font-weight', 'normal') //remove the italic from the previous version
-        $('#a_'+ts).removeClass('active-day'); // remove the Selected Day CSS class
-
-        var year = ts.substring(0, 4);
-        var month = ts.substring(4, 6);
-        var day = ts.substring(6, 8);
-
-        if(day.charAt(0) == '0'){
-          day = day.charAt(1);
-        }
-
-        $('#'+year).removeClass('active');
-        $('#'+year+'_'+month).removeClass('active');
-        $('#'+year+'_'+month+'_'+day).removeClass('active');
-
-
-        ts = currentTs; //update current Timestamp
-
-        year = ts.substring(0, 4);
-        month = ts.substring(4, 6);
-        day = ts.substring(6, 8);
-
-        if(day.charAt(0) == '0'){
-          day = day.charAt(1);
-        }
-
-        $('#a_'+ts).css('font-weight','bold'); //italic the new selected timestamp
-        $('#a_'+ts).addClass('active-day'); // add the Selected Day CSS class
-
-        $('#'+year).addClass('active');
-        $('#'+year+'_'+month).addClass('active');
-        $('#'+year+'_'+month+'_'+day).addClass('active');
-
-
-        $('#replay_iframe').attr('src', frameSrc); //update the iframe to the new version
-
-        sideMenuVersion = true; // TODO:: improve this Dirty hack global var to define a leftMenu version and preserve leftMenu state
-    }
-    </script>
-
-    <script>
-        function createVersion(timestamp, url)
-        //add version with timestamp to the left side menu
-        {
-            if (timestamp.length < 14) {
-              console.log("Invalid Timestamp: " + timestamp);
-            }
-            else{
-                    var year = timestamp.substring(0, 4);
-                    var month = timestamp.substring(4, 6);
-                    var day = timestamp.substring(6, 8);
-                    if(day.substring(0,1) == '0')
-                        day = day[1]; //remove the 0 in the day just for presentation purposes
-                    var hours = timestamp.substring(8, 10);
-                    var minutes = timestamp.substring(10, 12);
-
-                if ($('#'+year).length){
-                    //year already exists 
-                    if($('#'+year+'_'+month).length){
-                        
-                        if($('#'+year+'_'+month+'_'+day).length){
-                        //if day, month and year already exist  
-                                          $('#'+'ul_'+year+'_'+month+'_'+day).append(   
-                                                    '<li style="list-style: none;" id = "'+timestamp+'">'
-                                          +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\'); jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
-                                          +                         ''
-                                          +                 '</li>');                       
-                        }
-                        else{
-                        //if the month and year already exist
-                                          $('#'+'ul_'+year+'_'+month).append(
-                                                           '<li style="list-style: none;"><a id ="'+year+'_'+month+'_'+day+'" href="#">'+day+'</a>'
-                                          +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'" style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
-                                          +                         '<li style="list-style: none;" id = "'+timestamp+'">'
-                                          +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
-                                          +                         '</li>'
-                                          +                     '</ul>'
-                                          +                 '</li>');               
-
-                        }
-
-                    }
-                    else{
-                        //year already exists, add the month 
-                        $('#'+'ul_'+year).append(
-                                                    '<li style="list-style: none;"><a id ="'+year+'_'+month+'" href="#">'+Content.months[month]+'</a>'
-                                          +             '<ul id = "ul_'+year+'_'+month+'"  style="list-style: none; margin: 0; display: none;" class="days">'
-                                          +                 '<li style="list-style: none;"><a id ="'+year+'_'+month+'_'+day+'" href="#" >'+day+'</a>'
-                                          +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'"  style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
-                                          +                         '<li style="list-style: none;" id = "'+timestamp+'">'
-                                          +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
-                                          +                         '</li>'
-                                          +                     '</ul>'
-                                          +                 '</li>'
-                                          +             '</ul>'
-                                          +         '</li>');               
-
-                    }
-                }       
-                
-                else{   
-                    $("#yearList").append(
-                                            '<li id="toplist">'
-                                          +     '<a href="#" id = "'+year+'">' + year +'</a>'
-                                          +     '<ul id ="ul_'+year+'" style="list-style: none; display: none;" class="months" >'
-                                          +         '<li style="list-style: none;"><a id ="'+year+'_'+month+'" href="#" >'+Content.months[month]+'</a>'
-                                          +             '<ul id = "ul_'+year+'_'+month+'"  style="list-style: none; margin: 0; display: none;" class="days">'
-                                          +                 '<li style="list-style: none;"><a id ="'+year+'_'+month+'_'+day+'" href="#" >'+day+'</a>'
-                                          +                     '<ul id = "ul_'+year+'_'+month+'_'+day+'"  style="list-style: none; padding: 0; margin: 0; display: none;" class="hours">'
-                                          +                         '<li style="list-style: none;" id = "'+timestamp+'">'
-                                          +                         ''
-                                          +                             '<a onClick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Change Version\', \''+url+' '+timestamp+'\');jumpToVersion(\''+url+'\', \''+timestamp+'\')" href="" title="'+day+' '+Content.months[month] + ', ' + year +'" id = "a_'+timestamp+'">'+hours+':'+minutes+'</a>'
-                                          +                         '</li>'
-                                          +                     '</ul>'
-                                          +                 '</li>'
-                                          +             '</ul>'
-                                          +         '</li>'
-                                          +    '</ul>'
-                                          + '</li>');
-                    $("#toplist").css('list-style','none');
-
-
-                }
-
-
-            }
-
-            if(ts == timestamp){  //leave the current version open in the side menu
-
-                $('#'+year).addClass('active');
-                $('#'+year+'_'+month).addClass('active');
-                $('#'+year+'_'+month+'_'+day).addClass('active');
-                $('#a_'+timestamp).addClass('active-day');
-
-                $('#ul_'+year).addClass('open');
-                $('#ul_'+year+'_'+month).addClass('open');
-                $('#ul_'+year+'_'+month+'_'+day).addClass('open');
-
-
-                $('#ul_'+year).css('list-style','none'); $('#ul_'+year).css('display','block');
-                $('#ul_'+year+'_'+month).css('list-style','none'); $('#ul_'+year+'_'+month).css('display','block');
-                $('#ul_'+year+'_'+month+'_'+day).css('list-style','none'); $('#ul_'+year+'_'+month+'_'+day).css('display','block');
-                $('#a_'+timestamp).css('font-weight','bold');
-
-            }
-                
-        }
     </script>
 
     <script>
@@ -676,8 +519,10 @@ function set_state(state) {
                         </div>
                 </div>
                   <!--the below anchor is the button to minimize/maximize the replayBars it is a fixed element -->
-                  <a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em;
-height: 40px;"/></a>                  
+                  <script type="text/javascript">
+                  	document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
+                  </script>
+          
                   <div id="hbar">
                     <div class="logoDiv" id="logodiv">
                       <a>
@@ -685,7 +530,7 @@ height: 40px;"/></a>
                           document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
                         </script>
                                              
-                        <img id="arquivoImg" alt ="logo" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivo100v.png" /> 
+                        <img id="arquivoImg" alt ="Arquivo.pt logo" title="Arquivo.pt homepage" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivo100v.png" /> 
                         <script type="text/javascript"> document.write("</a>")</script> 
                     </div>  
                     <div class="url" id = "urlTopbarDiv" class="noprint">
@@ -700,26 +545,26 @@ height: 40px;"/></a>
                     <div class="toolbar noprint" id="toolBar">
                       <ul class="utilities" id="utilitiesUl">
                           <script type="text/javascript">
-                              document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a title='"+Content.completePage+"' id='a_reconstruct' href='http://timetravel.mementoweb.org/reconstruct/{{ wbrequest.wb_url.timestamp }}/{{url}}' target=\"_blank\" onClick=\"\"><img id=\"reconstructImg\" src=\"{{wbrequest.wb_prefix}}static/resources/img/reconstruct.png\"/><\/a><\/li>");
+                              document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a title='"+Content.completePage+"' id='a_reconstruct' href='http://timetravel.mementoweb.org/reconstruct/{{ wbrequest.wb_url.timestamp }}/{{url}}' target=\"_blank\" onClick=\"\"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{wbrequest.wb_prefix}}static/resources/img/reconstruct.png\"/><\/a><\/li>");
                           </script>
 
                           <script type="text/javascript">
-                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='#downloadImage' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class=\"ion ion-camera\"></i><\/a><\/li>");
+                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='#downloadImage' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><\/a><\/li>");
                           </script>
 
                           <script>
                                   var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');                   
-                                  document.write("<li class='print' id='printLi'><a title='"+Content.printTitle+"' id='a_print' href='javascript:getImageToPrint(\""+urlEncoded+"\")'><i id='printIon' class='ion ion-android-print menu-icon'></i></a><ion-spinner icon='android' class='spinner spinner-android' id='printLoading' style='display:none'></li>");
+                                  document.write("<li class='print' id='printLi'><a title='"+Content.printTitle+"' id='a_print' href='javascript:getImageToPrint(\""+urlEncoded+"\")'><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i></a><ion-spinner icon='android' class='spinner spinner-android' id='printLoading' style='display:none'></li>");
                           </script>
 
                           <script>
-                              document.write("<li id='facebook_share' class='facebook' title=''><a class='addthis_button_facebook' title='"+Content.faceTitle+"'  href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook'><\/i><\/a><\/li>");
+                              document.write("<li id='facebook_share' class='facebook' title=''><a class='addthis_button_facebook' title='"+Content.faceTitle+"'  href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook' alt=\""+Content.facebookIcon+"\"><\/i><\/a><\/li>");
                           </script>   
                           <script>
-                              document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class=' addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter'></i><\/a><\/li>");
+                              document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class=' addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter' alt=\""+Content.twitterIcon+"\" ></i><\/a><\/li>");
                           </script>
                           <script>
-                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ getDatets() +'%0D%0A %0D%0A\' + window.location ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email"></i><\/a><\/li>');
+                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ getDatets() +'%0D%0A %0D%0A\' + window.location ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email" alt=\"'+Content.emailIcon+'\"></i><\/a><\/li>');
                           </script>
 
                           <li class="lang">
@@ -784,9 +629,9 @@ height: 40px;"/></a>
                                         document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
                                         $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
                                     </script>
-                                    <i class="ion ion-grid" style=""></i>
+                                    
                                       <script type="text/javascript">
-                                        document.write('<span id="tableOfVersionsSpan" style="vertical-align: bottom">'+Content.table+'</span>');
+                                        document.write('<i alt="'+Content.iongrid+'"  class="ion ion-grid" style=""></i><span id="tableOfVersionsSpan" style="vertical-align: bottom">'+Content.table+'</span>');
                                       </script>
                                 </a>                    
                             </li>

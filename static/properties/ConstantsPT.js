@@ -83,6 +83,15 @@ Content = {
     suggestionsFeedback500: "Avise-nos do problema",
     goHome500: "Volte &#224 p&#225gina inicial",
     homePagetitle: "Ir para a p&#225gina principal", 
-    contact: "contacto?set_language=pt"   
+    contact: "contacto?set_language=pt",
+    iongrid: "Icone tabela de vers&#245es" ,
+    reconstructImg: "Icone completar a p&#225gina" ,
+    screenshotIcon: "Icone guardar p&#225gina como imagem" ,
+    printIcon: "Icone imprimir a p&#225gina" ,
+    facebookIcon: "Icone partilhar no Facebook",
+    twitterIcon: "Icone partilhar no Twitter",
+    emailIcon: "Icone partilhar por email",
+    minimizeMaximizeTitle: "Minimizar ou maximizar barra de ferramentas",
+    minimizeMaximizeIcon: "Icone minimizar ou maximizar barra de ferramentas"
 
 };
