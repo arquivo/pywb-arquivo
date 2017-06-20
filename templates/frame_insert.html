@@ -4,6 +4,7 @@
 
 <html lang="pt" ng-app="ionic">
 <head>
+  <meta property="og:image" content="http://arquivo.pt/img/logo-pt.png" />
 	<!-- Google Analytics-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -19,7 +20,7 @@
       wbinfo.prefix = "{{ wbrequest.wb_prefix }}";
       wbinfo.capture_url = "{{ url }}";
       wbinfo.timestamp = "{{ wbrequest.wb_url.timestamp }}";
-      ts = wbinfo.timestamp; //TODO:: maybe in the future remove this variable and use only the above
+      ts = "{{ wbrequest.wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
       wbinfo.is_frame = true;
       wbinfo.frame_mod = "{{ wbrequest.options.frame_mod }}";
       wbinfo.replay_mod = "{{ wbrequest.options.replay_mod }}";
@@ -110,13 +111,15 @@ function set_state(state) {
     $("#update1").attr('href',url);
     $("#update2").attr('href',url); 
 
-    ts = state.timestamp; //global variable timestamp
+    if(state.timestamp != undefined){
+      ts = state.timestamp; //global variable timestamp
+    }
 
     ga('set', 'page', '/wayback/'+ ts + '/'+ url);
     ga('send', 'pageview');    
 
     //update the date on minimized bar
-    $('#timeMinimized').html(getDatets()+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>');                      
+    $('#timeMinimized').html(getDatets(ts)+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>');                      
     var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/'+ts+'/'+url);
     $('#dlImgLink').attr('onClick', 'window.open(\'{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded+'\')');
 
@@ -127,6 +130,13 @@ function set_state(state) {
    
     theurl= '{{wbrequest.wb_prefix}}'+ts+'/'+url;
     addthis.update('share', 'url', theurl);
+
+    // find og:image metatag inside the iframe, if no image found maintain arquivo.pt's logo
+    var ogImageURL =  $("#replay_iframe").contents().find("meta[property='og:image']").attr("content");
+
+    if( ogImageURL!= undefined && ogImageURL!=null){
+      $("meta[property='og:image']").attr("content", ogImageURL);
+    }
 
     var title = $("#replay_iframe").contents().find("meta[property='og:title']").attr("content");
     if(title === undefined || title === null) // there is no og:title meta tag in this iframe
@@ -143,6 +153,9 @@ function set_state(state) {
     addthis.update('share', 'title', title);
     addthis.toolbox('.addthis_toolbox', addthis_config, addthis_share);
     $('meta[property="og:url"]').attr('content', theurl);
+
+
+
 
     //List the versions of current url in the side bar
     if(sideMenuVersion != true){ // TODO:: improve this Dirty hack global var to define a leftMenu version and preserve leftMenu state
@@ -181,7 +194,7 @@ function set_state(state) {
 
     <!-- Custom CSS -->
     <script>
-        document.write("<link href=\""+ "{{ wbrequest.wb_prefix }}"+"static/resources/css/screen.css?release=Janus\" rel =\"stylesheet\" >");
+        document.write("<link href=\""+ "{{ wbrequest.wb_prefix }}"+"static/resources/css/screen.css?release=Venus\" rel =\"stylesheet\" >");
     </script>
     <!--<link href="css/screen.css" rel="stylesheet">-->
     <!--[if lt IE 9]>
@@ -210,7 +223,7 @@ function set_state(state) {
                         </div>
                         <div id="timeDivMinimized">
                           <script>
-                            document.write('<p id="timeMinimized">'+getDatets()+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>'+'</p>');
+                            document.write('<p id="timeMinimized">'+getDatets(ts)+'<span> '+Content.at+' </span>'+getHoursMinutes()+'<span> GMT </span>'+'</p>');
                           </script>
                         </div>
                 </div>
@@ -260,7 +273,7 @@ function set_state(state) {
                               document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class=' addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter' alt=\""+Content.twitterIcon+"\" ></i><\/a><\/li>");
                           </script>
                           <script>
-                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ getDatets() +'%0D%0A %0D%0A\' + window.location ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email" alt=\"'+Content.emailIcon+'\"></i><\/a><\/li>');
+                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ getDatets(ts) +'%0D%0A %0D%0A\' + window.location ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email" alt=\"'+Content.emailIcon+'\"></i><\/a><\/li>');
                           </script>
 
                           <li class="lang">
