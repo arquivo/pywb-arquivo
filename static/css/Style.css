@@ -23,6 +23,20 @@ cite { font-family: monospace; font-size: 1.2em; font-style: normal; }
 .title { font-size: 1.8em; }
 .sub-title { font-size: 1.4em; }
 
+.imgClass{
+	display: block; 
+	margin: auto;
+	padding-top: 5%;
+	width: 75px;
+}
+
+.notArchived{
+	font-size: 1.6em; color: #000; 
+	margin-top: 5px;
+	margin-bottom: 25px; 
+	font: 180% 'Helvetica', Arial, sans;
+}
+
 #main-home, #main { margin: 0 25px; width: 960px; }
 #main-home { padding-top: 126px; }
 #main-home h3 { font-size: 1.8em; }
@@ -59,7 +73,17 @@ cite { font-family: monospace; font-size: 1.2em; font-style: normal; }
 /* Button: Pesquisa avanÃ§ada */
 .home-submit { font-size: 1.6em; }
 .search-submit { font-size: 1.4em; }
-.home-submit, .search-submit { float: right; background: url("../img/search-submit.gif") no-repeat scroll 0 0 transparent; color: #FFFFFF; height: 36px; text-align: center; text-decoration: none; width: 193px; cursor: pointer; }
+.home-submit, .search-submit { 
+	float: none;
+	background: url("/img/search-submit.gif") no-repeat scroll 0 0 transparent; 
+	color: #FFFFFF; height: 36px; 
+	text-align: center; 
+	text-decoration: none; 
+	width: 228px;
+	cursor: pointer;     
+    background-size: 228px;
+    font: 150% 'Helvetica', Arial, sans;
+}
 .home-submit:hover, .search-submit:hover  { /*background-position: 0 0px;*/ }
 .home-submit:active, .search-submit:active { /*background-position: 0 0px;*/ }
 
@@ -401,4 +425,5 @@ li.grouped { padding-left: 38px; }
 #conteudo-versoes .mais-resultados { padding: 0 5px 5px; }
 #conteudo-versoes .mais-resultados,
 #conteudo-versoes .mais-resultados span { text-align: center; }
+
 	
