@@ -1,4 +1,4 @@
-## pywb-arquivo-cdx
+## pywb-arquivo
 
 At Arquivo.pt anyone can search for information published since 1996.
 
