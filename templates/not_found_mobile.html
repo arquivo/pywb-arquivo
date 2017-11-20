@@ -1,0 +1,73 @@
+<style>
+.myButtonStyle{
+    background-color: white!important;
+    border: 1px solid #d0d0d0!important;
+    border-radius: 0!important;
+    margin-bottom: 30px!important;
+    outline: none!important;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    word-wrap: break-word;
+    max-width: 250px;
+    margin: auto;
+    text-align: center;
+}
+.myButtonStyle:active{
+    background-color: #efefef!important;
+}
+
+.myButtonStyle:focus{
+    outline: none;
+}
+
+.greyFont{
+    font-size: 17px;
+    color: #555;
+}
+
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/img/logo-16.jpg" type="image/x-icon">
+<script>
+        document.write("<link href=\""+ "{{ wbrequest.wb_prefix }}"+"static/resources/css/Style.css\" rel =\"stylesheet\" >");
+</script>
+
+<script type="text/javascript">
+document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/js\/js.cookie.js"+ "><\/script>");
+</script> <!-- Plugin for cookie to choose language-->
+<script>
+	var language = Cookies.get('language');
+	if( language == 'EN'){
+		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsEN.js"><\/script>');
+	}
+	else{
+		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsPT.js"><\/script>');
+	}
+</script>
+<script type="text/javascript">
+var tokens = window.location.toString().split('/');
+theURL = '';
+var i;
+for( i = 5; i<tokens.length; i ++){
+	if(i == 5){
+		theURL = tokens[i];
+	}
+	else{
+		theURL= theURL + "/" + tokens[i];
+	}
+}
+
+document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" class="imgClass" /></a>');
+
+document.write('<h2 align="center" class="notArchived">'+ Content.notArchived+'</h2>'); 
+
+document.write('<div class="myButtonStyle text-center" >'+
+               '	<a class="greyFont" role="button" onclick="window.open(\'http://timetravel.mementoweb.org/memento/'+tokens[4]+'/'+theURL+'\')">'+Content.otherArchives+
+               '	</a>'+
+               '</div>');
+</script>
+
+

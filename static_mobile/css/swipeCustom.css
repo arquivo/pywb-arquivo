@@ -1,0 +1,135 @@
+html, body {
+	position: relative;
+	height: 100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+}
+.swiper-container {
+	width: 100%;
+	height: 100%;
+}
+.menu {
+	min-width: 100px;
+	width: 70%;
+	max-width: 320px;
+	background-color: #252525;
+	color: #fff;
+	z-index:16777271;
+	overflow-y: scroll;
+    /*text-align: center;*/
+}
+.content {
+	width: 100%;
+}
+
+.menu-button {
+	position: absolute;
+	top: 0px; 
+	right: 0px;
+	padding: 15px;
+	cursor: pointer;
+	-webkit-transition: .3s;
+	transition: .3s;
+	color: green;
+}
+.menu-button .bar:nth-of-type(1) {
+	margin-top: 0px;
+}
+.menu-button .bar:nth-of-type(3) {
+	margin-bottom: 0px;
+}
+.bar {
+	position: relative;
+	display: block;
+	width: 50px;
+	height: 5px;
+	margin: 10px auto;
+	background-color: green;
+	border-radius: 10px;
+	-webkit-transition: .3s;
+	transition: .3s;
+}
+
+.maskMenu{
+	position: absolute;
+	margin:0;
+	top:0px;
+	width:100%;
+	height:100%;
+	background-color: black;
+	z-index:16777270;
+	opacity: 0.7;
+	display: none;
+}
+
+.menu h4{
+	border-top: 1px solid #3E3E3E;;
+	padding-top: 15px;
+	margin-bottom: 0px;
+	padding-bottom: 15px;
+	margin-top: 0px;
+	padding-left: 20px;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.menu h4:hover, .menu h4:visited, .menu h4:link, .menu h4:active
+{
+    text-decoration: none;
+}
+
+
+
+.menu a{
+	color:white;
+	text-decoration: none;
+}
+
+.menu a:active{
+	/*background-color: darkslategrey!important;*/
+}
+
+.menu h4:active{
+	 background: rgba(255, 255, 255, 0.2)!important;
+}
+
+.c-menu__close {
+  color: #fff;
+  background-color: transparent;
+  font-size: 14px;
+  border: none;
+  box-shadow: none;
+  border-radius: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.c-menu__close:focus {
+  outline: none;
+}
+
+.shareCarret{
+	padding-right: 20px;
+}
+
+.submenu{
+	background-color: #343434;
+    padding-left: 30px!important;
+}
+
+#shareOptions, #toolsOptions{
+	display: none;
+}
+
+#menuUrl{
+	cursor: default!important;
+}
+
+#menuUrl:active{
+	background-color: #42a5f5!important;
+}
+

@@ -1,0 +1,19 @@
+collections:
+    '':
+        index_paths: /data/cdx_indexes/
+
+       # server_cls: !!python/name:opensearch.OpenSearchCDXServer
+
+
+# configure path to warcs here
+archive_paths:
+    - http://p62.arquivo.pt:8080/arcproxy/arcproxy/
+    - http://p58.arquivo.pt:8080/arcproxy/arcproxy/
+
+enable_cdx_api: true
+framed_replay: true
+static_routes:
+          static/resources: ./static/
+          static/__pywb: pywb/static/
+metadata:
+          search_location: http://preprod.arquivo.pt

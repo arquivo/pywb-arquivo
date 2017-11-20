@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    wbinfo = {}
+    wbinfo.prefix = "{{ wbrequest.wb_prefix }}";
+    wbinfo.capture_url = "{{ url }}";
+    wbinfo.timestamp = "{{ wbrequest.wb_url.timestamp }}";
+    ts = "{{ wbrequest.wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
+    wbinfo.is_frame = true;
+    wbinfo.frame_mod = "{{ wbrequest.options.frame_mod }}";
+    wbinfo.replay_mod = "{{ wbrequest.options.replay_mod }}";
+    wbinfo.search_location= "{{ wbrequest.user_metadata.search_location }}";
+  </script>  
+<style>
+html, body
+{
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  overflow: hidden;
+}
+</style>
+<!-- Google Analytics-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-21825027-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<meta name="viewport" content="initial-scale=0.99,minimum-scale=0.1, maximum-scale=10">
+<script src='{{ host_prefix }}/wayback/{{ static_path }}/wb.js'> </script>
+<script src='{{ host_prefix }}/wayback/{{ static_path }}/wb_frame.js'> </script>
+<link rel='stylesheet' href='{{ host_prefix }}/wayback/static/resources/css/default_banner.css'/>
+<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/myStyle.css"/>
+<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/bootstrap.min.css">
+
+<script src="{{ host_prefix }}/wayback/static/resources/js/jquery-latest.min.js"></script>
+<script src="{{ host_prefix }}/wayback/static/resources/js/bootstrap.min.js"></script>
+<!-- Slider -->
+<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/swiper.min.css">
+<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/swipeCustom.css">
+<!-- End Slider Right -->
+<script src="{{ host_prefix }}/wayback/static/resources/js/uglipop.min.js"></script>
+<!-- simple plugin modals confirmation popups -->
+<script src="{{ host_prefix }}/wayback/static/resources/js/js.cookie.js"></script>
+<!-- Plugin for cookie to choose language-->
+<link rel="shortcut icon" href="/img/logo-16.jpg" type="image/x-icon">
+<!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
+<script src="{{ host_prefix }}/wayback/static/resources/js/arquivo.js"></script>
+<script type="text/javascript">
+  ARQUIVO.init("{{ host_prefix }}", "wayback/static/resources");  
+</script>
+<title>Arquivo.pt</title>
+</head>
+<body style="margin: 0px; padding: 0px;">
+<!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
+  <script> ARQUIVO.beforeIframe(); /*Load Arquivo specific code before iframe*/</script>
+  <div id="wb_iframe_div">
+    <iframe name="replay_iframe" id="replay_iframe" src="{{ wbrequest.wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" > 
+                <script>window.onunload = function() {window.top.postMessage('iframe_change', '*');};</script>
+    </iframe>
+
+
+
+  </div>
+<!-- scripts slider right menu -->
+<script src="{{ host_prefix }}/wayback/static/resources/js/swiper.min.js"></script>
+<script>
+  ARQUIVO.updateInfo(wbinfo.capture_url, ts);
+  ARQUIVO.afterIframe();
+</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317"></script> 
+<!-- end addthis for sharing on social media --> 
+<div id = "loadingAnimation" class="noprint">
+  <h1 class="noprint"><i class="fa fa-circle-o-notch fa-spin noprint" ></i></h1>
+</div>
+<div class="maskLoading noprint" style=""></div>
+  <script>
+  function set_state(state) {
+      if(state.timestamp != undefined){
+        ts = state.timestamp;
+      }else{
+        alert('undefined timestamp');
+      }
+      ARQUIVO.updateInfo(state.url, ts);
+      //the following code is the original code of pywb...
+      var capture_info = document.getElementById("_wb_capture_info");
+      if (capture_info) {
+          capture_info.innerHTML = state.capture_str;
+      }
+      var label = document.getElementById("_wb_label");
+      if (label) {
+          if (state.is_live) {
+              label.innerHTML = _wb_js.banner_labels.LIVE_MSG;
+          } else {
+              label.innerHTML = _wb_js.banner_labels.REPLAY_MSG;
+          }
+      }
+      curr_state = state;
+  }
+  </script>  
+
+
+</body>
+</html>
