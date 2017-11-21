@@ -1,9 +1,6 @@
 collections:
     '':
-        index_paths: http://p27.arquivo.pt/nutchwax/opensearch
-
-        server_cls: !!python/name:opensearch.OpenSearchCDXServer
-
+        index_paths: /data/cdx_indexes/
 
 # configure path to warcs here
 archive_paths:
@@ -16,4 +13,4 @@ static_routes:
           static/resources: ./static/
           static/__pywb: pywb/static/
 metadata:
-          search_location: http://p27.arquivo.pt
+          search_location: http://preprod.arquivo.pt
