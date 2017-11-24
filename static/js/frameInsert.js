@@ -224,7 +224,7 @@ function updateVersionsOfUrl(cleanurl){
   var timestamp1;
   var url1;
 
-  var requestURL = wbinfo.prefix+"-cdx"
+  var requestURL = wbinfo.prefix+"cdx"
   var tryCount = 0;
   var retryLimit = 3;
 
