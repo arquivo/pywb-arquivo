@@ -79,12 +79,8 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
               ' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
 			  '			</div>'+
-              ' 		<a href="#" id="toolsMenu"><h4><i class="fa fa-cogs" aria-hidden="true"></i> '+Content.tools+'<i id="toolsCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
-              '			<div id="toolsOptions">'+
-              '	 			<a id="completePage"><h4 class="submenu"><i class="fa fa-plus-circle" aria-hidden="true"></i> '+Content.complete+'</h4></a>' +
-              ' 			<a id="screenshotOption"><h4 class="submenu"><i class="fa fa-camera" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
-              ' 			<a id="printOption"><h4 class="submenu"><i class="fa fa-print" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-              '			</div>'+
+              ' 		<a id="screenshotOption"><h4><i class="fa fa-camera" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
+			  '	 		<a id="printOption"><h4><i class="fa fa-print" aria-hidden="true"></i> '+Content.print+'</h4></a>'+              
               '		 <a href="'+Content.helpHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'HelpClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-question-circle" aria-hidden="true"></i> '+Content.help+'</h4></a>'+
               '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
               '		</div>'+
@@ -93,7 +89,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '<div id="divPrintMe"></div>');
 			this.attachScreenshotModal();
 			this.attachPrintModal();
-			this.attachCompletePageModal();
 			this.iframeResize();
 			this.createSlideMenu();
 			this.attachLanguageChange();
@@ -220,13 +215,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		  $('#printPage').on('click', function(e){
 		    ARQUIVO.getImageToPrint("http://"+_hostname+"/noFrame/replay/"+ _ts+"/"+_url);
 		  }); 			
- 		}, 
- 		attachCompletePageModal: function(){
-		  $('#completePage').on('click', function(e){
-		  	ARQUIVO.closeSwipeMenu();    		  	
-		  	ARQUIVO.completePageModal();		  	
-		  }); 			
- 		}, 		 		 				
+ 		},  		 		 				
  		attachShare: function(){
 		  $('#shareMenu').on('click', function(e){
 		  	ga('send', 'event', 'ReplayBarFunctions', 'ShareMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);
@@ -357,18 +346,6 @@ var ARQUIVO = ARQUIVO || (function(){
 		    this.attachScreenshot();          			
 		    this.attachClosePopup();
 		},
-		completePageModal: function(){
-			ga('send', 'event', 'ReplayBarFunctions', 'CompletePageMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);						
-		    uglipop({
-		      class:'modalReplay noprint', //styling class for Modal
-		      source:'html',
-		      content:'<h4 class="modalTitleComplete"><i class="fa fa-plus-circle" aria-hidden="true"></i> '+Content.completeThisPage+'</h4>'+
-		              '<p class="modalparagraph first">'+Content.leavingArquivo+'</p>'+
-		      		  '<p class="modalparagraph last">'+Content.toBeCompleted+'</p>'+
-		              '<div class="row"><a id="completePageOption" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'CompletePageConfirm\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" href="http://timetravel.mementoweb.org/reconstruct/'+_ts+'/'+_url+'" class="col-xs-6 text-center leftAnchor modalOptions">Ok</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'CompletePageCancel\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});       			
-		    this.attachClosePopup();
-		},
-
 		loadingModal: function(){
 			$('.maskMenu').toggle();
 			$('#loadingAnimation').toggle();
