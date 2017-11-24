@@ -38,6 +38,7 @@ Content = {
     help:"Ajuda",
     helpHref:"http://sobre.arquivo.pt/ajuda",
     newSearch:"Nova pesquisa",
+    advancedSearch:"Pesquisa Avan&ccedil;ada",
     at:"&#224;s",
     shareMessage:"Arquivo.pt",
     language:"pt",
