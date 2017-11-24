@@ -73,6 +73,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '			</div>'+
               ' 		<a href="http://'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 		<a href="http://'+_hostname+'/search.jsp?l='+Content.language+'&query='+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
+              ' 		<a href="http://'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search-plus" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               ' 		<a href="#" id="shareMenu"><h4><i class="fa fa-share-alt" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
               '			<div id="shareOptions">'+
               ' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
