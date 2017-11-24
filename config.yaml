@@ -1,6 +1,6 @@
 collections:
     '':
-        index_paths: /data/cdx_indexes/
+        index_paths: /data/indexes_split_cdx/indexes_split_cdx
 
 # configure path to warcs here
 archive_paths:
@@ -13,4 +13,4 @@ static_routes:
           static/resources: ./static/
           static/__pywb: pywb/static/
 metadata:
-          search_location: http://preprod.arquivo.pt
+          search_location: http://p27.arquivo.pt
