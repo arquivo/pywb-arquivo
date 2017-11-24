@@ -42,7 +42,7 @@ Content = {
     shareMessage:"Arquivo.pt",
     language:"pt",
     otherDates:"Tabela de vers&#245;es",
-    emailMessage:"P&#225gina Interessante Do Passado &body=",
+    emailMessage:"P&#225gina interessante do passado &body=",
     noResultsFound:"N&#227;o foram encontrados resultados para a sua pesquisa:",
     suggestions:"Sugerimos que:",
     checkSpelling:"Verifique o URL",
