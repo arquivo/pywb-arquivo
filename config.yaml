@@ -7,7 +7,7 @@ archive_paths:
     - http://p62.arquivo.pt:8080/arcproxy/arcproxy/
     - http://p58.arquivo.pt:8080/arcproxy/arcproxy/
 
-enable_cdx_api: true
+enable_cdx_api: cdx
 framed_replay: true
 static_routes:
           static/resources: ./static/
