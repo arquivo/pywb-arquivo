@@ -16,7 +16,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			var language = Cookies.get('language');
 		    if( language == 'EN'){
 		      $('html').attr('lang', 'en');						
-		        document.write('<script type="text/javascript" language="JavaScript" src="'+_host_prefix+'/'+_static_path+'/properties/ConstantsEN.js?release=Afrodite"><\/script>');
+		        document.write('<script type="text/javascript" language="JavaScript" src="'+_host_prefix+'/static/resources/properties/ConstantsEN.js?release=Afrodite"><\/script>');
 		    }
 		    else{
 		      $('html').attr('lang', 'pt');
