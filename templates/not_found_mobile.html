@@ -58,7 +58,7 @@ $('#otherArchives').on('click', function(e){
             uglipop({
               class:'modalReplay noprint', //styling class for Modal
               source:'html',
-              content:'<h4 class="modalTitle"><i class="fa fa-print" aria-hidden="true"></i> '+'Other Archives'+'</h4>'+
+              content:'<h4 class="modalTitleComplete"><i class="fa fa-print" aria-hidden="true"></i> '+Content.otherArchives+'</h4><p class="modalparagraph last">'+Content.leavingArquivo+'</p>'+
                       '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">Ok</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
             });
     /*Closing popup*/            
