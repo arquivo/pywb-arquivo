@@ -426,4 +426,30 @@ li.grouped { padding-left: 38px; }
 #conteudo-versoes .mais-resultados,
 #conteudo-versoes .mais-resultados span { text-align: center; }
 
-	
+
+.myButtonStyle{
+    background-color: white!important;
+    border: 1px solid #d0d0d0!important;
+    border-radius: 0!important;
+    margin-bottom: 30px!important;
+    outline: none!important;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    word-wrap: break-word;
+    max-width: 250px;
+    margin: auto;
+    text-align: center;
+}
+.myButtonStyle:active{
+    background-color: #efefef!important;
+}
+.myButtonStyle:focus{
+    outline: none;
+}
+.greyFont{
+    font-size: 17px;
+    color: #555;
+}	
