@@ -55,7 +55,7 @@ Content = {
     mementoFind:"Pesquise outros arquivos web",
     embargo:"Embargo",
     embargoUrl:"http://sobre.arquivo.pt/ajuda/acesso-a-conteudos-arquivados#section-6",
-    notArchived:"N&#227;o Arquivado",
+    notArchived:"N&#227;o arquivado",
     otherLanguage: "EN"  ,
     preservedByArquivo: " - preservada pelo Arquivo.pt"   ,
     faceTitle: "Partilhar no Facebook",
