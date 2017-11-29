@@ -142,7 +142,7 @@ function set_state(state) {
     if(title === undefined || title === null) // there is no og:title meta tag in this iframe
     {
         title = $("#replay_iframe").contents().find("title").html(); //search for a title tag in the iframe
-        if (!title.length){ //there is no title
+        if (title === undefined || !title.length){ //there is no title
             //top.alert("No title");
             title = Content.shareMessage;
         }
