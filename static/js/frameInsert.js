@@ -242,8 +242,7 @@ function updateVersionsOfUrl(cleanurl){
         output: 'json',
         url: urlsource,
         fl: 'url,timestamp,status',
-        filter: '!status:4|5',
-        filter: '!mime:warc/revisit'
+        filter: '!status:4|5'
      },
      error: function() {
        tryCount++;
