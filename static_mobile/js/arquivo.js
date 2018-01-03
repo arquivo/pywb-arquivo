@@ -51,25 +51,25 @@ var ARQUIVO = ARQUIVO || (function(){
 		beforeIframe: function(){
 			document.write(''+
 			  '<div class="swiper-container swiper-container-horizontal noprint">'+
-			  ' <div class="swiper-wrapper" id="swiperWrapper" style="">'+
+			  ' <div class="swiper-wrapper" id="swiperWrapper">'+
 			  '  <div class="swiper-slide content swiper-slide-active">'+
-			  '    <div class="main-content" style="width:100%;height: 100%;">'+
+			  '    <div class="main-content">'+
 			  '      <div class="container-fluid">'+
-			  '        <div class="row text-center" style="padding-top:10px;padding-bottom:10px;background-color: #252525;border-bottom: solid 1px white;line-height: 30px;">'+
-			  '                    <a href="/"><img src="'+_host_prefix+'/'+_static_path+'/img/01_preto.png" id="arquivoLogo" alt="Logo Arquivo.pt" style="width:auto;max-height: 30px;" class="text-center"></a>'+
-			  '                    <a class="pull-right" style="color:white;font-size:23px;padding-right: 15px;line-height: 30px;vertical-align: middle; cursor: pointer;" id="menuButton"><i class="fa fa-bars" style=""></i></a>'+
+			  '        <div class="row text-center logo-main-div">'+
+			  '                    <a href="/"><img src="'+_host_prefix+'/'+_static_path+'/img/01_preto.png" id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
+			  '                    <a class="pull-right main-menu"id="menuButton"><i class="fa fa-bars"></i></a>'+
 			  '        </div>  '+
 			  '      </div>  ');		
 		},
 		afterIframe: function(){
 			document.write(''+
 			  '   </div>' +
-              '   <div class="maskMenu" style=""></div>'+
+              '   <div class="maskMenu"></div>'+
               '  </div>'+
               '		<div class="swiper-slide menu swiper-slide-prev">' +       
-              '			<div style="background-color:#42a5f5">'+
-			  '	 			<h4 id="menuUrl" style="padding-left: 20px; color: white;padding-bottom:0px; font-weight:bold;margin-top:0px;padding-top:10px;word-wrap: break-word;" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
-			  ' 			<h5 id="menuTs" style="font-weight: bold ;color: white;border-top:0px;padding-top:0px;padding-left: 20px; margin-bottom:0px; padding-bottom:10px;">'+ this.getShortDatets() +'</h5>' + 			                             
+              '			<div class="main-menu-top-div">'+
+			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
+			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
               ' 		<a href="http://'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 		<a href="http://'+_hostname+'/search.jsp?l='+Content.language+'&query='+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
@@ -105,7 +105,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			{
 			  title = $("#replay_iframe").contents().find("title").html(); //search for a title tag in the iframe
 			  if (title === undefined || !title.length){ //there is no title 
-			      //top.alert("No title");
 			      title = "Arquivo.pt"/*Content.shareMessage;*/
 			  }
 			}
@@ -117,9 +116,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			addthis_config.data_track_clickback = false;
 
 			theurl= 'http://arquivo.pt/wayback/'+_ts+'/'+_url;
-			/*addthis.update('share', 'url', theurl);
-			addthis.update('share', 'title', title);
-			addthis.toolbox('.addthis_toolbox', addthis_config, addthis_share); */
 
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(ARQUIVO.truncateEndURL(_url,20)); /*update menu url*/
@@ -133,18 +129,10 @@ var ARQUIVO = ARQUIVO || (function(){
 		      if (swiper.previousIndex == 0)
 		        swiper.slidePrev()
 		    }
-		    /*, menuButton = document.getElementsByClassName('menu-button')[0]*/
 		    , swiper = new Swiper('.swiper-container', {
 		      slidesPerView: 'auto'
 		      , initialSlide: 1
 		      , resistanceRatio: .00000000000001
-		      , onSlideChangeStart: function(slider) {
-		        if (slider.activeIndex == 0) {
-		          /*menuButton.removeEventListener('click', toggleMenu, false)*/
-		        }
-		          
-		      }
-
 		      ,onTransitionEnd: function(slider){
 		        if(ignoreInitialTransitionEnd === 0){
 		          ignoreInitialTransitionEnd+=1;

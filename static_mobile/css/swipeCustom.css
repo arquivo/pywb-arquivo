@@ -133,3 +133,41 @@ body {
 	background-color: #42a5f5!important;
 }
 
+.main-content{
+	width:100%;
+	height: 100%;
+}
+
+.logo-main-div{
+	padding-top:10px;
+	padding-bottom:10px;
+	background-color: #252525;
+	border-bottom: solid 1px white;
+	line-height: 30px;
+}
+
+.logo-main{
+	width:auto;
+	max-height: 30px;
+}
+
+.main-menu, .main-menu:active, .main-menu:hover{
+	color:white;
+	font-size:23px;
+	padding-right: 15px;
+	line-height: 30px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.main-menu-top-div{
+	background-color:#42a5f5
+}
+
+#menuUrl{
+	padding-left: 20px; color: white;padding-bottom:0px; font-weight:bold;margin-top:0px;padding-top:10px;word-wrap: break-word;
+}
+
+#menuTs{
+	font-weight: bold ;color: white;border-top:0px;padding-top:0px;padding-left: 20px; margin-bottom:0px; padding-bottom:10px;
+}
