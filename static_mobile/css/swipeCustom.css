@@ -165,9 +165,21 @@ body {
 }
 
 #menuUrl{
-	padding-left: 20px; color: white;padding-bottom:0px; font-weight:bold;margin-top:0px;padding-top:10px;word-wrap: break-word;
+	padding-left: 20px; 
+	color: white;
+	padding-bottom:0px; 
+	font-weight:bold;
+	margin-top:0px;
+	padding-top:10px;
+	word-wrap: break-word;
 }
 
 #menuTs{
-	font-weight: bold ;color: white;border-top:0px;padding-top:0px;padding-left: 20px; margin-bottom:0px; padding-bottom:10px;
+	font-weight: bold ;
+	color: white;
+	border-top:0px;
+	padding-top:0px;
+	padding-left: 20px;
+	margin-bottom:0px;
+	padding-bottom:10px;
 }
