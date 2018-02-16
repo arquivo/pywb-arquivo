@@ -38,7 +38,7 @@ Content = {
     help:"Help",
     helpHref:"http://sobre.arquivo.pt/help/faq?set_language=en",
     newSearch:"New search",
-    advancedSearch:"Advanced Search",
+    advancedSearch:"Advanced search",
     at:"at",
     shareMessage:"Arquivo.pt: search pages from the past.",
     language:"en",
@@ -108,8 +108,10 @@ Content = {
     cancel: "Cancel",
     saveAsImage: "Take a screenshot of this page?",
     completeThisPage: "Complete this page?",
-    leavingArquivo: "You are leaving Arquivo.pt",
+    leavingArquivo: "You are leaving Arquivo.pt to another service",
     toBeCompleted: "This page might be completed with missing information" ,
-    helpHref:"http://sobre.arquivo.pt/en/help/"   
+    helpHref:"http://sobre.arquivo.pt/en/help/",
+    expandPage:"Expand",
+    switchDesktop: "Desktop version"    
 
 };
