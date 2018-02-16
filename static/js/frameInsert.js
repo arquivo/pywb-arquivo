@@ -8,11 +8,8 @@ function minimizeMaximize(){
 	    $('#hbarMinimized').css('display','inline-block');
 	    /*Hide the Left Side Menu*/
 	    $('#sidebar-wrapper').css('display','none');
-
 	    $("#page-content-wrapper").css("cssText", "width: 100% !important;");
 	    $("#page-content-wrapper").css("cssText", "left: 0% !important;");
-
-
 	    /*resize vertically*/
 	    resize();
 	}    
@@ -31,12 +28,12 @@ function setLang(lang) {
     var cHost = hostwithHttp.substring(7);
     if(lang == 'EN')
      {
-        Cookies.set('language', 'EN', { expires: 30, path: '/', domain: cHost  });
+        localStorage.setItem('language', 'EN');
         window.location.reload();
      }
     else //default language Portuguese
     {
-        Cookies.set('language', 'PT', { expires: 30, path: '/', domain: cHost  });   
+        localStorage.setItem('language', 'PT');   
         window.location.reload();
     }   
 }
@@ -151,30 +148,149 @@ function createVersion(timestamp, url)
         
 }
 
-/*Logging for the modal to confirm download of screenshot*/
-$(document).on('opening', '.remodal', function () {
-  console.log('opening');
-});
+function screenshotModal(){
+  ga('send', 'event', 'ReplayBarFunctions', 'ScreenshotMenuClick', 'http://arquivo.pt/'+ts+'/'+url);      
+  uglipop({
+    class:'modalReplay noprint', //styling class for Modal
+    source:'html',
+    content:'<h4 class="modalTitle"><i class="fa fa-camera" aria-hidden="true"></i> '+Content.saveAsImage+'</h4>'+
+            '<div class="row"><a id="takeScreenshot" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuConfirm\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuCancel\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
+  attachScreenshot();                
+  attachClosePopup();
+}
 
-$(document).on('opened', '.remodal', function () {
-  console.log('opened');
-});
+function attachScreenshotModal(){
+      $('#a_screenshot').on('click', function(e){         
+        screenshotModal();        
+      });       
+}
+/*When user clicks on the screenshot link generate screenshot of current url*/
+function attachScreenshot() {
+  $('#takeScreenshot').on('click', function(e){
+    closeUglipop();
+    window.open('http://'+window.location.hostname+'/screenshot/?url='+encodeURIComponent("http://"+window.location.hostname+"/noFrame/replay/"+ ts+'/'+url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
+  });       
+}
 
-$(document).on('closing', '.remodal', function (e) {
-  console.log('closing' + (e.reason ? ', reason: ' + e.reason : ''));
-});
+function attachCompletePageModal(){
+      $('#a_reconstruct').on('click', function(e){         
+        completePageModal();        
+      });       
+}
 
-$(document).on('closed', '.remodal', function (e) {
-  console.log('closed' + (e.reason ? ', reason: ' + e.reason : ''));
-});
+function attachSwitchMobile(){
+  $('#switchMobile').on('click', function(e){         
+      Cookies.set('forceDesktop', 'false', { domain: window.location.hostname});
+      window.location =   window.location.href.replace(window.location.hostname, "m."+window.location.hostname);       
+  });       
+}
 
-$(document).on('confirmation', '.remodal', function () {
-  console.log('confirmation');
-});
+function attachClosePopup(){
+  $('#cancelPopup').on('click', function(e){
+    closeUglipop();
+  });         
+}
 
-$(document).on('cancellation', '.remodal', function () {
-  console.log('cancellation');
-});
+function closeUglipop(){
+  $('#uglipop_content_fixed').fadeOut();
+  $('#uglipop_overlay').fadeOut('fast');
+}
+
+function attachPrintModal(){
+  $('#printOption').on('click', function(e){
+    e.preventDefault();       
+    printModal();
+  });       
+}
+function completePageModal(){
+  ga('send', 'event', 'ReplayBarFunctions', 'Reconstruct', 'http://arquivo.pt/'+ts+'/'+url);
+    uglipop({
+      class:'modalReplay noprint', //styling class for Modal
+      source:'html',
+      content:'<h4 class="modalTitleComplete"><img class="reconstruct_modal" id="reconstructImg" alt="'+Content.reconstructImg+'" src="http://p28.arquivo.pt/wayback/static/resources/img/reconstruct.png"> '+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
+              '<div class="row"><a id="completePage"  class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
+  attachCompletepage();
+  attachClosePopup();
+}
+
+function attachCompletepage(){
+    $('#completePage').on('click', function(e){
+        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'http://arquivo.pt/'+ts+'/'+url);
+        window.open('http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
+        closeUglipop();
+    });    
+}
+
+
+function printModal(){
+  ga('send', 'event', 'ReplayBarFunctions', 'PrintMenuClick', 'http://arquivo.pt/'+ts+'/'+url);
+    uglipop({
+      class:'modalReplay noprint', //styling class for Modal
+      source:'html',
+      content:'<h4 class="modalTitle"><i class="fa fa-print" aria-hidden="true"></i> '+Content.printModalTitle+'</h4>'+
+              '<div class="row"><a id="printPage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuCancel\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
+  attachPrint();               
+  attachClosePopup();
+}
+
+function attachPrint(){
+  $('#printPage').on('click', function(e){
+    getImageToPrint("http://"+window.location.hostname+"/noFrame/replay/"+ ts+"/"+url);
+  });       
+}      
+
+function getImageToPrint(encodedURLToPrint){
+    closeUglipop();
+    openingModal();
+    printLoading= true;
+    var requestURL = "http://"+window.location.hostname+ "/print";
+    $.ajax({
+    // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
+       url: requestURL,
+       data: {
+          url: encodedURLToPrint
+       },
+       dataType: 'text',
+         error: function() {
+           printLoading= false; 
+           top.alert('error printing');
+           top.alert('url: ' + requestURL+'?url='+encodedURLToPrint);
+       },
+       success: function(data) {
+            var theImage = jQuery.parseJSON(data);
+            $('#divPrintMe').show();
+            if($('#imgToPrint').length){ //if 2nd time user prints only update the image
+                $('#imgToPrint').attr('src','data:image/png;base64,'+theImage.imgBase64);
+            }
+            else{
+                $('#divPrintMe').append('<img id="imgToPrint" style="display: block;" width=600px src="data:image/png;base64,'+ theImage.imgBase64 + '"/>');                    
+            }
+            setTimeout(function(){
+            window.print();
+      }, 200); /*Wait 200ms for element to be created before printing*/
+            setTimeout(function(){
+              $('#divPrintMe').hide();
+      }, 1000); /*Wait 1s for image to be printed before hiding it*/          
+
+       },
+       complete : function(){
+        printLoading= false;
+        closingModal();
+        console.log(this.url);
+       },
+       type: 'GET',
+    });
+}
+
+function openingModal(){
+  $('.maskMenu').show();
+  $('#loadingAnimation').show();
+}  
+function closingModal(){
+  $('.maskMenu').hide();
+  $('#loadingAnimation').hide();
+}  
+
 
 function jumpToVersion (url, currentTs){  
   var frameSrc = wbinfo.prefix + currentTs + 'mp_/' + url;
@@ -234,6 +350,8 @@ function updateVersionsOfUrl(cleanurl){
   var toYear = ts.substring(0,4) + 1;
   var toTs = toYear.toString() + toYear.substring(4, ts.length);
 
+  var filterErrorPages = sessionStorage.showErrorPages == "true" ? '' : '!status:4|5';
+
 
   $.ajax({
   // example request to the cdx-server api - 'http://arquivo.pt/pywb/replay-cdx?url=http://www.sapo.pt/index.html&output=json&fl=url,timestamp'
@@ -242,7 +360,7 @@ function updateVersionsOfUrl(cleanurl){
         output: 'json',
         url: urlsource,
         fl: 'url,timestamp,status',
-        filter: '!status:4|5'
+        filter: filterErrorPages
      },
      error: function() {
        tryCount++;
@@ -264,37 +382,6 @@ function updateVersionsOfUrl(cleanurl){
      },
      type: 'GET'
   });
-}
-
-function getImageToPrint(encodedURLToPrint){
-    var requestURL = wbinfo.search_location + "/print/";
-    printLoading = true;
-    $.ajax({
-    // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
-       url: requestURL,
-       data: {
-          url: encodedURLToPrint
-       },
-       error: function() {
-         top.alert('error printing');
-       },
-       dataType: 'text',
-       success: function(data) {
-            var theImage = jQuery.parseJSON(data);
-            
-            $('#divPrintMe').show();
-            if($('#imgToPrint').length){ //if 2nd time user prints only update the image
-                $('#imgToPrint').attr('src','data:image/png;base64,'+theImage.imgBase64);
-            }
-            else{
-                $('#divPrintMe').append('<img id="imgToPrint" style="display: block;" width=600px src="data:image/png;base64,'+ theImage.imgBase64 + '"/>');                    
-            }
-            window.print();
-            $('#divPrintMe').hide();
-
-       },
-       type: 'GET'
-    });
 }
 
 function getDatets(){
@@ -352,7 +439,7 @@ function resize() {
     }    
   }
 
-  else if(window.innerWidth < 1024 && window.innerWidth > 600){
+  else if( (window.innerWidth < 1024 && window.innerWidth>768) ||  Cookies.get('forceDesktop') == 'true'  ){
     if(expanded){
         $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
         $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");      
@@ -371,16 +458,14 @@ function resize() {
 
     }                    
   }
-
-  else if(window.innerWidth <= 600 ){
-    var newPrefix = wbinfo.prefix.replace("wayback", "noFrame/replay");
-    window.location.replace(newPrefix+ts+"/"+wbinfo.capture_url);
-    //redirecting to the noFrame version
+  else{ /*Resolution smaller than 768 redirect to mobile version*/
+    window.location = window.location.href.replace(window.location.hostname, "m."+window.location.hostname);  
   }
+
 }
 
 $(document).ready(function() {     
-    var language = Cookies.get('language');
+    var language = localStorage.language;
     if (! ('ontouchstart' in document.documentElement)) {
         // if you are not in a touch device (hide scroll on the div in top of the iframe)
         $('#iframeBox').css('overflow-y','hidden');
@@ -432,19 +517,13 @@ $(document)
  .ajaxStart(function () {
     if(!printLoading){
       $('#tableofVersionsSpinnerLi').css('display','block');
-    }
-    else{                                    
-      $('#a_print').hide();
-      $('#printLoading').show();
-    }  
+    } 
  })
 .ajaxStop(function () {
     if(!printLoading){
       $('#tableofVersionsSpinnerLi').css('display','none');
     }
-    else{
-      $('#printLoading').hide();
-      $('#a_print').show();          
+    else{       
       printLoading="false";                                    
     }
 });        

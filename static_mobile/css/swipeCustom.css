@@ -1,3 +1,7 @@
+*{
+	font-family: "Open Sans", sans-serif;
+}
+
 html, body {
 	position: relative;
 	height: 100%;
@@ -17,7 +21,7 @@ body {
 	background-color: #252525;
 	color: #fff;
 	z-index:16777271;
-	overflow-y: scroll;
+	overflow-y: auto;
     /*text-align: center;*/
 }
 .content {
@@ -65,6 +69,8 @@ body {
 }
 
 .menu h4{
+	font-family: "Open Sans", sans-serif;
+ 	font-size: 17px;	
 	border-top: 1px solid #3E3E3E;;
 	padding-top: 15px;
 	margin-bottom: 0px;
@@ -73,6 +79,10 @@ body {
 	padding-left: 20px;
 	cursor: pointer;
 	text-decoration: none;
+}
+
+.menu h4 i{
+	padding-right: 6px;
 }
 
 .menu h4:hover, .menu h4:visited, .menu h4:link, .menu h4:active
@@ -113,7 +123,7 @@ body {
 }
 
 .shareCarret{
-	padding-right: 20px;
+	padding-right: 20px!important;
 }
 
 .submenu{
@@ -123,10 +133,6 @@ body {
 
 #shareOptions, #toolsOptions{
 	display: none;
-}
-
-#menuUrl{
-	cursor: default!important;
 }
 
 #menuUrl:active{
@@ -165,21 +171,57 @@ body {
 }
 
 #menuUrl{
-	padding-left: 20px; 
-	color: white;
-	padding-bottom:0px; 
-	font-weight:bold;
-	margin-top:0px;
-	padding-top:10px;
-	word-wrap: break-word;
+	font-family: "Open Sans", sans-serif;
+ 	font-size: 18px;
+	cursor: default!important;
+	padding-left: 20px;
+    color: white;
+    padding-bottom: 0px;
+    font-weight: bold;
+    margin-top: 0px;
+    padding-top: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #menuTs{
+	font-family: "Open Sans", sans-serif;
+    font-size: 14px;
 	font-weight: bold ;
 	color: white;
 	border-top:0px;
-	padding-top:0px;
 	padding-left: 20px;
 	margin-bottom:0px;
 	padding-bottom:10px;
+}
+
+.right-5{
+	padding-right: 5px!important;
+}
+.right-6{
+	padding-right: 6px!important;
+}
+.right-7{
+	padding-right: 7px!important;
+}
+.right-8{
+	padding-right: 8px!important;
+}
+.right-9{
+	padding-right: 9px!important;
+}
+.right-10{
+	padding-right: 10px!important;
+}
+.right-11{
+	padding-right: 11px!important;
+}
+.right-12{
+	padding-right: 12px!important;
+}
+.right-13{
+	padding-right: 13px!important;
+}
+.right-14{
+	padding-right: 14px!important;
 }

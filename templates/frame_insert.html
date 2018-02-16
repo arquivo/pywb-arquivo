@@ -4,7 +4,7 @@
 
 <html lang="pt" ng-app="ionic">
 <head>
-  <meta property="og:image" content="http://arquivo.pt/img/logo-pt.png" />
+  <meta property="og:image" content="http://arquivo.pt/img/logoFace.png">
 	<!-- Google Analytics-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -30,36 +30,23 @@
     {% include banner_html ignore missing %}
 
     <!-- Jquery-->
-    <script type="text/javascript">
-                document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static/resources/dependencies/jquery-latest.min.js"+ "><\/script>");
-    </script>
-
-
-    <script type="text/javascript">
-    document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
-    </script> <!-- Plugin for cookie to choose language-->
-
+    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/jquery-latest.min.js"></script>;
+    <!-- Plugin for cookie to choose language-->
+    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/js.cookie.js"></script>
+    <!-- Plugin for responsive modals-->
+    <script src="{{ wbrequest.wb_prefix }}static/resources/js/uglipop.min.js"></script>
     <!-- Javascript code for this page-->
     <script type="text/javascript" src="{{ wbrequest.wb_prefix }}static/resources/js/frameInsert.js"> </script>
-
     <!-- ionicons-->
-    <script type="text/javascript">
-                document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static/resources/dependencies/ionic.bundle.min.js"+ "><\/script>");
-    </script>
+    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/ionic.bundle.min.js"></script>
+    <!--bootstrap -->
+    <link href="{{ wbrequest.wb_prefix }}static/resources/css/bootstrap.min.css?release=Zeus" rel ="stylesheet" >
+    <script src="{{ wbrequest.wb_prefix }}static/resources/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/font-awesome.min.css">
 
-    <!-- plugin Dialog to Download Screenshot -->
-    <script type="text/javascript">
-                document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static/resources/dependencies/remodal.js"+ "><\/script>");
-                document.write("<link rel=\"stylesheet\" href={{ wbrequest.wb_prefix }}static/resources/dependencies/remodal.css>");
-                document.write("<link rel=\"stylesheet\" href={{ wbrequest.wb_prefix }}static/resources/dependencies/remodal-default-theme.css>");
-    </script> 
-
-    <!-- Events of the Dialog Plugin - Check if Really Needed -->
-    <script>
-    </script>
 
     <script>
-        var language = Cookies.get('language');
+        var language = localStorage.language;
         if( language == 'EN'){
         	$('html').attr('lang', 'en');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=Hercules"><\/script>');
@@ -88,13 +75,10 @@
           return t;
         }(document, "script", "twitter-wjs"));
     </script>
-
-    <script type="text/javascript">
-        document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"{{ static_path }}/wb.js"+ "><\/script>");
-        document.write("<link rel='stylesheet' href ='"+ "{{ wbrequest.wb_prefix }}"+"{{ static_path }}/wb.css'"+ "\/>");
-        document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"{{ static_path }}/wb_frame.js"+ "><\/script>");
-    </script> 
-
+    <script src="{{ wbrequest.wb_prefix }}{{ static_path }}/wb.js"></script>
+    <link rel='stylesheet' href ="{{ wbrequest.wb_prefix }}{{ static_path }}/wb.css">
+    <script src="{{ wbrequest.wb_prefix }}{{ static_path }}/wb_frame.js"></script>
+        
     <!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
 <script>
 function set_state(state) {
@@ -123,10 +107,7 @@ function set_state(state) {
     var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/'+ts+'/'+url);
     $('#dlImgLink').attr('onClick', 'window.open(\'{{ wbrequest.user_metadata.search_location }}/screenshot/?url='+urlEncoded+'\')');
 
-    /*Update Reconstruct anchor*/
-    $('#a_reconstruct').attr('href', 'http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
-
-    $('#a_print').attr('href','javascript:getImageToPrint("'+urlEncoded+'")');
+    /*$('#a_print').attr('href','javascript:getImageToPrint("'+urlEncoded+'")');*/
    
     theurl= '{{wbrequest.wb_prefix}}'+ts+'/'+url;
     addthis.update('share', 'url', theurl);
@@ -193,9 +174,8 @@ function set_state(state) {
     <link rel="shortcut icon" href="http://arquivo.pt/img/logo-16.jpg" type="image/x-icon">
 
     <!-- Custom CSS -->
-    <script>
-        document.write("<link href=\""+ "{{ wbrequest.wb_prefix }}"+"static/resources/css/screen.css?release=Venus\" rel =\"stylesheet\" >");
-    </script>
+    <link href="{{ wbrequest.wb_prefix }}static/resources/css/screen.css?release=Zeus" rel ="stylesheet" >
+
     <!--<link href="css/screen.css" rel="stylesheet">-->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -210,8 +190,14 @@ function set_state(state) {
     </script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317" async="async">
     </script>
+
+    <!--<div class="maskLoading noprint" style=""></div>-->
+    <div class="maskMenu"></div> 
+    <div id="loadingAnimation" class="noprint">
+      <i class="fa fa-circle-o-notch fa-spin noprint"></i>
+    </div>                           
     <div id="page">
-            <div id="pageWrapper" style="height: 100%; position:absolute;">
+            <div id="pageWrapper" style="height: 100%; position:absolute;">  
               <div id="topbar" class="noprint">
                 <div id="hbarMinimized">
                         <div id="logoDivMinimized"><img id="logoMinimized" src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" width="40px" alt="Arquivo.pt"></img></div>
@@ -254,16 +240,23 @@ function set_state(state) {
                     <div class="toolbar noprint" id="toolBar">
                       <ul class="utilities" id="utilitiesUl">
                           <script type="text/javascript">
-                              document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a title='"+Content.completePage+"' id='a_reconstruct' href='http://timetravel.mementoweb.org/reconstruct/{{ wbrequest.wb_url.timestamp }}/{{url}}' target=\"_blank\" onClick=\"\"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{wbrequest.wb_prefix}}static/resources/img/reconstruct.png\"/><\/a><\/li>");
+                              document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a title='"+Content.completePage+"' id='a_reconstruct' href='' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{wbrequest.wb_prefix}}static/resources/img/reconstruct.png\"/><\/a><\/li>");
+                              attachCompletePageModal();
                           </script>
 
                           <script type="text/javascript">
-                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='#downloadImage' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><\/a><\/li>");
+                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><\/a><\/li>");
+                                attachScreenshotModal();
                           </script>
 
                           <script>
-                                  var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');                   
-                                  document.write("<li class='print' id='printLi'><a title='"+Content.printTitle+"' id='a_print' href='javascript:getImageToPrint(\""+urlEncoded+"\")'><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i></a><ion-spinner icon='android' class='spinner spinner-android' id='printLoading' style='display:none'></li>");
+                                  /*var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}'); */
+                                  document.write("<li class='' id='printLi'><a title='"+Content.printTitle+"' id='printOption' href=''><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i></a></li>");
+                                    attachPrintModal();
+                          </script>
+                          <script type="text/javascript">
+                                  document.write("<li class='print' id='mobileLi'><a id='switchMobile' title='"+Content.switchMobile+"' id='printOption' href=''><i alt=\""+"teste"+"\" class='ion ion ion-iphone menu-icon'></i></a></li>");
+                                  attachSwitchMobile();                            
                           </script>
 
                           <script>
@@ -281,7 +274,7 @@ function set_state(state) {
                             <script>
                                 document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
                                   var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
-                                  Cookies.set('language', Content.otherLanguage, { expires: 30, path: '/', domain: httpURLTokens[2]  });
+                                  localStorage.setItem('language', Content.otherLanguage);
                                   window.location.reload();
                                   return false; });</script></a>
                           </li>                      
@@ -317,16 +310,6 @@ function set_state(state) {
             $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
           </script>
 
-              <div class="remodal" data-remodal-id="downloadImage" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                <div>
-                  <script type="text/javascript">document.write('<h2 id="modal1Title">'+Content.downloadPopup+'</h2>')</script>              
-                </div>
-                <br>
-
-                <script type="text/javascript">document.write('<button data-remodal-action="confirm" class="home-submit" id="dlImgLink">'+Content.downloadMessage+'</button>')</script>
-                <script type="text/javascript">document.write('<button data-remodal-action="cancel" class="cancel-download" id="dlImgLink">'+Content.downloadCancel+'</button>')</script>                        
-              </div>
-
               <ul class="sidebar-functions">
 
                             <li id="tableofVersionsSpinnerLi"><ion-spinner icon="android" class="spinner spinner-android" id="tableofVersionsSpinner"></ion-spinner></li>
@@ -338,7 +321,7 @@ function set_state(state) {
                                     </script>
                                     
                                       <script type="text/javascript">
-                                        document.write('<i alt="'+Content.iongrid+'"  class="ion ion-grid" style=""></i><span id="tableOfVersionsSpan" style="vertical-align: bottom">'+Content.table+'</span>');
+                                        document.write('<div><i alt="'+Content.iongrid+'"  class="fa fa-list" style=""></i><span id="tableOfVersionsSpan" style="vertical-align: bottom"> '+Content.table+'</span></div>');
                                       </script>
                                 </a>                    
                             </li>

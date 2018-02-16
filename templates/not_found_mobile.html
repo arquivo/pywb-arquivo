@@ -20,7 +20,7 @@
 document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/js\/js.cookie.js"+ "><\/script>");
 </script> <!-- Plugin for cookie to choose language-->
 <script>
-	var language = Cookies.get('language');
+	var language = localStorage.language;
 	if( language == 'EN'){
 		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsEN.js"><\/script>');
 	}
@@ -59,7 +59,7 @@ $('#otherArchives').on('click', function(e){
               class:'modalReplay noprint', //styling class for Modal
               source:'html',
               content:'<h4 class="modalTitleComplete"><i class="fa fa-print" aria-hidden="true"></i> '+Content.otherArchives+'</h4><p class="modalparagraph last">'+Content.leavingArquivo+'</p>'+
-                      '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">Ok</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
+                      '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
             });
     /*Closing popup*/            
     $('#cancelPopup').on('click', function(e){
@@ -71,6 +71,7 @@ $('#otherArchives').on('click', function(e){
     $('#searchOtherArchives').on('click', function(e){
         ga('send', 'event', 'Not Found', 'Other Archives Confirm', 'http://arquivo.pt/'+tokens[4]+'/'+theURL);
         window.open('http://timetravel.mementoweb.org/memento/'+tokens[4]+'/'+theURL);
+        $('#uglipop_overlay').fadeOut('fast');
     });  
 
 });
