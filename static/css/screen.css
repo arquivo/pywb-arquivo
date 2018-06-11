@@ -3932,8 +3932,11 @@ p {
       /*border-bottom: 1px solid #999;*/
     }
   #topbar .toolbar {
-    width: 48%;
-    display: inline-block; }
+    /*width: 48%;*/
+    display: inline-block; 
+    float: right;
+    padding-right: 20px;
+  }
   #topbar .utilities {
     text-align: right; 
     height: 100px;
@@ -4090,6 +4093,9 @@ p {
         #urlTopbarDiv{
           display: inline-block;
           visibility: hidden;
+          height: 100px;
+          line-height: 100px;
+          vertical-align: middle;
         }
         #utilitiesUl{
           visibility: visible;
@@ -4118,7 +4124,7 @@ p {
           visibility: visible;
           display: inline-block!important;
           margin-left: 0%!important;
-          width: 48%!important;
+          /*width: 48%!important;*/
         }
         #update1{
           visibility: visible;
@@ -4128,6 +4134,9 @@ p {
         #urlTopbarDiv{
           visibility: visible!important;
           display: inline-block;
+          height: 100px;
+          line-height: 100px;
+          vertical-align: middle;
         }
         #utilitiesUl{
           visibility: visible;

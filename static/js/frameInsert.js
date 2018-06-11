@@ -422,8 +422,10 @@ function resize() {
   if($('#hbarMinimized').css('display') == 'none')
       expanded=true; /*The bar is Expanded*/ 
 
-  if(window.innerWidth >= 1024){
+  if(window.innerWidth >= 1100){
     if(expanded){
+        console.log("desktop mode");
+        $('#urlTopbarDiv').css('display', 'inline-block');
         $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
         $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
         $('#iframeBox').css("width", (window.innerWidth*.84)  +"px");
@@ -439,8 +441,10 @@ function resize() {
     }    
   }
 
-  else if( (window.innerWidth < 1024 && window.innerWidth>768) ||  Cookies.get('forceDesktop') == 'true'  ){
+  else if( (window.innerWidth < 1100 && window.innerWidth>768) ||  Cookies.get('forceDesktop') == 'true'  ){
+    console.log("tablet mode");
     if(expanded){
+        $('#urlTopbarDiv').css('display', 'none');
         $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
         $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");      
         $('#iframeBox').css("width", window.innerWidth  +"px");
