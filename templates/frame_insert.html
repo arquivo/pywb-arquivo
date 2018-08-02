@@ -40,7 +40,7 @@
     <!-- ionicons-->
     <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/ionic.bundle.min.js"></script>
     <!--bootstrap -->
-    <link href="{{ wbrequest.wb_prefix }}static/resources/css/bootstrap.min.css?release=Zeus" rel ="stylesheet" >
+    <link href="{{ wbrequest.wb_prefix }}static/resources/css/bootstrap.min.css?release=WARCRelease" rel ="stylesheet" >
     <script src="{{ wbrequest.wb_prefix }}static/resources/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/font-awesome.min.css">
 
@@ -49,11 +49,11 @@
         var language = localStorage.language;
         if( language == 'EN'){
         	$('html').attr('lang', 'en');
-            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=Hercules"><\/script>');
+            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=WARCRelease"><\/script>');
         }
         else{
         	$('html').attr('lang', 'pt');
-            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js?release=Hercules"><\/script>');
+            document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js?release=WARCRelease"><\/script>');
         }
     </script>
     <!-- Twitter js -->
