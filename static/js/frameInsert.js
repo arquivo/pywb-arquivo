@@ -149,12 +149,12 @@ function createVersion(timestamp, url)
 }
 
 function screenshotModal(){
-  ga('send', 'event', 'ReplayBarFunctions', 'ScreenshotMenuClick', 'http://arquivo.pt/'+ts+'/'+url);      
+  ga('send', 'event', 'ReplayBarFunctions', 'ScreenshotMenuClick', 'arquivo.pt/'+ts+'/'+url);      
   uglipop({
     class:'modalReplay noprint', //styling class for Modal
     source:'html',
     content:'<h4 class="modalTitle"><i class="fa fa-camera" aria-hidden="true"></i> '+Content.saveAsImage+'</h4>'+
-            '<div class="row"><a id="takeScreenshot" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuConfirm\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuCancel\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
+            '<div class="row"><a id="takeScreenshot" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuConfirm\', \'arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuCancel\', \'arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
   attachScreenshot();                
   attachClosePopup();
 }
@@ -168,7 +168,7 @@ function attachScreenshotModal(){
 function attachScreenshot() {
   $('#takeScreenshot').on('click', function(e){
     closeUglipop();
-    window.open('http://'+window.location.hostname+'/screenshot/?url='+encodeURIComponent("http://"+window.location.hostname+"/noFrame/replay/"+ ts+'/'+url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
+    window.open('//'+window.location.hostname+'/screenshot/?url='+encodeURIComponent("https://"+window.location.hostname+"/noFrame/replay/"+ ts+'/'+url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
   });       
 }
 
@@ -203,11 +203,11 @@ function attachPrintModal(){
   });       
 }
 function completePageModal(){
-  ga('send', 'event', 'ReplayBarFunctions', 'Reconstruct', 'http://arquivo.pt/'+ts+'/'+url);
+  ga('send', 'event', 'ReplayBarFunctions', 'Reconstruct', 'arquivo.pt/'+ts+'/'+url);
     uglipop({
       class:'modalReplay noprint', //styling class for Modal
       source:'html',
-      content:'<h4 class="modalTitleComplete"><img class="reconstruct_modal" id="reconstructImg" alt="'+Content.reconstructImg+'" src="http://p28.arquivo.pt/wayback/static/resources/img/reconstruct.png"> '+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
+      content:'<h4 class="modalTitleComplete"><img class="reconstruct_modal" id="reconstructImg" alt="'+Content.reconstructImg+'" src="//arquivo.pt/wayback/static/resources/img/reconstruct.png"> '+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
               '<div class="row"><a id="completePage"  class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
   attachCompletepage();
   attachClosePopup();
@@ -215,27 +215,27 @@ function completePageModal(){
 
 function attachCompletepage(){
     $('#completePage').on('click', function(e){
-        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'http://arquivo.pt/'+ts+'/'+url);
-        window.open('http://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
+        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'arquivo.pt/'+ts+'/'+url);
+        window.open('https://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
         closeUglipop();
     });    
 }
 
 
 function printModal(){
-  ga('send', 'event', 'ReplayBarFunctions', 'PrintMenuClick', 'http://arquivo.pt/'+ts+'/'+url);
+  ga('send', 'event', 'ReplayBarFunctions', 'PrintMenuClick', 'arquivo.pt/'+ts+'/'+url);
     uglipop({
       class:'modalReplay noprint', //styling class for Modal
       source:'html',
       content:'<h4 class="modalTitle"><i class="fa fa-print" aria-hidden="true"></i> '+Content.printModalTitle+'</h4>'+
-              '<div class="row"><a id="printPage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuCancel\', \'http://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
+              '<div class="row"><a id="printPage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'https://arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuCancel\', \'arquivo.pt/'+ts+'/'+url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
   attachPrint();               
   attachClosePopup();
 }
 
 function attachPrint(){
   $('#printPage').on('click', function(e){
-    getImageToPrint("http://"+window.location.hostname+"/noFrame/replay/"+ ts+"/"+url);
+    getImageToPrint("https://"+window.location.hostname+"/noFrame/replay/"+ ts+"/"+url);
   });       
 }      
 
@@ -243,7 +243,7 @@ function getImageToPrint(encodedURLToPrint){
     closeUglipop();
     openingModal();
     printLoading= true;
-    var requestURL = "http://"+window.location.hostname+ "/print";
+    var requestURL = "//"+window.location.hostname+ "/print";
     $.ajax({
     // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
        url: requestURL,
