@@ -200,7 +200,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		attachScreenshot: function(){
 		  $('#takeScreenshot').on('click', function(e){
 		  	ARQUIVO.closeUglipop();
-		    window.open('//'+_hostname+'/screenshot/?url='+encodeURIComponent("//"+_hostname+"/noFrame/replay/"+ _ts+'/'+_url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
+		    window.open('//'+_hostname+'/screenshot/?url='+encodeURIComponent("https://"+_hostname+"/noFrame/replay/"+ _ts+'/'+_url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
 		  }); 			
  		},
  		attachPrintModal: function(){
@@ -211,7 +211,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		}, 
  		attachPrint: function(){
 		  $('#printPage').on('click', function(e){
-		    ARQUIVO.getImageToPrint("//"+_hostname+"/noFrame/replay/"+ _ts+"/"+_url);
+		    ARQUIVO.getImageToPrint("https://"+_hostname+"/noFrame/replay/"+ _ts+"/"+_url);
 		  }); 			
  		},  		 		 				
  		attachShare: function(){
