@@ -59,17 +59,17 @@ $('#otherArchives').on('click', function(e){
               class:'modalReplay noprint', //styling class for Modal
               source:'html',
               content:'<h4 class="modalTitleComplete"><i class="fa fa-print" aria-hidden="true"></i> '+Content.otherArchives+'</h4><p class="modalparagraph last">'+Content.leavingArquivo+'</p>'+
-                      '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
+                      '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
             });
     /*Closing popup*/            
     $('#cancelPopup').on('click', function(e){
-        ga('send', 'event', 'Not Found', 'Other Archives Cancel', 'http://arquivo.pt/'+tokens[4]+'/'+theURL);
+        ga('send', 'event', 'Not Found', 'Other Archives Cancel', 'arquivo.pt/'+tokens[4]+'/'+theURL);
         $('#uglipop_content_fixed').fadeOut();
         $('#uglipop_overlay').fadeOut('fast');
     });
     /*Confirm searching other archives*/
     $('#searchOtherArchives').on('click', function(e){
-        ga('send', 'event', 'Not Found', 'Other Archives Confirm', 'http://arquivo.pt/'+tokens[4]+'/'+theURL);
+        ga('send', 'event', 'Not Found', 'Other Archives Confirm', 'arquivo.pt/'+tokens[4]+'/'+theURL);
         window.open('http://timetravel.mementoweb.org/memento/'+tokens[4]+'/'+theURL);
         $('#uglipop_overlay').fadeOut('fast');
     });  
