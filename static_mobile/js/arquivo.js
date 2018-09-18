@@ -74,21 +74,21 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
-              ' 		<a href="http://'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
-              ' 		<a href="http://'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
-              ' 		<a href="http://'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              ' 		<a href="//'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 		<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
+              ' 		<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               ' 		<a href="#" id="shareMenu"><h4><i class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
               '			<div id="shareOptions">'+
-              ' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
-              ' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
-              ' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
+              ' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
+              ' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
+              ' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
 			  '			</div>'+
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-              '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
-              '		 <a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
-              '		 <a href="'+Content.helpHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'HelpClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-question-circle right-10" aria-hidden="true"></i> '+Content.help+'</h4></a>'+
-              '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
+              '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
+              '		 <a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
+              '		 <a href="'+Content.helpHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'HelpClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-question-circle right-10" aria-hidden="true"></i> '+Content.help+'</h4></a>'+
+              '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
               '		</div>'+
               '	</div>'+
 			  '</div>'+
@@ -121,10 +121,10 @@ var ARQUIVO = ARQUIVO || (function(){
 			addthis_config.data_track_addressbar = false;
 			addthis_config.data_track_clickback = false;
 
-			theurl= 'http://arquivo.pt/wayback/'+_ts+'/'+_url;
+			theurl= 'arquivo.pt/wayback/'+_ts+'/'+_url;
 
 			$('#expandPage').attr('href', '/noFrame/replay/'+_ts+'/'+_url);
-			$('#expandPage').attr('onclick', 'ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'http://arquivo.pt/'+_ts+'/'+_url+'\')');
+			$('#expandPage').attr('onclick', 'ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\')');
 
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(ARQUIVO.truncateEndURL(_url,20)); /*update menu url*/
@@ -178,7 +178,7 @@ var ARQUIVO = ARQUIVO || (function(){
 				ARQUIVO.closeSwipeMenu(); 
 			});  
 			$('#menuButton').on('click', function(e){
-				ga('send', 'event', 'ReplayBarFunctions', 'MainMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);
+				ga('send', 'event', 'ReplayBarFunctions', 'MainMenuClick', 'arquivo.pt/'+_ts+'/'+_url);
 				$('.swiper-wrapper').addClass('active');
 				$('.swiper-wrapper').css('-webkit-transition', 'all 0.3s linear' );
 				$('.swiper-wrapper').css('-moz-transition', 'all 0.3s linear' );
@@ -200,7 +200,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		attachScreenshot: function(){
 		  $('#takeScreenshot').on('click', function(e){
 		  	ARQUIVO.closeUglipop();
-		    window.open('http://'+_hostname+'/screenshot/?url='+encodeURIComponent("http://"+_hostname+"/noFrame/replay/"+ _ts+'/'+_url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
+		    window.open('//'+_hostname+'/screenshot/?url='+encodeURIComponent("//"+_hostname+"/noFrame/replay/"+ _ts+'/'+_url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
 		  }); 			
  		},
  		attachPrintModal: function(){
@@ -211,19 +211,19 @@ var ARQUIVO = ARQUIVO || (function(){
  		}, 
  		attachPrint: function(){
 		  $('#printPage').on('click', function(e){
-		    ARQUIVO.getImageToPrint("http://"+_hostname+"/noFrame/replay/"+ _ts+"/"+_url);
+		    ARQUIVO.getImageToPrint("//"+_hostname+"/noFrame/replay/"+ _ts+"/"+_url);
 		  }); 			
  		},  		 		 				
  		attachShare: function(){
 		  $('#shareMenu').on('click', function(e){
-		  	ga('send', 'event', 'ReplayBarFunctions', 'ShareMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);
+		  	ga('send', 'event', 'ReplayBarFunctions', 'ShareMenuClick', '//arquivo.pt/'+_ts+'/'+_url);
 		    $('#shareCarret').toggleClass('fa-caret-up fa-caret-down');
 		    $('#shareOptions').slideToggle( "fast", "linear" );
 		  }); 	 			
  		}, 	
  		attachTools: function(){
 		  $('#toolsMenu').on('click', function(e){
-		  	ga('send', 'event', 'ReplayBarFunctions', 'ToolsMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);		  	
+		  	ga('send', 'event', 'ReplayBarFunctions', 'ToolsMenuClick', '//arquivo.pt/'+_ts+'/'+_url);		  	
 		    $('#toolsCarret').toggleClass('fa-caret-up fa-caret-down');
 		    $('#toolsOptions').slideToggle( "fast", "linear" );
 		  }); 	 			
@@ -231,7 +231,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		attachSwitchDesktop: function(){
 		  $('#switchDesktop').on('click', function(e){		  	
 		  	e.preventDefault();
-		  	ga('send', 'event', 'ReplayBarFunctions', 'SwitchDesktopClick', 'http://arquivo.pt/'+_ts+'/'+_url);	
+		  	ga('send', 'event', 'ReplayBarFunctions', 'SwitchDesktopClick', '//arquivo.pt/'+_ts+'/'+_url);	
 			Cookies.set('forceDesktop', 'true', { domain: window.location.hostname.substr(2, window.location.hostname.length), path:'djsakj' });
 			/*redirect current link from mobile to desktop version i.e. remove the m. from current link*/
 			window.location = window.location.href.replace(window.location.hostname , window.location.hostname.substr(2, window.location.hostname.length)); 
@@ -296,7 +296,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		getImageToPrint: function(encodedURLToPrint){
 			ARQUIVO.closeUglipop();
 			ARQUIVO.loadingModal();
-		    var requestURL = "http://"+_hostname+ "/print";
+		    var requestURL = "//"+_hostname+ "/print";
 		    $.ajax({
 		    // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
 		       url: requestURL,
@@ -333,22 +333,22 @@ var ARQUIVO = ARQUIVO || (function(){
 		    });
 		},
 		printModal: function(){
-			ga('send', 'event', 'ReplayBarFunctions', 'PrintMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);
+			ga('send', 'event', 'ReplayBarFunctions', 'PrintMenuClick', 'arquivo.pt/'+_ts+'/'+_url);
 		    uglipop({
 		      class:'modalReplay noprint', //styling class for Modal
 		      source:'html',
 		      content:'<h4 class="modalTitle"><i class="fa fa-print" aria-hidden="true"></i> '+Content.printModalTitle+'</h4>'+
-		              '<div class="row"><a id="printPage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuCancel\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
+		              '<div class="row"><a id="printPage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuCancel\', \'arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
 		    this.attachPrint();          			
 		    this.attachClosePopup();
 		},
 		screenshotModal: function(){
-			ga('send', 'event', 'ReplayBarFunctions', 'ScreenshotMenuClick', 'http://arquivo.pt/'+_ts+'/'+_url);			
+			ga('send', 'event', 'ReplayBarFunctions', 'ScreenshotMenuClick', 'arquivo.pt/'+_ts+'/'+_url);			
 		    uglipop({
 		      class:'modalReplay noprint', //styling class for Modal
 		      source:'html',
 		      content:'<h4 class="modalTitle"><i class="fa fa-camera" aria-hidden="true"></i> '+Content.saveAsImage+'</h4>'+
-		              '<div class="row"><a id="takeScreenshot" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuConfirm\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuCancel\', \'http://arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
+		              '<div class="row"><a id="takeScreenshot" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuConfirm\', \'arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ScreenshotMenuCancel\', \'arquivo.pt/'+_ts+'/'+_url+'\');" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});
 		    this.attachScreenshot();          			
 		    this.attachClosePopup();
 		},
