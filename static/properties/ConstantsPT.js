@@ -62,7 +62,7 @@ Content = {
     faceTitle: "Partilhar no Facebook",
     twitterTitle: "Partilhar no Twitter",
     mailTitle: "Partilhar por Email",
-    screenTitle: "Guardar como Imagem",
+    screenTitle: "Guardar p&#225gina como Imagem",
     printTitle: "Imprimir a P&#225gina" ,
     changeLanguageTitle: "Change to English language" ,
     versionsStoredTable:"Lista de Vers&#245es", 
