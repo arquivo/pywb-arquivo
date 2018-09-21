@@ -74,7 +74,7 @@ Content = {
     otherArchives: "Search in other archives",
     table: "List versions",
     completePage: "Complete the page", 
-    downloadTitle: "Download Screenshot",
+    downloadTitle: "Download full page screenshot ",
     downloadPopup: "Download screenshot of this page?",    
     downloadMessage: "Download",
     downloadCancel: "Cancel",
