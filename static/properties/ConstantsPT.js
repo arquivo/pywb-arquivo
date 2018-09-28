@@ -111,6 +111,6 @@ Content = {
     leavingArquivo: "Vai sair do Arquivo.pt",
     toBeCompleted: "Esta p&aacute;gina porder&aacute; ser completada com informa&ccedil;&atilde;o em falta.",
     helpHref:"http://sobre.arquivo.pt/pt/ajuda/",
-    switchMobile: "Vers&atilde;o para telem&oacute;veis"        
-
+    switchMobile: "Vers&atilde;o para telem&oacute;veis",
+    moreInfoIcon: "Detalhes t&eacute;cnicos"        
 };

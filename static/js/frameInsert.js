@@ -148,6 +148,91 @@ function createVersion(timestamp, url)
         
 }
 
+function attachMoreInfoModal(){
+       $('#a_moreinfo').on('click', function(e){         
+        moreInfoModal();        
+      });    
+}
+
+function moreInfoModal(){
+  ga('send', 'event', 'ReplayBarFunctions', 'MoreInformationMenuClick', 'arquivo.pt/'+ts+'/'+url);
+    var requestURL = "//"+window.location.hostname+ "/textsearch";
+    metadataResponse= '';
+      $.ajax({
+      // example request to the cdx-server api - 'http://arquivo.pt/textsearch?metadata=http%3A%2F%2Fquiz.musicbox.sapo.pt%2F%2F20131108093638'
+          url: requestURL,
+          data: {
+            metadata: url+"/"+ts
+          },
+          dataType: 'text',
+
+        error: function() {
+             printLoading= false; 
+             console.log('error showing metadata');
+         },
+         success: function(data) {
+              var theMetadata = jQuery.parseJSON(data).response_items;
+              for(var obj in theMetadata){
+                  if(theMetadata.hasOwnProperty(obj)){
+                    for(var prop in theMetadata[obj]){
+                        if(theMetadata[obj][prop] === '') continue; /*do not show empty fields*/
+                        if(theMetadata[obj].hasOwnProperty(prop)){
+                          if(theMetadata[obj][prop].startsWith('http')){
+                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="'+theMetadata[obj][prop]+'">' + theMetadata[obj][prop] + '</a></p>';    
+                          }
+                          else if(prop == "collection"){
+                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="https://archive.org/details/portuguese-web-archive?sin=&and[]='+ theMetadata[obj][prop] +'&and[]=subject%3A%22pwacrawlid%3A'+ theMetadata[obj][prop] +'%22&and[]=collection%3A%22portuguese-web-archive%22">' + theMetadata[obj][prop] + '</a></p>';
+                          }
+                          else{
+                           metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: ' + theMetadata[obj][prop] + '</p>';
+                          }
+                        }
+                    }
+                  }
+              }            
+              console.log('Success: '+ metadataResponse);
+
+              uglipop({
+                class:'modalReplay noprint scrollModal', //styling class for Modal
+                source:'html',
+                content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
+                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+'</h4>'+
+                        '<div>' + metadataResponse + '</div>'
+              });
+              attachRemoveModal();
+              $( ".scrollModal" ).ready(function() {
+                $( ".scrollModal" ).parent().css({
+                    'top': '10px',
+                    'left': '10%',
+                    'bottom': '10px',
+                    'width': '80%',
+                    'height': '80%', 
+                    'opacity': '0.9',  
+                    'overflow': 'auto' ,
+                    'transform': 'none',
+                    '-webkit-transform': 'none',
+                    '-ms-transform': 'unset'
+                });
+
+              }); 
+              loadedModal = true;
+         },
+         type: 'GET',
+      });   
+}
+
+
+function attachRemoveModal(){
+       $('#removeModal').on('click', function(e){    
+          closeUglipopCustomCss();  
+        });
+       $('#uglipop_overlay').on('click', function(e){
+          if( $('#uglipop_popbox').hasClass('scrollModal')){
+            closeUglipopCustomCss();
+          }
+       });    
+}
+
 function screenshotModal(){
   ga('send', 'event', 'ReplayBarFunctions', 'ScreenshotMenuClick', 'arquivo.pt/'+ts+'/'+url);      
   uglipop({
@@ -158,6 +243,7 @@ function screenshotModal(){
   attachScreenshot();                
   attachClosePopup();
 }
+
 
 function attachScreenshotModal(){
       $('#a_screenshot').on('click', function(e){         
@@ -195,6 +281,24 @@ function closeUglipop(){
   $('#uglipop_content_fixed').fadeOut();
   $('#uglipop_overlay').fadeOut('fast');
 }
+
+function closeUglipopCustomCss(){
+  $('#uglipop_content_fixed').hide();
+  $('#uglipop_overlay').hide();
+  $( "#uglipop_content_fixed" ).css({
+                  'top': '50%',
+                  'left': '50%',
+                  'bottom': '',
+                  'width': '',
+                  'height': '', 
+                  'opacity': '1',  
+                  'overflow': 'auto' ,
+                  'transform': 'translate(-50%, -50%)',
+                  '-webkit-transform': 'translate(-50%, -50%)',
+                  '-ms-transform': 'translate(-50%, -50%)'
+  });
+}
+
 
 function attachPrintModal(){
   $('#printOption').on('click', function(e){
