@@ -4367,7 +4367,8 @@ margin-left: 25px;
 .modalReplay{
   background: #252525;
   color: white;
-  border: 1px solid #3E3E3E
+  border: 1px solid #3E3E3E;
+  overflow: auto;
 }
 
 .modalReplay a, .modalReplay a:hover, .modalReplay a:visited, .modalReplay a:active {
@@ -4404,6 +4405,7 @@ margin-left: 25px;
   font-size: 14px;
   padding-left: 20px;
   padding-right: 20px;
+  word-wrap: break-word;
 }
 .modalReplay .first{
   margin: 10px 0 0 0;
@@ -4425,7 +4427,27 @@ margin-left: 25px;
 #uglipop_content_fixed{
   z-index: 2;
   min-width: 300px;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  opacity:1;
 }
+
+/*
+  z-index: 2;
+  min-width: 300px;
+  position: fixed;
+  top: 10px;
+  left: 10%;
+  bottom: 10px;
+  width: 80%;
+  height: 80%; 
+  opacity: 0.85;
+  overflow: auto;  
+*/
 
 #loadingAnimation{
   z-index:16777270;  
@@ -4456,4 +4478,34 @@ margin-left: 25px;
 
 .reconstruct_modal{
   margin-right: 5px;
+}
+
+strong{
+  font-weight: 700;
+}
+
+.expand__close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  color: #454545;
+  font-size: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.expand__close:before {
+  content: '\00d7';
+}
+
+.expand__close:visited {
+  color: #454545;
+}
+
+.expand__close:hover {
+  color: #fff;
 }

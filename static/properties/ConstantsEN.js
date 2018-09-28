@@ -111,6 +111,7 @@ Content = {
     leavingArquivo: "You are leaving Arquivo.pt",
     toBeCompleted: "This page might be completed with missing information" ,
     helpHref:"http://sobre.arquivo.pt/en/help/",
-    switchMobile: "Switch to mobile version"   
+    switchMobile: "Switch to mobile version",
+    moreInfoIcon: "Technical details"   
 
 };
