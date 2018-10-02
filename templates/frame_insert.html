@@ -248,7 +248,10 @@ function set_state(state) {
                               document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><\/a><\/li>");
                                 attachScreenshotModal();
                           </script>
-
+                          <script type="text/javascript">
+                              document.write("<li id='techDetails'><a title='"+Content.moreInfoIcon+"' id='a_moreinfo' href=''><i alt=\""+Content.moreInfoIcon+"\" class=\"fa fa-info-circle\"></i><\/a><\/li>");
+                                attachMoreInfoModal();
+                          </script>
                           <script>
                                   /*var urlEncoded = encodeURIComponent('{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}'); */
                                   document.write("<li class='' id='printLi'><a title='"+Content.printTitle+"' id='printOption' href=''><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i></a></li>");
