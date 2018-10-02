@@ -77,13 +77,14 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 		<a href="//'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 		<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
               ' 		<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
-              ' 		<a href="//'+_hostname+'/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-image right-7" aria-hidden="true"></i> '+Content.imageSearch+'</h4></a>' +
-              ' 		<a href="#" id="shareMenu"><h4><i class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
+              ' 		<a href="//'+_hostname+'/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-image right-7" aria-hidden="true"></i> '+Content.imageSearch+'</h4></a>' +              
+              ' 		<a href="#" id="shareMenu"><h4><i alt="'+Content.moreInfoIcon+'" class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
               '			<div id="shareOptions">'+
               ' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
               ' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
               ' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
 			  '			</div>'+
+			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
               '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
@@ -102,6 +103,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachShare();
 			this.attachTools();
 			this.attachSwitchDesktop();
+			this.attachMoreInfoModal();
  		},
  		updateInfo: function(url, ts){
  			_url = url;
@@ -237,7 +239,104 @@ var ARQUIVO = ARQUIVO || (function(){
 			/*redirect current link from mobile to desktop version i.e. remove the m. from current link*/
 			window.location = window.location.href.replace(window.location.hostname , window.location.hostname.substr(2, window.location.hostname.length)); 
 		  }); 	 			
- 		}, 	 
+ 		},
+		moreInfoModal: function(){
+		  ga('send', 'event', 'ReplayBarFunctions', 'MoreInformationMenuClick', '//arquivo.pt/'+_ts+'/'+_url);
+		    var requestURL = "//"+window.location.hostname.replace("m.","")+ "/textsearch";
+		    metadataResponse= '';
+		      $.ajax({
+		      // example request to the cdx-server api - 'http://arquivo.pt/textsearch?metadata=http%3A%2F%2Fquiz.musicbox.sapo.pt%2F%2F20131108093638'
+		          url: requestURL,
+		          data: {
+		            metadata: _url+"/"+_ts
+		          },
+		          dataType: 'text',
+
+		        error: function() {
+		             printLoading= false; 
+		             console.log('error showing metadata');
+		         },
+		         success: function(data) {
+		              var theMetadata = jQuery.parseJSON(data).response_items;
+		              for(var obj in theMetadata){
+		                  if(theMetadata.hasOwnProperty(obj)){
+		                    for(var prop in theMetadata[obj]){
+		                        if(theMetadata[obj][prop] === '') continue; /*do not show empty fields*/
+		                        if(theMetadata[obj].hasOwnProperty(prop)){
+		                          if(theMetadata[obj][prop].startsWith('http')){
+		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="'+theMetadata[obj][prop]+'">' + theMetadata[obj][prop] + '</a></p>';    
+		                          }
+		                          else if(prop == "collection"){
+		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="https://archive.org/details/portuguese-web-archive?sin=&and[]='+ theMetadata[obj][prop] +'&and[]=subject%3A%22pwacrawlid%3A'+ theMetadata[obj][prop] +'%22&and[]=collection%3A%22portuguese-web-archive%22">' + theMetadata[obj][prop] + '</a></p>';
+		                          }
+		                          else{
+		                           metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: ' + theMetadata[obj][prop] + '</p>';
+		                          }
+		                        }
+		                    }
+		                  }
+		              }            
+
+		              uglipop({
+		                class:'modalReplay noprint scrollModal', //styling class for Modal
+		                source:'html',
+		                content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
+		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+'</h4>'+
+		                        '<div>' + metadataResponse + '</div>'
+		              });
+		              ARQUIVO.attachRemoveModal();
+		              $( ".scrollModal" ).ready(function() {
+		                $( ".scrollModal" ).parent().css({
+		                    'top': '1%',
+		                    'left': '3%',
+		                    'bottom': '1%',
+		                    'width': '94%',
+		                    'height': '98%', 
+		                    'opacity': '0.9',  
+		                    'overflow': 'auto' ,
+		                    'transform': 'none',
+		                    '-webkit-transform': 'none',
+		                    '-ms-transform': 'unset'
+		                });
+
+		              }); 
+		              loadedModal = true;
+		         },
+		         type: 'GET',
+		      });   
+		}, 		
+		attachMoreInfoModal: function(){
+       		$('#a_moreinfo').on('click', function(e){         
+        		ARQUIVO.moreInfoModal();        
+      		});    			
+		},
+		attachRemoveModal: function(){
+		       $('#removeModal').on('click', function(e){    
+		          ARQUIVO.closeUglipopCustomCss();  
+		        });
+		       $('#uglipop_overlay').on('click', function(e){
+		          if( $('#uglipop_popbox').hasClass('scrollModal')){
+		            ARQUIVO.closeUglipopCustomCss();
+		          }
+		       });    
+		},
+		closeUglipopCustomCss: function(){
+		  $('#uglipop_content_fixed').hide();
+		  $('#uglipop_overlay').hide();
+		  $( "#uglipop_content_fixed" ).css({
+		                  'top': '50%',
+		                  'left': '50%',
+		                  'bottom': '',
+		                  'width': '',
+		                  'height': '', 
+		                  'opacity': '1',  
+		                  'overflow': 'auto' ,
+		                  'transform': 'translate(-50%, -50%)',
+		                  '-webkit-transform': 'translate(-50%, -50%)',
+		                  '-ms-transform': 'translate(-50%, -50%)'
+		  });
+		},			
+			 		 	 
  		attachLanguageChange: function(){
 		  $('#changeLanguage').on('click', function(e){
 		    ARQUIVO.setLang(Content.otherLanguage);

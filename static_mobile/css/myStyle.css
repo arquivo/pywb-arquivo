@@ -61,6 +61,7 @@
 .modalReplay .modalparagraph{
 	padding-left: 20px;
 	padding-right: 20px;
+	word-wrap: break-word;
 }
 .modalReplay .first{
 	margin: 10px 0 0 0;
@@ -79,10 +80,24 @@
 	z-index: 1;
 }
 
-#uglipop_content_fixed{
-	z-index: 2;
-	min-width: 300px;
+
+#uglipop_overlay{
+  opacity: 0.7!important;
+  z-index: 1;
 }
+
+#uglipop_content_fixed{
+  z-index: 2;
+  min-width: 300px;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  opacity:1;
+}
+
 
 #loadingAnimation{
 	z-index: 2;  
@@ -104,4 +119,30 @@
 	z-index:1;
 	opacity: 0.7;
 	display: none;
+}
+
+.expand__close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  color: #454545;
+  font-size: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.expand__close:before {
+  content: '\00d7';
+}
+
+.expand__close:visited {
+  color: #454545;
+}
+
+.expand__close:hover {
+  color: #fff;
 }
