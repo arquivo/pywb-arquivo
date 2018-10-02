@@ -113,6 +113,6 @@ Content = {
     toBeCompleted: "This page might be completed with missing information" ,
     helpHref:"http://sobre.arquivo.pt/en/help/",
     expandPage:"Expand",
-    switchDesktop: "Desktop version"    
-
+    switchDesktop: "Desktop version",
+    moreInfoIcon: "Technical details"    
 };
