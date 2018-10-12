@@ -280,7 +280,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                class:'modalReplay noprint scrollModal', //styling class for Modal
 		                source:'html',
 		                content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
-		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+'</h4>'+
+		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2-(beta-version)#response-fields">'+Content.techDetails+'</a></h4>'+
 		                        '<div>' + metadataResponse + '</div>'
 		              });
 		              ARQUIVO.attachRemoveModal();
