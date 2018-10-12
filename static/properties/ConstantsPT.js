@@ -113,5 +113,5 @@ Content = {
     helpHref:"http://sobre.arquivo.pt/pt/ajuda/",
     switchMobile: "Vers&atilde;o para telem&oacute;veis",
     moreInfoIcon: "Detalhes t&eacute;cnicos",
-    techDetails:" (descri&ccedil;&aacute;o dos campos)"           
+    techDetails:"(descri&ccedil;&aacute;o dos campos)"           
 };
