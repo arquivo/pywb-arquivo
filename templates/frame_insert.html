@@ -171,7 +171,7 @@ function set_state(state) {
     <meta name="author" content="">
 
     <title>Arquivo.pt</title>
-    <link rel="shortcut icon" href="http://arquivo.pt/img/logo-16.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ wbrequest.wb_prefix }}static/resources/img/logo-16.jpg" type="image/x-icon">
 
     <!-- Custom CSS -->
     <link href="{{ wbrequest.wb_prefix }}static/resources/css/screen.css?release=Zeus" rel ="stylesheet" >
@@ -222,7 +222,7 @@ function set_state(state) {
                     <div class="logoDiv" id="logodiv">
                       <a>
                         <script type="text/javascript">
-                          document.write('<a href="//?l='+Content.language+'">');
+                          document.write('<a href="/?l='+Content.language+'">');
                         </script>
                                              
                         <img id="arquivoImg" alt ="Arquivo.pt logo" title="Arquivo.pt homepage" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivo100v.png" /> 
