@@ -114,5 +114,6 @@ Content = {
     helpHref:"http://sobre.arquivo.pt/en/help/",
     expandPage:"Expand",
     switchDesktop: "Desktop version",
-    moreInfoIcon: "Technical details"    
+    moreInfoIcon: "Technical details",
+    techDetails:"(field description)"     
 };
