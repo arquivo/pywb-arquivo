@@ -115,6 +115,6 @@ Content = {
     expandPage:"Expandir",
     switchDesktop: "Vers&atilde;o desktop",
     moreInfoIcon: "Detalhes t&eacute;cnicos",
-    techDetails:"(descri&ccedil;&aacute;o dos campos)"         
+    techDetails:"(descri&ccedil;&atilde;o dos campos)"         
 
 };
