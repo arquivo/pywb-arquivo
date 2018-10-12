@@ -113,6 +113,6 @@ Content = {
     helpHref:"http://sobre.arquivo.pt/en/help/",
     switchMobile: "Switch to mobile version",
     moreInfoIcon: "Technical details",
-    techDetails:" (field description)"   
+    techDetails:"(field description)"   
 
 };
