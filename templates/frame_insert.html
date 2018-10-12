@@ -222,7 +222,7 @@ function set_state(state) {
                     <div class="logoDiv" id="logodiv">
                       <a>
                         <script type="text/javascript">
-                          document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
+                          document.write('<a href="//?l='+Content.language+'">');
                         </script>
                                              
                         <img id="arquivoImg" alt ="Arquivo.pt logo" title="Arquivo.pt homepage" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivo100v.png" /> 
@@ -276,7 +276,6 @@ function set_state(state) {
                             <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
                             <script>
                                 document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
-                                  var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
                                   localStorage.setItem('language', Content.otherLanguage);
                                   window.location.reload();
                                   return false; });</script></a>
