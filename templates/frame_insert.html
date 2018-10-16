@@ -318,7 +318,7 @@ function set_state(state) {
                             <li id="sidebarli">
                               <script type="text/javascript">document.write('<a id="versionsTable" href="" class="versions-table" title="'+Content.versionsStoredTable+'" style="text-decoration:none;color:#fff">')</script>
                                     <script>
-                                        document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
+                                        document.getElementById("versionsTable").setAttribute("href","/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
                                         $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
                                     </script>
                                     
