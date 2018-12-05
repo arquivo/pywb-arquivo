@@ -33,6 +33,7 @@
 }
 
 .modalReplay a, .modalReplay a:hover, .modalReplay a:visited, .modalReplay a:active {
+	text-decoration: underline;
 	color: white;
 	cursor: pointer;
 	border-top: 1px solid #3E3E3E;
