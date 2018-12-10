@@ -1,3 +1,6 @@
+String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
+    return this.split(needle).join(replacement);
+}; 
 /*Arquivo.pt specific functions and js code, such as loading constants, cookies, custom html code, etc*/
 var ARQUIVO = ARQUIVO || (function(){
     var _host_prefix;
@@ -87,6 +90,7 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
               '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
+              '		 <a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+
               '		 <a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
               '		 <a href="'+Content.helpHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'HelpClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-question-circle right-10" aria-hidden="true"></i> '+Content.help+'</h4></a>'+
               '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
@@ -103,6 +107,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachTools();
 			this.attachSwitchDesktop();
 			this.attachMoreInfoModal();
+			this.attachReportBug();
  		},
  		updateInfo: function(url, ts){
  			_url = url;
@@ -464,6 +469,13 @@ var ARQUIVO = ARQUIVO || (function(){
 		  	ARQUIVO.closeUglipop();
 		  }); 	 			
  		},
+		attachReportBug: function(){
+			$('#reportBug').click( function(e) {
+				e.preventDefault();
+				ga('send', 'event', 'ReplayBarFunctions', 'ReportBug', window.location.href);
+				window.location = Content.bug + window.location.href.replaceAll('&', '%26');
+			});
+		},		 		
 		closeSwipeMenu: function(){
 	      $('.swiper-wrapper').css('-webkit-transition', 'all 0.3s linear' );
 	      $('.swiper-wrapper').css('-moz-transition', 'all 0.3s linear' );
