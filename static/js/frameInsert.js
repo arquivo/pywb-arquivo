@@ -1,3 +1,7 @@
+String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
+    return this.split(needle).join(replacement);
+}; 
+
 sideMenuVersion = false;
 printLoading = false;
 
@@ -323,6 +327,14 @@ function attachCompletepage(){
         window.open('https://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
         closeUglipop();
     });    
+}
+
+function attachReportBug(){
+    $('#reportBug').click( function(e) {
+        e.preventDefault();
+        ga('send', 'event', 'ReplayBarFunctions', 'ReportBug', window.location.href);
+        window.location = Content.bug + window.location.href.replaceAll('&', '%26');
+      });
 }
 
 

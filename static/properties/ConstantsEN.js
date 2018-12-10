@@ -113,6 +113,8 @@ Content = {
     helpHref:"http://sobre.arquivo.pt/en/help/",
     switchMobile: "Switch to mobile version",
     moreInfoIcon: "Technical details",
-    techDetails:"(field description)"   
+    techDetails:"(field description)",
+    report:"Report a bug", 
+    bug: "https://sobre.arquivo.pt/en/contact/?your-subject=Problem%20in%20arquivo.pt&your-message="   
 
 };
