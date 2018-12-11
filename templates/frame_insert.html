@@ -5,7 +5,7 @@
 <html lang="pt" ng-app="ionic">
 <head>
   <meta property="og:image" content="http://arquivo.pt/img/logoFace.png">
-	<!-- Google Analytics-->
+  <!-- Google Analytics-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -30,7 +30,7 @@
     {% include banner_html ignore missing %}
 
     <!-- Jquery-->
-    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/jquery-latest.min.js"></script>;
+    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/jquery-latest.min.js"></script>
     <!-- Plugin for cookie to choose language-->
     <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/js.cookie.js"></script>
     <!-- Plugin for responsive modals-->
@@ -48,11 +48,11 @@
     <script>
         var language = localStorage.language;
         if( language == 'EN'){
-        	$('html').attr('lang', 'en');
+          $('html').attr('lang', 'en');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=WARCRelease"><\/script>');
         }
         else{
-        	$('html').attr('lang', 'pt');
+          $('html').attr('lang', 'pt');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js?release=WARCRelease"><\/script>');
         }
     </script>
@@ -215,7 +215,7 @@ function set_state(state) {
                 </div>
                   <!--the below anchor is the button to minimize/maximize the replayBars it is a fixed element -->
                   <script type="text/javascript">
-                  	document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
+                    document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
                   </script>
           
                   <div id="hbar">
