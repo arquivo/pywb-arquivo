@@ -538,7 +538,7 @@ function resize() {
   if($('#hbarMinimized').css('display') == 'none')
       expanded=true; /*The bar is Expanded*/ 
 
-  if(window.innerWidth >= 1100){
+  if(window.innerWidth >= 1340){
     if(expanded){
         console.log("desktop mode");
         $('#urlTopbarDiv').css('display', 'inline-block');
@@ -557,7 +557,7 @@ function resize() {
     }    
   }
 
-  else if( (window.innerWidth < 1100 && window.innerWidth>768) ||  Cookies.get('forceDesktop') == 'true'  ){
+  else if( (window.innerWidth < 1340 && window.innerWidth>850) ||  Cookies.get('forceDesktop') == 'true'  ){
     console.log("tablet mode");
     if(expanded){
         $('#urlTopbarDiv').css('display', 'none');
