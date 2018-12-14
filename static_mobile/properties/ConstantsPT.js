@@ -114,6 +114,8 @@ Content = {
     helpHref:"http://sobre.arquivo.pt/pt/ajuda/",
     expandPage:"Expandir",
     switchDesktop: "Vers&atilde;o desktop",
-    moreInfoIcon: "Detalhes t&eacute;cnicos"        
-
+    moreInfoIcon: "Detalhes t&eacute;cnicos",
+    techDetails:"(descri&ccedil;&atilde;o dos campos)",
+    report:"Reportar problema",      
+    bug: "https://sobre.arquivo.pt/pt/contacto/?your-subject=Problema%20no%20arquivo.pt&your-message="
 };

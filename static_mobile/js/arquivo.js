@@ -1,3 +1,6 @@
+String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
+    return this.split(needle).join(replacement);
+}; 
 /*Arquivo.pt specific functions and js code, such as loading constants, cookies, custom html code, etc*/
 var ARQUIVO = ARQUIVO || (function(){
     var _host_prefix;
@@ -77,7 +80,6 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 		<a href="//'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 		<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
               ' 		<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
-              ' 		<a href="//'+_hostname+'/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-image right-7" aria-hidden="true"></i> '+Content.imageSearch+'</h4></a>' +              
               ' 		<a href="#" id="shareMenu"><h4><i alt="'+Content.moreInfoIcon+'" class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
               '			<div id="shareOptions">'+
               ' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
@@ -88,6 +90,7 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
               '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
+              '		 <a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+
               '		 <a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
               '		 <a href="'+Content.helpHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'HelpClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-question-circle right-10" aria-hidden="true"></i> '+Content.help+'</h4></a>'+
               '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
@@ -104,6 +107,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachTools();
 			this.attachSwitchDesktop();
 			this.attachMoreInfoModal();
+			this.attachReportBug();
  		},
  		updateInfo: function(url, ts){
  			_url = url;
@@ -281,7 +285,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                class:'modalReplay noprint scrollModal', //styling class for Modal
 		                source:'html',
 		                content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
-		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+'</h4>'+
+		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2-(beta-version)#response-fields">'+Content.techDetails+'</a></h4>'+
 		                        '<div>' + metadataResponse + '</div>'
 		              });
 		              ARQUIVO.attachRemoveModal();
@@ -465,6 +469,13 @@ var ARQUIVO = ARQUIVO || (function(){
 		  	ARQUIVO.closeUglipop();
 		  }); 	 			
  		},
+		attachReportBug: function(){
+			$('#reportBug').click( function(e) {
+				e.preventDefault();
+				ga('send', 'event', 'ReplayBarFunctions', 'ReportBug', window.location.href);
+				window.location = Content.bug + window.location.href.replaceAll('&', '%26');
+			});
+		},		 		
 		closeSwipeMenu: function(){
 	      $('.swiper-wrapper').css('-webkit-transition', 'all 0.3s linear' );
 	      $('.swiper-wrapper').css('-moz-transition', 'all 0.3s linear' );

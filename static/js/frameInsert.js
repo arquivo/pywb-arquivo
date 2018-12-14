@@ -1,3 +1,7 @@
+String.prototype.replaceAll = String.prototype.replaceAll || function(needle, replacement) {
+    return this.split(needle).join(replacement);
+}; 
+
 sideMenuVersion = false;
 printLoading = false;
 
@@ -196,7 +200,7 @@ function moreInfoModal(){
                 class:'modalReplay noprint scrollModal', //styling class for Modal
                 source:'html',
                 content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
-                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+'</h4>'+
+                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2-(beta-version)#response-fields">'+Content.techDetails+'</a></h4>'+
                         '<div>' + metadataResponse + '</div>'
               });
               attachRemoveModal();
@@ -311,7 +315,7 @@ function completePageModal(){
     uglipop({
       class:'modalReplay noprint', //styling class for Modal
       source:'html',
-      content:'<h4 class="modalTitleComplete"><img class="reconstruct_modal" id="reconstructImg" alt="'+Content.reconstructImg+'" src="//arquivo.pt/wayback/static/resources/img/reconstruct.png"> '+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
+      content:'<h4 class="modalTitleComplete"><img class="reconstruct_modal" id="reconstructImg" alt="'+Content.reconstructImg+'" src="//'+window.location.hostname+'/wayback/static/resources/img/reconstruct.png"> '+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
               '<div class="row"><a id="completePage"  class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
   attachCompletepage();
   attachClosePopup();
@@ -323,6 +327,14 @@ function attachCompletepage(){
         window.open('https://timetravel.mementoweb.org/reconstruct/'+ts+'/'+url);
         closeUglipop();
     });    
+}
+
+function attachReportBug(){
+    $('#reportBug').click( function(e) {
+        e.preventDefault();
+        ga('send', 'event', 'ReplayBarFunctions', 'ReportBug', window.location.href);
+        window.location = Content.bug + window.location.href.replaceAll('&', '%26');
+      });
 }
 
 
@@ -526,7 +538,7 @@ function resize() {
   if($('#hbarMinimized').css('display') == 'none')
       expanded=true; /*The bar is Expanded*/ 
 
-  if(window.innerWidth >= 1100){
+  if(window.innerWidth >= 1340){
     if(expanded){
         console.log("desktop mode");
         $('#urlTopbarDiv').css('display', 'inline-block');
@@ -545,7 +557,7 @@ function resize() {
     }    
   }
 
-  else if( (window.innerWidth < 1100 && window.innerWidth>768) ||  Cookies.get('forceDesktop') == 'true'  ){
+  else if( (window.innerWidth < 1340 && window.innerWidth>850) ||  Cookies.get('forceDesktop') == 'true'  ){
     console.log("tablet mode");
     if(expanded){
         $('#urlTopbarDiv').css('display', 'none');
