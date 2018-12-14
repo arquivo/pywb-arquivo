@@ -4374,6 +4374,7 @@ margin-left: 25px;
 .modalReplay a, .modalReplay a:hover, .modalReplay a:visited, .modalReplay a:active {
   color: white;
   cursor: pointer;
+  text-decoration: underline;
   border-top: 1px solid #3E3E3E;
   font-size: 14px;
 }

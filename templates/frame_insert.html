@@ -5,7 +5,7 @@
 <html lang="pt" ng-app="ionic">
 <head>
   <meta property="og:image" content="http://arquivo.pt/img/logoFace.png">
-	<!-- Google Analytics-->
+  <!-- Google Analytics-->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -30,13 +30,13 @@
     {% include banner_html ignore missing %}
 
     <!-- Jquery-->
-    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/jquery-latest.min.js"></script>;
+    <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/jquery-latest.min.js"></script>
     <!-- Plugin for cookie to choose language-->
     <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/js.cookie.js"></script>
     <!-- Plugin for responsive modals-->
     <script src="{{ wbrequest.wb_prefix }}static/resources/js/uglipop.min.js"></script>
     <!-- Javascript code for this page-->
-    <script type="text/javascript" src="{{ wbrequest.wb_prefix }}static/resources/js/frameInsert.js"> </script>
+    <script type="text/javascript" src="{{ wbrequest.wb_prefix }}static/resources/js/frameInsert.js?release=ImageSearch"> </script>
     <!-- ionicons-->
     <script src="{{ wbrequest.wb_prefix }}static/resources/dependencies/ionic.bundle.min.js"></script>
     <!--bootstrap -->
@@ -48,11 +48,11 @@
     <script>
         var language = localStorage.language;
         if( language == 'EN'){
-        	$('html').attr('lang', 'en');
+          $('html').attr('lang', 'en');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsEN.js?release=WARCRelease"><\/script>');
         }
         else{
-        	$('html').attr('lang', 'pt');
+          $('html').attr('lang', 'pt');
             document.write('<script type="text/javascript" language="JavaScript" src="'+"{{ wbrequest.wb_prefix }}"+'static/resources/properties/ConstantsPT.js?release=WARCRelease"><\/script>');
         }
     </script>
@@ -171,7 +171,7 @@ function set_state(state) {
     <meta name="author" content="">
 
     <title>Arquivo.pt</title>
-    <link rel="shortcut icon" href="http://arquivo.pt/img/logo-16.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ wbrequest.wb_prefix }}static/resources/img/logo-16.png" type="image/x-icon">
 
     <!-- Custom CSS -->
     <link href="{{ wbrequest.wb_prefix }}static/resources/css/screen.css?release=Zeus" rel ="stylesheet" >
@@ -215,14 +215,14 @@ function set_state(state) {
                 </div>
                   <!--the below anchor is the button to minimize/maximize the replayBars it is a fixed element -->
                   <script type="text/javascript">
-                  	document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
+                    document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{wbrequest.wb_prefix}}static/resources/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
                   </script>
           
                   <div id="hbar">
                     <div class="logoDiv" id="logodiv">
                       <a>
                         <script type="text/javascript">
-                          document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+Content.language+'">');
+                          document.write('<a href="/?l='+Content.language+'">');
                         </script>
                                              
                         <img id="arquivoImg" alt ="Arquivo.pt logo" title="Arquivo.pt homepage" src="{{ wbrequest.wb_prefix }}static/resources/img/arquivo100v.png" /> 
@@ -257,6 +257,10 @@ function set_state(state) {
                                   document.write("<li class='' id='printLi'><a title='"+Content.printTitle+"' id='printOption' href=''><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i></a></li>");
                                     attachPrintModal();
                           </script>
+                          <script>
+                                  document.write("<li id='bugLi'><a href='#' title='"+Content.report+"' id='reportBug' ><i  alt=\""+Content.report+"\" class='ion ion-bug menu-icon'></i></a></li>");
+                                    attachReportBug();
+                          </script>                          
                           <script type="text/javascript">
                                   document.write("<li class='print' id='mobileLi'><a id='switchMobile' title='"+Content.switchMobile+"' id='printOption' href=''><i alt=\""+"teste"+"\" class='ion ion ion-iphone menu-icon'></i></a></li>");
                                   attachSwitchMobile();                            
@@ -276,7 +280,6 @@ function set_state(state) {
                             <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
                             <script>
                                 document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
-                                  var httpURLTokens = "{{ wbrequest.user_metadata.search_location }}".toString().split("/");
                                   localStorage.setItem('language', Content.otherLanguage);
                                   window.location.reload();
                                   return false; });</script></a>
@@ -319,7 +322,7 @@ function set_state(state) {
                             <li id="sidebarli">
                               <script type="text/javascript">document.write('<a id="versionsTable" href="" class="versions-table" title="'+Content.versionsStoredTable+'" style="text-decoration:none;color:#fff">')</script>
                                     <script>
-                                        document.getElementById("versionsTable").setAttribute("href","{{ wbrequest.user_metadata.search_location }}/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
+                                        document.getElementById("versionsTable").setAttribute("href","/search.jsp?l="+Content.language+"&query="+ "{{ url }}" + "&btnSubmit=Pesquisar");
                                         $('#versionsTable').attr('onClick','ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Table of Versions\', \'{{ wbrequest.user_metadata.search_location }}/search.jsp'+Content.language+'&query="{{ url }}&btnSubmit=Pesquisar"\');');
                                     </script>
                                     
