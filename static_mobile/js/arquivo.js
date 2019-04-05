@@ -32,6 +32,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		iframeResize: function(){ /*Code written by the author of Jquery to dynamically resize iframe to always have height equal to the parent container*/
 			var buffer = 20; //scroll bar buffer
 			var iframe = document.getElementById('replay_iframe');
+			var bottomBar =47;
 
 			function pageY(elem) {
 			    return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
@@ -41,7 +42,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			    var height = document.documentElement.clientHeight;
 			    height -= pageY(document.getElementById('replay_iframe'))+ buffer ;
 			    height = (height < 0) ? 0 : height;
-			    document.getElementById('replay_iframe').style.height = height+20 + 'px';
+			    document.getElementById('replay_iframe').style.height = height+20-bottomBar + 'px';
 			}
 
 			// .onload doesn't work with IE8 and older.
@@ -61,10 +62,14 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '  <div class="swiper-slide content swiper-slide-active">'+
 			  '    <div class="main-content">'+
 			  '      <div class="container-fluid">'+
-			  '        <div class="row text-center logo-main-div">'+
+			  '        <div class="row text-center logo-main-div-no-border">'+
 			  '                    <a href="/?l='+_language+'"><img src="'+_host_prefix+'/'+_static_path+'/img/01_preto.png" id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
 			  '                    <a class="pull-right main-menu"id="menuButton"><i class="fa fa-bars"></i></a>'+
 			  '        </div>  '+
+			  '        <div class="row logo-main-div replay-options">'+
+			  				'<button class="clean-button" style="padding:11px" onclick="ARQUIVO.showPageOptions()"><span class="opts">'+Content.options+'</span></button>'+
+			  		/*   	'<ion-button size="small" expand="full" color="white" fill="outline"class="options-button" onclick="console.log(\'custom button\')" >Opcoes da p&#225gina</ion-button>'+*/
+			  '        </div>  '+			  
 			  '      </div>  ');		
 		},
 		afterIframe: function(){
@@ -72,27 +77,37 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '   </div>' +
               '   <div class="maskMenu"></div>'+
               '  </div>'+
-              '		<div class="swiper-slide menu swiper-slide-prev">' +       
-              '			<div class="main-menu-top-div">'+
+             '		<div class="swiper-slide menu swiper-slide-prev">' +       
+/*              '			<div class="main-menu-top-div">'+
 			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
-              ' 		<a href="//'+_hostname+'/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
-              ' 		<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>' +
-              ' 		<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
-              ' 		<a href="#" id="shareMenu"><h4><i alt="'+Content.moreInfoIcon+'" class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
-              '			<div id="shareOptions">'+
-              ' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
-              ' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
-              ' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
-			  '			</div>'+
-			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
-              ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
-			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-              '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
-              '		 <a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+
+*/
+			  '			<button class="clean-button" onclick="ARQUIVO.copyLink();"><h4><i class="fa fa-link padding-right-menu-icon" aria-hidden="true"></i> '+Content.copyLink+'</h4></button>' +
+  					   '<button class="clean-button" id="pagesMenu" onclick="ARQUIVO.pagesClick();"><h4><i class="fa fa-globe padding-right-menu-icon" aria-hidden="true"></i> '+Content.pages+'<i id="pagesCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></button>'+	 			  
+      				   '<div id="pageOptions">'+
+              ' 			<a href="/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 			<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              		   '</div>'+
+			  		   '<button class="clean-button" id="imagesMenu" onclick="ARQUIVO.imagesClick();"><h4><i class="fa fa-image padding-right-menu-icon" aria-hidden="true"></i> '+Content.images+'<i id="imagesCarret" class="fa iCarret shareCarret pull-right fa-caret-down" aria-hidden="true"></i></h4></button>'+
+      				   '<div id="imageOptions">'+
+              ' 			<a href="/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 			<a href="/advancedImages.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              		   '</div>'+
+
+              //' 		<a href="#" id="shareMenu"><h4><i alt="'+Content.moreInfoIcon+'" class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
+              //'			<div id="shareOptions">'+
+              //' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
+              //' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
+              //' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
+			  //'			</div>'+
+			  //' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
+             //' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
+			 //'	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
+             // '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
               '		 <a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
-              '		 <a href="'+Content.helpHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'HelpClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-question-circle right-10" aria-hidden="true"></i> '+Content.help+'</h4></a>'+
+			  '		 <a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+              
+              '		 <a href="'+Content.aboutHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AboutClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
               '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
               '		</div>'+
               '	</div>'+
@@ -108,6 +123,63 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachSwitchDesktop();
 			this.attachMoreInfoModal();
 			this.attachReportBug();
+ 		},
+ 		copyLink: function(){
+			var dummy = document.createElement('input')			    
+			var urlToCopy= window.location.href;
+
+			document.body.appendChild(dummy);
+			dummy.value = urlToCopy;
+			dummy.select();
+			document.execCommand('copy');
+			document.body.removeChild(dummy);
+			$('body').append('<div id="alertCopy" class="alert alert-success alertCopy"><strong>'+Content.linkCopied+'</strong></div>');
+			$('#alertCopy').show().delay(1500).fadeOut();
+			setTimeout(function(){
+  			$('#alertCopy').remove();
+			}, 2000); /*time to show the notification plus the time to do the fadeout effect*/ 			
+ 		},
+ 		showPageOptions: function(){
+ 			console.log("options");
+
+		              uglipop({
+		                class:'modalReplay noprint scrollModal', //styling class for Modal
+		                source:'html',
+		                content:'<button onclick="ARQUIVO.closeUglipopCustomCss()" class="expand__close__white" title="Fechar"></button>'+
+				                '<div class="main-menu-top-div">'+
+							    	'<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
+							  		'<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
+							  	'</div>'+
+							  	'<div class="fullwidth menu">'+
+									'<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>'+ 						                      
+									'<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>' +									
+             						'<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
+			 						'<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+									
+			 						'<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+								
+								'</div>'+
+		                        '<div></div>'
+		              });
+		              $( ".scrollModal" ).ready(function() {
+		                $( ".scrollModal" ).parent().css({
+		                    'top': 'inherit',
+		                    'left': 'inherit',
+		                    'bottom': '47px',
+		                    'width': '100%',
+		                    'max-height': '80%',		                    
+		                    'opacity': '1',  
+		                    'overflow': 'auto' ,
+		                    'transform': 'none',
+		                    '-webkit-transform': 'none',
+		                    '-ms-transform': 'unset'
+		                });
+
+		              }); 
+		              ARQUIVO.attachClosePopup();
+                	  $('#a_moreinfo').on('click', function(e){         
+        				ARQUIVO.moreInfoModal();        
+      				  });  
+
+
  		},
  		updateInfo: function(url, ts){
  			_url = url;
@@ -435,6 +507,14 @@ var ARQUIVO = ARQUIVO || (function(){
     		   },
 		       type: 'GET',
 		    });
+		},
+		pagesClick: function(){
+		    $('#pagesCarret').toggleClass('fa-caret-up fa-caret-down');
+		    $('#pageOptions').slideToggle( "fast", "linear" );
+		},
+		imagesClick: function(){
+		    $('#imagesCarret').toggleClass('fa-caret-up fa-caret-down');
+		    $('#imageOptions').slideToggle( "fast", "linear" );
 		},
 		printModal: function(){
 			ga('send', 'event', 'ReplayBarFunctions', 'PrintMenuClick', 'arquivo.pt/'+_ts+'/'+_url);

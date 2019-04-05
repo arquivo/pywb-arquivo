@@ -145,11 +145,17 @@ body {
 }
 
 .logo-main-div{
+    background-color: #252525;
+    position: absolute;
+    border-bottom: solid 1px white;
+    bottom: 0;
+    width: 100%;
+}
+.logo-main-div-no-border{
 	padding-top:10px;
-	padding-bottom:10px;
 	background-color: #252525;
-	border-bottom: solid 1px white;
 	line-height: 30px;
+	padding-bottom:10px;
 }
 
 .logo-main{
@@ -224,4 +230,32 @@ body {
 }
 .right-14{
 	padding-right: 14px!important;
+}
+
+.replay-options{
+    text-align: center;
+}
+.options-replay
+{
+    color: white;
+    cursor: pointer;
+}
+
+.options-button{
+  color: white!important;
+  -border-color: white!important;
+  border: 1px solid;  
+  font-size: 17px!important;
+  font-weight: 400;
+
+  text-transform: inherit!important;
+}
+
+.fullwidth{
+  min-width: 100%!important;
+  width: 100%!important;
+}
+
+.fullwidth a:hover, .fullwidth a:visited, .fullwidth a:active{
+	text-decoration: none!important;
 }
