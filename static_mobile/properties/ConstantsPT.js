@@ -36,7 +36,8 @@ Content = {
     moreOptions:"Mais op&#231;&#245;es",
     lessOptions:"Menos op&#231;&#245;es",
     help:"Ajuda",
-    helpHref:"http://sobre.arquivo.pt/ajuda",
+    helpHref:"https://sobre.arquivo.pt/ajuda",
+    aboutHref:"https://sobre.arquivo.pt/",
     newSearch:"Nova pesquisa",
     advancedSearch:"Pesquisa avan&ccedil;ada",
     imageSearch:"Pesquisa de imagens",
@@ -117,5 +118,11 @@ Content = {
     moreInfoIcon: "Detalhes t&eacute;cnicos",
     techDetails:"(descri&ccedil;&atilde;o dos campos)",
     report:"Reportar problema",      
+    pages:"P&#225ginas",
+    about:"Sobre",
+    copyLink:"Copiar link",
+    linkCopied:"Link copiado!",
+    images: "Imagens",
+    options: "Op&ccedil;&#245;es",
     bug: "https://sobre.arquivo.pt/pt/contacto/?your-subject=Problema%20no%20arquivo.pt&your-message="
 };

@@ -4,6 +4,7 @@
 }
 
 .wb_iframe{
+  background: white;
   min-width: 100%!important;
 }
 
@@ -146,4 +147,56 @@
 
 .expand__close:hover {
   color: #fff;
+}
+
+.expand__close__white {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: white;
+  font-size: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.expand__close__white:before {
+  content: '\00d7';
+}
+
+.clean-button{
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-align: inherit;
+    width: 100%;
+}
+
+.alertCopy {
+    position: absolute;
+    display:  hidden;
+    top: 0px;
+    z-index: 4;
+    width: 100%;
+    margin: 0px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.5em;
+    text-align: center
+}
+
+
+#pageOptions, #imageOptions{
+  display: none;
+}
+
+
+.opts{
+  color: white;
+  font-size: 17px;
 }
