@@ -32,8 +32,9 @@
 {
     position: absolute;
     width: 100%;
-    height: 100%;
-    padding: 0px 4px 4px 0px;
+    height: calc(100% - 94px);
+    padding: 0px 10px 0px 10px;
+    background: #252525;
 
     border: none;
     box-sizing: border-box;
@@ -47,7 +48,7 @@
 {
     width: 100%;
     height: 100%;
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     padding: 0px 0px 0px 0px;
     overflow: scroll;
 }
