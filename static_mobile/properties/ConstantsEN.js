@@ -37,6 +37,7 @@ Content = {
     lessOptions:"Less options",
     help:"Help",
     helpHref:"http://sobre.arquivo.pt/help/faq?set_language=en",
+    aboutHref:"https://sobre.arquivo.pt/en/",
     newSearch:"New search",
     advancedSearch:"Advanced search",
     imageSearch:"Image search",
@@ -117,5 +118,11 @@ Content = {
     moreInfoIcon: "Technical details",
     techDetails:"(field description)",
     report:"Report a bug", 
+    pages:"Pages",
+    about:"About",
+    copyLink:"Copy link",
+    linkCopied:"Link copied!",  
+    images: "Images",  
+    options: "Options",
     bug: "https://sobre.arquivo.pt/en/contact/?your-subject=Problem%20in%20arquivo.pt&your-message="
 };
