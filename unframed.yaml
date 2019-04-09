@@ -1,16 +1,18 @@
 collections:
     replay:
-        index_paths: /data/indexes_split_cdx/indexes_split_cdx/
+        index_paths: /data/cdx_indexes/
+        archive_paths:
+            - http://p62.arquivo.pt:8080/arcproxy/arcproxy/
+            - http://p58.arquivo.pt:8080/arcproxy/arcproxy/
+    check:
+        index_paths: /data/cdx_indexes/
+        archive_paths:
+            - http://p62.arquivo.pt:8080/arcproxy/arcproxy/
 
-
-# configure path to warcs here
-archive_paths:
-    - http://p62.arquivo.pt:8080/arcproxy/arcproxy/
-    - http://p58.arquivo.pt:8080/arcproxy/arcproxy/
 enable_cdx_api: true
 framed_replay: false
 static_routes:
           static/resources: ./static/
           static/__pywb: pywb/static/
 metadata:
-          search_location: http://p27.arquivo.pt
+          search_location: http://p25.arquivo.pt
