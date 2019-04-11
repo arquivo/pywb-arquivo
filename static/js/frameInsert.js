@@ -258,7 +258,7 @@ function attachScreenshotModal(){
 function attachScreenshot() {
   $('#takeScreenshot').on('click', function(e){
     closeUglipop();
-    window.open('//'+window.location.hostname+'/screenshot/?url='+encodeURIComponent("https://"+window.location.hostname+"/noFrame/replay/"+ ts+'/'+url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
+    window.open('//'+window.location.hostname+'/screenshot/?url='+encodeURIComponent(window.location.protocol+"//"+window.location.hostname+"/noFrame/replay/"+ ts+'/'+url)+"&width="+window.screen.width/*window.innerWidth*/+"&height="+/*window.innerHeight*/ window.screen.height);
   });       
 }
 
