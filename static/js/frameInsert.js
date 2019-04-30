@@ -557,28 +557,7 @@ function resize() {
     }    
   }
 
-  else if( (window.innerWidth < 1340 && window.innerWidth>850) ||  Cookies.get('forceDesktop') == 'true'  ){
-    console.log("tablet mode");
-    if(expanded){
-        $('#urlTopbarDiv').css('display', 'none');
-        $('#sidebar-wrapper').css("height", (window.innerHeight - $('#toolBar').height())  +"px");
-        $('#iframeBox').css("height", (window.innerHeight - $('#toolBar').height())  +"px");      
-        $('#iframeBox').css("width", window.innerWidth  +"px");
-        $('#sidebar-wrapper').css('display','none');
-        $("#page-content-wrapper").css("cssText", "width: 100% !important;");
-        $("#page-content-wrapper").css("cssText", "left: 0% !important;");
-    }
-    else{/*The bar is minimized*/
-        $('#iframeBox').css("height", (window.innerHeight - $('#hbarMinimized').height())  +"px");      
-        $('#iframeBox').css("width", window.innerWidth  +"px");
-        $('#timeMinimized').show();
-        if(window.innerWidth < 750){ /* Hide the date if between 600 and 750*/
-          $('#timeMinimized').hide();
-        }  
-
-    }                    
-  }
-  else{ /*Resolution smaller than 768 redirect to mobile version*/
+  else{ /*Resolution smaller than 1340 redirect to mobile version*/
     window.location = window.location.href.replace(window.location.hostname, "m."+window.location.hostname);  
   }
 
