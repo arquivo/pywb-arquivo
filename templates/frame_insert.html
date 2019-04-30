@@ -266,16 +266,6 @@ function set_state(state) {
                                   attachSwitchMobile();                            
                           </script>
 
-                          <script>
-                              document.write("<li id='facebook_share' class='facebook' title=''><a class='addthis_button_facebook' title='"+Content.faceTitle+"'  href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'FacebookShare', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-facebook' alt=\""+Content.facebookIcon+"\"><\/i><\/a><\/li>");
-                          </script>   
-                          <script>
-                              document.write("<li class='twitter'><a title='"+Content.twitterTitle+"' class=' addthis_button_twitter' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Twitter', '{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}');\"><i class='ion ion-social-twitter' alt=\""+Content.twitterIcon+"\" ></i><\/a><\/li>");
-                          </script>
-                          <script>
-                              document.write('<li class="mail" id="liEmail"><a title="'+Content.mailTitle+'" id="sendEmail" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ getDatets(ts) +'%0D%0A %0D%0A\' + window.location ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Email\', \'{{ wbrequest.user_metadata.search_location }}/noFrame/replay/{{ wbrequest.wb_url.timestamp }}/{{url}}\');"><i class="ion ion-email" alt=\"'+Content.emailIcon+'\"></i><\/a><\/li>');
-                          </script>
-
                           <li class="lang">
                             <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
                             <script>

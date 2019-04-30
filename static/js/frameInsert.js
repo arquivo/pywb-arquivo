@@ -538,7 +538,7 @@ function resize() {
   if($('#hbarMinimized').css('display') == 'none')
       expanded=true; /*The bar is Expanded*/ 
 
-  if(window.innerWidth >= 1340){
+  if(window.innerWidth >= 1280){
     if(expanded){
         console.log("desktop mode");
         $('#urlTopbarDiv').css('display', 'inline-block');
@@ -557,7 +557,7 @@ function resize() {
     }    
   }
 
-  else{ /*Resolution smaller than 1340 redirect to mobile version*/
+  else{ /*Resolution smaller than 1280 redirect to mobile version*/
     window.location = window.location.href.replace(window.location.hostname, "m."+window.location.hostname);  
   }
 
