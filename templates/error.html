@@ -1,20 +1,18 @@
 <html>
-<head>
+<head>	
 	<script type="text/javascript">
-		document.write('<link rel="stylesheet" type="text/css" href="http://'+window.location.hostname+'/css/style.css">');
+		document.write('<link rel="stylesheet" type="text/css" href="//'+window.location.hostname+'/css/style.css">');
 	</script>
 	<script type="text/javascript">
-
-
-	document.write("<script src=http://"+window.location.hostname+"/wayback/static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
+	document.write("<script src=//"+window.location.hostname+"/wayback/static\/resources\/dependencies\/js.cookie.js"+ "><\/script>");
 	</script> <!-- Plugin for cookie to choose language-->
 	<script>
 		var language = Cookies.get('language');
 		if( language == 'EN'){
-			document.write('<script type="text/javascript" language="JavaScript" src="http://'+window.location.hostname+'/wayback/static/resources/properties/ConstantsEN.js"><\/script>');
+			document.write('<script type="text/javascript" language="JavaScript" src="//'+window.location.hostname+'/wayback/static/resources/properties/ConstantsEN.js"><\/script>');
 		}
 		else{
-			document.write('<script type="text/javascript" language="JavaScript" src="http://'+window.location.hostname+'/wayback/static/resources/properties/ConstantsPT.js"><\/script>');
+			document.write('<script type="text/javascript" language="JavaScript" src="//'+window.location.hostname+'/wayback/static/resources/properties/ConstantsPT.js"><\/script>');
 		}
 	</script>	
 <title></title>
@@ -25,7 +23,7 @@
 			<div id="header" style="min-height: 0;">
 				<div id="logo">
 					<script type="text/javascript">
-						document.write('<a href="http://'+window.location.hostname+'/index.jsp?l="'+Content.language+' title="'+Content.homePagetitle+'"><img src="http://'+window.location.hostname+'/img/logo-pt.png" alt="Logo Arquivo.pt" width="125" height="90"></a>');
+						document.write('<a href="//'+window.location.hostname+'/index.jsp?l="'+Content.language+' title="'+Content.homePagetitle+'"><img src="//'+window.location.hostname+'/img/logo-pt.png" alt="Logo Arquivo.pt" width="125" height="90"></a>');
 					</script>
 					
 				</div>
@@ -41,12 +39,19 @@
 								<p></p>
 								<ul>	
 									<script type="text/javascript">
-										document.write('<li><a href="http://sobre.arquivo.pt/'+Content.contact+'">'+Content.suggestionsFeedback500+'</a></li><li><a href="http://'+window.location.hostname+'">'+Content.goHome500+'</a></li>');
+										document.write('<li><a href="//sobre.arquivo.pt/'+Content.contact+'">'+Content.suggestionsFeedback500+'</a></li><li><a href="//'+window.location.hostname+'">'+Content.goHome500+'</a></li>');
 									</script> 
                                 </ul>
                                 <p></p>
 			</div>
 		</div>
+
+{% include 'errorstacktrace.html' %}
+
 </div>	
+
+
+
+
 </body>
 </html> 
