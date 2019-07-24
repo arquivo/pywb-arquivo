@@ -1,0 +1,12 @@
+collections:
+    replay:
+        index_paths: /data/cdx_indexes/
+        archive_paths:
+            - http://p89.arquivo.pt:8080/arcproxy/arcproxy/
+            - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+    check:
+        index: /data/cdx_indexes/
+        archive:
+            - http://p89.arquivo.pt:8080/arcproxy/arcproxy/
+
+framed_replay: false
