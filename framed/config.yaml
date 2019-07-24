@@ -1,0 +1,17 @@
+collections:
+  $root:
+    index_paths: /home/dbicho/Documents/ArquivoDocker/pywb/webarchive/indexes/
+    archive_paths:
+      - http://p89.arquivo.pt:8080/arcproxy/arcproxy/
+      - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+
+framed_replay: true
+#static_routes:
+#  static/resources: ./static/
+#  static/__pywb: pywb/static/
+
+#metadata:
+#  search_location: http://preprod.arquivo.pt
+
+search_location: http://localhost:8082
+debug: True

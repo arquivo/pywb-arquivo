@@ -42,3 +42,4 @@ PrintServer/*
 include/*
 lib/*
 bin/*
+**/venv/*

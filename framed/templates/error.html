@@ -1,0 +1,54 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ static_prefix }}/css/style.css">
+	<script src="{{ static_prefix }}/dependencies/js.cookie.js"></script>
+        <!-- Plugin for cookie to choose language-->
+	<script>
+		var language = Cookies.get('language');
+		if( language == 'EN'){
+			document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsEN.js"><\/script>');
+		}
+		else{
+			document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsPT.js"><\/script>');
+		}
+	</script>	
+<title></title>
+</head>
+<body>
+<div class="wrap">
+		<div id="main">
+			<div id="header" style="min-height: 0;">
+				<div id="logo">
+					<script type="text/javascript">
+						document.write('<a href="//'+window.location.hostname+'/index.jsp?l="'+Content.language+' title="'+Content.homePagetitle+'"><img src="//'+window.location.hostname+'/img/logo-pt.png" alt="Logo Arquivo.pt" width="125" height="90"></a>');
+					</script>
+					
+				</div>
+
+				<div id="info-texto-termos">
+					<script type="text/javascript">
+						document.write('<h1>'+Content.title500+'</h1><h2>'+Content.subtitle500+'</h2>')
+					</script>
+				</div>
+			</div>
+
+			<div id="conteudo-erro">
+								<p></p>
+								<ul>	
+									<script type="text/javascript">
+										document.write('<li><a href="//sobre.arquivo.pt/'+Content.contact+'">'+Content.suggestionsFeedback500+'</a></li><li><a href="//'+window.location.hostname+'">'+Content.goHome500+'</a></li>');
+									</script> 
+                                </ul>
+                                <p></p>
+			</div>
+		</div>
+
+{% include 'errorstacktrace.html' %}
+
+</div>	
+
+
+
+
+</body>
+</html> 
