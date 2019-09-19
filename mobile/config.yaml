@@ -4,7 +4,13 @@ collections:
     archive_paths:
       - http://p89.arquivo.pt:8080/arcproxy/arcproxy/
       - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+    
+head_insert_html: head_insert_mobile.html
+frame_insert_html: frame_insert_mobile.html
+error_html: error_mobile.html
+not_found_html: not_found_mobile.html
 
 framed_replay: true
 redirect_exact: true
 debug: True
+
