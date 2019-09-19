@@ -1,9 +1,9 @@
-<script src="{{ host_prefix }}/wayback/static/resources/js/jquery-latest.min.js"></script>
-<script src="{{ host_prefix }}/wayback/static/resources/js/uglipop.min.js"></script>
-<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/myStyle.css"></script>
-<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/Style.css"></script>
-<link rel="stylesheet" href="{{ host_prefix }}/wayback/static/resources/css/bootstrap.min.css">
-<script src="{{ host_prefix }}/wayback/static/resources/js/bootstrap.min.js"></script>
+<script src="{{ static_prefix }}/jquery-latest.min.js"></script>
+<script src="{{ static_prefix }}/js/uglipop.min.js"></script>
+<link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.css"></script>
+<link rel="stylesheet" href="{{ static_prefix }}/css/Style.css"></script>
+<link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css">
+<script src="{{ static_prefix }}/js/bootstrap.min.js"></script>
 <meta name="viewport" content="initial-scale=0.99,minimum-scale=0.1, maximum-scale=10">
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
 <script>
@@ -16,16 +16,16 @@
     ga('send', 'pageview');
 </script>
 
-<script type="text/javascript">
-document.write("<script src="+ "{{ wbrequest.wb_prefix }}"+"static\/resources\/js\/js.cookie.js"+ "><\/script>");
-</script> <!-- Plugin for cookie to choose language-->
+<!-- <script type="text/javascript">
+document.write("<script src="+ "{{ wb_prefix }}"+"static\/resources\/js\/js.cookie.js"+ "><\/script>");
+</script> <!-- Plugin for cookie to choose language-->-->
 <script>
 	var language = localStorage.language;
 	if( language == 'EN'){
-		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsEN.js"><\/script>');
+		document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsEN.js"><\/script>');
 	}
 	else{
-		document.write('<script type="text/javascript" language="JavaScript" src="'+'{{ wbrequest.wb_prefix }}'+'static/resources/properties/ConstantsPT.js"><\/script>');
+		document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsPT.js"><\/script>');
 	}
 </script>
 <script type="text/javascript">
@@ -41,7 +41,7 @@ for( i = 5; i<tokens.length; i ++){
 	}
 }
 
-document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" class="imgClass" /></a>');
+document.write('<a href="///?l='+ Content.language +'"><img src="{{ static_prefix }}/img/AWP_200_100.png" class="imgClass" /></a>');
 
 document.write('<h2 align="center" class="notArchived">'+ Content.notArchived+'</h2>'); 
 

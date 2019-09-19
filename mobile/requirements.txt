@@ -1,2 +1,2 @@
-pywb==2.3.1
+pywb==2.3.5
 uwsgi

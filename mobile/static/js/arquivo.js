@@ -3,15 +3,13 @@ String.prototype.replaceAll = String.prototype.replaceAll || function(needle, re
 }; 
 /*Arquivo.pt specific functions and js code, such as loading constants, cookies, custom html code, etc*/
 var ARQUIVO = ARQUIVO || (function(){
-    var _host_prefix;
     var _static_path;
 	var	_url;
 	var _ts;
 	var _hostname = window.location.hostname;
 	var _language ='pt';
     return {
-        init : function(host_prefix, static_path) {
-        	_host_prefix = host_prefix;
+        init : function(static_path) {
 			_static_path = static_path;
 			this.loadLanguage();
         },
@@ -20,13 +18,13 @@ var ARQUIVO = ARQUIVO || (function(){
 			var language = localStorage.language;
 		    if( language == 'EN'){
 		      $('html').attr('lang', 'en');						
-		        document.write('<script type="text/javascript" language="JavaScript" src="'+_host_prefix+'/'+_static_path+'/properties/ConstantsEN.js?release=Zeus"><\/script>');
+		        document.write('<script type="text/javascript" language="JavaScript" src="'+_static_path+'/properties/ConstantsEN.js?release=Zeus"><\/script>');
 		        _language = 'en';
 		    }
 		    else{
 		      _language ='pt';	
 		      $('html').attr('lang', 'pt');
-		        document.write('<script type="text/javascript" language="JavaScript" src="'+_host_prefix+'/'+_static_path+'/properties/ConstantsPT.js?release=Zeus"><\/script>');
+		        document.write('<script type="text/javascript" language="JavaScript" src="'+_static_path+'/properties/ConstantsPT.js?release=Zeus"><\/script>');
 		    }
 		},
 		iframeResize: function(){ /*Code written by the author of Jquery to dynamically resize iframe to always have height equal to the parent container*/
@@ -63,7 +61,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '    <div class="main-content">'+
 			  '      <div class="container-fluid">'+
 			  '        <div class="row text-center logo-main-div-no-border">'+
-			  '                    <a href="/?l='+_language+'"><img src="'+_host_prefix+'/'+_static_path+'/img/01_preto.png" id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
+			  '                    <a href="/?l='+_language+'"><img src="'+_static_path+'/img/01_preto.png" id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
 			  '                    <a class="pull-right main-menu"id="menuButton"><i class="fa fa-bars"></i></a>'+
 			  '        </div>  '+
 			  '        <div class="row logo-main-div replay-options">'+
