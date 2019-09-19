@@ -3,7 +3,8 @@
 <meta name=viewport content="width=device-width, initial-scale=1">
 
 <html lang="pt" ng-app="ionic">
-<head>
+<head>  
+<meta name=viewport content="width=device-width, initial-scale=1">
   <meta property="og:image" content="http://arquivo.pt/img/logoFace.png">
   <!-- Google Analytics-->
     <script>
@@ -75,16 +76,21 @@
           return t;
         }(document, "script", "twitter-wjs"));
     </script>
-    <script src="{{ static_prefix }}/wb.js"></script>
-    <link rel='stylesheet' href ="{{ static_prefix }}/wb.css">
     <script src="{{ static_prefix }}/wb_frame.js"></script>
+    <script>
+        var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
+                               "prefix": "{{ wb_prefix }}",
+                               "request_ts": "{{ wb_url.timestamp }}",
+                               "iframe": "#replay_iframe"});
+    </script>
         
     <!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
 <script>
-function set_state(state) {
+	
+function set_state(new_url, new_timestamp) {
     // current url
-    url = state.url;
-    wbinfo.capture_url = state.url;
+    url = new_url;
+    wbinfo.capture_url = new_url;
     var truncatedUrl = truncateUrl(url);
     $("#update1").text(truncatedUrl);
     $("#update2").text(truncatedUrl);
@@ -95,8 +101,8 @@ function set_state(state) {
     $("#update1").attr('href',url);
     $("#update2").attr('href',url); 
 
-    if(state.timestamp != undefined){
-      ts = state.timestamp; //global variable timestamp
+    if(new_timestamp != undefined){
+      ts = new_timestamp; //global variable timestamp
     }
 
     ga('set', 'page', '/wayback/'+ ts + '/'+ url);
@@ -146,21 +152,6 @@ function set_state(state) {
     }
     sideMenuVersion =false;
 
-    //the following code is the original code of pywb...
-    var capture_info = document.getElementById("_wb_capture_info");
-    if (capture_info) {
-        capture_info.innerHTML = state.capture_str;
-    }
-
-    var label = document.getElementById("_wb_label");
-    if (label) {
-        if (state.is_live) {
-            label.innerHTML = _wb_js.banner_labels.LIVE_MSG;
-        } else {
-            label.innerHTML = _wb_js.banner_labels.REPLAY_MSG;
-        }
-    }
-    curr_state = state;
 }
 </script>
 <!--end pywb changes -->
@@ -181,6 +172,16 @@ function set_state(state) {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+    window.addEventListener("message", function(event) {
+  if (event.data.wb_type == "load" || event.data.wb_type == "replace-url") {
+    console.log("New Url: " + event.data.url);
+    console.log("New Timestamp: " + event.data.ts);
+    set_state(event.data.url, event.data.ts);
+  }
+});
+    </script>
+
 </head>
 <body >  
     <script type="text/javascript">
@@ -285,7 +286,7 @@ function set_state(state) {
             </script>
            
                 <script type="text/javascript">
-                  document.write('<div id="iframeBox" class="container-fluid" class = "noprint" style="height: '+(window.innerHeight - $('#toolBar').height()) +'px;"><iframe style="background-color: #fff;border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; height:100%; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" onload=" iframe_loaded(event);" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >')
+                  document.write('<div id="iframeBox" class="container-fluid" class = "noprint" style="height: '+(window.innerHeight - $('#toolBar').height()) +'px;"><iframe style="background-color: #fff;border-left: 1px solid #fff; border-right:none; border-top:none;border-bottom:none; height:100%; width: 100%;" name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >')
                 </script>
                 
                 <script>

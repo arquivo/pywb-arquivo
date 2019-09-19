@@ -27,22 +27,6 @@ function minimizeMaximize(){
 	}
 }
 
-// if this is not used why its here??
-function setLang(lang) {
-    hostwithHttp = "{{ wbrequest.user_metadata.search_location }}";
-    var cHost = hostwithHttp.substring(7);
-    if(lang == 'EN')
-     {
-        localStorage.setItem('language', 'EN');
-        window.location.reload();
-     }
-    else //default language Portuguese
-    {
-        localStorage.setItem('language', 'PT');   
-        window.location.reload();
-    }   
-}
-
 function createVersion(timestamp, url)
 //add version with timestamp to the left side menu
 {

@@ -13,5 +13,6 @@ framed_replay: true
 #metadata:
 #  search_location: http://preprod.arquivo.pt
 
-search_location: http://localhost:8082
+# search_location: http://localhost:8082
+redirect_exact: true
 debug: True
