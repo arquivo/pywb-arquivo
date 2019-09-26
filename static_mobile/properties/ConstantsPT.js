@@ -121,7 +121,7 @@ Content = {
     pages:"P&#225ginas",
     about:"Sobre",
     copyLink:"Copiar link",
-    linkCopied:"Link copiado!",
+    linkCopied:"Link copiado",
     images: "Imagens",
     options: "Op&ccedil;&#245;es",
     bug: "https://sobre.arquivo.pt/pt/contacto/?your-subject=Problema%20no%20arquivo.pt&your-message="
