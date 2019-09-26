@@ -31,8 +31,9 @@ var ARQUIVO = ARQUIVO || (function(){
 		},
 		iframeResize: function(){ /*Code written by the author of Jquery to dynamically resize iframe to always have height equal to the parent container*/
 			var buffer = 20; //scroll bar buffer
+			var overlayBuffer = 27 // overlay current style with a curve in the replaybar
 			var iframe = document.getElementById('replay_iframe');
-			var bottomBar =47;
+	
 
 			function pageY(elem) {
 			    return elem.offsetParent ? (elem.offsetTop + pageY(elem.offsetParent)) : elem.offsetTop;
@@ -40,9 +41,9 @@ var ARQUIVO = ARQUIVO || (function(){
 
 			function resizeIframe() {
 			    var height = document.documentElement.clientHeight;
-			    height -= pageY(document.getElementById('replay_iframe'))+ buffer ;
+			    height -= pageY(document.getElementById('replay_iframe'))+ buffer+ overlayBuffer ;
 			    height = (height < 0) ? 0 : height;
-			    document.getElementById('replay_iframe').style.height = height+20-bottomBar + 'px';
+			    document.getElementById('replay_iframe').style.height = height+ buffer +overlayBuffer + 'px';
 			}
 
 			// .onload doesn't work with IE8 and older.
@@ -57,59 +58,38 @@ var ARQUIVO = ARQUIVO || (function(){
 		/*Write custom html code before the Iframe*/
 		beforeIframe: function(){
 			document.write(''+
-			  '<div class="swiper-container swiper-container-horizontal noprint">'+
+			  '<div id="swipeContainer" class="swiper-container swiper-container-horizontal noprint">'+
 			  ' <div class="swiper-wrapper" id="swiperWrapper">'+
 			  '  <div class="swiper-slide content swiper-slide-active">'+
 			  '    <div class="main-content">'+
 			  '      <div class="container-fluid">'+
 			  '        <div class="row text-center logo-main-div-no-border">'+
-			  '                    <a href="/?l='+_language+'"><img src="'+_host_prefix+'/'+_static_path+'/img/01_preto.png" id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
-			  '                    <a class="pull-right main-menu"id="menuButton"><i class="fa fa-bars"></i></a>'+
+			  '                    <a class="logo-menu-anchor" href="/?l='+_language+'"><img src="'+_host_prefix+'/'+_static_path+'/img/arquivo-logo-white.svg  " id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
+			  '                    <a class="pull-left main-menu" id="menuButton"><div class="menu-button"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></a><button  id="replayMenuButton" " class="select-language" title="Replay menu">...</button>'+
+																																						  
+
 			  '        </div>  '+
-			  '        <div class="row logo-main-div replay-options">'+
-			  				'<button class="clean-button" style="padding:11px" onclick="ARQUIVO.showPageOptions()"><span class="opts">'+Content.options+'</span></button>'+
-			  		/*   	'<ion-button size="small" expand="full" color="white" fill="outline"class="options-button" onclick="console.log(\'custom button\')" >Opcoes da p&#225gina</ion-button>'+*/
-			  '        </div>  '+			  
-			  '      </div>  ');		
+			  '      </div>  '+
+	'<div class="curve-background"></div>'+
+	'<div class="background-top-curve"></div>');		
 		},
 		afterIframe: function(){
 			document.write(''+
 			  '   </div>' +
-              '   <div class="maskMenu"></div>'+
+              '   <div id="mainMask" class="maskMenu"></div>'+
               '  </div>'+
-             '		<div class="swiper-slide menu swiper-slide-prev">' +       
-/*              '			<div class="main-menu-top-div">'+
-			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
+              '  <div class="swiper-slide" style="width:100%;">'+
+              '			<div class="main-menu-top-div">'+
+			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' + 
+			  ' 			<button href="#" onclick="ARQUIVO.closeFunctionsMenu()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
-*/
-			  '			<button class="clean-button" onclick="ARQUIVO.copyLink();"><h4><i class="fa fa-link padding-right-menu-icon" aria-hidden="true"></i> '+Content.copyLink+'</h4></button>' +
-  					   '<button class="clean-button" id="pagesMenu" onclick="ARQUIVO.pagesClick();"><h4><i class="fa fa-globe padding-right-menu-icon" aria-hidden="true"></i> '+Content.pages+'<i id="pagesCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></button>'+	 			  
-      				   '<div id="pageOptions">'+
-              ' 			<a href="/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
-              ' 			<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
-              		   '</div>'+
-			  		   '<button class="clean-button" id="imagesMenu" onclick="ARQUIVO.imagesClick();"><h4><i class="fa fa-image padding-right-menu-icon" aria-hidden="true"></i> '+Content.images+'<i id="imagesCarret" class="fa iCarret shareCarret pull-right fa-caret-down" aria-hidden="true"></i></h4></button>'+
-      				   '<div id="imageOptions">'+
-              ' 			<a href="/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
-              ' 			<a href="/advancedImages.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
-              		   '</div>'+
+			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
+              ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
+			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
+              '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><ion-icon name="resize"></ion-icon></i> '+Content.expandPage+'</h4></a>'+			                
 
-              //' 		<a href="#" id="shareMenu"><h4><i alt="'+Content.moreInfoIcon+'" class="fa fa-share-alt right-9" aria-hidden="true"></i> '+Content.share+'<i id="shareCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></a>'+
-              //'			<div id="shareOptions">'+
-              //' 			<a class="addthis_button_facebook" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'FacebookShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" href=""><h4 class="submenu"><i class="fa fa-facebook right-13" aria-hidden="true"></i> '+ Content.facebook+'</h4></a>'+
-              //' 			<a class="addthis_button_twitter" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'TwitterShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');" ><h4 class="submenu"><i class="fa fa-twitter" aria-hidden="true"></i> '+Content.twitter+'</h4></a>'+
-              //' 			<a title="'+Content.mailTitle+'" href="mailto:?subject='+Content.emailMessage+'[sub]" onclick="this.href = this.href.replace(\'[sub]\',document.title + \'%0D%0A'+ encodeURIComponent(this.getDatets()) +'%0D%0A %0D%0A\' + encodeURIComponent(window.location.href) ); ga(\'send\', \'event\', \'ReplayBarFunctions\', \'EmailShareClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');""><h4 class="submenu"><i class="fa fa-envelope" aria-hidden="true"></i> '+Content.email+'</h4></a>'+
-			  //'			</div>'+
-			  //' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
-             //' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
-			 //'	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-             // '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+			                
-              '		 <a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
-			  '		 <a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+              
-              '		 <a href="'+Content.aboutHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AboutClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
-              '		 <a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
-              '		</div>'+
+              '  </div>'+
               '	</div>'+
 			  '</div>'+
 			  '<div id="divPrintMe"></div>');
@@ -123,6 +103,10 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachSwitchDesktop();
 			this.attachMoreInfoModal();
 			this.attachReportBug();
+ 		},
+ 		closeFunctionsMenu: function(){
+ 			console.log('closing menu');
+ 			var mySwiper = document.querySelector('.swiper-container').swiper.slidePrev();
  		},
  		copyLink: function(){
 			var dummy = document.createElement('input')			    
@@ -143,7 +127,7 @@ var ARQUIVO = ARQUIVO || (function(){
  			console.log("options");
 
 		              uglipop({
-		                class:'modalReplay noprint scrollModal', //styling class for Modal
+		                class:'modalReplay noprint scrollModal PagSpec', //styling class for Modal
 		                source:'html',
 		                content:'<button onclick="ARQUIVO.closeUglipopCustomCss()" class="expand__close__white" title="Fechar"></button>'+
 				                '<div class="main-menu-top-div">'+
@@ -212,63 +196,83 @@ var ARQUIVO = ARQUIVO || (function(){
 			ga('send', 'pageview'); /*New page*/ 			
  		},
  		createSlideMenu: function(){
-		    var ignoreInitialTransitionEnd = 0;
-		    var toggleMenu = function(){
-		      if (swiper.previousIndex == 0)
-		        swiper.slidePrev()
-		    }
-		    , swiper = new Swiper('.swiper-container', {
-		      slidesPerView: 'auto'
-		      , initialSlide: 1
-		      , resistanceRatio: .00000000000001
-		      ,onTransitionEnd: function(slider){
-		        if(ignoreInitialTransitionEnd === 0){
-		          ignoreInitialTransitionEnd+=1;
-		          return;
+
+ 			this.insertMenuHtlm();
+
+		    var replayMenu = document.querySelector('#replayMenuButton');
+		    var openReplayMenu = function () {
+		      console.log('Opening replay menu');	
+			  swiper.allowSlideNext = true;    	
+		      swiper.slideNext();
+		      swiper.allowSlidePrev = true;
+		    };
+
+
+		    var menuButton = document.querySelector('#menuButton');
+		    var openMenu = function () {
+			  swiper.allowSlidePrev = true;    	
+		      swiper.slidePrev();
+		    };
+		    swiper = new Swiper('.swiper-container', {
+		      slidesPerView: 'auto',
+		      initialSlide: 1,
+		      resistanceRatio: 0,
+		      slideToClickedSlide: true,
+		      on: {
+		        slideChangeTransitionStart: function () {
+		          var slider = this;
+		          console.log("active: " + slider.activeIndex);
+		          if (slider.activeIndex === 0) { /*open menu*/
+		          	this.allowSlidePrev = true;
+		          	$('#mainMask').fadeIn('fast');
+		            menuButton.classList.add('cross');
+		            $('.swiper-container').removeClass('swiper-no-swiping');
+		            // required because of slideToClickedSlide
+		            menuButton.removeEventListener('click', openMenu, true);
+		          } else  if (slider.activeIndex === 1) { /*close menu*/
+		          	 this.allowSlidePrev = false;
+		          	$('.swiper-container').addClass('swiper-no-swiping');
+		          	$('#mainMask').fadeOut('fast');
+		            menuButton.classList.remove('cross');
+		          } else if(slider.activeIndex === 2){
+		          	console.log('right menu');
+		          	$('#mainMask').fadeIn('fast')
+		          }
 		        }
-		        if( $('.swiper-wrapper').css('transform').split(',')[4] != 0){
-		          $('.swiper-wrapper').addClass('active');
-		          $('.maskMenu').fadeIn(150);    
-		        }
-		        else{
-		          $('.swiper-wrapper').removeClass('active');
-		          $('.maskMenu').fadeOut();             
-		        }
+		        , slideChangeTransitionEnd: function () {
+		          var slider = this;
+		          console.log("active End of transition: " + slider.activeIndex);		          
+		          if (slider.activeIndex === 1) {
+		            menuButton.addEventListener('click', openMenu, true);
+		            replayMenu.addEventListener('click', openReplayMenu, true);
+		          }		         
+		        },
 		      }
-		      , onSlideChangeEnd: function(slider) {
-		        if (slider.activeIndex == 0){
-		          menuButton.removeEventListener('click', toggleMenu, false);
-		        }
-		        else{
-		          $('.swiper-wrapper').addClass('active');
-		          menuButton.addEventListener('click', toggleMenu, false);
-		        }
-		      }
-		      , slideToClickedSlide: true
-		    })
-	        $('.swiper-wrapper').css('-webkit-transition', 'all 0s linear' );
-	        $('.swiper-wrapper').css('-moz-transition', 'all 0s linear' );
-	        $('.swiper-wrapper').css('-o-transition', 'all 0s linear' );
-	        $('.swiper-wrapper').css('-ms-transition', 'all 0s linear' );
-	        $('.swiper-wrapper').css('transition', 'all 0s linear' );
-	        $('.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)' );
-	        $('.swiper-wrapper').css('-webkit-transform', 'translate3d(0px, 0px, 0px)' );	
-			$('.maskMenu').on('click', function (e) { 
-				ARQUIVO.closeSwipeMenu(); 
-			});  
-			$('#menuButton').on('click', function(e){
-				ga('send', 'event', 'ReplayBarFunctions', 'MainMenuClick', 'arquivo.pt/'+_ts+'/'+_url);
-				$('.swiper-wrapper').addClass('active');
-				$('.swiper-wrapper').css('-webkit-transition', 'all 0.3s linear' );
-				$('.swiper-wrapper').css('-moz-transition', 'all 0.3s linear' );
-				$('.swiper-wrapper').css('-o-transition', 'all 0.3s linear' );
-				$('.swiper-wrapper').css('-ms-transition', 'all 0.3s linear' );
-				$('.swiper-wrapper').css('transition', 'all 0.3s linear' );
-				$('.swiper-wrapper').css('transform', 'translate3d(-'+$('.menu').width()+'px, 0px, 0px)' );
-				$('.swiper-wrapper').css('-webkit-transform', 'translate3d(-'+$('.menu').width()+'px, 0px, 0px)' );
-				$('.maskMenu').fadeIn(150);    
-			});	        	    
+		    });
+		    swiper.allowSlidePrev = false;       	    
  		},
+
+ 		insertMenuHtlm: function(){
+ 			$('.swiper-wrapper').prepend(
+			  '		  <div class="swiper-slide menu swiper-slide-prev">' +       
+			  '			<button class="clean-button" onclick="ARQUIVO.copyLink();"><h4><i class="fa fa-link padding-right-menu-icon" aria-hidden="true"></i> '+Content.copyLink+'</h4></button>' +
+  					   '<button class="clean-button" id="pagesMenu" onclick="ARQUIVO.pagesClick();"><h4><i class="fa fa-globe padding-right-menu-icon" aria-hidden="true"></i> '+Content.pages+'<i id="pagesCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></button>'+	 			  
+      				   '<div id="pageOptions">'+
+              ' 			<a href="/index.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 			<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              		   '</div>'+
+			  		   '<button class="clean-button" id="imagesMenu" onclick="ARQUIVO.imagesClick();"><h4><i class="fa fa-image padding-right-menu-icon" aria-hidden="true"></i> '+Content.images+'<i id="imagesCarret" class="fa iCarret shareCarret pull-right fa-caret-down" aria-hidden="true"></i></h4></button>'+
+      				   '<div id="imageOptions">'+
+              ' 			<a href="/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 			<a href="/advancedImages.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              		   '</div>'+                
+              '		 	<a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
+			  '		 	<a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+              
+              '		 	<a href="'+Content.aboutHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AboutClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
+              '		 	<a id="changeLanguage" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
+              '		</div>' ); 			
+ 		},
+
  		attachScreenshotModal: function(){
 		  $('#screenshotOption').on('click', function(e){
 		  	ARQUIVO.closeSwipeMenu();    		  	
@@ -354,21 +358,20 @@ var ARQUIVO = ARQUIVO || (function(){
 		              }            
 
 		              uglipop({
-		                class:'modalReplay noprint scrollModal', //styling class for Modal
+		                class:'modalReplay noprint scrollModal PageSpec', //styling class for Modal
 		                source:'html',
 		                content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
-		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2-(beta-version)#response-fields">'+Content.techDetails+'</a></h4>'+
+		                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon removeContentIcon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2-(beta-version)#response-fields">'+Content.techDetails+'</a></h4>'+
 		                        '<div>' + metadataResponse + '</div>'
 		              });
 		              ARQUIVO.attachRemoveModal();
 		              $( ".scrollModal" ).ready(function() {
 		                $( ".scrollModal" ).parent().css({
-		                    'top': '1%',
+		                    'top': '2%',
 		                    'left': '3%',
 		                    'bottom': '1%',
 		                    'width': '94%',
-		                    'height': '98%', 
-		                    'opacity': '0.9',  
+		                    'height': '96%', 
 		                    'overflow': 'auto' ,
 		                    'transform': 'none',
 		                    '-webkit-transform': 'none',
@@ -557,15 +560,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			});
 		},		 		
 		closeSwipeMenu: function(){
-	      $('.swiper-wrapper').css('-webkit-transition', 'all 0.3s linear' );
-	      $('.swiper-wrapper').css('-moz-transition', 'all 0.3s linear' );
-	      $('.swiper-wrapper').css('-o-transition', 'all 0.3s linear' );
-	      $('.swiper-wrapper').css('-ms-transition', 'all 0.3s linear' );
-	      $('.swiper-wrapper').css('transition', 'all 0.3s linear' );
-	      $('.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)' );
-	      $('.swiper-wrapper').css('-webkit-transform', 'translate3d(0px, 0px, 0px)' );
-	      $('.swiper-wrapper').removeClass('active');
-	      $('.maskMenu').fadeOut(); 
 		} 		 									 		
     };
 }());

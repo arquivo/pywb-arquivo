@@ -41,7 +41,11 @@ for( i = 5; i<tokens.length; i ++){
 	}
 }
 
-document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" class="imgClass" /></a>');
+
+/* Old image */
+/*document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/img/AWP_200_100.png" class="imgClass" /></a>');*/
+
+document.write('<a href="{{ wbrequest.user_metadata.search_location }}?l='+ Content.language +'"><img src="{{ wbrequest.wb_prefix }}static/resources/img/logo.svg" class="imgClass" /></a>');
 
 document.write('<h2 align="center" class="notArchived">'+ Content.notArchived+'</h2>'); 
 

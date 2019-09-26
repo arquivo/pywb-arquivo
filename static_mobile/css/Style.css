@@ -26,15 +26,19 @@ cite { font-family: monospace; font-size: 1.2em; font-style: normal; }
 .imgClass{
 	display: block; 
 	margin: auto;
-	padding-top: 5%;
-	width: 75px;
+	padding-top: /*5%*//*50%*/58%;
+	width: 62%;
 }
 
 .notArchived{
-	font-size: 1.6em; color: #000; 
+	font-size: /*1.6em*/0.9em; color: #000; 
 	margin-top: 5px;
 	margin-bottom: 10px; 
-	font: 180% 'Helvetica', Arial, sans;
+	/*font: 180% 'Helvetica', Arial, sans;*/
+	    font-size: /*1.6em*/1.2em;
+    color: #000;
+    margin-top: 9px;
+    margin-bottom: /*13px*/20px;
 }
 
 #main-home, #main { margin: 0 25px; width: 960px; }
@@ -424,38 +428,40 @@ li.grouped { padding-left: 38px; }
 #resultados-lista .tabela-principal th.mais-resultados-title { min-width: 180px; }
 #conteudo-versoes .mais-resultados { padding: 0 5px 5px; }
 #conteudo-versoes .mais-resultados,
-#conteudo-versoes .mais-resultados span { text-align: center; }
+#conteudo-versoes .mais-resultados span { text-align: center;border-radius: 50px !important;
+    background-color: #007AFF !important;
+    color: white !important;
+    border: none !important; }
 
 
-.myButtonStyle{
-    background-color: #efefef!important;
-    border: 1px solid #d0d0d0!important;
-    border-radius: 0!important;
+.myButtonStyle{       
     margin-bottom: 30px!important;
     outline: none!important;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding:9px 13px;    
     cursor: pointer;
     word-wrap: break-word;
-    max-width: 250px;
+    max-width: 65%;
     margin: auto;
     text-align: center;
+    border-radius: 5px /*60px*/ !important;
+    border: none !important;
+    background-color: #007AFF !important;
+}
+
 }
 .myButtonStyle:active{
     background-color: #dedede!important;
-    color: #555;
+    color: /*#555*/white;
     text-decoration: none;
 }
 .myButtonStyle:hover{
-    color: #555;
+    color:/*#555*/white;
     text-decoration: none;	
 }
 
 .myButtonStyle:focus{
     outline: none;
-    color: #555;
+    color: /*#555*/white;
     text-decoration: none;    
 }
 
@@ -465,7 +471,7 @@ li.grouped { padding-left: 38px; }
 }
 #otherArchives, #otherArchives:visited, #otherArchives:focus, #otherArchives:active {
     text-decoration:none;
-    color: #555;
+    color: /*#555*/white;
 }
 .greyFont{
     font-size: 17px;
