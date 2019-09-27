@@ -26,8 +26,8 @@ cite { font-family: monospace; font-size: 1.2em; font-style: normal; }
 .imgClass{
 	display: block; 
 	margin: auto;
-	padding-top: /*5%*//*50%*/58%;
-	width: 62%;
+	/*padding-top: /*5%*//*50%*//*58%;*/
+	/*width: 62%;*/
 }
 
 .notArchived{
@@ -35,10 +35,19 @@ cite { font-family: monospace; font-size: 1.2em; font-style: normal; }
 	margin-top: 5px;
 	margin-bottom: 10px; 
 	/*font: 180% 'Helvetica', Arial, sans;*/
-	    font-size: /*1.6em*/1.2em;
+	font-size: /*1.6em*/1.2em;
     color: #000;
     margin-top: 9px;
     margin-bottom: /*13px*/20px;
+}
+
+#pageIsNotArchived {	
+	margin:9% !important;
+}
+
+#pageIsNotArchived img {
+	width: 50% !important;
+	margin: 0 auto !important;
 }
 
 #main-home, #main { margin: 0 25px; width: 960px; }
@@ -440,7 +449,7 @@ li.grouped { padding-left: 38px; }
     padding:9px 13px;    
     cursor: pointer;
     word-wrap: break-word;
-    max-width: 65%;
+    /*max-width: /*65%*//*51.5%*;    
     margin: auto;
     text-align: center;
     border-radius: 5px /*60px*/ !important;
@@ -476,4 +485,36 @@ li.grouped { padding-left: 38px; }
 .greyFont{
     font-size: 17px;
     color: #555;
+}
+
+/*  queries for*/
+/* Portrait */
+@media screen and (orientation:portrait) {
+#pageIsNotArchived {
+    margin: 50% 0 !important;
+    }
+    .myButtonStyle {    
+    width: 62% !important;
+    margin: 0 auto;
+     border-radius: 5px
+}
+#pageIsNotArchived img {
+    width: 62% !important;
+    margin: 0 auto !important;
+}
+}
+/* Landscape */
+@media screen and (orientation:landscape) {
+#pageIsNotArchived {
+    margin: 9% !important;
+}
+#pageIsNotArchived img {
+    width: 41% !important;
+    margin: 0 auto !important;
+}
+.myButtonStyle {   
+    width: 41% !important;
+    margin: 0 auto;
+    border-radius: 5px;
+}
 }	
