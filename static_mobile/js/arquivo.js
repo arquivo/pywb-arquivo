@@ -84,6 +84,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  ' 			<button href="#" onclick="ARQUIVO.closeFunctionsMenu()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
+			  '			<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>'+ 						                      
 			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+

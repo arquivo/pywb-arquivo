@@ -11,6 +11,7 @@
 #replay_iframe{
   margin-top: -22px;
   padding: 0 0px;
+  height: 100%;  
 }
 
 @media print
@@ -92,6 +93,14 @@
 .PageSpec h4.modalTitle {
    padding:39px 0 6px 20px;
    font-weight: bold;
+}
+
+h4 .fa-list:before {
+  padding-left: 1.5px;
+  }
+
+h4 .fa-list {
+  padding-right: 4.9px;
 }
 
 .modalReplay .modalparagraph{
@@ -255,7 +264,7 @@
 }
 
 .alertCopy {
-    position: absolute;
+    /*position: absolute;
     display:  hidden;
     top: 0px;
     z-index: 4;
@@ -263,7 +272,21 @@
     margin: 0px;
     font-family: "Open Sans", sans-serif;
     font-size: 1.5em;
-    text-align: center
+    text-align: center*/
+    position: absolute;
+    display:  hidden;
+    top: 0px;
+    z-index: 4;
+    width: 100%;
+    margin: 0px;
+    font-family: Roboto, "Open Sans", sans-serif;
+    font-size: 1.5em;
+    font-weight: normal !important;
+    text-align: center;
+    background-color: #007AFF !important;
+    color:white !important;
+    border:none !important;
+    border-radius: none !important
 }
 
 

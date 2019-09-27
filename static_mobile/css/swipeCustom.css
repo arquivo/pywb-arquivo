@@ -216,6 +216,10 @@ body {
 	 background: rgba(255, 255, 255, 0.2)!important;
 }
 
+#menuUrl:active{
+    background-color: initial!important;
+}
+
 .curve-background{
     background-color: #000;
     z-index: 9;
@@ -263,10 +267,6 @@ body {
 
 #shareOptions, #toolsOptions{
 	display: none;
-}
-
-#menuUrl:active{
-	background-color: #42a5f5!important;
 }
 
 .main-content{
