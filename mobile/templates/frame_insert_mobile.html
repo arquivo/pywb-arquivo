@@ -65,7 +65,9 @@ html, body
 </script>
 
 <title>Arquivo.pt</title>
-<script src='{{ host_prefix }}/{{ static_path }}/wb_frame.js'> </script>
+
+<script src="{{ static_prefix }}/wb_frame.js"></script>
+
 <script>
 var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
                                "prefix": "{{ wb_prefix }}",
