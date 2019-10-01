@@ -39,9 +39,7 @@
   wbinfo.wombat_scheme = "{{ urlsplit.scheme }}";
   wbinfo.wombat_host = "{{ urlsplit.netloc }}";
   wbinfo.wombat_sec = "{{ cdx.timestamp | format_ts('%s') }}";
-
   wbinfo.wombat_opts = {};
-
   if (window && window._WBWombatInit) {
     window._WBWombatInit(wbinfo);
   }
@@ -59,4 +57,3 @@
 {{ banner_html }}
 
 <!-- End WB Insert -->
-

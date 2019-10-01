@@ -12,6 +12,7 @@
     text-align: center !important;
     z-index: 2147483643 !important;
     line-height: normal !important;
+    outline: 5px solid red;
 }
 
 #_wb_plain_banner
@@ -31,17 +32,16 @@
 #wb_iframe_div
 {
     position: absolute;
-    width: 100%;
-    height: calc(100% - 94px);
-    padding: 0px 10px 0px 10px;
+    width: 100%;   
+    padding: 0px /*10px 0px 10px*/;
     background: #252525;
-
+    height: 100%;
     border: none;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 }
 
 .wb_iframe

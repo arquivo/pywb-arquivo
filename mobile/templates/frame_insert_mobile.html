@@ -63,23 +63,37 @@ html, body
 <script type="text/javascript">
 	ARQUIVO.init("{{ static_prefix }}");  
 </script>
+
 <title>Arquivo.pt</title>
+<script src='{{ host_prefix }}/{{ static_path }}/wb_frame.js'> </script>
+<script>
+var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
+                               "prefix": "{{ wb_prefix }}",
+                               "request_ts": "{{ wb_url.timestamp }}",
+                               "iframe": "#replay_iframe"});
+ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
+</script>
 </head>
+
 <body style="margin: 0px; padding: 0px;">
+
 <!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
   <script> ARQUIVO.beforeIframe(); /*Load Arquivo specific code before iframe*/</script>
   <div id="wb_iframe_div">
-    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" > 
-                <script>window.onunload = function() {window.top.postMessage('iframe_change', '*');};</script>
+    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >
     </iframe>
-
-
 
   </div>
 <!-- scripts slider right menu -->
 <script src="{{ static_prefix }}/js/swiper.min.js"></script>
 <script>
-  ARQUIVO.updateInfo(wbinfo.capture_url, ts);
+    window.addEventListener("message", function(event) {
+        if (event.data.wb_type == "load" || event.data.wb_type == "replace-url") {
+            console.log("New Url: " + event.data.url);
+            console.log("New Timestamp: " + event.data.ts);
+            ARQUIVO.updateInfo(event.data.url, event.data.ts);
+        }
+    });
   ARQUIVO.afterIframe();
 </script>
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317"></script> 
@@ -88,29 +102,5 @@ html, body
   <h1 class="noprint"><i class="fa fa-circle-o-notch fa-spin noprint" ></i></h1>
 </div>
 <div class="maskLoading noprint" style=""></div>
-  <script>
-  function set_state(state) {
-      if(state.timestamp != undefined){
-        ts = state.timestamp;
-      }else{
-        alert('undefined timestamp');
-      }
-      ARQUIVO.updateInfo(state.url, ts);
-      //the following code is the original code of pywb...
-      var capture_info = document.getElementById("_wb_capture_info");
-      if (capture_info) {
-          capture_info.innerHTML = state.capture_str;
-      }
-      var label = document.getElementById("_wb_label");
-      if (label) {
-          if (state.is_live) {
-              label.innerHTML = _wb_js.banner_labels.LIVE_MSG;
-          } else {
-              label.innerHTML = _wb_js.banner_labels.REPLAY_MSG;
-          }
-      }
-      curr_state = state;
-  }
-  </script>  
 </body>
 </html>
