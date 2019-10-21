@@ -34,7 +34,7 @@
   background: /*#252525*/white;
   color: /*white*/black;
   /*border: 1px solid #3E3E3E;*/
-  border-radius: /*10px*/5px;
+  border-radius: /*10px*/10px;
   text-align: center;
   padding-bottom: 9px;
 }
@@ -45,15 +45,23 @@
   font-size: 14px;
   padding-top: 1px;
 }
-#uglipop_content_fixed .PageSpec {
-  background-color: white !important;
-  text-align: left;
+#uglipop_content_fixed .PageSpec {  
+   text-align: left;
+  /* Gradient */
+  /* background: #45484d; /* Old browsers */
+  /* background: -moz-linear-gradient(top,  #45484d 0%, #000000 100%); /* FF3.6-15 */
+   /*background: -webkit-linear-gradient(top,  #45484d 0%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+  /* background: linear-gradient(to bottom,  #45484d 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+   color: rgba(255,255,255,0.6) !important;
+   background-color: white !important;
 }
 
 #uglipop_content_fixed .PageSpec a, #uglipop_content_fixed .PageSpec a:active {
- color: #007AFF !important;
+ color: /*#00bcd4*//*#007AFF*/#1c75c0 !important;
  text-decoration: none !important;
  border:none !important;
+ font-weight: normal !important;
 }
 
 .modalReplay a, .modalReplay a:hover, .modalReplay a:visited, .modalReplay a:active {
@@ -76,7 +84,6 @@
   border-right: 1px solid #3E3E3E;
 }
 
-
 .modalReplay .modalTitle{   
     padding: 20px 0 20px 0px;
     font-size: /*16px*/15px !important;
@@ -93,6 +100,7 @@
 .PageSpec h4.modalTitle {
    padding:39px 0 6px 20px;
    font-weight: bold;
+   color: black;
 }
 
 h4 .fa-list:before {
@@ -107,10 +115,11 @@ h4 .fa-list {
     padding-left: 20px;
     padding-right: 20px;
     word-wrap: break-word;
-    border-top: 1px solid /*#ccc*/#cccccc91;
+    border-top: 1px solid /*#ccc*//*#cccccc91*//*#435b66*/#435b6624;
     padding-bottom: 39px;
     padding: 15px 0 15px 0;
     margin: 0 20px;
+    color: black;
 }
 
 .modalReplay .last {   
@@ -133,7 +142,7 @@ h4 .fa-list {
 .modalReplay .modalOptions{ 
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #007AFF;
+  background-color: /*#007AFF*/#1c75c0;
   border-radius: 5px /*10px /*100px*/;
   margin: 0 10px;
   width: 43%;
@@ -161,10 +170,10 @@ h4 .fa-list {
 #uglipop_overlay{
   opacity: 0.7!important;
   z-index: 1;
+  background-color:#1c75c0 !important;
 }
 
-.removeContentIcon {
-  outline: 1px solid red !important;
+.removeContentIcon {  
   display: none !important;
 }
 
@@ -207,23 +216,51 @@ h4 .fa-list {
 .expand__close {
     position: fixed;    
     color: #454545;
-    top: 1.2%;
-    right: 4%;
+    /*top: 1.2%;
+    right: 4%;*/
+    top: 2.8%;
+    right: 5.1%;
     color: #454545;
-    font-size: 30px !important;   
-    line-height: 40px;
+    /*font-size: /*30px*//*27px !important*;*/   
+    /*line-height: 40px;*/
     text-decoration: none;
     cursor: pointer;
-    background: transparent;
+    background: transparent !important;
     border: 0;
     outline: none;    
     padding:0 !important;
-    margin:0 !important;
-
+    margin:0 !important;    
 }
 
 .expand__close:before {
+  position: relative;
   content: '\00d7';
+  padding: 0px;
+  background-color: #222222f2 !important;
+  border-radius: /*50px*/;
+  height: 9px !important;
+  width:9px !important;   
+  font-size: 25px !important;
+  border-radius: 50px;
+  vertical-align: middle !important;
+  padding-bottom: 5px !important;
+  padding-right:10px; 
+  padding-left:10px;
+  color: rgba(255,255,255,1) !important;
+
+    background-color: #fffffff2 !important;
+    border-radius: /*50px*/;
+    height: 9px !important;
+    width: 9px !important;
+    font-size: 25px !important;
+    border-radius: 50px;
+    vertical-align: middle !important;
+    padding-bottom: 5px !important;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: rgba(255,255,255,1) !important;
+    color: rgb(28, 117, 192) !important;
+    border: 1px solid rgb(28, 117, 192);
 }
 
 .expand__close:visited {
@@ -235,7 +272,7 @@ h4 .fa-list {
 }
 
 .expand__close__white {
-  position: absolute;
+  /*position: absolute;
   top: 5px;
   right: 10px;
   color: white;
@@ -245,7 +282,7 @@ h4 .fa-list {
   cursor: pointer;
   background: transparent;
   border: 0;
-  outline: none;
+  outline: none;*/
 }
 .expand__close__white:before {
   content: '\00d7';
@@ -264,26 +301,18 @@ h4 .fa-list {
 }
 
 .alertCopy {
-    /*position: absolute;
-    display:  hidden;
-    top: 0px;
-    z-index: 4;
-    width: 100%;
-    margin: 0px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 1.5em;
-    text-align: center*/
     position: absolute;
     display:  hidden;
     top: 0px;
     z-index: 4;
     width: 100%;
     margin: 0px;
-    font-family: Roboto, "Open Sans", sans-serif;
-    font-size: 1.5em;
+    font-family: "Roboto", "Open Sans", sans-serif;
+    font-size: 1.15em !important;
+    height: 48px;
     font-weight: normal !important;
     text-align: center;
-    background-color: #007AFF !important;
+    background-color: #1b65a2 !important;
     color:white !important;
     border:none !important;
     border-radius: none !important
@@ -304,12 +333,11 @@ h4 .fa-list {
     color: #fff !important;
     width: 25px;
     position: absolute;
-    right: 16px;
-    top: 12px;
-    font-size: 24px!important;
+    right: /*16px*/11px;
+    top: /*12px*/14px;
+    font-size: /*24px*/19px !important;
     font-weight: bold !important;
 }
-
 .clean-button-no-fill{
     background: none;
     color: inherit;
@@ -319,4 +347,15 @@ h4 .fa-list {
     cursor: pointer;
     outline: inherit;
     text-align: inherit;
+}
+.complete-page{
+    padding-left: 6px;
+}
+
+#reconstructImg{
+  margin-top: -3px;
+}
+
+.modalReplay{
+  display: none;
 }
