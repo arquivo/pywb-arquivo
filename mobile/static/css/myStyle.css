@@ -235,32 +235,19 @@ h4 .fa-list {
 .expand__close:before {
   position: relative;
   content: '\00d7';
-  padding: 0px;
-  background-color: #222222f2 !important;
+  padding: 0px; 
+  background-color: #fffffff2 !important;
   border-radius: /*50px*/;
   height: 9px !important;
-  width:9px !important;   
-  font-size: 25px !important;
+  width: 9px !important;
+  font-size: 27px !important;
   border-radius: 50px;
   vertical-align: middle !important;
   padding-bottom: 5px !important;
-  padding-right:10px; 
-  padding-left:10px;
-  color: rgba(255,255,255,1) !important;
-
-    background-color: #fffffff2 !important;
-    border-radius: /*50px*/;
-    height: 9px !important;
-    width: 9px !important;
-    font-size: 25px !important;
-    border-radius: 50px;
-    vertical-align: middle !important;
-    padding-bottom: 5px !important;
-    padding-right: 10px;
-    padding-left: 10px;
-    color: rgba(255,255,255,1) !important;
-    color: rgb(28, 117, 192) !important;
-    border: 1px solid rgb(28, 117, 192);
+  padding-right: 10px;
+  padding-left: 10px;
+  color: rgb(28, 117, 192) !important;
+  /*border: 1px solid rgb(28, 117, 192);*/
 }
 
 .expand__close:visited {
