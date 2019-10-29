@@ -87,8 +87,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-              '		 <a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><ion-icon name="resize"></ion-icon></i> '+Content.expandPage+'</h4></a>'+			                
-
+              '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><ion-icon name="resize"></ion-icon></i> '+Content.expandPage+'</h4></a>'+			                
+              '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\'); ARQUIVO.attachCompletePageModal();"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>'+
               '  </div>'+
               '	</div>'+
 			  '</div>'+
@@ -103,13 +103,13 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachSwitchDesktop();
 			this.attachMoreInfoModal();
 			this.attachReportBug();
+			this.attachCompletepage();
  		},
  		closeFunctionsMenu: function(){
- 			console.log('closing menu');
  			var mySwiper = document.querySelector('.swiper-container').swiper.slidePrev();
  		},
  		copyLink: function(){
-			var dummy = document.createElement('input')			    
+			var dummy = document.createElement('input')	    
 			var urlToCopy= window.location.href;
 
 			document.body.appendChild(dummy);
@@ -124,7 +124,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			}, 2000); /*time to show the notification plus the time to do the fadeout effect*/ 			
  		},
  		showPageOptions: function(){
- 			console.log("options");
 
 		              uglipop({
 		                class:'modalReplay noprint scrollModal PagSpec', //styling class for Modal
@@ -139,7 +138,8 @@ var ARQUIVO = ARQUIVO || (function(){
 									'<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>' +									
              						'<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			 						'<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+									
-			 						'<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+								
+			 						'<a id="expandPage"  href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="ion ion-arrow-resize right-8" aria-hidden="true"></i> '+Content.expandPage+'</h4></a>'+								
+									'<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\'); ARQUIVO.attachCompletePageModal();"><h4><i class="complete-page"></i><span class="complete-page-text"> '+Content.completePage+'</span></h4></a>'+
 								'</div>'+
 		                        '<div></div>'
 		              });
@@ -149,14 +149,13 @@ var ARQUIVO = ARQUIVO || (function(){
 		                    'left': 'inherit',
 		                    'bottom': '47px',
 		                    'width': '100%',
-		                    'max-height': '80%',		                    
+		                    'max-height': '80%',	                    
 		                    'opacity': '1',  
 		                    'overflow': 'auto' ,
 		                    'transform': 'none',
 		                    '-webkit-transform': 'none',
 		                    '-ms-transform': 'unset'
 		                });
-
 		              }); 
 		              ARQUIVO.attachClosePopup();
                 	  $('#a_moreinfo').on('click', function(e){         
@@ -165,10 +164,46 @@ var ARQUIVO = ARQUIVO || (function(){
 
 
  		},
+ 		attachCompletePageModal: function(){
+        
+	       //this.closeFunctionsMenu();  
+	       this.completePageModal();        
+     	
+		},
+ 		completePageModal: function(){
+		  	ga('send', 'event', 'ReplayBarFunctions', 'Reconstruct', 'arquivo.pt/'+_ts+'/'+_url);
+		  	var classModalTitle = "";
+		  	if(_language === 'pt')
+		  		classModalTitle = "completePageIcon";
+		  	else
+		  		classModalTitle = "completePageIconEN";
+		    uglipop({
+		      class:'modalReplay noprint', //styling class for Modal
+		      source:'html',
+		      content: '<h4 class="modalTitleComplete" id="'+classModalTitle+'">'+Content.leavingArquivo+'</h4>' +
+		              '<div class="row"><a id="completePage" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
+		  	this.attachCompletepage();
+		  	this.attachClosePopup();
+		},
+		attachCompletepage: function(){
+		    $('#completePage').on('click', function(e){
+		        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'arquivo.pt/'+_ts+'/'+_url);
+		        window.open('https://timetravel.mementoweb.org/reconstruct/'+_ts+'/'+_url);
+		        this.closeUglipop();
+		    });    
+		},
+		attachClosePopup: function(){
+		  $('#cancelPopup').on('click', function(e){
+		    this.closeUglipop();
+		  });         
+		},
+		closeUglipop: function(){
+		  $('#uglipop_content_fixed').fadeOut();
+		  $('#uglipop_overlay').fadeOut('fast');
+		},
  		updateInfo: function(url, ts){
  			_url = url;
  			_ts = ts;
- 			console.log("CHECK _url:" + _url);
 			/*get new page title and update it*/  
 			var title = $("#replay_iframe").contents().find("meta[property='og:title']").attr("content");
 			if(title === undefined || title === null) // there is no og:title meta tag in this iframe
@@ -200,7 +235,6 @@ var ARQUIVO = ARQUIVO || (function(){
 
 		    var replayMenu = document.querySelector('#replayMenuButton');
 		    var openReplayMenu = function () {
-		      console.log('Opening replay menu');	
 			  swiper.allowSlideNext = true;    	
 		      swiper.slideNext();
 		      swiper.allowSlidePrev = true;
@@ -220,7 +254,6 @@ var ARQUIVO = ARQUIVO || (function(){
 		      on: {
 		        slideChangeTransitionStart: function () {
 		          var slider = this;
-		          console.log("active: " + slider.activeIndex);
 		          if (slider.activeIndex === 0) { /*open menu*/
 		          	this.allowSlidePrev = true;
 		          	$('#mainMask').fadeIn('fast');
@@ -234,13 +267,11 @@ var ARQUIVO = ARQUIVO || (function(){
 		          	$('#mainMask').fadeOut('fast');
 		            menuButton.classList.remove('cross');
 		          } else if(slider.activeIndex === 2){
-		          	console.log('right menu');
 		          	$('#mainMask').fadeIn('fast')
 		          }
 		        }
 		        , slideChangeTransitionEnd: function () {
 		          var slider = this;
-		          console.log("active End of transition: " + slider.activeIndex);		          
 		          if (slider.activeIndex === 1) {
 		            menuButton.addEventListener('click', openMenu, true);
 		            replayMenu.addEventListener('click', openReplayMenu, true);
@@ -445,7 +476,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			return url;
 		},
 		truncateEndURL: function(url, maxLength){
-			console.log("TRUNCATE_END_URL: " + url);
 			url = url.replace("/(^\w+:|^)\/\//", ''); /*remove protocol from url*/
 			if(url.length > maxLength){
 				url = url.substring(0, maxLength - 3) + '...' ;

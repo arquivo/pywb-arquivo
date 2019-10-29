@@ -110,7 +110,7 @@ Content = {
     cancel: "Cancelar",
     saveAsImage: "Guardar esta p&aacute;gina como imagem?",
     completeThisPage: "Completar esta p&aacute;gina?",
-    leavingArquivo: "Vai sa&iacute;r do Arquivo.pt para outro servi&ccedil;o",
+    leavingArquivo: "Vai sair do Arquivo.pt para outro servi&ccedil;o",
     toBeCompleted: "Esta p&aacute;gina porder&aacute; ser completada com informa&ccedil;&atilde;o em falta.",
     helpHref:"http://sobre.arquivo.pt/pt/ajuda/",
     expandPage:"Expandir",
