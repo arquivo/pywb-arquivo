@@ -343,6 +343,24 @@ h4 .fa-list {
   margin-top: -3px;
 }
 
-.modalReplay{
-  display: none;
+
+.complete-page{
+  background: url(../img/complete-page.svg) no-repeat -1px 4px;
+  background-size: 24px;
+  padding-left: 29px;
+}
+
+#completePageIcon{
+  background: url(../img/complete-page-black.svg) no-repeat 17px 8px;
+  background-size: 24px;
+  padding-left: 36px !important;
+  font-size: 15px !important;
+}
+
+
+#completePageIconEN{
+  background: url(../img/complete-page-black.svg) no-repeat 17px 8px;
+  background-size: 24px;
+  padding-left: 39px !important;
+  font-size: 14px !important;
 }
