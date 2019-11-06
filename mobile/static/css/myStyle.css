@@ -364,3 +364,28 @@ h4 .fa-list {
   padding-left: 39px !important;
   font-size: 14px !important;
 }
+
+
+/****************************/
+/****** MEDIA QUERIES *******/
+/****************************/
+
+@media (min-device-width: 642px) and (max-device-width:675px) {
+  #completePageIcon {
+    background: url(../img/complete-page-black.svg) no-repeat 17px 8px;
+    background-size: 24px;
+    padding-left: 36px !important;
+    font-size: 16px !important;
+  }
+}
+
+
+@media (min-device-width: 676px) and (max-device-width:3000px) {
+  #completePageIcon {
+    background: url(../img/complete-page-black.svg) no-repeat 17px 11px;
+    background-size: 24px;
+    padding-left: 36px !important;
+    font-size: 20px !important;
+  }
+}
+
