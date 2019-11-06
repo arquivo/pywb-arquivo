@@ -7,7 +7,7 @@ html, body {
 	height: 100%;
 }
 body {
-	font-family: Roboto 1!important;
+	font-family: Roboto !important;
 	margin: 0;
 	padding: 0;
 	background-color: #000 !important;
@@ -21,7 +21,7 @@ body {
 
 .swiper-container h4, .swiper-container #expandPage {
 	display: block;
-	font-family: Roboto 1!important;
+	font-family: Roboto !important;
 	color: white;
 	border-top:1px solid #e3e3e32e;
     padding-top: /*15px*/20px;
@@ -32,6 +32,7 @@ body {
     font-size: 17px;
     cursor: pointer;
     text-decoration: none;
+    font-weight: 500 !important;
 }
 
 .swiper-container h4:hover{
