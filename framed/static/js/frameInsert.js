@@ -451,7 +451,7 @@ function updateVersionsOfUrl(cleanurl){
   var toYear = ts.substring(0,4) + 1;
   var toTs = toYear.toString() + toYear.substring(4, ts.length);
 
-  var filterErrorPages = sessionStorage.showErrorPages == "true" ? '' : '!status:4|5';
+  var filterErrorPages = sessionStorage.showErrorPages == "true" ? '' : '!~status:4|5';
 
 
   $.ajax({
