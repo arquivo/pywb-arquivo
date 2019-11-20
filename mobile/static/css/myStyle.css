@@ -345,22 +345,23 @@ h4 .fa-list {
 
 
 .complete-page{
-  background: url(../img/complete-page.svg) no-repeat -1px 4px;
-  background-size: 24px;
+  background: url(../img/reconstruct.svg) no-repeat -1px 1.2px;
+  background-size: 18px;
   padding-left: 29px;
+  padding-bottom: 14px;
 }
 
 #completePageIcon{
-  background: url(../img/complete-page-black.svg) no-repeat 17px 8px;
-  background-size: 24px;
+  background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
+  background-size: 18px;
   padding-left: 36px !important;
   font-size: 15px !important;
 }
 
 
 #completePageIconEN{
-  background: url(../img/complete-page-black.svg) no-repeat 17px 8px;
-  background-size: 24px;
+  background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
+  background-size: 18px;
   padding-left: 39px !important;
   font-size: 14px !important;
 }
@@ -372,7 +373,7 @@ h4 .fa-list {
 
 @media (min-device-width: 642px) and (max-device-width:675px) {
   #completePageIcon {
-    background: url(../img/complete-page-black.svg) no-repeat 17px 8px;
+    background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
     background-size: 24px;
     padding-left: 36px !important;
     font-size: 16px !important;
@@ -382,7 +383,7 @@ h4 .fa-list {
 
 @media (min-device-width: 676px) and (max-device-width:3000px) {
   #completePageIcon {
-    background: url(../img/complete-page-black.svg) no-repeat 17px 11px;
+    background: url(../img/reconstruct-black.svg) no-repeat 17px 11px;
     background-size: 24px;
     padding-left: 36px !important;
     font-size: 20px !important;

@@ -87,7 +87,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-              '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><ion-icon name="resize"></ion-icon></i> '+Content.expandPage+'</h4></a>'+			                
+              '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><i class="fa fa-expand" aria-hidden="true"></i><span style="padding-left: 13px !important;">'+Content.expandPage+'</span></a>'+
               '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\'); ARQUIVO.attachCompletePageModal();"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>'+
               '  </div>'+
               '	</div>'+
