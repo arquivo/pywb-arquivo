@@ -113,7 +113,7 @@ Content = {
     leavingArquivo: "You are leaving Arquivo.pt to another service",
     toBeCompleted: "This page might be completed with missing information" ,
     helpHref:"http://sobre.arquivo.pt/en/help/",
-    expandPage:"Expand",
+    expandPage:"Fullscreen",
     switchDesktop: "Desktop version",
     moreInfoIcon: "Technical details",
     techDetails:"(field description)",
