@@ -1,2 +1,2 @@
-pywb==2.3.1
+git+https://github.com/webrecorder/pywb.git@v-2.4.0-rc2
 uwsgi
