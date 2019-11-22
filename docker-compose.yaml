@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  pywb-unframed:
+    build:
+      context: . 
+      args:
+        - PYWB_ENV=unframed
+        - PORT=8080 
+    ports:
+      - 8080:8080
+
+  pywb-framed:
+    build:
+      context: . 
+      args:
+        - PYWB_ENV=framed
+        - PORT=8081
+    ports: 
+      - 8081:8081
+
+  pywb-mobile:
+    build:
+      context: . 
+      args:
+        - PYWB_ENV=mobile
+        - PORT=8082 
+    ports: 
+     - 8082:8082
+
