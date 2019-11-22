@@ -1,10 +1,6 @@
 collections:
-  $root:
-    index_paths: /home/dbicho/Documents/ArquivoDocker/pywb/webarchive/indexes/
-    archive_paths:
-      - http://p89.arquivo.pt:8080/arcproxy/arcproxy/
-      - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+  arquivo: cdx+https://arquivo.pt/wayback/cdx 
 
 framed_replay: true
 redirect_exact: true
-debug: True
+debug: true
