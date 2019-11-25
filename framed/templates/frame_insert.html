@@ -37,7 +37,7 @@
     <!-- Plugin for responsive modals-->
     <script src="{{ static_prefix }}/js/uglipop.min.js"></script>
     <!-- Javascript code for this page-->
-	<script type="text/javascript" src="{{ static_prefix }}/js/frameInsert.js?release=ImageSearch"> </script>
+  <script type="text/javascript" src="{{ static_prefix }}/js/frameInsert.js?release=ImageSearch"> </script>
     <!-- ionicons-->
     <script src="{{ static_prefix }}/dependencies/ionic.bundle.min.js"></script>
     <!--bootstrap -->
@@ -45,16 +45,15 @@
     <script src="{{ static_prefix }}/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ static_prefix }}/css/font-awesome.min.css">
 
-
     <script>
         var language = localStorage.language;
         if( language == 'EN'){
           $('html').attr('lang', 'en');
-		document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsEN.js?release=ImageSearch"><\/script>');
+    document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsEN.js?release=ImageSearch"><\/script>');
         }
         else{
           $('html').attr('lang', 'pt');
-		document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsPT.js?release=ImageSearch"><\/script>');
+    document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsPT.js?release=ImageSearch"><\/script>');
         }
     </script>
     <!-- Twitter js -->
@@ -86,7 +85,7 @@
         
     <!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
 <script>
-	
+  
 function set_state(new_url, new_timestamp) {
     // current url
     url = new_url;
@@ -201,7 +200,7 @@ function set_state(new_url, new_timestamp) {
             <div id="pageWrapper" style="height: 100%; position:absolute;">  
               <div id="topbar" class="noprint">
                 <div id="hbarMinimized">
-			<div id="logoDivMinimized"><img id="logoMinimized" src="{{ static_prefix }}/img/AWP_200_100.png" width="40px" alt="Arquivo.pt"></img></div>
+      <div id="logoDivMinimized"><img id="logoMinimized" src="{{ static_prefix }}/img/AWP_200_100.png" width="40px" alt="Arquivo.pt"></img></div>
                         <div id="urlDivMinimized"><a id="update2" href="" target="_blank">                
                             <script type="text/javascript">
                                 document.write(truncateUrl("{{url}}"));
@@ -216,7 +215,7 @@ function set_state(new_url, new_timestamp) {
                 </div>
                   <!--the below anchor is the button to minimize/maximize the replayBars it is a fixed element -->
                   <script type="text/javascript">
-			  document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{ static_prefix }}/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
+                    document.write('<a href="#" onclick="minimizeMaximize()" id ="minimizeOrMaximize" title="'+Content.minimizeMaximizeTitle+'"><img src="{{ static_prefix }}/img/icon_minimize.png" style="    position: fixed; top: 0.3em; right: 0.5em; height: 40px;" alt="'+Content.minimizeMaximizeIcon+'" /></a> ')
                   </script>
           
                   <div id="hbar">
@@ -241,29 +240,23 @@ function set_state(new_url, new_timestamp) {
                     <div class="toolbar noprint" id="toolBar">
                       <ul class="utilities" id="utilitiesUl">
                           <script type="text/javascript">
-                              document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a title='"+Content.completePage+"' id='a_reconstruct' href='' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><\/a><\/li>");
-                              attachCompletePageModal();
+                              document.write("<li id='reconstruct'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
                           </script>
-
                           <script type="text/javascript">
-                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ search_location }}/noFrame/replay/{{ wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><\/a><\/li>");
+                              document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ search_location }}/noFrame/replay/{{ wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><span class=\"menu-topbar\">"+Content.savePage+"</span><\/a><\/li>");
                                 attachScreenshotModal();
                           </script>
                           <script type="text/javascript">
-                              document.write("<li id='techDetails'><a title='"+Content.moreInfoIcon+"' id='a_moreinfo' href=''><i alt=\""+Content.moreInfoIcon+"\" class=\"ion ion-information-circled\"></i><\/a><\/li>");
+                              document.write("<li id='techDetails'><a title='"+Content.moreInfoIcon+"' id='a_moreinfo' href=''><i alt=\""+Content.moreInfoIcon+"\" class=\"moreInfoIcon ion ion-information-circled\"></i><span class=\"menu-topbar\">"+Content.technicalDetails+"</span><\/a><\/li>");
                                 attachMoreInfoModal();
                           </script>
                           <script>
                                   /*var urlEncoded = encodeURIComponent('{{ search_location }}/noFrame/replay/{{ wb_url.timestamp }}/{{url}}'); */
-                                  document.write("<li class='' id='printLi'><a title='"+Content.printTitle+"' id='printOption' href=''><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i></a></li>");
+                                  document.write("<li id='printLi'><a title='"+Content.printTitle+"' id='printOption' href=''><i id='printIon' alt=\""+Content.printIcon+"\" class='ion ion-android-print menu-icon'></i><span class=\"menu-topbar\">"+Content.printTitle+"</span></a></li>");
                                     attachPrintModal();
-                          </script>
-                          <script>
-                                  document.write("<li id='bugLi'><a href='#' title='"+Content.report+"' id='reportBug' ><i  alt=\""+Content.report+"\" class='ion ion-bug menu-icon'></i></a></li>");
-                                    attachReportBug();
-                          </script>                          
+                          </script>                       
                           <script type="text/javascript">
-                                  document.write("<li class='print' id='mobileLi'><a id='switchMobile' title='"+Content.switchMobile+"' id='printOption' href=''><i alt=\""+"teste"+"\" class='ion ion ion-iphone menu-icon'></i></a></li>");
+                                  document.write("<li id='mobileLi'><a id='switchMobile' title='"+Content.switchMobile+"' href=''><i alt=\""+"teste"+"\" class='ion ion ion-iphone menu-icon'></i><span class=\"menu-topbar\">"+Content.switchMobile+"</span></a></li>");
                                   attachSwitchMobile();                            
                           </script>
 

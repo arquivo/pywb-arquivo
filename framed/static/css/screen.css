@@ -804,12 +804,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: inline-block;
   font-family: "Ionicons";
   speak: none;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   height: 24px;
-  padding-right: .3em;
+  padding-right: .2em;
   text-transform: none;
   text-rendering: auto;
   /*vertical-align: middle;*/
@@ -3948,7 +3948,7 @@ p {
       font-weight: 700;
       color: #666;
       text-decoration: none;
-      text-transform: uppercase; }
+      }
       #topbar .utilities a:hover {
         color: #fff; }
     #topbar .utilities li {
@@ -4263,9 +4263,17 @@ p {
 }
 
 #reconstructImg{
-    height: 20px;
-    width: 25px;
+    height: 17px;
+    width: 19px;
     /*vertical-align: text-top;*/
+    margin-right: 10px;
+}
+
+#moreInfoIcon{
+    height: 17px;
+    width: 19px;
+    /*vertical-align: text-top;*/
+    margin-right: 10px;
 }
 
 .spinner-table {
@@ -4509,4 +4517,49 @@ strong{
 
 .expand__close:hover {
   color: #fff;
+}
+
+  
+/*---- Update  ----*/
+.menu-topbar {
+  color: white;
+  font-size: 0.85em;
+}
+
+.menu-topbar:hover {
+  color: #cccccc;
+  font-size: 0.85em;
+}
+
+#a_screenshot {
+  padding-top: 10px !important;
+  margin-top: 10px !important;
+  position: relative;
+  top: 2px;
+  font-size: 1.2em;
+}
+
+#printOption{
+  padding-top: 10px !important;
+  margin-top: 10px !important;
+  position: relative;
+  top: 2px;
+  font-size: 1.2em;
+}
+
+#a_moreinfo{
+  padding-top: 10px !important;
+  margin-top: 10px !important;
+  position: relative;
+  top: 2px;
+  font-size: 1.2em;
+}
+
+
+#switchMobile{
+  padding-top: 10px !important;
+  margin-top: 10px !important;
+  position: relative;
+  top: 2px;
+  font-size: 1.2em;
 }
