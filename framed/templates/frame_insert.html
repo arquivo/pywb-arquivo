@@ -240,18 +240,19 @@ function set_state(new_url, new_timestamp) {
                     <div class="toolbar noprint" id="toolBar">
                       <ul class="utilities" id="utilitiesUl">
                           <script type="text/javascript">
-				{% if patching %}
-document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
-				{% else %}
-                              document.write("<li id='reconstruct'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
-				{% endif %}				
+                          {% if patching %}
+                            document.write("<li id='reconstruct'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
+                          {% else %}
+                              document.write("<li id='reconstruct'><a title='"+Content.completePage+"' id='a_reconstruct' href='' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
+                              attachCompletePageModal();
+                          {% endif %}       
                           </script>
                           <script type="text/javascript">
                               document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ search_location }}/noFrame/replay/{{ wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><span class=\"menu-topbar\">"+Content.savePage+"</span><\/a><\/li>");
                                 attachScreenshotModal();
                           </script>
                           <script type="text/javascript">
-                              document.write("<li id='techDetails'><a title='"+Content.moreInfoIcon+"' id='a_moreinfo' href=''><i alt=\""+Content.moreInfoIcon+"\" class=\"moreInfoIcon ion ion-information-circled\"></i><span class=\"menu-topbar\">"+Content.technicalDetails+"</span><\/a><\/li>");
+                              document.write("<li id='techDetails'><a title='"+Content.moreInfoIcon+"' id='a_moreinfo' href=''><i alt=\""+Content.moreInfoIcon+"\" id=\"moreInfoIcon\"  class=\"ion ion-information-circled\"></i><span class=\"menu-topbar\">"+Content.technicalDetails+"</span><\/a><\/li>");
                                 attachMoreInfoModal();
                           </script>
                           <script>
@@ -265,12 +266,34 @@ document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a id
                           </script>
 
                           <li class="lang">
-                            <script>document.write('<a id="changeLanguage" href="" title="'+Content.changeLanguageTitle+'">');</script>
                             <script>
-                                document.write(Content.otherLanguage); $('#changeLanguage').click(function(){ 
-                                  localStorage.setItem('language', Content.otherLanguage);
+                              if(language === 'PT') {
+                                 document.write('<a id="changeLanguagePT" class="languagePTactive" href="" title="'+Content.changeLanguageTitlePT+'">');           
+                               } else {
+                                  document.write('<a id="changeLanguagePT" class="languagePT" href="" title="'+Content.changeLanguageTitlePT+'">');  
+                               }
+                                document.write(Content.portugueseLanguage); 
+                                $('#changeLanguagePT').click(function(){ 
+                                  localStorage.setItem('language', Content.portugueseLanguage);
                                   window.location.reload();
-                                  return false; });</script></a>
+                                  return false; 
+                                });
+                              </script>
+                            </a>&nbsp;<span class="languagePTactive">|&nbsp;</span> 
+                            <script>
+                              if(language === 'EN') {
+                                document.write('<a id="changeLanguageEN" class="languageENactive" href="" title="'+Content.changeLanguageTitleEN+'">');  
+                              } else {
+                                document.write('<a id="changeLanguageEN" class="languageEN" href="" title="'+Content.changeLanguageTitleEN+'">');  
+                              }
+                              document.write(Content.englishLanguage); 
+                                $('#changeLanguageEN').click(function(){ 
+                                  localStorage.setItem('language', Content.englishLanguage);
+                                  window.location.reload();
+                                  return false; 
+                                });
+                              </script>
+                            </a>
                           </li>                      
                       </ul>
                   </div>

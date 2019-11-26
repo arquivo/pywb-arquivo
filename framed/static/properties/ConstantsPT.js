@@ -64,7 +64,8 @@ Content = {
     mailTitle: "Partilhar por Email",
     screenTitle: "Guardar p&#225gina inteira como Imagem",
     printTitle: "Imprimir a P&#225gina" ,
-    changeLanguageTitle: "Change to English language" ,
+    changeLanguageTitlePT: "Mudar para Portugu&#234;s",
+    changeLanguageTitleEN: "Mudar para Ingl&ecirc;s",
     versionsStoredTable:"Lista de Vers&#245es", 
     suggestArchive: "Sugira o Arquivo desta página",
     ups: "Ups...",
@@ -116,7 +117,9 @@ Content = {
     techDetails:"(descri&ccedil;&atilde;o dos campos)",
     report:"Reportar problema",      
     bug: "https://sobre.arquivo.pt/pt/contacto/?your-subject=Problema%20no%20arquivo.pt&your-message=",
-    savePage: "Guardar p&aacute;gina",
-    technicalDetails: "Detalhes t&eacute;nicos"
+    savePage: "Guardar a p&aacute;gina",
+    technicalDetails: "Detalhes t&eacute;nicos",
+    portugueseLanguage: "PT",
+    englishLanguage: "EN"
 
 };

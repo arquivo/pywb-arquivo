@@ -64,7 +64,8 @@ Content = {
     mailTitle: "Share by Email",
     screenTitle: "Download full page screenshot",
     printTitle: "Print the Page",
-    changeLanguageTitle: "Mudar para Portugu&#234;s",
+    changeLanguageTitlePT: "Change to Portuguese language",
+    changeLanguageTitleEN: "Change to English language",
     versionsStoredTable:"List versions",
     suggestArchive: "Suggest this website for archive",
     ups: "Ups...",
@@ -117,5 +118,7 @@ Content = {
     report:"Report a bug", 
     bug: "https://sobre.arquivo.pt/en/contact/?your-subject=Problem%20in%20arquivo.pt&your-message=",
     savePage: "Save the page",
-    technicalDetails: "Technical details"
+    technicalDetails: "Technical details",
+    portugueseLanguage: "PT",
+    englishLanguage: "EN"
 };
