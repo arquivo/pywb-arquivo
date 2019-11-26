@@ -240,7 +240,11 @@ function set_state(new_url, new_timestamp) {
                     <div class="toolbar noprint" id="toolBar">
                       <ul class="utilities" id="utilitiesUl">
                           <script type="text/javascript">
+				{% if patching %}
+document.write("<li id='reconstruct' class=\"\" style='padding-right:2em;'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
+				{% else %}
                               document.write("<li id='reconstruct'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
+				{% endif %}				
                           </script>
                           <script type="text/javascript">
                               document.write("<li id='screenshot'><a title='"+Content.screenTitle+"' id='a_screenshot' href='' onClick=\"ga('send', 'event', 'ReplayBarFunctions', 'Screenshot', '{{ search_location }}/noFrame/replay/{{ wb_url.timestamp }}/{{url}}');\"><i alt=\""+Content.screenshotIcon+"\" class=\"ion ion-camera\"></i><span class=\"menu-topbar\">"+Content.savePage+"</span><\/a><\/li>");
