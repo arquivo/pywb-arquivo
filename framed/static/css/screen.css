@@ -4263,18 +4263,12 @@ p {
 }
 
 #reconstructImg{
-    height: 17px;
-    width: 19px;
+    height: 13px;
+    width: 14px;
     /*vertical-align: text-top;*/
     margin-right: 10px;
 }
 
-#moreInfoIcon{
-    height: 17px;
-    width: 19px;
-    /*vertical-align: text-top;*/
-    margin-right: 10px;
-}
 
 .spinner-table {
   max-width: 280px;
@@ -4377,6 +4371,7 @@ margin-left: 25px;
   color: white;
   border: 1px solid #3E3E3E;
   overflow: auto;
+  font-family: Roboto;
 }
 
 .modalReplay a, .modalReplay a:hover, .modalReplay a:visited, .modalReplay a:active {
@@ -4524,6 +4519,7 @@ strong{
 .menu-topbar {
   color: white;
   font-size: 0.85em;
+  font-weight: normal !important;
 }
 
 .menu-topbar:hover {
@@ -4562,4 +4558,55 @@ strong{
   position: relative;
   top: 2px;
   font-size: 1.2em;
+}
+
+.moreInfoDetails {
+  padding: 20px 30px 30px 30px;
+}
+
+
+#moreInfoIcon .ion{
+    height: 15px !important;
+    width: 17px !important;
+    /*vertical-align: text-top;*/
+    margin-right: 10px !important;
+}
+
+.languagePTactive {
+  color: white !important;
+  font-weight: normal !important;
+  font-size:0.8rem !important;
+}
+
+.languageENactive {
+  color: white !important;
+  font-weight: normal !important;
+  font-size:0.8rem !important;
+}
+
+.complete-page{
+  background: url(../img/reconstruct.svg) no-repeat -1px 1.2px;
+  background-size: 18px;
+  padding-left: 29px;
+  padding-bottom: 14px;
+  margin-right: -2px;
+}
+
+li#reconstruct a {
+  position: relative;
+  top: 1px;
+}
+
+
+li#reconstruct a i {
+  position: relative;
+  top: 1px;
+}
+
+.languagePT {
+  font-size:0.8rem !important;
+}
+
+.languageEN {
+  font-size:0.8rem !important;
 }

@@ -6,25 +6,25 @@ sideMenuVersion = false;
 printLoading = false;
 
 function minimizeMaximize(){
-	if($('#hbarMinimized').css('display') == 'none'){
-	    /*The bar is Expanded - Let's minimize the bar*/
-	    $('#hbar').css('display','none');
-	    $('#hbarMinimized').css('display','inline-block');
-	    /*Hide the Left Side Menu*/
-	    $('#sidebar-wrapper').css('display','none');
-	    $("#page-content-wrapper").css("cssText", "width: 100% !important;");
-	    $("#page-content-wrapper").css("cssText", "left: 0% !important;");
-	    /*resize vertically*/
-	    resize();
-	}    
-	else{ 
-	    /*The bar is Minimized - Let's expand the bar*/
-	    $('#hbarMinimized').css('display','none');  
-	    $('#hbar').css('display','inherit');
-	    /*resize vertically*/
-	    resize();            
-	             
-	}
+  if($('#hbarMinimized').css('display') == 'none'){
+      /*The bar is Expanded - Let's minimize the bar*/
+      $('#hbar').css('display','none');
+      $('#hbarMinimized').css('display','inline-block');
+      /*Hide the Left Side Menu*/
+      $('#sidebar-wrapper').css('display','none');
+      $("#page-content-wrapper").css("cssText", "width: 100% !important;");
+      $("#page-content-wrapper").css("cssText", "left: 0% !important;");
+      /*resize vertically*/
+      resize();
+  }    
+  else{ 
+      /*The bar is Minimized - Let's expand the bar*/
+      $('#hbarMinimized').css('display','none');  
+      $('#hbar').css('display','inherit');
+      /*resize vertically*/
+      resize();            
+               
+  }
 }
 
 function createVersion(timestamp, url)
@@ -185,8 +185,8 @@ function moreInfoModal(){
                 class:'modalReplay noprint scrollModal', //styling class for Modal
                 source:'html',
                 content:'<button id="removeModal" class="expand__close" title="Fechar"></button>'+
-                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2-(beta-version)#response-fields">'+Content.techDetails+'</a></h4>'+
-                        '<div>' + metadataResponse + '</div>'
+                        '<h4 class="modalTitle"><i  alt="'+Content.moreInfoIcon+'" class="ion ion-information-circled menu-icon"></i> '+Content.moreInfoIcon+' <a target="_blank" href="https://github.com/arquivo/pwa-technologies/wiki/Arquivo.pt-API-v.0.2#response-fields">'+Content.techDetails+'</a></h4>'+
+                        '<div class=\'moreInfoDetails\'>' + metadataResponse + '</div>'
               });
               attachRemoveModal();
               $( ".scrollModal" ).ready(function() {
@@ -300,7 +300,7 @@ function completePageModal(){
     uglipop({
       class:'modalReplay noprint', //styling class for Modal
       source:'html',
-      content:'<h4 class="modalTitleComplete"><img class="reconstruct_modal" id="reconstructImg" alt="'+Content.reconstructImg+'" src="//'+window.location.hostname+'/static/img/reconstruct.png"> '+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
+      content:'<h4 class="modalTitleComplete"><i class="complete-page"></i>'+Content.completePage+'</h4><p class="modalparagraph last">  '+Content.leavingArquivo+'</p>'+
               '<div class="row"><a id="completePage"  class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
   attachCompletepage();
   attachClosePopup();
