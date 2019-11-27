@@ -9,6 +9,7 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _ts;
 	var _hostname = window.location.hostname;
 	var _language ='pt';
+	var _patching = '';
     return {
         init : function(static_path) {
 			_static_path = static_path;
@@ -73,6 +74,14 @@ var ARQUIVO = ARQUIVO || (function(){
 	'<div class="background-top-curve"></div>');		
 		},
 		afterIframe: function(){
+			console.log('Patching => ' + _patching);
+			var reconstructMenu = '';
+			if( _patching.toLowerCase( ) === 'true' ) {
+				reconstructMenu = '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=\'/noFrame/patching/record/'+_ts+'/'+_url+'\' onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>';
+			} else {
+				reconstructMenu = '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\'); ARQUIVO.attachCompletePageModal();"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>';
+			}
+
 			document.write(''+
 			  '   </div>' +
               '   <div id="mainMask" class="maskMenu"></div>'+
@@ -87,7 +96,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
-              '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\'); ARQUIVO.attachCompletePageModal();"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>'+
+			  			reconstructMenu +
 			  '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><i class="fa fa-expand" aria-hidden="true"></i><span style="padding-left: 13px !important;">'+Content.expandPage+'</span></a>'+
               '  </div>'+
               '	</div>'+
@@ -124,7 +133,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			}, 2000); /*time to show the notification plus the time to do the fadeout effect*/ 			
  		},
  		showPageOptions: function(){
-
 		              uglipop({
 		                class:'modalReplay noprint scrollModal PagSpec', //styling class for Modal
 		                source:'html',
@@ -201,7 +209,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		  $('#uglipop_content_fixed').fadeOut();
 		  $('#uglipop_overlay').fadeOut('fast');
 		},
- 		updateInfo: function(url, ts){
+ 		updateInfo: function(url, ts, patching){
  			_url = url;
  			_ts = ts;
 			/*get new page title and update it*/  
@@ -226,6 +234,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(ARQUIVO.truncateEndURL(_url,20)); /*update menu url*/
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
+
+			_patching = patching;
 
 			ga('send', 'pageview'); /*New page*/ 			
  		},
