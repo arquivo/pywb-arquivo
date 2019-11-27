@@ -63,7 +63,7 @@ Content = {
     twitterTitle: "Partilhar no Twitter",
     mailTitle: "Partilhar por Email",
     screenTitle: "Guardar p&#225gina inteira como Imagem",
-    printTitle: "Imprimir a P&#225gina" ,
+    printTitle: "Imprimir a p&#225gina" ,
     changeLanguageTitlePT: "Mudar para Portugu&#234;s",
     changeLanguageTitleEN: "Mudar para Ingl&ecirc;s",
     versionsStoredTable:"Lista de Vers&#245es", 
