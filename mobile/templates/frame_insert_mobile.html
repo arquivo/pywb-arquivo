@@ -64,7 +64,7 @@ html, body
 <!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
 <script src="{{ static_prefix }}/js/arquivo.js?release=ImageSearch"></script>
 <script type="text/javascript">
-	ARQUIVO.init("{{ static_prefix }}");  
+  ARQUIVO.init("{{ static_prefix }}");  
 </script>
 
 <title>Arquivo.pt</title>
@@ -76,7 +76,7 @@ var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
                                "prefix": "{{ wb_prefix }}",
                                "request_ts": "{{ wb_url.timestamp }}",
                                "iframe": "#replay_iframe"});
-ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
+ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}", "{{ metadata.patching }}");
 </script>
 </head>
 
@@ -94,8 +94,6 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
 <script>
     window.addEventListener("message", function(event) {
         if (event.data.wb_type == "load" || event.data.wb_type == "replace-url") {
-            console.log("New Url: " + event.data.url);
-            console.log("New Timestamp: " + event.data.ts);
             ARQUIVO.updateInfo(event.data.url, event.data.ts);
         }
     });
