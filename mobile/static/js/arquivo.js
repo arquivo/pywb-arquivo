@@ -74,7 +74,6 @@ var ARQUIVO = ARQUIVO || (function(){
 	'<div class="background-top-curve"></div>');		
 		},
 		afterIframe: function(){
-			console.log('Patching => ' + _patching);
 			var reconstructMenu = '';
 			if( _patching.toLowerCase( ) === 'true' ) {
 				reconstructMenu = '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=\'/noFrame/patching/record/'+_ts+'/'+_url+'\' onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'Complete Page\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>';
