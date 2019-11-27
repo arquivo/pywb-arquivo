@@ -63,7 +63,7 @@ Content = {
     twitterTitle: "Share On Twitter",
     mailTitle: "Share by Email",
     screenTitle: "Download full page screenshot",
-    printTitle: "Print the Page",
+    printTitle: "Print the page",
     changeLanguageTitlePT: "Change to Portuguese language",
     changeLanguageTitleEN: "Change to English language",
     versionsStoredTable:"List versions",
