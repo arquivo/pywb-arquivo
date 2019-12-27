@@ -118,7 +118,7 @@ Content = {
     report:"Reportar problema",      
     bug: "https://sobre.arquivo.pt/pt/contacto/?your-subject=Problema%20no%20arquivo.pt&your-message=",
     savePage: "Guardar a p&aacute;gina",
-    technicalDetails: "Detalhes t&eacute;nicos",
+    technicalDetails: "Detalhes t&eacute;cnicos",
     portugueseLanguage: "PT",
     englishLanguage: "EN"
 
