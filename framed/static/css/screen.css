@@ -3880,11 +3880,10 @@ p {
 #sidebar-wrapper {
   background: #252525;
   position: relative;
-  left: 16%;
-  width: 0;
-  /*height: 847px;*/
+  /*left: 16%;*/
+  width: 0;  
   bottom: 0;
-  margin-left: -16%;
+  /*margin-left: -16%;*/
   overflow-y: auto;
   overflow-x: hidden;
   z-index: 1000;
@@ -3922,14 +3921,13 @@ p {
 
   #topbar .url {
     margin-left: 16.1%;
-    width: 33.6%;
+    width: /*33.6%*/auto;
     display: inline-block;
     }
     #topbar .url p {
       display: inline-block;
       font-size: 1.6em;
-      color: #fff;
-      /*border-bottom: 1px solid #999;*/
+      color: #fff;    
     }
   #topbar .toolbar {
     /*width: 48%;*/
@@ -3957,7 +3955,7 @@ p {
       #topbar .utilities li.print, #topbar .utilities li.mail, #topbar .utilities li.help, #topbar .utilities li.lang {
         border-right: 1px solid #3E3E3E; }
       #topbar .utilities li.save_img, #topbar .utilities li.facebook, #topbar .utilities li.help, #topbar .utilities li.lang {
-        padding-left: 1.5em; }
+        padding-left: 0; }
       #topbar .utilities li.lang {
         padding-right: 2.5em;
         border: 0; }
@@ -4013,9 +4011,10 @@ p {
       text-decoration: none; }
   .sidebar-nav li .active {
     font-weight: 700;
-    color: #fff; }
+    color: #fff;
+    font-size: 0.9em}
   .sidebar-nav li ul.months {
-    background: #2E2E2E;
+    background: /*#2E2E2E*/#393737;
     padding: 1em 0;
     border: 1px solid #3E3E3E; }
   .sidebar-nav li ul.months li {
@@ -4023,7 +4022,7 @@ p {
     text-indent: 3em; }
 
   .sidebar-nav li ul.months li a {
-      font-size: 1rem;
+      font-size: /*1rem*/0.9em;
       border-bottom: 0;
      }
 
@@ -4130,6 +4129,7 @@ p {
           visibility: visible;
           display: inline-block!important;
           color: white;
+          font-size: 1.3em;
         }
         #urlTopbarDiv{
           visibility: visible!important;
@@ -4518,7 +4518,7 @@ strong{
 /*---- Update  ----*/
 .menu-topbar {
   color: white;
-  font-size: 0.85em;
+  font-size: 0.73em;
   font-weight: normal !important;
 }
 
