@@ -4504,6 +4504,7 @@ strong{
 
 .expand__close:before {
   content: '\00d7';
+  color: #ffffff;
 }
 
 .expand__close:visited {
