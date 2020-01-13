@@ -244,7 +244,7 @@ function set_state(new_url, new_timestamp) {
                       <ul class="utilities" id="utilitiesUl">
                           <script type="text/javascript">
                           if( patching.toLowerCase() === 'true' ) {
-                            document.write("<li id='reconstruct'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
+                            document.write("<li id='reconstruct'><a title='"+Content.completePageLang+"' id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
                           } else {
                               document.write("<li id='reconstruct'><a title='"+Content.completePageLang+"' id='a_reconstruct' href='' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
                               attachCompletePageModal();
