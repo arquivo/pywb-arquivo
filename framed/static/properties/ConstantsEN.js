@@ -75,7 +75,7 @@ Content = {
     searchTitle: "search in Arquivo.pt",
     otherArchives: "Search in other archives",
     table: "List versions",    
-    completePage: "Complete the page",
+    completePage: "Complete",
     completePageLang: "Complete the page",
     downloadTitle: "Download full page screenshot ",
     downloadPopup: "Download screenshot of this page?",    
