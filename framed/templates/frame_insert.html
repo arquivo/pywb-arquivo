@@ -246,7 +246,7 @@ function set_state(new_url, new_timestamp) {
                           if( patching.toLowerCase() === 'true' ) {
                             document.write("<li id='reconstruct'><a id='a_reconstruct' href='{{ host_prefix }}/noFrame/patching/record/{{ wb_url.timestamp }}/{{ url }}' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
                           } else {
-                              document.write("<li id='reconstruct'><a title='"+Content.completePage+"' id='a_reconstruct' href='' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
+                              document.write("<li id='reconstruct'><a title='"+Content.completePageLang+"' id='a_reconstruct' href='' \"><img id=\"reconstructImg\" alt=\""+Content.reconstructImg+"\" src=\"{{ static_prefix }}/img/reconstruct.png\"/><span class=\"menu-topbar\">"+Content.completePage+"</span><\/a><\/li>");
                               attachCompletePageModal();
                           }
                           
@@ -265,7 +265,7 @@ function set_state(new_url, new_timestamp) {
                                     attachPrintModal();
                           </script>                       
                           <script type="text/javascript">
-                                  document.write("<li id='mobileLi'><a id='switchMobile' title='"+Content.switchMobile+"' href=''><i alt=\""+"teste"+"\" class='ion ion ion-iphone menu-icon'></i><span class=\"menu-topbar\">"+Content.switchMobile+"</span></a></li>");
+                                  document.write("<li id='mobileLi'><a id='switchMobile' title='"+Content.switchMobileLang+"' href=''><i alt=\""+"teste"+"\" class='ion ion ion-iphone menu-icon'></i><span class=\"menu-topbar\">"+Content.switchMobile+"</span></a></li>");
                                   attachSwitchMobile();                            
                           </script>
 
