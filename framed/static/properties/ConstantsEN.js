@@ -115,7 +115,7 @@ Content = {
     toBeCompleted: "This page might be completed with missing information" ,
     helpHref:"http://sobre.arquivo.pt/en/help/",    
     switchMobileLang:"Mobile version",
-    switchMobile: "Mobile version",
+    switchMobile: "Mobile",
     moreInfoIcon: "Details",
     moreInfoIcon: "Technical details",
     techDetails:"(field description)",
