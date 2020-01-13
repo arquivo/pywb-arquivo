@@ -2500,6 +2500,10 @@ p {
   color: #666;
   text-decoration: none;
 }
+a#a_reconstruct {
+  position: relative;
+  top: 2px;
+  }
 #topbar .utilities a:hover {
   color: #fff;
 }
