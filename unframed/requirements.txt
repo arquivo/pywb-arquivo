@@ -1,2 +1,2 @@
-git+https://github.com/webrecorder/pywb.git@f0b9d5b8e8dbedeeac99608bf9fb3bb2a39f8a44
+git+https://github.com/webrecorder/pywb.git@v-2.4.0-rc5
 uwsgi

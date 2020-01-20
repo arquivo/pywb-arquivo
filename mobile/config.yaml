@@ -1,5 +1,5 @@
 collections:
-  arquivo: cdx+https://arquivo.pt/wayback/cdx 
+  arquivo: memento+https://arquivo.pt/wayback/
     
 head_insert_html: head_insert_mobile.html
 frame_insert_html: frame_insert_mobile.html
