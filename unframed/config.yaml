@@ -1,5 +1,5 @@
 collections:
-    arquivo: cdx+https://arquivo.pt/wayback/cdx
+  arquivo: memento+https://arquivo.pt/wayback/
 
 redirect_exact: true
 framed_replay: false
