@@ -19,19 +19,12 @@
     <script>
       wbinfo = {}
       wbinfo.prefix = "{{ wb_prefix }}";
-      wbinfo.capture_url = "{{ url }}";
-      wbinfo.timestamp = "{{ wb_url.timestamp }}";
       ts = "{{ wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
-      wbinfo.is_frame = true;
-      wbinfo.frame_mod = "{{ options.frame_mod }}";
-      wbinfo.replay_mod = "{{ options.replay_mod }}";
-      wbinfo.search_location= "{{ search_location }}";
       patching = "{{ metadata.patching }}";
       
 
     </script>
 
-    {% include banner_html ignore missing %}
 
     <!-- Jquery-->
     <script src="{{ static_prefix }}/dependencies/jquery-latest.min.js"></script>
