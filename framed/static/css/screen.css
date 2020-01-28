@@ -2366,7 +2366,6 @@ h1 {
   overflow: hidden;
   text-align: left;
   text-transform: capitalize;
-  /*background-image: url('/img/AnW_logo.png?1458649439');*/
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
@@ -2375,7 +2374,7 @@ h2 {
   margin: .5em 0;
 }
 ul, p, a {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 p {
   margin-bottom: 1em;
@@ -2405,9 +2404,6 @@ p {
   left: 0px;
   width: 16%;
   height: 5%;
-  /*margin-left: -16%;*/
-  /*overflow-y: auto;
-  z-index: 1000;*/
   -webkit-transition: all .5s ease;
   -moz-transition: all .5s ease;
   -o-transition: all .5s ease;
