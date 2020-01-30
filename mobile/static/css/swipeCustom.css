@@ -342,6 +342,10 @@ body {
     padding-top: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    width: -webkit-calc(100% - 50px);
+    width:    -moz-calc(100% - 50px);
+    width:         calc(100% - 50px);
 }
 
 #menuTs{

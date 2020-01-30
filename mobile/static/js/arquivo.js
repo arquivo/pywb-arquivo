@@ -87,7 +87,7 @@ var ARQUIVO = ARQUIVO || (function(){
               '  </div>'+
               '  <div class="swiper-slide" style="width:100%;">'+
               '			<div class="main-menu-top-div">'+
-			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' + 
+			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ _url +'</h4>' + 
 			  ' 			<button href="#" onclick="ARQUIVO.closeFunctionsMenu()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
@@ -137,7 +137,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                source:'html',
 		                content:'<button onclick="ARQUIVO.closeUglipopCustomCss()" class="expand__close__white" title="Fechar"></button>'+
 				                '<div class="main-menu-top-div">'+
-							    	'<h4 id="menuUrl" title="'+_url+'">'+ this.truncateEndURL(_url, 20)+'</h4>' +
+							    	'<h4 id="menuUrl" title="'+_url+'">'+ _url+'</h4>' +
 							  		'<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 							  	'</div>'+
 							  	'<div class="fullwidth menu">'+
@@ -231,7 +231,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#expandPage').attr('onclick', 'ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\')');
 
 			$('#menuUrl').attr('title', _url);
-			$('#menuUrl').html(ARQUIVO.truncateEndURL(_url,20)); /*update menu url*/
+			$('#menuUrl').html(_url); /*update menu url*/
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
 
 			_patching = patching;
@@ -473,24 +473,6 @@ var ARQUIVO = ARQUIVO || (function(){
 		        window.location.reload();
 		    }   
 		},
-		truncateURL: function(url, maxLength){
-			var middleLength = 8;
-			if(maxLength > 5){
-				middleLength = (maxLength-3)/2;
-			}
-			url = url.replace(/(^\w+:|^)\/\//, ''); /*remove protocol from url*/
-			if(url.length > maxLength){
-				url = url.substring(0,middleLength) + '...' + url.substring(url.length-middleLength, url.length);
-			}
-			return url;
-		},
-		truncateEndURL: function(url, maxLength){
-			url = url.replace("/(^\w+:|^)\/\//", ''); /*remove protocol from url*/
-			if(url.length > maxLength){
-				url = url.substring(0, maxLength - 3) + '...' ;
-			}
-			return url;
-		},		
 		/*Returns current timestamp in short form such as '2 Nov, 2015' */
 		getShortDatets: function(){
 		              var year = _ts.substring(0, 4);
