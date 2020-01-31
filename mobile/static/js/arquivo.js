@@ -85,10 +85,10 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '   </div>' +
               '   <div id="mainMask" class="maskMenu"></div>'+
               '  </div>'+
-              '  <div class="swiper-slide" style="width:100%;">'+
+              '  <div class="swiper-slide replayMenu">'+
               '			<div class="main-menu-top-div">'+
 			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ _url +'</h4>' + 
-			  ' 			<button href="#" onclick="ARQUIVO.closeFunctionsMenu()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
+			  ' 			<button href="#" onclick="ARQUIVO.closeReplayMenu()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
 			  '			<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>'+ 						                      
@@ -113,8 +113,9 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachReportBug();
 			this.attachCompletepage();
  		},
- 		closeFunctionsMenu: function(){
- 			var mySwiper = document.querySelector('.swiper-container').swiper.slidePrev();
+ 		closeReplayMenu: function(){
+ 			const mySwiper = document.querySelector('.swiper-container').swiper;
+ 			mySwiper.slideTo(1);
  		},
  		copyLink: function(){
 			var dummy = document.createElement('input')	    
@@ -173,7 +174,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		},
  		attachCompletePageModal: function(){
         
-	       //this.closeFunctionsMenu();  
+	       //this.closeReplayMenu();  
 	       this.completePageModal();        
      	
 		},
@@ -244,15 +245,11 @@ var ARQUIVO = ARQUIVO || (function(){
 
 		    var replayMenu = document.querySelector('#replayMenuButton');
 		    var openReplayMenu = function () {
-			  swiper.allowSlideNext = true;    	
 		      swiper.slideNext();
-		      swiper.allowSlidePrev = true;
 		    };
-
 
 		    var menuButton = document.querySelector('#menuButton');
 		    var openMenu = function () {
-			  swiper.allowSlidePrev = true;    	
 		      swiper.slidePrev();
 		    };
 		    swiper = new Swiper('.swiper-container', {
@@ -264,14 +261,12 @@ var ARQUIVO = ARQUIVO || (function(){
 		        slideChangeTransitionStart: function () {
 		          var slider = this;
 		          if (slider.activeIndex === 0) { /*open menu*/
-		          	this.allowSlidePrev = true;
 		          	$('#mainMask').fadeIn('fast');
 		            menuButton.classList.add('cross');
 		            $('.swiper-container').removeClass('swiper-no-swiping');
 		            // required because of slideToClickedSlide
 		            menuButton.removeEventListener('click', openMenu, true);
 		          } else  if (slider.activeIndex === 1) { /*close menu*/
-		          	 this.allowSlidePrev = false;
 		          	$('.swiper-container').addClass('swiper-no-swiping');
 		          	$('#mainMask').fadeOut('fast');
 		            menuButton.classList.remove('cross');
@@ -288,7 +283,8 @@ var ARQUIVO = ARQUIVO || (function(){
 		        },
 		      }
 		    });
-		    swiper.allowSlidePrev = false;       	    
+		    swiper.allowSlidePrev = true;
+		    swiper.allowSlideNext = true;
  		},
 
  		insertMenuHtlm: function(){

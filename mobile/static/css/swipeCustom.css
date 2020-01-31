@@ -46,19 +46,25 @@ body {
 
 .menu {
 	margin-top: 48px;
-	/*min-width: 100px;*/
-	width: 100%;
-	/*max-width: 320px;*/
-	background-color: /*#252525*/#1c75c0;
+	min-width: 100px;
+	max-width: 320px;
+	background-color: #1c75c0;
 	color: #fff;
 	z-index:0;
 	overflow-y: auto;
-    /*text-align: center;*/
 }
 .content {
 	width: 100%;
 }
-
+.replayMenu {
+    /*margin-top: 48px;*/
+    min-width: 100px;
+    max-width: 320px;
+    background-color: #1c75c0;
+    color: #fff;
+    z-index:0;
+    overflow-y: auto;
+}
 
 #mainMask{
 	position: absolute;
