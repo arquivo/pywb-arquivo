@@ -88,7 +88,7 @@ var ARQUIVO = ARQUIVO || (function(){
               '  <div class="swiper-slide replayMenu">'+
               '			<div class="main-menu-top-div">'+
 			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ _url +'</h4>' + 
-			  ' 			<button href="#" onclick="ARQUIVO.closeReplayMenu()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
+			  ' 			<button href="#" onclick="ARQUIVO.goToContent()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
 			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
 			  '			</div>'+
 			  '			<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ListVersionsClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>'+ 						                      
@@ -112,8 +112,9 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachMoreInfoModal();
 			this.attachReportBug();
 			this.attachCompletepage();
+			this.attachKeyBoardEvent();
  		},
- 		closeReplayMenu: function(){
+ 		goToContent: function(){
  			const mySwiper = document.querySelector('.swiper-container').swiper;
  			mySwiper.slideTo(1);
  		},
@@ -174,7 +175,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		},
  		attachCompletePageModal: function(){
         
-	       //this.closeReplayMenu();  
+	       //this.goToContent();  
 	       this.completePageModal();        
      	
 		},
@@ -577,7 +578,23 @@ var ARQUIVO = ARQUIVO || (function(){
 			});
 		},		 		
 		closeSwipeMenu: function(){
-		} 		 									 		
+		},
+		attachKeyBoardEvent: function() {
+			if (document.onkeydown == null) {
+				document.onkeydown = function(evt) {
+				  // When pressing escape key close image
+				  var isEscape = false;
+				  if ("key" in evt) {
+				      isEscape = (evt.key === "Escape" || evt.key === "Esc");
+				  } else {
+				      isEscape = (evt.keyCode === 27);
+				  }
+				  if (isEscape) {
+				      ARQUIVO.goToContent();
+				  }
+				}
+			}
+		}
     };
 }());
 
