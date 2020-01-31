@@ -1,6 +1,8 @@
 collections:
   arquivo: memento+https://arquivo.pt/wayback/
 
+banner_html: banner_blank.html
+
 redirect_exact: true
 framed_replay: false
 debug: true
