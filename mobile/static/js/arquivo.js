@@ -66,8 +66,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '        <div class="row text-center logo-main-div-no-border">'+
 			  '                    <a class="logo-menu-anchor" href="/?l='+_language+'"><img src="'+_static_path+'/img/arquivo-logo-white.svg  " id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
 			  '                    <a class="pull-left main-menu" id="menuButton"><div class="menu-button"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></a><button  id="replayMenuButton" " class="select-language" title="Replay menu">...</button>'+
-																																						  
-
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+
@@ -85,7 +83,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '   </div>' +
               '   <div id="mainMask" class="maskMenu"></div>'+
               '  </div>'+
-              '  <div class="swiper-slide replayMenu">'+
+              '  <div class="swiper-slide replayMenu swiper-slide-next">'+
               '			<div class="main-menu-top-div">'+
 			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ _url +'</h4>' + 
 			  ' 			<button href="#" onclick="ARQUIVO.goToContent()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
@@ -247,6 +245,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		    var replayMenu = document.querySelector('#replayMenuButton');
 		    var openReplayMenu = function () {
 		      swiper.slideNext();
+		      $('#mainMask').fadeIn('fast');
 		    };
 
 		    var menuButton = document.querySelector('#menuButton');
@@ -271,6 +270,8 @@ var ARQUIVO = ARQUIVO || (function(){
 		          	$('.swiper-container').addClass('swiper-no-swiping');
 		          	$('#mainMask').fadeOut('fast');
 		            menuButton.classList.remove('open');
+		          
+		          // can not make ionic return the replay menu has activeIndex with 2 value, so the following if dead code.
 		          } else if(slider.activeIndex === 2){
 		          	$('#mainMask').fadeIn('fast');
 		          }
