@@ -346,7 +346,7 @@ body {
 
 #menuTs{
     font-family: "Open Sans", sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: /*bold*/normal;
     color: white;
     border-top: 0px;
@@ -454,7 +454,7 @@ body {
 
 @media screen and (max-device-width: 3000px) and (min-device-width: 769px){
 .swiper-container h4, .swiper-container #expandPage {
-    font-size: 13px;
+    font-size: 13px !important;
     cursor: pointer;  
 }
 }
