@@ -453,7 +453,8 @@ body {
 }
 
 @media screen and (max-device-width: 3000px) and (min-device-width: 769px){
-.menu h4 {
+.swiper-container h4, .swiper-container #expandPage {
     font-size: 13px;
+    cursor: pointer;  
 }
 }
