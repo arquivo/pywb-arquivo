@@ -46,19 +46,22 @@ body {
 
 .menu {
 	margin-top: 48px;
-	/*min-width: 100px;*/
-	width: 100%;
-	/*max-width: 320px;*/
-	background-color: /*#252525*/#1c75c0;
+	max-width: 200px;
+	background-color: #1c75c0;
 	color: #fff;
 	z-index:0;
 	overflow-y: auto;
-    /*text-align: center;*/
 }
 .content {
 	width: 100%;
 }
-
+.replayMenu {
+    max-width: 200px;
+    background-color: #1c75c0;
+    color: #fff;
+    z-index:0;
+    overflow-y: auto;
+}
 
 #mainMask{
 	position: absolute;
@@ -342,6 +345,10 @@ body {
     padding-top: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    width: -webkit-calc(100% - 50px);
+    width:    -moz-calc(100% - 50px);
+    width:         calc(100% - 50px);
 }
 
 #menuTs{
