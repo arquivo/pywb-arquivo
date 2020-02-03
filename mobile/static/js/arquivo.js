@@ -263,16 +263,16 @@ var ARQUIVO = ARQUIVO || (function(){
 		          var slider = this;
 		          if (slider.activeIndex === 0) { /*open menu*/
 		          	$('#mainMask').fadeIn('fast');
-		            menuButton.classList.add('cross');
+		            menuButton.classList.add('open');
 		            $('.swiper-container').removeClass('swiper-no-swiping');
 		            // required because of slideToClickedSlide
 		            menuButton.removeEventListener('click', openMenu, true);
 		          } else  if (slider.activeIndex === 1) { /*close menu*/
 		          	$('.swiper-container').addClass('swiper-no-swiping');
 		          	$('#mainMask').fadeOut('fast');
-		            menuButton.classList.remove('cross');
+		            menuButton.classList.remove('open');
 		          } else if(slider.activeIndex === 2){
-		          	$('#mainMask').fadeIn('fast')
+		          	$('#mainMask').fadeIn('fast');
 		          }
 		        }
 		        , slideChangeTransitionEnd: function () {
@@ -290,7 +290,11 @@ var ARQUIVO = ARQUIVO || (function(){
 
  		insertMenuHtlm: function(){
  			$('.swiper-wrapper').prepend(
-			  '		  <div class="swiper-slide menu swiper-slide-prev">' +       
+			  '		  <div class="swiper-slide menu swiper-slide-prev">' +
+			  		   '<div class="main-menu-top-div">'+
+			  		   	 '<h4>&nbsp;</h4>'+
+			  	         '<button href="#" onclick="ARQUIVO.goToContent()" class="close-functions clean-button-no-fill">&#10005;</button>' +
+			  	       '</div>'+
 			  '			<button class="clean-button" onclick="ARQUIVO.copyLink();"><h4><i class="fa fa-link padding-right-menu-icon" aria-hidden="true"></i> '+Content.copyLink+'</h4></button>' +
   					   '<button class="clean-button" id="pagesMenu" onclick="ARQUIVO.pagesClick();"><h4><i class="fa fa-globe padding-right-menu-icon" aria-hidden="true"></i> '+Content.pages+'<i id="pagesCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></button>'+	 			  
       				   '<div id="pageOptions">'+
