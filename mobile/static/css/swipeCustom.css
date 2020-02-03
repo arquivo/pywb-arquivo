@@ -126,8 +126,7 @@ body {
 }
 
 #swipeContainer .fa-caret-up:before {   
-    border: 1px solid #e3e3e32e;
-    background-color: /*#c0c0c096*/ /*#c0c0c069*/ #c0c0c024;   
+    border: 1px solid #e3e3e32e;      
     font-size: 1.1em;   
     padding: 3px 9px 7px 9px;
     border-radius: 50px;
@@ -152,6 +151,10 @@ body {
     text-decoration: none;
 }
 
+.menu h4:hover, .menu ha:active, .swiper-container h4:hover, .swiper-container h4:active, .swiper-container #expandPage:hover, .swiper-container #expandPage:active {
+background-color:#1a5f97ba;
+}
+
 /*Start Menu Button*/
 .bar {  
     position: relative;
@@ -164,11 +167,11 @@ body {
     -webkit-transition: .3s;
     transition: .3s;
 }
-}
+
 .menu-button {
     position: absolute;
     top: -7px;
-    right: -38px;
+    right: -37px;
     padding: 15px;
     cursor: pointer;
     -webkit-transition: .3s;
@@ -456,5 +459,8 @@ body {
 .swiper-container h4, .swiper-container #expandPage {
     font-size: 13px !important;
     cursor: pointer;  
+}
+#swiperWrapper .submenu:hover{	
+    background-color: #1f5788 !important;  
 }
 }
