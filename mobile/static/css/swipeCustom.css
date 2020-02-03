@@ -45,7 +45,6 @@ body {
 	}
 
 .menu {
-    margin-top: 48px;
     min-width: 100px;
     max-width: 320px;
     background-color: #1c75c0;
@@ -57,7 +56,6 @@ body {
 	width: 100%;
 }
 .replayMenu {
-    /*margin-top: 48px;*/
     min-width: 100px;
     max-width: 320px;
     background-color: #1c75c0;
@@ -82,10 +80,8 @@ body {
 	cursor: pointer;
 	margin-top: 7px;
 }
-#menuButton.cross{	
-	margin-left: -60px;
-	margin-top:15px;
-	/*padding: 20px;*/
+#menuButton.open{	
+    display: none;
 }
 
 #swiperWrapper{
