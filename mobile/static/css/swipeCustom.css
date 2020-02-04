@@ -494,7 +494,8 @@ display: none;
 }
 
 .background-top-curve p a {
-  color: white;text-decoration: underline;
+  color: white;text-decoration: underline; 
+  display: inline-block;
 }
 
 .menu {
