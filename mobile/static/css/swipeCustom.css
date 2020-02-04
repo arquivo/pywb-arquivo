@@ -45,8 +45,9 @@ body {
 	}
 
 .menu {
-    min-width: 100px;
-    max-width: 320px;
+    width: 100%;
+    min-width: 220px;
+    max-width: 220px;
     background-color: #1c75c0;
     color: #fff;
     z-index:0;
@@ -56,8 +57,9 @@ body {
 	width: 100%;
 }
 .replayMenu {
-    min-width: 100px;
-    max-width: 320px;
+    width: 100%;
+    min-width: 220px;
+    max-width: 220px;
     background-color: #1c75c0;
     color: #fff;
     z-index:0;
@@ -197,6 +199,7 @@ background-color:#1a5f97ba;
 	opacity: 0;
 }
 .cross .bar:nth-of-type(3) {
+
 	-webkit-transform: translateY(-13px) rotate(46deg);
 	-ms-transform: translateY(-13px) rotate(46deg);
 	transform: translateY(-13px) rotate(46deg);
@@ -465,4 +468,25 @@ background-color:#1a5f97ba;
 #swiperWrapper .submenu:hover{	
     background-color: #1f5788 !important;  
 }
+
+/* NEW Style: change background top curve to url information on desktop */
+.background-top-curve {
+    text-align: center;
+    height: auto;
+    background-color:#1a5f97ba !important;
+}
+
+.background-top-curve p {
+    padding: 9px 0 21px 0;   
+    z-index: 3;
+    position: relative;    
+    color: white;
+    font-size: 0.9em;
+    font-weight: lighter;
+}
+
+.background-top-curve p a {
+  color: white;text-decoration: underline;
+}
+
 }
