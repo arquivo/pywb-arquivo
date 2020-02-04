@@ -46,8 +46,8 @@ body {
 
 .menu {
     width: 100%;
-    min-width: 220px;
-    max-width: 220px;
+    min-width: 320px;
+    max-width: 320px;
     background-color: #1c75c0;
     color: #fff;
     z-index:0;
@@ -58,8 +58,8 @@ body {
 }
 .replayMenu {
     width: 100%;
-    min-width: 220px;
-    max-width: 220px;
+    min-width: 320px;
+    max-width: 320px;
     background-color: #1c75c0;
     color: #fff;
     z-index:0;
@@ -105,6 +105,11 @@ body {
     border-bottom: 1px solid #e3e3e32e !important
 	
 }
+
+.menu button:nth-child(1) {
+margin-top: 50px;
+}
+
 
 #switchDesktop h4 {
     border: none !important;    
@@ -490,6 +495,26 @@ display: none;
 
 .background-top-curve p a {
   color: white;text-decoration: underline;
+}
+
+.menu {
+    width: 100%;
+    min-width: 220px;
+    max-width: 220px;
+    background-color: #1c75c0;
+    color: #fff;
+    z-index:0;
+    overflow-y: auto;
+}
+
+.replayMenu {
+    width: 100%;
+    min-width: 220px;
+    max-width: 220px;
+    background-color: #1c75c0;
+    color: #fff;
+    z-index:0;
+    overflow-y: auto;
 }
 
 }
