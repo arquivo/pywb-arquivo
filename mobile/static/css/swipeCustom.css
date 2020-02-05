@@ -370,6 +370,10 @@ display: none;
     padding-bottom: 13px;
     padding-top: -20px;
     margin-top: 2px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;    
+    width: 76%;
 }
 
 .right-5{
