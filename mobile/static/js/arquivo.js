@@ -69,7 +69,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+
-	'<div class="background-top-curve"></div>');		
+	'<div class="background-top-curve"><p>&rarr; Insert here dynamically url from the page plus date - <a href="#">See all available versions</a> </p></div>');
 		},
 		afterIframe: function(){
 			var reconstructMenu = '';
