@@ -522,4 +522,18 @@ display: none;
     overflow-y: auto;
 }
 
+#wb_iframe_div {
+    left: 16%;
+}
+
+.url-search-iframe-container {
+    display: inherit;
+    width: 16%;
+    height: 100%;
+}
+
+.url-search-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+}
 }

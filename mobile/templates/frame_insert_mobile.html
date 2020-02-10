@@ -89,21 +89,50 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}", "{{ metadata.patching 
     </iframe>
 
   </div>
-<!-- scripts slider right menu -->
-<script src="{{ static_prefix }}/js/swiper.min.js"></script>
-<script>
-    window.addEventListener("message", function(event) {
-        if (event.data.wb_type == "load" || event.data.wb_type == "replace-url") {
-            ARQUIVO.updateInfo(event.data.url, event.data.ts);
+
+  <!-- url search -->
+  <script>
+    // add event listener thar receive messages from url search iframe.
+    if (window.addEventListener) {
+      window.addEventListener("message", onMessage, false);        
+    } else if (window.attachEvent) {
+      window.attachEvent("onmessage", onMessage, false);
+    }
+    // generic function that receive multiple messages from url search iframe and calls different king on functions.
+    function onMessage(event) {
+      // Check sender origin to be trusted
+      if (!event.isTrusted) return;
+      var data = event.data;
+
+      if (typeof data.wb_type !== 'undefined') {
+        if (data.wb_type == "load" || data.wb_type == "replace-url") {
+          ARQUIVO.updateInfo(data.url, data.ts);
         }
-    });
-  ARQUIVO.afterIframe();
-</script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5645cdb2e22ca317"></script> 
-<!-- end addthis for sharing on social media --> 
-<div id = "loadingAnimation" class="noprint">
-  <h1 class="noprint"><i class="fa fa-circle-o-notch fa-spin noprint" ></i></h1>
-</div>
-<div class="maskLoading noprint" style=""></div>
+      } else {
+        if (typeof(window[data.func]) == "function") {
+            window[data.func].call(null, "ARQUIVO."+data.message);
+        }
+      }
+    }
+  </script>
+  <div class="url-search-iframe-container">
+    <iframe
+      name="url_search_iframe" 
+      id="url_search_iframe"
+      allowFullScreen="true"
+      onload="ARQUIVO.resizeIframe(this)"
+      src="{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}/url/search/{{ url }}"></iframe>
+  </div>
+  <!-- scripts slider right menu -->
+  <script src="{{ static_prefix }}/js/swiper.min.js"></script>
+  <script>
+    ARQUIVO.afterIframe();
+  </script>
+
+
+  <div id = "loadingAnimation" class="noprint">
+    <h1 class="noprint"><i class="fa fa-circle-o-notch fa-spin noprint" ></i></h1>
+  </div>
+  <div class="maskLoading noprint" style=""></div>
 </body>
 </html>
