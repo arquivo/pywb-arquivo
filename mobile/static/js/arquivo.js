@@ -603,33 +603,14 @@ var ARQUIVO = ARQUIVO || (function(){
 		},
         // called from url search iframe when the user clicks a specific version
         // the message is the url clicked
-		urlSearchClickOnVersion: function(message) {
-		    // send event to google analytics
-	        ga('send', 'event', 'Versions List', 'Version Click', message);
-	        //  go to the url clicked by the user on iframe
-	        window.location = message;
+		urlSearchClickOnVersion: function(waybackUrlClicked) {
+			const timestampAndURL = waybackUrlClicked.substring(wbinfo.prefix.length);
+			const timestampURLSeparatorPos = timestampAndURL.indexOf('/');
+			const timestamp = timestampAndURL.substring(0, timestampURLSeparatorPos);
+			const url = timestampAndURL.substring(timestampURLSeparatorPos+1);
+			var frameSrc = wbinfo.prefix + timestamp + 'mp_/' + url;
+			$('#replay_iframe').attr('src', frameSrc); //update the iframe to the new version
 		},
-		// resize the url search iframe so the iframe has the same size of its content then isn't the need of a scroll.
-    	// it is like the iframe doesn't exist.
-    	resizeIframe: function() {
-			function getDocHeight(doc) {
-				doc = doc || document;
-		        // stackoverflow.com/questions/1145850/
-		        var body = doc.body, html = doc.documentElement;
-		        var height = Math.max( body.scrollHeight, body.offsetHeight, 
-		            html.clientHeight, html.scrollHeight, html.offsetHeight );
-		        return height;
-			}
-	      	const id = "url_search_iframe";
-	        var ifrm = document.getElementById(id);
-	        var doc = ifrm.contentDocument? ifrm.contentDocument: 
-	            ifrm.contentWindow.document;
-	        ifrm.style.visibility = 'hidden';
-	        //ifrm.style.height = "10px"; // reset to minimal height ...
-	        // IE opt. for bing/msn needs a bit added or scrollbar appears
-	        ifrm.style.height = getDocHeight( doc ) + 4 + "px";
-	        ifrm.style.visibility = 'visible';
-	    },
 	    // function that updates
 	    updatePageOnUrlSearch: function(url, timestamp) {
 	    	function getIframeWindow(iframe_object) {
