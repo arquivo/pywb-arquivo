@@ -608,18 +608,18 @@ var ARQUIVO = ARQUIVO || (function(){
 	        //  go to the url clicked by the user on iframe
 	        window.location = message;
 		},
-		getDocHeight: function(doc) {
-			doc = doc || document;
-	        // stackoverflow.com/questions/1145850/
-	        var body = doc.body, html = doc.documentElement;
-	        var height = Math.max( body.scrollHeight, body.offsetHeight, 
-	            html.clientHeight, html.scrollHeight, html.offsetHeight );
-	        return height;
-		},
 		// resize the url search iframe so the iframe has the same size of its content then isn't the need of a scroll.
     	// it is like the iframe doesn't exist.
     	resizeIframe: function() {
-	      const id = "url_search_iframe";
+			function getDocHeight(doc) {
+				doc = doc || document;
+		        // stackoverflow.com/questions/1145850/
+		        var body = doc.body, html = doc.documentElement;
+		        var height = Math.max( body.scrollHeight, body.offsetHeight, 
+		            html.clientHeight, html.scrollHeight, html.offsetHeight );
+		        return height;
+			}
+	      	const id = "url_search_iframe";
 	        var ifrm = document.getElementById(id);
 	        var doc = ifrm.contentDocument? ifrm.contentDocument: 
 	            ifrm.contentWindow.document;
