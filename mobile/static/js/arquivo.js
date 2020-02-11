@@ -235,6 +235,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
 
 			_patching = patching;
+			ARQUIVO.updatePageOnUrlSearch(url, ts);
 
 			ga('send', 'pageview'); /*New page*/ 			
  		},
@@ -628,6 +629,49 @@ var ARQUIVO = ARQUIVO || (function(){
 	        // IE opt. for bing/msn needs a bit added or scrollbar appears
 	        ifrm.style.height = getDocHeight( doc ) + 4 + "px";
 	        ifrm.style.visibility = 'visible';
+	    },
+	    // function that updates
+	    updatePageOnUrlSearch: function(url, timestamp) {
+	    	function getIframeWindow(iframe_object) {
+			  var doc;
+
+			  if (iframe_object.contentWindow) {
+			    return iframe_object.contentWindow;
+			  }
+
+			  if (iframe_object.window) {
+			    return iframe_object.window;
+			  } 
+
+			  if (!doc && iframe_object.contentDocument) {
+			    doc = iframe_object.contentDocument;
+			  } 
+
+			  if (!doc && iframe_object.document) {
+			    doc = iframe_object.document;
+			  }
+
+			  if (doc && doc.defaultView) {
+			   return doc.defaultView;
+			  }
+
+			  if (doc && doc.parentWindow) {
+			    return doc.parentWindow;
+			  }
+
+			  return undefined;
+			}
+
+			async function doUpdate(iframeId, url, timestamp) {
+		    	const ifrm_el = document.getElementById(iframeId);
+		    	if (ifrm_el) {
+			    	const ifrm_win = getIframeWindow(ifrm_el);
+			    	if (ifrm_win && ifrm_win.replacePageAndHighlightTimestamp) { // the function could be not defined because the iframe could be starting up.
+			    		ifrm_win.replacePageAndHighlightTimestamp(url, timestamp);
+			    	}
+		    	}
+			}
+			doUpdate("url_search_iframe", url, timestamp);
 	    }
     };
 }());
