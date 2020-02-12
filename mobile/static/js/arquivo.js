@@ -95,6 +95,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
 			  			reconstructMenu +
 			  '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'ExpandClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><i class="fa fa-expand" aria-hidden="true"></i><span style="padding-left: 13px !important;">'+Content.expandPage+'</span></a>'+
+			  '			<a id="replayWithOldBrowsers" alt="'+Content.replayWithOldBrowsers+'" href=javascript:void(0) onclick="ARQUIVO.replayWithOldBrowsers();"><h4><i class="replay-with-old-browsers"></i>'+Content.replayWithOldBrowsers+'</h4></a>'+
               '  </div>'+
               '	</div>'+
 			  '</div>'+
@@ -196,17 +197,34 @@ var ARQUIVO = ARQUIVO || (function(){
 		    $('#completePage').on('click', function(e){
 		        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'arquivo.pt/'+_ts+'/'+_url);
 		        window.open('https://timetravel.mementoweb.org/reconstruct/'+_ts+'/'+_url);
-		        this.closeUglipop();
+		        ARQUIVO.closeUglipop();
 		    });    
 		},
 		attachClosePopup: function(){
 		  $('#cancelPopup').on('click', function(e){
-		    this.closeUglipop();
+		    ARQUIVO.closeUglipop();
 		  });         
 		},
 		closeUglipop: function(){
 		  $('#uglipop_content_fixed').fadeOut();
 		  $('#uglipop_overlay').fadeOut('fast');
+		},
+		replayWithOldBrowsers: function() {
+			ga('send', 'event', 'ReplayBarFunctions', 'Replay with old browser', 'arquivo.pt/'+_ts+'/'+_url);
+		    uglipop({
+		      class:'modalReplay noprint', //styling class for Modal
+		      source:'html',
+		      content: '<h4 class="modalTitleReplayWithOldBrowsers">'+Content.leavingArquivo+'</h4>' +
+		              '<div class="row"><a id="okReplayWithOldBrowsers" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
+		  	this.attachReplayWithOldBrowsers();
+		  	this.attachClosePopup();
+		},
+		attachReplayWithOldBrowsers: function() {
+			$('#okReplayWithOldBrowsers').on('click', function(e) {
+		        ga('send', 'event', 'Replay with old browser', 'Clicked replay with old browser and confirmed', 'arquivo.pt/'+_ts+'/'+_url);
+		        window.open('http://oldweb.today/firefox/'+_ts+'/'+_url);
+		        ARQUIVO.closeUglipop();
+		    });
 		},
  		updateInfo: function(url, ts, patching){
  			_url = url;
