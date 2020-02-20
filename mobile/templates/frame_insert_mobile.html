@@ -1,3 +1,4 @@
+{% set buildUrlSuffix = ( '?build=' + metadata.build ) if metadata.build is defined else '' %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +55,7 @@ html, body
 <script src="{{ static_prefix }}/js/bootstrap.min.js"></script>
 <!-- Slider -->
 <link rel="stylesheet" href="{{ static_prefix }}/css/swiper.min.css">
-<link rel="stylesheet" href="{{ static_prefix }}/css/swipeCustom.css">
+<link rel="stylesheet" href="{{ static_prefix }}/css/swipeCustom.css{{ buildUrlSuffix }}">
 <!-- End Slider Right -->
 <script src="{{ static_prefix }}/js/uglipop.min.js"></script>
 <!-- simple plugin modals confirmation popups -->
@@ -62,7 +63,7 @@ html, body
 <!-- Plugin for cookie to choose language-->
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
 <!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
-<script src="{{ static_prefix }}/js/arquivo.js?release=ImageSearch"></script>
+<script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
 <script type="text/javascript">
   ARQUIVO.init("{{ static_prefix }}");  
 </script>
