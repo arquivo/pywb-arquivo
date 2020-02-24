@@ -4,6 +4,7 @@ collections:
       arquivo: memento+https://arquivo.pt/wayback/
     metadata:
       arquivoweb_app_url: https://preprod.arquivo.pt  # to use the preprod environment
+      screenshot_endpoint: https://preprod.arquivo.pt/screenshot
     #  arquivoweb_app_url: http://localhost:8080  # to use the localhost development
     #  build: hash_or_timestamp  # optional configuration to force browsers use the correct version of each js or css file.
     
@@ -11,6 +12,7 @@ head_insert_html: head_insert_mobile.html
 frame_insert_html: frame_insert_mobile.html
 error_html: error_mobile.html
 not_found_html: not_found_mobile.html
+
 
 framed_replay: true
 redirect_exact: true

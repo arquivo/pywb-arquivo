@@ -12,6 +12,7 @@
     wbinfo.is_frame = true;
     wbinfo.frame_mod = "{{ options.frame_mod }}";
     wbinfo.replay_mod = "{{ options.replay_mod }}";
+    wbinfo.screenshotEndpoint = "{{ screenshot_endpoint }}";
   </script>  
 <style>
 html, body
@@ -66,6 +67,8 @@ html, body
 <script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
 <script type="text/javascript">
   ARQUIVO.init("{{ static_prefix }}");  
+  var screenshotEndpoint = "{{ metadata.screenshot_endpoint }}";
+  console.log("SCREENSHOT ENDPOINT: ", screenshotEndpoint);
 </script>
 
 <title>Arquivo.pt</title>
