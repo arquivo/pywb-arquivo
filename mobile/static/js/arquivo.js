@@ -488,7 +488,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		     	localStorage.setItem('language', 'EN');
 		        window.location.reload();
 		     }
-		    else //default language Portuguese
+		    else //default language Portuguesez
 		    {
 		        localStorage.setItem('language', 'PT');   
 		        window.location.reload();
@@ -517,41 +517,31 @@ var ARQUIVO = ARQUIVO || (function(){
 		getImageToPrint: function(encodedURLToPrint){
 			ARQUIVO.closeUglipop();
 			ARQUIVO.loadingModal();
-		    var requestURL = "//"+_hostname+ "/print";
-		    $.ajax({
-		    // example request to the cdx-server api - 'http://arquivo.pt/print/?url='
-		       url: requestURL,
-		       data: {
-		          url: encodedURLToPrint
-		       },
-		       dataType: 'text',
-   		       error: function() {
-		         top.alert('error printing');
-		         top.alert('url: ' + requestURL+'?url='+encodedURLToPrint);
-		       },
-		       success: function(data) {
-		            var theImage = jQuery.parseJSON(data);
-		            $('#divPrintMe').show();
-		            if($('#imgToPrint').length){ //if 2nd time user prints only update the image
-		                $('#imgToPrint').attr('src','data:image/png;base64,'+theImage.imgBase64);
-		            }
-		            else{
-		                $('#divPrintMe').append('<img id="imgToPrint" style="display: block;" width=600px src="data:image/png;base64,'+ theImage.imgBase64 + '"/>');                    
-		            }
-		            setTimeout(function(){
-		  		    	window.print();
-					}, 200); /*Wait 200ms for element to be created before printing*/
-		            setTimeout(function(){
-		            	$('#divPrintMe').hide();
-					}, 1000); /*Wait 1s for image to be printed before hiding it*/					
 
-		       },
-		       complete : function(){
-		       	ARQUIVO.loadingModal();
-        		console.log(this.url);
-    		   },
-		       type: 'GET',
-		    });
+			var requestURL = screenshotEndpoint + "?url=" + encodedURLToPrint + "&download=false";
+
+			let divPrintMe = document.getElementById("divPrintMe");
+			let imgElem = document.getElementById("imgToPrint");
+
+			if (imgElem == null){
+				imgElem = document.createElement('img');
+				imgElem.setAttribute("id", "imgToPrint");
+				imgElem.setAttribute("width", "600px");
+				imgElem.style.display = 'inherited';
+				divPrintMe.appendChild(imgElem);
+			}
+
+			imgElem.addEventListener('load', () => {
+				setTimeout(() => {
+					window.print();
+				}, 1000);
+			});
+
+			imgElem.src = requestURL;
+			divPrintMe.style.display = "block";
+
+			ARQUIVO.loadingModal();
+			console.log(this.url);
 		},
 		pagesClick: function(){
 		    $('#pagesCarret').toggleClass('fa-caret-up fa-caret-down');
