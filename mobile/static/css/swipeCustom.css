@@ -530,8 +530,13 @@ display: none;
 
 .url-search-iframe-container {
     display: block;
+    position: absolute;
+    top: 84px;
     width: 200px;
     height: 100%;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 .url-search-iframe-container iframe {
