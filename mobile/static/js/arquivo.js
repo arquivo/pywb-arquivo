@@ -69,7 +69,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+
-	'<div class="background-top-curve"><p>&rarr; Insert here dynamically url from the page plus date - <a href="#">See all available versions</a> </p></div>');
+	'<div class="background-top-curve"><p><span id="headerUrl"></span></p></div>');
 		},
 		afterIframe: function(){
 			var reconstructMenu = '';
@@ -250,6 +250,7 @@ var ARQUIVO = ARQUIVO || (function(){
 
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(_url); /*update menu url*/
+			$('#headerUrl').html(_url);
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
 
 			_patching = patching;
