@@ -552,3 +552,10 @@ display: none;
     display: none;
 }
 }
+
+.headerUrl {
+    margin-right: 10px;
+}
+.headerTimestamp {
+    margin-left: 10px;   
+}
