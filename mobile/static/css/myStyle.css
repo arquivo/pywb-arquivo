@@ -4,8 +4,13 @@
 }
 
 .wb_iframe{
-  background: white;
-  min-width: 100%!important;
+  background: white; 
+  width: calc(100% - 200px);
+}
+
+@media screen and (max-width: 980px) {
+.wb_iframe{ width: 100% !important;
+}
 }
 
 #replay_iframe{
