@@ -69,7 +69,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+
-	'<div class="background-top-curve"><p>&rarr; Insert here dynamically url from the page plus date - <a href="#">See all available versions</a> </p></div>');
+	'<div class="background-top-curve"><p><span id="headerUrl" class="headerUrl"></span><span id="headerTimestamp" class="headerTimestamp"></span></p></div>');
 		},
 		afterIframe: function(){
 			var reconstructMenu = '';
@@ -226,6 +226,10 @@ var ARQUIVO = ARQUIVO || (function(){
 		        ARQUIVO.closeUglipop();
 		    });
 		},
+		// present url without protocol neither www.
+		formatURLForPresentation: function(originalURL) {
+			return originalURL.replace(/^(http(s)?\:\/\/(www\.)?)?/,'').replace(/\/$/,'');
+		},
  		updateInfo: function(url, ts, patching){
  			_url = url;
  			_ts = ts;
@@ -250,6 +254,8 @@ var ARQUIVO = ARQUIVO || (function(){
 
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(_url); /*update menu url*/
+			$('#headerUrl').html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
+			$('#headerTimestamp').html(ARQUIVO.getShortDatets());
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
 
 			_patching = patching;
