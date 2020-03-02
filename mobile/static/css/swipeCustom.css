@@ -488,7 +488,7 @@ display: none;
 }
 
 .background-top-curve p {
-    padding: 9px 0 21px 0;   
+    padding: 10px 0;   
     z-index: 3;
     position: relative;    
     color: white;
@@ -526,6 +526,7 @@ display: none;
 
 #wb_iframe_div {
     left: 200px;
+    width: calc(100% - 200px);
 }
 
 .url-search-iframe-container {
@@ -537,6 +538,8 @@ display: none;
 .url-search-iframe-container iframe {
     width: 100%;
     height: 100%;
+    margin-top: -9px;
+    border: none
 }
 
 @media screen  and (max-width: 979px) /* Tablet */ {
