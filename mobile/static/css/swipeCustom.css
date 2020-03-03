@@ -357,6 +357,8 @@ display: none;
     padding-top: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    width: 152px;
 }
 
 #menuTs{
@@ -526,9 +528,13 @@ display: none;
 
 #wb_iframe_div {
     left: 200px;
-    width: calc(100% - 200px);
-}
+   }
 
+@media screen and (min-width:980px) {
+#wb_iframe_div {   
+    width: calc(100% - 200px);   
+    }
+}
 .url-search-iframe-container {
     display: block;
     position: absolute;
@@ -543,7 +549,7 @@ display: none;
 .url-search-iframe-container iframe {
     width: 100%;
     height: 100%;
-    margin-top: -9px;
+    margin-top: 3px;
     border: none
 }
 
