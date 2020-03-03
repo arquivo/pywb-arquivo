@@ -295,14 +295,14 @@ h4 .fa-list {
     width: 100%;
     margin: 0px;
     font-family: "Roboto", "Open Sans", sans-serif;
-    font-size: 1.15em !important;
-    height: 48px;
+    font-size: 0.9em !important;
+    height: 52px;
     font-weight: normal !important;
     text-align: center;
     background-color: #1b65a2 !important;
     color:white !important;
     border:none !important;
-    border-radius: none !important
+    border-radius: none !important;  
 }
 
 
@@ -346,7 +346,7 @@ h4 .fa-list {
 
 
 .complete-page{
-    background: url(../img/reconstruct.svg) no-repeat -1px -0.8px;
+    background: url(../img/reconstruct.svg) no-repeat 0px 0px;
     background-size: 15px;
     padding-left: 23px;
     padding-bottom: 14px;
