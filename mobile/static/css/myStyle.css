@@ -9,7 +9,7 @@
 }
 
 #replay_iframe{
-  margin-top: /*-22px*/-9px;
+  margin-top: /*-22px*/-8px;
   padding: 0 0px;
   height: 100%;  
 }
@@ -346,27 +346,38 @@ h4 .fa-list {
 
 
 .complete-page{
-  background: url(../img/reconstruct.svg) no-repeat -1px 1.2px;
-  background-size: 18px;
-  padding-left: 29px;
-  padding-bottom: 14px;
-}
+    background: url(../img/reconstruct.svg) no-repeat -1px -0.8px;
+    background-size: 15px;
+    padding-left: 23px;
+    padding-bottom: 14px;
+ }
 
 #completePageIcon{
   background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
   background-size: 18px;
-  padding-left: 36px !important;
-  font-size: 15px !important;
+  padding-left: 36px;
+  font-size: 15px;
 }
 
 
 #completePageIconEN{
   background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
   background-size: 18px;
-  padding-left: 39px !important;
+  padding-left: 39px;
   font-size: 14px !important;
 }
 
+.fa-expand {
+padding-left: 2px;
+margin-right: -3px;
+}
+
+
+#replayWithOldBrowsers h4 {
+     background: url(../img/old-browser-icon.svg) no-repeat 20px 17.6px;
+    background-size: 16px;
+    padding-left: 45px;
+}
 
 /****************************/
 /****** MEDIA QUERIES *******/
@@ -380,7 +391,6 @@ h4 .fa-list {
     font-size: 16px !important;
   }
 }
-
 
 @media (min-device-width: 676px) and (max-device-width:3000px) {
   #completePageIcon {
