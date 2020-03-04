@@ -1,3 +1,25 @@
+/* scrollbar */
+
+html {
+  --scrollbarBG: #1c75c0;
+  --thumbBG: #0b497f;
+}
+body::-webkit-scrollbar {
+  width: 11px;
+}
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 0px;
+  border: 3px solid var(--scrollbarBG);
+}
+
 .logo-top-div{
   background-color: #252525!important;
   padding-left: 0px!important;
@@ -78,11 +100,11 @@ background-color: white !important;
 
 .modalTitleReplayWithOldBrowsers {     
     text-align: center;
-    font-size: 13px;    
-    background: url(../img/old-browser-icon-black.svg) no-repeat 17px 5.15px;
-    background-size: 18px;   
-    padding-bottom: 10px;
-    padding-left: 41px;
+    font-size: 13px;
+    background: url(../img/old-browser-icon-black.svg) no-repeat 17px 5px;
+    background-size: 17px;
+    padding-bottom: 8px;
+    padding-left: 39px;
     padding-top: 8px;
     padding-right: 20px;
 }
@@ -118,9 +140,8 @@ background-color: white !important;
 }
 
 
-.modalTitleComplete{
-  /*padding:20px 20px 0px 20px;*/
-  padding: 7px 20px 0px 20px !important;
+.modalTitleComplete{  
+  padding: 5px 20px 5px 32px !important;
 }
 
 .PageSpec h4.modalTitle {
@@ -204,13 +225,35 @@ padding-top: 7px;
   display: none !important;
 }
 
+@media screen and (min-width:1024px) {
+#uglipop_content_fixed{
+  /*z-index: 2;
+  min-width: 300px;   
+  position:relative;
+  border-radius: 5px;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  opacity: 1 !important; */
+  
+  /*top: 10% !important;
+    left: 25% !important;   
+    opacity: 1;
+    overflow: auto;
+    bottom: 10% !important;     
+    right: 25% !important;
+    width: 40% !important;
+    height: initial !important;
+    padding: 0px 14px 14px 14px;
+    background-color: white;*/
+}
+}
+
 #uglipop_content_fixed{
   z-index: 2;
   min-width: 300px;
   max-height: 100%;
   position:fixed;
-  /*top: 2% !important;*/
-  /*margin-top: 10px;*/
   border-radius: 5px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
@@ -241,15 +284,10 @@ padding-top: 7px;
 }
 
 .expand__close {
-    position: fixed;    
-    color: #454545;
-    /*top: 1.2%;
-    right: 4%;*/
-    top: 2.8%;
-    right: 5.1%;
-    color: #454545;
-    /*font-size: /*30px*//*27px !important*;*/   
-    /*line-height: 40px;*/
+    position: /*fixed*/ absolute;        
+    top: 0.8% !important;
+    right: 1.1% !important;
+    color: #454545;   
     text-decoration: none;
     cursor: pointer;
     background: transparent !important;
@@ -326,7 +364,7 @@ padding-top: 7px;
     height: 52px;
     font-weight: normal !important;
     text-align: center;
-    background-color: #1b65a2 !important;
+    background-color: /*#1b65a2*/ #0b497f !important;
     color:white !important;
     border:none !important;
     border-radius: none !important;  
@@ -380,21 +418,22 @@ padding-top: 7px;
  }
 
 #completePageIcon{
-  background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
-  background-size: 18px;
-  padding-left: 36px;
-  font-size: 15px;
+    background: url(../img/reconstruct-black.svg) no-repeat 18px 3.5px;
+    background-size: 16px;  
+    font-size: 13px;
 }
 
 
 #completePageIconEN{
-  background: url(../img/reconstruct-black.svg) no-repeat 17px 5px;
+background: url(../img/reconstruct-black.svg) no-repeat 17px 4px;
     background-size: 18px;
     padding-left: 39px;
     font-size: 13px !important;
     padding-bottom: 10px !important;
-    padding-left: 41px !important;
+    padding-left: 38px !important;
     padding-top: 5px;
+    background-size: 15px;
+
 }
 
 .fa-expand {
@@ -424,10 +463,10 @@ margin-right: -3px;
 
 @media (min-device-width: 676px) and (max-device-width:3000px) {
   #completePageIcon {
-    background: url(../img/reconstruct-black.svg) no-repeat 17px 11px;
+    /*background: url(../img/reconstruct-black.svg) no-repeat 17px 11px;
     background-size: 24px;
     padding-left: 36px !important;
-    font-size: 20px !important;
+    font-size: 20px !important;*/
   }
 }
 
