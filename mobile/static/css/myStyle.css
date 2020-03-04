@@ -33,17 +33,18 @@
 .modalReplay{
   background: /*#252525*/white;
   color: /*white*/black;
-  /*border: 1px solid #3E3E3E;*/
-  border-radius: /*10px*/10px;
+  border-radius: /*10px*/5px;
   text-align: center;
-  padding-bottom: 9px;
+  padding-bottom: 8px;
+
 }
 
 #uglipop_content_fixed .modalReplay { 
-  background-color: white !important;
-  text-align: center;
-  font-size: 14px;
-  padding-top: 1px;
+background-color: white !important;
+    text-align: center;
+    font-size: 13px;
+    padding-top: 2px;
+    padding-bottom: 8px !important;
 }
 #uglipop_content_fixed .PageSpec {  
    text-align: left;
@@ -75,6 +76,17 @@
   /*background: #515151;*/
 }
 
+.modalTitleReplayWithOldBrowsers {     
+    text-align: center;
+    font-size: 13px;    
+    background: url(../img/old-browser-icon-black.svg) no-repeat 17px 5.15px;
+    background-size: 18px;   
+    padding-bottom: 10px;
+    padding-left: 41px;
+    padding-top: 8px;
+    padding-right: 20px;
+}
+
 .modalReplay .row{
   margin:/* 0px!important*/0px 6px -3px 6px!important;
   padding-top:0;
@@ -85,12 +97,26 @@
 }
 
 .modalReplay .modalTitle{   
-    padding: 20px 0 20px 0px;
-    font-size: /*16px*/15px !important;
+    padding: 6px 0;
+    font-size: /*16px*/13px !important;
     font-weight: normal;
-    /*margin-top: 25px;*/
-    padding-bottom: 14px;   
+  
 }
+
+
+.modalOptions  {
+    background-color: #1c75c0 !important;   
+    border: 1px solid #1c75c0 !important;      
+    transition: background-color 0.5s ease 0s;
+    color: #fff; 
+   }
+
+.modalOptions:hover  {
+    background-color: #fff !important;
+    border: 1px solid #1c75c0 !important; 
+    color: #1c75c0 !important;      
+}
+
 
 .modalTitleComplete{
   /*padding:20px 20px 0px 20px;*/
@@ -140,21 +166,22 @@ h4 .fa-list {
 }
 
 .modalReplay .modalOptions{ 
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: /*#007AFF*/#1c75c0;
-  border-radius: 5px /*10px /*100px*/;
-  margin: 0 10px;
-  width: 43%;
-  float: left;
-  margin-bottom: 11px;   
-  border: none;
-  text-decoration: none !important;
+padding-top: 7px;
+ padding-bottom: 7px;
+    background-color: /*#007AFF*/#1c75c0;
+    border-radius: 5px /*10px /*100px*/;
+    margin: 0 10px;
+    width: 43%;
+    float: left;
+    margin-bottom: 11px;
+    border: none;
+    text-decoration: none !important;
+    font-size: 13px;
 }
 
 #cancelPopup, #searchOtherArchives {
   text-decoration: none;  
-  border: none !important;
+  /*border: none !important;*/
 }
 
 #cancelPopup, #searchOtherArchives: {
@@ -168,9 +195,9 @@ h4 .fa-list {
 
 
 #uglipop_overlay{
-  opacity: 0.7!important;
+  opacity: 0.1 !important;
   z-index: 1;
-  background-color:#1c75c0 !important;
+  background-color:/*#1c75c0*/ #000 !important;
 }
 
 .removeContentIcon {  
@@ -361,10 +388,13 @@ h4 .fa-list {
 
 
 #completePageIconEN{
-  background: url(../img/reconstruct-black.svg) no-repeat 17px 8px;
-  background-size: 18px;
-  padding-left: 39px;
-  font-size: 14px !important;
+  background: url(../img/reconstruct-black.svg) no-repeat 17px 5px;
+    background-size: 18px;
+    padding-left: 39px;
+    font-size: 13px !important;
+    padding-bottom: 10px !important;
+    padding-left: 41px !important;
+    padding-top: 5px;
 }
 
 .fa-expand {
