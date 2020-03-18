@@ -227,8 +227,8 @@ var ARQUIVO = ARQUIVO || (function(){
 		    });
 		},
 		// present url without protocol neither www.
-		formatURLForPresentation: function(originalURL) {
-			return originalURL.replace(/^(http(s)?\:\/\/(www\.)?)?/,'').replace(/\/$/,'');
+		formatURLForPresentation: function(url) {
+			return url.replace(/^(http(s)?\:\/\/)?(www\.)?/,'').replace(/\/$/,'');
 		},
  		updateInfo: function(url, ts, patching){
  			_url = url;
