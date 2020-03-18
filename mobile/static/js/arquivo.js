@@ -77,7 +77,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '      <div class="container-fluid">'+
 			  '        <div class="row text-center logo-main-div-no-border">'+
 			  '                    <a class="logo-menu-anchor" href="/?l='+_language+'"><img src="'+_static_path+'/img/arquivo-logo-white.svg  " id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
-			  '                    <a class="pull-left main-menu" id="menuButton"><div class="menu-button"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></a><button  id="replayMenuButton" " class="select-language" title="Replay menu">...</button>'+
+			  '                    <a class="pull-left main-menu" id="menuButton"><div class="menu-button"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><span class="headerMenuText">'+Content.header.menu+'</span></a>'+
+			  '                    <button id="replayMenuButton" " class="select-language" title="Replay menu"><span class="headerOptionsText">'+Content.header.options+'</span>...</button>'+
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+

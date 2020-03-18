@@ -125,5 +125,9 @@ Content = {
     images: "Images",  
     options: "Options",
     bug: "https://sobre.arquivo.pt/en/contact/?your-subject=Problem%20in%20arquivo.pt&your-message=",
-    replayWithOldBrowsers: "Replay with old browser"
+    replayWithOldBrowsers: "Replay with old browser",
+    header: {
+        menu: "Menu",
+        options: "Options",
+    },
 };

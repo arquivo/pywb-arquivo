@@ -125,5 +125,9 @@ Content = {
     images: "Imagens",
     options: "Op&ccedil;&#245;es",
     bug: "https://sobre.arquivo.pt/pt/contacto/?your-subject=Problema%20no%20arquivo.pt&your-message=",
-    replayWithOldBrowsers: "Veja com browser antigo"
+    replayWithOldBrowsers: "Veja com browser antigo",
+    header: {
+        menu: "Menu",
+        options: "Op&ccedil;&#245;es",
+    },
 };
