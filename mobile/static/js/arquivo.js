@@ -10,10 +10,22 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _hostname = window.location.hostname;
 	var _language ='pt';
 	var _patching = '';
+	var _screenshotEndpoint;
+	var _otherArchivesPrefixURL = 'https://web.archive.org/web/';
     return {
         init : function(static_path) {
 			_static_path = static_path;
 			this.loadLanguage();
+        },
+        initScreenshotEndpoint : function(screenshotEndpoint) {
+        	_screenshotEndpoint = screenshotEndpoint;
+        },
+
+        /**
+         * get other archives URL
+         */
+        getOtherArchivesURL : function() {
+        	return _otherArchivesPrefixURL + +_ts + '/' + _url;
         },
         /*Choose language and load corresponding Constants*/
 		loadLanguage: function(){
@@ -196,7 +208,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		attachCompletepage: function(){
 		    $('#completePage').on('click', function(e){
 		        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'arquivo.pt/'+_ts+'/'+_url);
-		        window.open('https://timetravel.mementoweb.org/reconstruct/'+_ts+'/'+_url);
+		        window.open(ARQUIVO.getOtherArchivesURL());
 		        ARQUIVO.closeUglipop();
 		    });    
 		},
@@ -524,7 +536,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			ARQUIVO.closeUglipop();
 			ARQUIVO.loadingModal();
 
-			var requestURL = screenshotEndpoint + "?url=" + encodedURLToPrint + "&download=false";
+			var requestURL = _screenshotEndpoint + "?url=" + encodedURLToPrint + "&download=false";
 
 			let divPrintMe = document.getElementById("divPrintMe");
 			let imgElem = document.getElementById("imgToPrint");
