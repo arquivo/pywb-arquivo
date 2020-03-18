@@ -50,8 +50,6 @@ document.write('<div class="myButtonStyle text-center" >'+
                '	</a>'+
                '</div></div>');
 
-/*window.open(\'http://timetravel.mementoweb.org/memento/'+tokens[4]+'/'+theURL+'\')*/
-
 $('#otherArchives').on('click', function(e){
 
             /*ga('send', 'event', 'ReplayBarFunctions', 'Search Other Archives Click', 'http://arquivo.pt/'+_ts+'/'+_url);*/
@@ -70,7 +68,7 @@ $('#otherArchives').on('click', function(e){
     /*Confirm searching other archives*/
     $('#searchOtherArchives').on('click', function(e){
         ga('send', 'event', 'Not Found', 'Other Archives Confirm', 'arquivo.pt/'+tokens[4]+'/'+theURL);
-        window.open('http://timetravel.mementoweb.org/memento/'+tokens[4]+'/'+theURL);
+        window.open('https://web.archive.org/web/'+tokens[4]+'/'+theURL);
         $('#uglipop_overlay').fadeOut('fast');
     });  
 
