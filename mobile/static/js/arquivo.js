@@ -10,10 +10,22 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _hostname = window.location.hostname;
 	var _language ='pt';
 	var _patching = '';
+	var _screenshotEndpoint;
+	var _otherArchivesPrefixURL = 'https://web.archive.org/web/';
     return {
         init : function(static_path) {
 			_static_path = static_path;
 			this.loadLanguage();
+        },
+        initScreenshotEndpoint : function(screenshotEndpoint) {
+        	_screenshotEndpoint = screenshotEndpoint;
+        },
+
+        /**
+         * get other archives URL
+         */
+        getOtherArchivesURL : function() {
+        	return _otherArchivesPrefixURL + +_ts + '/' + _url;
         },
         /*Choose language and load corresponding Constants*/
 		loadLanguage: function(){
@@ -65,7 +77,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '      <div class="container-fluid">'+
 			  '        <div class="row text-center logo-main-div-no-border">'+
 			  '                    <a class="logo-menu-anchor" href="/?l='+_language+'"><img src="'+_static_path+'/img/arquivo-logo-white.svg  " id="arquivoLogo" alt="Logo Arquivo.pt" class="text-center logo-main"></a>'+
-			  '                    <a class="pull-left main-menu" id="menuButton"><div class="menu-button"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></a><button  id="replayMenuButton" " class="select-language" title="Replay menu">...</button>'+
+			  '                    <a class="pull-left main-menu" id="menuButton"><div class="menu-button"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><span class="headerMenuText">'+Content.header.menu+'</span></a>'+
+			  '                    <button id="replayMenuButton" " class="select-language" title="Replay menu"><span class="headerOptionsText">'+Content.header.options+'</span>...</button>'+
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+
@@ -196,7 +209,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		attachCompletepage: function(){
 		    $('#completePage').on('click', function(e){
 		        ga('send', 'event', 'Complete Page', 'Clicked complete page and confirmed', 'arquivo.pt/'+_ts+'/'+_url);
-		        window.open('https://timetravel.mementoweb.org/reconstruct/'+_ts+'/'+_url);
+		        window.open(ARQUIVO.getOtherArchivesURL());
 		        ARQUIVO.closeUglipop();
 		    });    
 		},
@@ -227,8 +240,8 @@ var ARQUIVO = ARQUIVO || (function(){
 		    });
 		},
 		// present url without protocol neither www.
-		formatURLForPresentation: function(originalURL) {
-			return originalURL.replace(/^(http(s)?\:\/\/(www\.)?)?/,'').replace(/\/$/,'');
+		formatURLForPresentation: function(url) {
+			return url.replace(/^(http(s)?\:\/\/)?(www\.)?/,'').replace(/\/$/,'');
 		},
  		updateInfo: function(url, ts, patching){
  			_url = url;
@@ -524,7 +537,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			ARQUIVO.closeUglipop();
 			ARQUIVO.loadingModal();
 
-			var requestURL = screenshotEndpoint + "?url=" + encodedURLToPrint + "&download=false";
+			var requestURL = _screenshotEndpoint + "?url=" + encodedURLToPrint + "&download=false";
 
 			let divPrintMe = document.getElementById("divPrintMe");
 			let imgElem = document.getElementById("imgToPrint");
