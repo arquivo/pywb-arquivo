@@ -552,18 +552,24 @@ display: none;
     border: none
 }
 
-@media screen and (max-width:768px){
+@media screen and (max-width:960px){
 .headerMenuText {
 display: none;
+}
+.headerOptionsText {
+display: none;
+}
+.headerOptionsTextDots {
+display: block;
 }
 .menu-button {display: block}
 }
 
-@media screen and (min-width:769px){
+@media screen and (min-width:960px){
 .headerMenuText {
  display: block;
     position: absolute;
-    top: 1.5px;
+    top: 2.5px;
     left: 13px;
     font-size: 0.6em;
     padding: 0 10px;
@@ -572,15 +578,32 @@ display: none;
     margin: 0;
     transition: 0.5s;
 }
+
+@media screen and (min-width:960px){
+.headerOptionsText {
+font-size: 13px !important;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin: 9px -8px 0 0;
+    transition: 0.5s;
+}
+
+.headerOptionsText {
+display: block;
+
+}
+.headerOptionsTextDots {
+display: none;
+}
+
 .menu-button {display:none}
 }
 
-.headerMenuText:hover, .headerMenuText:active {    
-    
+.headerMenuText:hover, .headerMenuText:active, .headerOptionsText:hover, .headerOptions:active { 
     color: #1a73ba;
     border: 1px solid transparent;   
-    background-color: white
-   
+    background-color: white   
 }
 
 @media screen  and (max-width: 979px) /* Tablet */ {
