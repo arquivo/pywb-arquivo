@@ -472,7 +472,11 @@ display: none;
     color: red !important;     
 }
 
-@media screen and (min-device-width: 769px){ /* desktop */
+@media screen and (max-width: 768px){ /* desktop */
+.headerMenuText, .headerOptionsText {display: none}  
+}
+
+@media screen and (min-width: 769px){ /* desktop */
 .swiper-container h4, .swiper-container #expandPage {
     font-size: 13px !important;
     cursor: pointer;  
@@ -523,11 +527,10 @@ display: none;
     overflow-y: auto;
 }
 
-}
 
 #wb_iframe_div {
     left: 200px;
-   }
+}
 
 @media screen and (min-width:980px) {
 #wb_iframe_div {   
