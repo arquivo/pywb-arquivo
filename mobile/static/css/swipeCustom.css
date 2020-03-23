@@ -1,4 +1,3 @@
-
 html, body {
 	position: relative;
 	height: 100%;
@@ -551,6 +550,37 @@ display: none;
     height: 100%;
     margin-top: 3px;
     border: none
+}
+
+@media screen and (max-width:768px){
+.headerMenuText {
+display: none;
+}
+.menu-button {display: block}
+}
+
+@media screen and (min-width:769px){
+.headerMenuText {
+ display: block;
+    position: absolute;
+    top: -6.5px;
+    left: -10px;
+    font-size: 0.6em;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin: 0;
+    transition: 0.5s;
+}
+.menu-button {display:none}
+}
+
+.headerMenuText:hover, .headerMenuText:active {    
+    
+    color: #1a73ba;
+    border: 1px solid transparent;   
+    background-color: white
+   
 }
 
 @media screen  and (max-width: 979px) /* Tablet */ {
