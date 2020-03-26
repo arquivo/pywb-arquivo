@@ -120,7 +120,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachLanguageChange();
 			this.attachShare();
 			this.attachTools();
-			this.attachSwitchDesktop();
 			this.attachMoreInfoModal();
 			this.attachReportBug();
 			this.attachCompletepage();
@@ -346,7 +345,6 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 			<a href="/images.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'NewImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 			<a href="/advancedImages.jsp?l='+Content.language+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AdvancedImageSearchClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               		   '</div>'+                
-              '		 	<a id="switchDesktop" href="" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'SwitchDesktopClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-desktop right-8" aria-hidden="true"></i> '+Content.switchDesktop+'</h4></a>'+			                    
 			  '		 	<a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+              
               '		 	<a href="'+Content.aboutHref+'" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'AboutClick\', \'arquivo.pt/'+_ts+'/'+_url+'\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
               '		</div>' ); 			
@@ -390,15 +388,6 @@ var ARQUIVO = ARQUIVO || (function(){
 		    $('#toolsOptions').slideToggle( "fast", "linear" );
 		  }); 	 			
  		}, 	 			
- 		attachSwitchDesktop: function(){
-		  $('#switchDesktop').on('click', function(e){		  	
-		  	e.preventDefault();
-		  	ga('send', 'event', 'ReplayBarFunctions', 'SwitchDesktopClick', '//arquivo.pt/'+_ts+'/'+_url);	
-			Cookies.set('forceDesktop', 'true', { domain: window.location.hostname.substr(2, window.location.hostname.length), path:'djsakj' });
-			/*redirect current link from mobile to desktop version i.e. remove the m. from current link*/
-			window.location = window.location.href.replace(window.location.hostname , window.location.hostname.substr(2, window.location.hostname.length)); 
-		  }); 	 			
- 		},
 		moreInfoModal: function(){
 		  ga('send', 'event', 'ReplayBarFunctions', 'MoreInformationMenuClick', '//arquivo.pt/'+_ts+'/'+_url);
 		    var requestURL = "//"+window.location.hostname.replace("m.","")+ "/textsearch";
