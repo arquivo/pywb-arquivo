@@ -111,6 +111,7 @@ Content = {
     saveAsImage: "Take a screenshot of this page?",
     completeThisPage: "Complete this page?",
     leavingArquivo: "You are leaving Arquivo.pt to another service",
+    leavingArquivoToReplayWithOldBrowsers: "You are leaving Arquivo.pt to oldweb.today service",
     toBeCompleted: "This page might be completed with missing information" ,
     helpHref:"http://sobre.arquivo.pt/en/help/",
     expandPage:"Fullscreen",

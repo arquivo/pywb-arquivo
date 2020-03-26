@@ -226,7 +226,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		    uglipop({
 		      class:'modalReplay noprint', //styling class for Modal
 		      source:'html',
-		      content: '<h4 class="modalTitleReplayWithOldBrowsers">'+Content.leavingArquivo+'</h4>' +
+		      content: '<h4 class="modalTitleReplayWithOldBrowsers">'+Content.leavingArquivoToReplayWithOldBrowsers+'</h4>' +
 		              '<div class="row"><a id="okReplayWithOldBrowsers" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
 		  	this.attachReplayWithOldBrowsers();
 		  	this.attachClosePopup();
