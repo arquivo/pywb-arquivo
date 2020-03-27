@@ -76,6 +76,7 @@ Content = {
     otherArchives: "Search in other archives",
     table: "Table",
     completePage: "Complete the page", 
+    completePageUsingPatchingConfirmationMessage: "We will try to complete the page with resources of others web archives",
     downloadTitle: "Download full page screenshot",
     downloadPopup: "Download screenshot of this page?",    
     downloadMessage: "Download",
