@@ -90,7 +90,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '        </div>  '+
 			  '      </div>  '+
 	'<div class="curve-background"></div>'+
-	'<div class="background-top-curve"><p><span id="headerUrl" class="headerUrl"></span><span id="headerTimestamp" class="headerTimestamp"></span></p></div>');
+	'<div class="background-top-curve"><p><a id="headerUrl" class="headerUrl" target="_blank"></a><span id="headerTimestamp" class="headerTimestamp"></span></p></div>');
 		},
 		afterIframe: function(){
 			document.write(''+
@@ -234,7 +234,7 @@ var ARQUIVO = ARQUIVO || (function(){
 
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(_url); /*update menu url*/
-			$('#headerUrl').html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
+			$('#headerUrl').attr('href', _url).attr('title', _url).html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
 			$('#headerTimestamp').html(ARQUIVO.getShortDatets());
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
 			$('#listVersionsSideLink').attr('href', _host_prefix + "/search.jsp?query=" + this.formatURLForPresentation(_url) );
