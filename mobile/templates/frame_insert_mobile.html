@@ -72,8 +72,7 @@ html, body
 <!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
 <script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
 <script type="text/javascript">
-  ARQUIVO.init("{{ static_prefix }}");  
-  ARQUIVO.initScreenshotEndpoint("{{ metadata.screenshot_endpoint }}");
+  ARQUIVO.init("{{ host_prefix }}", "{{ static_prefix }}", "{{ metadata.screenshot_endpoint }}");
 </script>
 
 <title>Arquivo.pt</title>
@@ -125,6 +124,9 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}", "{{ metadata.patching 
     }
   </script>
   <div class="url-search-iframe-container">
+    <a id="listVersionsSideLink" class="listVersionsSideLink" href="#"><span id="listVersionsText" class="listVersionsText"></span></a>
+    <script type="text/javascript">$('#listVersionsText').html(Content.allVersions);</script>
+
     <!-- onload="ARQUIVO.resizeIframe(this)" -->
     <iframe
       name="url_search_iframe" 

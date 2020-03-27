@@ -3,7 +3,6 @@ String.prototype.replaceAll = String.prototype.replaceAll || function(needle, re
 }; 
 /*Arquivo.pt specific functions and js code, such as loading constants, cookies, custom html code, etc*/
 var ARQUIVO = ARQUIVO || (function(){
-    var _host_prefix;
     var _static_path;
 	var	_url;
 	var _ts;
@@ -11,14 +10,16 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _language ='pt';
 	var _patching = '';
 	var _screenshotEndpoint;
+	var _host_prefix;
 	var _otherArchivesPrefixURL = 'https://web.archive.org/web/';
     return {
-        init : function(static_path) {
+        init : function(host_prefix, static_path, screenshotEndpoint) {
 			_static_path = static_path;
 			this.loadLanguage();
-        },
-        initScreenshotEndpoint : function(screenshotEndpoint) {
+
         	_screenshotEndpoint = screenshotEndpoint;
+
+        	_host_prefix = host_prefix;
         },
 
         /**
@@ -269,6 +270,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#headerUrl').html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
 			$('#headerTimestamp').html(ARQUIVO.getShortDatets());
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
+			$('#listVersionsSideLink').attr('href', _host_prefix + "/search.jsp?query=" + this.formatURLForPresentation(_url) );
 
 			_patching = patching;
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
@@ -669,7 +671,8 @@ var ARQUIVO = ARQUIVO || (function(){
 		    	}
 			}
 			doUpdate("url_search_iframe", url, timestamp);
-	    }
+	    },
+
     };
 }());
 
