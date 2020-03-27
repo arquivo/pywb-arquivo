@@ -81,9 +81,6 @@ body {
 	cursor: pointer;
 	margin-top: 7px;
 }
-#menuButton.open{	
-    display: none;
-}
 
 #swiperWrapper{
 	background-color: #1c75c0;
@@ -570,7 +567,7 @@ display: block;
 
 @media screen and (min-width:960px){
 .headerMenuText {
- display: block;
+    display: block;
     position: absolute;
     top: 2.5px;
     left: 13px;
