@@ -452,7 +452,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                  '-webkit-transform': 'translate(-50%, -50%)',
 		                  '-ms-transform': 'translate(-50%, -50%)'
 		  });
-		},			
+		},
 			 		 	 
  		attachLanguageChange: function(){
 		  $('#changeLanguage').on('click', function(e){
@@ -470,18 +470,19 @@ var ARQUIVO = ARQUIVO || (function(){
 		    {
 		        localStorage.setItem('language', 'PT');   
 		        window.location.reload();
-		    }   
+		    }
 		},
 		/*Returns current timestamp in short form such as '2 Nov, 2015' */
 		getShortDatets: function(){
-		              var year = _ts.substring(0, 4);
-		              var month = _ts.substring(4, 6);
-		              var day = _ts.substring(6, 8);
-		              if(day.charAt(0) == '0'){
-		                day = day.charAt(1);
-		              }
-
-		  return day+" "+ Content.months[month]+", "+year;
+			var year = _ts.substring(0, 4);
+			var month = _ts.substring(4, 6);
+			var day = _ts.substring(6, 8);
+			if(day.charAt(0) == '0'){
+				day = day.charAt(1);
+			}
+			var hour = _ts.substring(8,10);
+			var minute = _ts.substring(10,12);
+			return day+" "+Content.months[month]+" "+Content.at+" "+hour+":"+minute+", "+year;
 		},
 		getDatets: function(){
 		              var year = ts.substring(0, 4);
