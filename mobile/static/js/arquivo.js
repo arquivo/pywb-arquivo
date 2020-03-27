@@ -11,7 +11,6 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _patching = '';
 	var _screenshotEndpoint;
 	var _host_prefix;
-	var _otherArchivesPrefixURL = 'https://web.archive.org/web/';
     return {
         init : function(host_prefix, static_path, screenshotEndpoint, patching, buildUrlSuffix) {
         	_buildUrlSuffix = buildUrlSuffix;
@@ -26,10 +25,13 @@ var ARQUIVO = ARQUIVO || (function(){
          * get other archives URL
          */
         getOtherArchivesURL : function() {
-        	return _otherArchivesPrefixURL +_ts + '/' + _url;
+        	return 'https://web.archive.org/web/' +_ts + '/' + _url;
         },
         getPatchingPageURL : function() {
         	return '/noFrame/patching/record/' + _ts + '/' + _url;
+        },
+        getReplayWithOldBrowsersURL : function () {
+        	return 'http://oldweb.today/firefox/' + _ts + '/' + _url;
         },
         
         /*
@@ -107,7 +109,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
               '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'Complete Page\'); ARQUIVO.attachCompletePageModal(); return false;"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>'+
 			  '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'ExpandClick\');"><i class="fa fa-expand" aria-hidden="true"></i><span style="padding-left: 13px !important;">'+Content.expandPage+'</span></a>'+
-			  '			<a id="replayWithOldBrowsers" alt="'+Content.replayWithOldBrowsers+'" href=javascript:void(0) onclick="ARQUIVO.replayWithOldBrowsers();"><h4><i class="replay-with-old-browsers"></i>'+Content.replayWithOldBrowsers+'</h4></a>'+
+			  '			<a id="replayWithOldBrowsers" alt="'+Content.replayWithOldBrowsers+'" href=javascript:void(0) onclick="ARQUIVO.replayWithOldBrowsers(); return false;"><h4><i class="replay-with-old-browsers"></i>'+Content.replayWithOldBrowsers+'</h4></a>'+
               '  </div>'+
               '	</div>'+
 			  '</div>'+
@@ -200,7 +202,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		attachReplayWithOldBrowsers: function() {
 			$('#okReplayWithOldBrowsers').on('click', function(e) {
 		        ARQUIVO.sendEventToAnalytics('Replay with old browser', 'Clicked replay with old browser and confirmed');
-		        window.open('http://oldweb.today/firefox/'+_ts+'/'+_url);
+		        window.open( ARQUIVO.getReplayWithOldBrowsersURL() );
 		        ARQUIVO.closeUglipop();
 		    });
 		},
@@ -237,6 +239,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
 			$('#listVersionsSideLink').attr('href', _host_prefix + "/search.jsp?query=" + this.formatURLForPresentation(_url) );
 			$('#a_reconstruct').attr('href', this.getPatchingPageURL());
+			$('#replayWithOldBrowsers').attr('href', this.getReplayWithOldBrowsersURL());
 
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
 
