@@ -101,7 +101,7 @@ var ARQUIVO = ARQUIVO || (function(){
               '			<div class="main-menu-top-div">'+
 			  '	 			<h4 id="menuUrl" title="'+_url+'">'+ _url +'</h4>' + 
 			  ' 			<button href="#" onclick="ARQUIVO.goToContent()" class="close-functions clean-button-no-fill" id="closeSpecPopUp">&#10005;</button>' +			  
-			  ' 			<h5 id="menuTs">'+ this.getShortDatets() +'</h5>' + 			                             
+			  ' 			<h5 id="menuTs">'+ this.formatTimestampToPresentation(_ts) +'</h5>' + 			                             
 			  '			</div>'+
 			  '			<a href="//'+_hostname+'/search.jsp?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'ListVersionsClick\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>'+ 						                      
 			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
@@ -235,8 +235,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#menuUrl').attr('title', _url);
 			$('#menuUrl').html(_url); /*update menu url*/
 			$('#headerUrl').attr('href', _url).attr('title', _url).html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
-			$('#headerTimestamp').html(ARQUIVO.getShortDatets());
-			$('#menuTs').html(ARQUIVO.getShortDatets()); /*update menu ts*/
+			$('#headerTimestamp').html(ARQUIVO.formatTimestampToPresentation(_ts));
+			$('#menuTs').html(ARQUIVO.formatTimestampToPresentation(_ts)); /*update menu ts*/
 			$('#listVersionsSideLink').attr('href', _host_prefix + "/search.jsp?query=" + this.formatURLForPresentation(_url) );
 			$('#a_reconstruct').attr('href', this.getPatchingPageURL());
 			$('#replayWithOldBrowsers').attr('href', this.getReplayWithOldBrowsersURL());
@@ -472,16 +472,18 @@ var ARQUIVO = ARQUIVO || (function(){
 		        window.location.reload();
 		    }
 		},
-		/*Returns current timestamp in short form such as '2 Nov, 2015' */
-		getShortDatets: function(){
-			var year = _ts.substring(0, 4);
-			var month = _ts.substring(4, 6);
-			var day = _ts.substring(6, 8);
+		/**
+		 * Returns current timestamp in short form such as '2 Nov 10:24, 2015'
+		 */
+		formatTimestampToPresentation: function(timestamp){
+			var year = timestamp.substring(0, 4);
+			var month = timestamp.substring(4, 6);
+			var day = timestamp.substring(6, 8);
 			if(day.charAt(0) == '0'){
 				day = day.charAt(1);
 			}
-			var hour = _ts.substring(8,10);
-			var minute = _ts.substring(10,12);
+			var hour = timestamp.substring(8,10);
+			var minute = timestamp.substring(10,12);
 			return day+" "+Content.months[month]+" "+Content.at+" "+hour+":"+minute+", "+year;
 		},
 		getDatets: function(){
