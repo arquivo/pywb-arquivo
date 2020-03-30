@@ -81,9 +81,6 @@ body {
 	cursor: pointer;
 	margin-top: 7px;
 }
-#menuButton.open{	
-    display: none;
-}
 
 #swiperWrapper{
 	background-color: #1c75c0;
@@ -570,7 +567,7 @@ display: block;
 
 @media screen and (min-width:960px){
 .headerMenuText {
- display: block;
+    display: block;
     position: absolute;
     top: 2.5px;
     left: 13px;
@@ -625,4 +622,26 @@ display: none;
 }
 .headerTimestamp {
     margin-left: 10px;   
+}
+
+.listVersionsSideLink {
+    cursor: pointer;
+    color: white;
+    line-height: 30px;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.listVersionsText {
+    display: block;
+    position: absolute;
+    top: 2.5px;
+    left: 13px;
+    font-size: 0.6em;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin: 0;
+    transition: 0.5s;
 }
