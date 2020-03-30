@@ -411,6 +411,9 @@ a#closeSpecPopUp {
   text-decoration: none !important;
   color: red !important;
 }
+
+.day-version-div {outline: 1px solid red}
+
 @media screen and (max-width: 959px) { /* desktop */
   .headerMenuText, .headerOptionsText {
     display: none
@@ -501,7 +504,7 @@ a#closeSpecPopUp {
     }
   }
   @media screen and (min-width:960px) {
-    .headerMenuText {
+   body#homepage-landing .headerMenuText, body#homeImages .headerMenuText, .headerMenuText  {
       display: block;
       position: absolute;
       top: 2.5px;
@@ -512,6 +515,9 @@ a#closeSpecPopUp {
       border-radius: 5px;
       margin: 0;
       transition: 0.5s;
+     color: white;
+    background-color: transparent;
+    border: 1px solid white;
     }
     @media screen and (min-width:960px) {
       .headerOptionsText {
@@ -521,6 +527,10 @@ a#closeSpecPopUp {
         border-radius: 5px;
         margin: 9px -8px 0 0;
         transition: 0.5s;
+        
+       color: white;
+    background-color: transparent;
+    border: 1px solid white;
       }
       .headerOptionsText {
         display: block;
@@ -533,9 +543,9 @@ a#closeSpecPopUp {
       }
     }
     .headerMenuText:hover, .headerMenuText:active, .headerOptionsText:hover, .headerOptions:active {
-      color: #1a73ba;
-      border: 1px solid transparent;
-      background-color: white
+     color: #1c75c0;
+      border: 1px solid white;
+      background-color: white;
     }
     @media screen and (max-width: 959px) /* Tablet */ {
       #wb_iframe_div {
@@ -570,3 +580,15 @@ a#closeSpecPopUp {
       margin: 11px 0 0 0;
       transition: 0.5s;
     }
+.url-search-iframe-container #listVersionsText {
+           
+      color: white;
+      border: 1px solid white;
+      background-color: transparent;
+}
+
+.url-search-iframe-container #listVersionsText:hover {  
+      color: #1c75c0;
+      border: 1px solid white;
+      background-color: white;
+}
