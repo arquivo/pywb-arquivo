@@ -245,7 +245,7 @@ body {
   padding-right: 20px !important;
 }
 .submenu {
-  background-color: #1a5f97ba;
+ /* background-color: #1a5f97ba;*/
   padding-left: 30px !important;
 }
 #shareOptions, #toolsOptions {
