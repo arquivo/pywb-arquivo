@@ -116,6 +116,7 @@ body {
   right: -4px;
   background-color: /*#c0c0c096*/ /*#c0c0c069*/ #c0c0c024;
   color: white !important;
+  opacity: 0.6;
 }
 #swipeContainer .fa-caret-up:before {
   /*border: 1px solid #e3e3e32e;  */
