@@ -425,13 +425,13 @@ a#closeSpecPopUp {
     cursor: pointer;
   }
   #swiperWrapper .submenu:hover {
-    background-color: #1f5788 !important;
+    background-color: #1a5f97ba !important;
   }
   /* NEW Style: change background top curve to url information on desktop */
   .background-top-curve {
     text-align: center;
     height: auto;
-    background-color: #1a5f97ba !important;
+    background-color: #1a5f97 !important;
   }
   .background-top-curve p {
     padding: 10px 0;
