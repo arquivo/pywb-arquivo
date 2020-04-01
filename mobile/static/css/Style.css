@@ -39,6 +39,7 @@ cite { font-family: monospace; font-size: 1.2em; font-style: normal; }
     color: #000;
     margin-top: 9px;
     margin-bottom: /*13px*/20px;
+    display: none;
 }
 
 #pageIsNotArchived {	
@@ -483,7 +484,7 @@ li.grouped { padding-left: 38px; }
     color: /*#555*/white;
 }
 .greyFont{
-    font-size: 17px;
+    font-size: 13px;
     color: #555;
 }
 
@@ -491,29 +492,32 @@ li.grouped { padding-left: 38px; }
 /* Portrait */
 @media screen and (orientation:portrait) {
 #pageIsNotArchived {
-    margin: 50% 0 !important;
-    }
+    margin: 41vh auto !important;
+    max-width: 354px;
+}
     .myButtonStyle {    
     width: 62% !important;
     margin: 0 auto;
      border-radius: 5px
 }
 #pageIsNotArchived img {
-    width: 62% !important;
+    width: 52% !important;
     margin: 0 auto !important;
 }
 }
 /* Landscape */
 @media screen and (orientation:landscape) {
 #pageIsNotArchived {
-    margin: 9% !important;
+   margin: 41vh auto !important;
+    max-width: 354px;
 }
 #pageIsNotArchived img {
-    width: 41% !important;
-    margin: 0 auto !important;
+    width: 52% !important;
+    margin: 0 auto 5px auto !important;
+}
 }
 .myButtonStyle {   
-    width: 41% !important;
+    width: 53% !important;
     margin: 0 auto;
     border-radius: 5px;
 }
