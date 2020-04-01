@@ -512,8 +512,8 @@ var ARQUIVO = ARQUIVO || (function(){
 				divPrintMe.appendChild(imgElem);
 			}
 
-			imgElem.addEventListener('load', () => {
-				setTimeout(() => {
+			imgElem.addEventListener('load', function() {
+				setTimeout(function() {
 					window.print();
 				}, 1000);
 			});
@@ -642,7 +642,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  return undefined;
 			}
 
-			async function doUpdate(iframeId, url, timestamp) {
+			function doUpdate(iframeId, url, timestamp) {
 		    	const ifrm_el = document.getElementById(iframeId);
 		    	if (ifrm_el) {
 			    	const ifrm_win = getIframeWindow(ifrm_el);
