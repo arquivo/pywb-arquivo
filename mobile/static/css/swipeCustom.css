@@ -419,6 +419,10 @@ a#closeSpecPopUp {
   .headerMenuText, .headerOptionsText {
     display: none
   }
+  .background-top-curve {
+    z-index: -1;
+    margin-top: -58px;
+}
 }
 @media screen and (min-width: 960px) { /* desktop */
   .swiper-container h4, .swiper-container #expandPage {
