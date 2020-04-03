@@ -76,7 +76,7 @@ Content = {
     otherArchives: "Pesquisar noutros arquivos",
     table: "Tabela",
     completePage: "Completar a p&#225gina",
-    completePageUsingPatchingConfirmationMessage: "Vamos tentar completar a p&aacute;gina com recursos a outros arquivos",
+    completePageUsingPatchingConfirmationMessage: "Vamos tentar completar a p&aacute;gina com recursos externos",
     downloadTitle: "Guardar como Imagem",
     downloadPopup: "Guardar p&#225gina inteira como imagem?",
     downloadMessage: "Guardar",
