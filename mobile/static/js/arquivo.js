@@ -246,7 +246,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#headerUrl').attr('href', _url).attr('title', _url).html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
 			$('#headerTimestamp').html(ARQUIVO.formatTimestampToPresentation(_ts));
 			$('#menuTs').html(ARQUIVO.formatTimestampToPresentation(_ts)); /*update menu ts*/
-			$('#listVersionsSideLink').attr('href', _host_prefix + "/search.jsp?query=" + this.formatURLForPresentation(_url) );
+			$('#tableVersionsSideLink').attr('href', _host_prefix + "/search.jsp?typeShow=table&query=" + this.formatURLForPresentation(_url) );
 			$('#a_reconstruct').attr('href', this.getPatchingPageURL());
 			$('#replayWithOldBrowsers').attr('href', this.getReplayWithOldBrowsersURL());
 			
