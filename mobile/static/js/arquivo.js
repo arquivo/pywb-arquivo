@@ -239,7 +239,11 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#listVersionsSideLink').attr('href', _host_prefix + "/search.jsp?query=" + this.formatURLForPresentation(_url) );
 			$('#a_reconstruct').attr('href', this.getPatchingPageURL());
 			$('#replayWithOldBrowsers').attr('href', this.getReplayWithOldBrowsersURL());
-			document.getElementById("replayMenuButton").style.display = "block";
+			
+			const replayMenuButton = document.getElementById("replayMenuButton");
+			if (replayMenuButton) {
+				replayMenuButton.style.display = "block";
+			}
 
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
 
