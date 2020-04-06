@@ -122,7 +122,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachShare();
 			this.attachTools();
 			this.attachMoreInfoModal();
-			this.attachReportBug();
 			this.attachCompletepage();
 			this.attachKeyBoardEvent();
  		},
@@ -316,7 +315,6 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 			<a href="/images.jsp?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'NewImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 			<a href="/advancedImages.jsp?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AdvancedImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               		   '</div>'+                
-			  '		 	<a id="reportBug"><h4><i class="fa fa-bug right-10" aria-hidden="true"></i> '+Content.report+'</h4></a>'+              
               '		 	<a href="'+Content.aboutHref+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AboutClick\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
               '		</div>' ); 			
  		},
@@ -566,13 +564,6 @@ var ARQUIVO = ARQUIVO || (function(){
 		  	ARQUIVO.closeUglipop();
 		  }); 	 			
  		},
-		attachReportBug: function(){
-			$('#reportBug').click( function(e) {
-				e.preventDefault();
-				ARQUIVO.sendEventToAnalytics('ReplayBarFunctions', 'ReportBug', window.location.href);
-				window.location = Content.bug + window.location.href.replaceAll('&', '%26');
-			});
-		},		 		
 		closeSwipeMenu: function(){
 		},
 		
