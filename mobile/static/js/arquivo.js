@@ -11,14 +11,21 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _patching = '';
 	var _screenshotEndpoint;
 	var _host_prefix;
+	var _replayWithOldBrowsers;
+
+	function isEmpty(val){
+	    return (val === undefined || val == null || val.length <= 0) ? true : false;
+	}
+
     return {
-        init : function(host_prefix, static_path, screenshotEndpoint, patching, buildUrlSuffix) {
+        init : function(host_prefix, static_path, screenshotEndpoint, patching, buildUrlSuffix, replayWithOldBrowsers) {
         	_buildUrlSuffix = buildUrlSuffix;
 			_static_path = static_path;
 			this.loadLanguage();
         	_screenshotEndpoint = screenshotEndpoint;
         	_host_prefix = host_prefix;
         	_patching = patching;
+        	_replayWithOldBrowsers = replayWithOldBrowsers;
         },
 
         /**
@@ -109,7 +116,10 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
               '			<a id="a_reconstruct" alt="'+Content.completePage+'" href=javascript:void(0) onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'Complete Page\'); ARQUIVO.attachCompletePageModal(); return false;"><h4><i class="complete-page"></i>'+Content.completePage+'</h4></a>'+
 			  '		 	<a id="expandPage" href="/noFrame/replay/'+_ts+'/'+_url+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'ExpandClick\');"><i class="fa fa-expand" aria-hidden="true"></i><span style="padding-left: 13px !important;">'+Content.expandPage+'</span></a>'+
-			  '			<a id="replayWithOldBrowsers" alt="'+Content.replayWithOldBrowsers+'" href=javascript:void(0) onclick="ARQUIVO.replayWithOldBrowsers(); return false;"><h4><i class="replay-with-old-browsers"></i>'+Content.replayWithOldBrowsers+'</h4></a>'+
+			  (this.isReplayWithOldBrowsers() ?
+			  '			<a id="replayWithOldBrowsers" alt="'+Content.replayWithOldBrowsers+'" href=javascript:void(0) onclick="ARQUIVO.replayWithOldBrowsers(); return false;"><h4><i class="replay-with-old-browsers"></i>'+Content.replayWithOldBrowsers+'</h4></a>':
+			  ''
+              )+
               '  </div>'+
               '	</div>'+
 			  '</div>'+
@@ -658,6 +668,10 @@ var ARQUIVO = ARQUIVO || (function(){
         	ga("send", "event", eventCategory, eventAction, eventLabel );
         	ARQUIVO.updatePageOnUrlSearch
 	    },
+
+		isReplayWithOldBrowsers : function() {
+			return _replayWithOldBrowsers.toLowerCase( ) === 'true' || isEmpty(_replayWithOldBrowsers);
+		},
 
     };
 }());
