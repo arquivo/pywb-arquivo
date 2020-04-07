@@ -112,16 +112,23 @@
   font-weight: normal;
 }
 .modalOptions {
-  background-color: white !important;
-  border: 1px solid #1c75c0 !important;
-  transition: background-color 0.5s ease 0s;
-  color: #1c75c0 !important;
-}
-.modalOptions:hover {
   background-color: #1c75c0 !important;
   border: 1px solid #1c75c0 !important;
+  transition: background-color 0.2s ease 0s;
   color: white !important;
 }
+.modalOptions:hover {
+  background-color: white !important;
+  border: 1px solid #1c75c0 !important;
+  color: #1c75c0 !important;
+}
+
+.modalOptions:active {
+  background-color: #033f72 !important;
+  border: 1px solid #033f72 !important;
+  color: #fff !important;
+}
+
 .modalTitleComplete {
   padding: 5px 20px 5px 32px !important;
 }
@@ -194,25 +201,7 @@ h4 .fa-list {
 }
 @media screen and (min-width:1024px) {
   #uglipop_content_fixed {
-    /*z-index: 2;
-  min-width: 300px;   
-  position:relative;
-  border-radius: 5px;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  opacity: 1 !important; */
-    /*top: 10% !important;
-    left: 25% !important;   
-    opacity: 1;
-    overflow: auto;
-    bottom: 10% !important;     
-    right: 25% !important;
-    width: 40% !important;
-    height: initial !important;
-    padding: 0px 14px 14px 14px;
-    background-color: white;*/
-  }
+   }
 }
 #uglipop_content_fixed {
   z-index: 2;
@@ -388,6 +377,7 @@ h4 .fa-list {
   padding-left: 23px;
   padding-bottom: 14px;
 }
+
 #completePageIcon {
   background: url(../img/reconstruct-black.svg) no-repeat 18px 3.5px;
   background-size: 16px;
@@ -412,6 +402,12 @@ h4 .fa-list {
   background-size: 16px;
   padding-left: 45px;
 }
+
+#replayWithOldBrowsers h4:hover {
+  background: white url(../img/old-browser-icon-blue.svg) no-repeat 20px 18.6px;
+  background-size: 16px;
+  padding-left: 45px;
+}
 /****************************/
 /****** MEDIA QUERIES *******/
 /****************************/
@@ -423,7 +419,7 @@ h4 .fa-list {
     font-size: 16px !important;
   }
 }
-@media (min-device-width: 676px) and (max-device-width:3000px) {
+@media (min-device-width: 676px) {
   #completePageIcon {
     /*background: url(../img/reconstruct-black.svg) no-repeat 17px 11px;
     background-size: 24px;
