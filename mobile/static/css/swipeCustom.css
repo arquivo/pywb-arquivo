@@ -614,12 +614,19 @@ a#closeSpecPopUp {
       left: 13px;
       font-size: 0.6em;
       padding: 0 10px;
-      border: 1px solid transparent;
+      border: 1px solid #fff;
       border-radius: 5px;
       margin: 11px 0 0 0;
       transition: 0.5s;
     }
-.url-search-iframe-container #listVersionsText {          
+    
+    .tableVersionsText:active {
+      display: block;
+      background
+      color: #fff !important;
+      background-color:#033f72 !important;
+    }
+.url-search-iframe-container #listVersionsText {         
 
            
       color: white;
