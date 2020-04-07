@@ -106,8 +106,7 @@ body {
 }
 #swipeContainer .fa-caret-down:before {
   content: "\f0d7";
-  font-size: 1.1em;
-  /*border: 1px solid #e3e3e32e;*/
+  font-size: 1.1em; 
   padding: 4px 7px 3px 7px;
   border-radius: 50px;
   margin-top: 3px !important;
@@ -115,8 +114,8 @@ body {
   top: 0px;
   right: -4px;
   background-color: /*#c0c0c096*/ /*#c0c0c069*/ #c0c0c024;
-  color: white !important;
-  opacity: 0.6;
+  /*color: white !important;*/
+  opacity:1;
 }
 #swipeContainer .fa-caret-up:before {
   /*border: 1px solid #e3e3e32e;  */
@@ -140,7 +139,15 @@ body {
   text-decoration: none;
 }
 .menu h4:hover, .menu ha:active, .swiper-container h4:hover, .swiper-container h4:active, .swiper-container #expandPage:hover, .swiper-container #expandPage:active {
-  background-color: #1a5f97ba;
+  background-color: #fff;
+  color: #1c75c0;
+}
+
+.swiper-container h4:hover .complete-page {
+background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
+ 
+  background-size: 15px;
+  font-size: 13px;
 }
 /*Start Menu Button*/
 .bar {
@@ -215,7 +222,7 @@ body {
 }
 /* NEW Style: give a white curve effect to the search box*/
 .background-top-curve {
-  border-radius: 10px !important;
+  /*border-radius: 10px !important;*/
   height: 45px;
   /*background-color: /*white*/ /*#f2f2f2 !important;*/
   background-color: /*#f8f8f8*/ /* #eeeded !important*/ white !important;
@@ -299,6 +306,9 @@ body {
   margin-top: -1px;
   padding-left: 3px;
 }
+.main-menu-top-div h4:hover {   
+ background-color: transparent!important;
+}
 #menuUrl {
   font-family: "Open Sans", sans-serif;
   font-size: /*18px*/ 16px;
@@ -312,8 +322,15 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 152px;
+  width: /*152px*/204px;
+  border:1px solid transparent !important;
+  outline: none
+  
 }
+#menuUrl:hover {
+background:none !important;
+}
+
 #menuTs {
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
@@ -324,7 +341,7 @@ body {
   margin-bottom: 0px;
   padding-bottom: 13px;
   padding-top: -20px;
-  margin-top: 2px;
+  margin-top: 4px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -430,7 +447,7 @@ a#closeSpecPopUp {
     cursor: pointer;
   }
   #swiperWrapper .submenu:hover {
-    background-color: #1a5f97ba !important;
+    background-color: #fff !important;
   }
   /* NEW Style: change background top curve to url information on desktop */
   .background-top-curve {
@@ -452,10 +469,20 @@ a#closeSpecPopUp {
     text-decoration: underline;
     display: inline-block;
   }
+  
+  .swiper-slide .main-menu-top-div h4 {  
+  border:1px solid transparent !important;  
+  }
+  
+  .swiper-slide .main-menu-top-div h4:hover {
+  background-color: none !important;
+  border: 1px solid transparent !important;
+  }
+  
   .menu {
     width: 100%;
-    min-width: 200px;
-    max-width: 200px;
+    min-width: /*200px*/280px;
+    max-width: /*200px*/280px;
     background-color: #1c75c0;
     color: #fff;
     z-index: 0;
@@ -463,8 +490,8 @@ a#closeSpecPopUp {
   }
   .replayMenu {
     width: 100%;
-    min-width: 220px;
-    max-width: 220px;
+    min-width: /*220px*/260px;
+    max-width: /*220px*/260px;
     background-color: #1c75c0;
     color: #fff;
     z-index: 0;
@@ -547,11 +574,18 @@ a#closeSpecPopUp {
         display: none
       }
     }
-    .headerMenuText:hover, .headerMenuText:active, .headerOptionsText:hover, .headerOptions:active {
+    .headerMenuText:hover, .headerOptionsText:hover {
      color: #1c75c0;
       border: 1px solid white;
       background-color: white;
     }
+    
+    .headerMenuText:active, .headerOptionsText:active {
+     color: #fff;
+     border: 1px solid #033f72 !important;
+     background-color:#033f72 !important;
+    }
+    
     @media screen and (max-width: 959px) /* Tablet */ {
       #wb_iframe_div {
         left: auto;
@@ -576,7 +610,7 @@ a#closeSpecPopUp {
     .listVersionsText {
       display: block;
       position: absolute;
-      top: 2.5px;
+      top: 0.5px;
       left: 13px;
       font-size: 0.6em;
       padding: 0 10px;
@@ -585,8 +619,7 @@ a#closeSpecPopUp {
       margin: 11px 0 0 0;
       transition: 0.5s;
     }
-.url-search-iframe-container #listVersionsText {
-           
+.url-search-iframe-container #listVersionsText {           
       color: white;
       border: 1px solid white;
       background-color: transparent;
@@ -595,5 +628,11 @@ a#closeSpecPopUp {
 .url-search-iframe-container #listVersionsText:hover {  
       color: #1c75c0;
       border: 1px solid white;
-      background-color: white;
+      background-color: #fff;
+}
+
+.url-search-iframe-container #listVersionsText:active {  
+      color: #fff;
+      border: #033f72 !important;
+      background-color: #033f72 !important;
 }
