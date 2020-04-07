@@ -600,14 +600,14 @@ a#closeSpecPopUp {
     .headerTimestamp {
       margin-left: 10px;
     }
-    .listVersionsSideLink {
+    .tableVersionsSideLink {
       color: white;
       line-height: 30px;
       vertical-align: middle;
       cursor: pointer;
       font-size: 21px;
     }
-    .listVersionsText {
+    .tableVersionsText {
       display: block;
       position: absolute;
       top: 0.5px;
@@ -619,13 +619,15 @@ a#closeSpecPopUp {
       margin: 11px 0 0 0;
       transition: 0.5s;
     }
-.url-search-iframe-container #listVersionsText {           
+.url-search-iframe-container #listVersionsText {          
+
+           
       color: white;
       border: 1px solid white;
       background-color: transparent;
 }
 
-.url-search-iframe-container #listVersionsText:hover {  
+.url-search-iframe-container #tableVersionsText:hover {  
       color: #1c75c0;
       border: 1px solid white;
       background-color: #fff;
