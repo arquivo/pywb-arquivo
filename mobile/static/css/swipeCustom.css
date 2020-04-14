@@ -102,7 +102,7 @@ body {
   border-bottom: 1px solid #e3e3e32e !important
 }
 #changeLanguage h4 {
-  border-bottom: none !important;
+  /*border-bottom: none !important;*/
 }
 #swipeContainer .fa-caret-down:before {
   content: "\f0d7";
@@ -302,10 +302,15 @@ background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
   z-index: 99999999;
 }
 .main-menu-top-div {
-  background-color: /*#42a5f5*/ /*#007AFF*/ /*#1c75c0*/ #1a5f97ba !important;
+  /*background-color: /*#42a5f5*/ /*#007AFF*/ /*#1c75c0*/ /*#1a5f97ba !important;*/
   margin-top: -1px;
   padding-left: 3px;
 }
+
+.main-menu-top-div h4:first-child {   
+ 
+}
+
 .main-menu-top-div h4:hover {   
  background-color: transparent!important;
 }
