@@ -484,7 +484,7 @@ li.grouped { padding-left: 38px; }
     color: /*#555*/white;
 }
 .greyFont{
-    font-size: 13px;
+    font-size: 10px;
     color: #555;
 }
 
@@ -501,18 +501,18 @@ li.grouped { padding-left: 38px; }
      border-radius: 5px
 }
 #pageIsNotArchived img {
-    width: 52% !important;
-    margin: 0 auto !important;
+   margin: 1.3% auto !important;
+   max-width: 48% !important;
 }
 }
 /* Landscape */
 @media screen and (orientation:landscape) {
 #pageIsNotArchived {
-   margin: 41vh auto !important;
-    max-width: 354px;
+    margin: 2% auto !important;   
+    max-width: 349px;
 }
 #pageIsNotArchived img {
-    width: 52% !important;
+    width: 40% !important;
     margin: 0 auto 5px auto !important;
 }
 }
