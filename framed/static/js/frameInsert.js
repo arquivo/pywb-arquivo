@@ -336,7 +336,7 @@ function printModal(){
 
 function attachPrint(){
   $('#printPage').on('click', function(e){
-    getImageToPrint("https://"+window.location.hostname+"/noFrame/replay/"+ ts+"/"+url);
+    getImageToPrint("https://"+window.location.hostname+"/noFrame/replay/"+ ts+"/"+encodeURIComponent(url));
   });       
 }      
 
