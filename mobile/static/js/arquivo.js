@@ -354,7 +354,7 @@ var ARQUIVO = ARQUIVO || (function(){
  		}, 
  		attachPrint: function(){
 		  $('#printPage').on('click', function(e){
-		    ARQUIVO.getImageToPrint("https://"+_hostname+"/noFrame/replay/"+ _ts+"/"+_url);
+		    ARQUIVO.getImageToPrint("https://"+_hostname+"/noFrame/replay/"+ _ts+"/"+encodeURIComponent(_url));
 		  }); 			
  		},  		 		 				
  		attachShare: function(){
