@@ -106,7 +106,7 @@ body {
 }
 #swipeContainer .fa-caret-down:before {
   content: "\f0d7";
-  font-size: 1.1em; 
+  font-size: 1.1em;
   padding: 4px 7px 3px 7px;
   border-radius: 50px;
   margin-top: 3px !important;
@@ -115,7 +115,7 @@ body {
   right: -4px;
   background-color: /*#c0c0c096*/ /*#c0c0c069*/ #c0c0c024;
   /*color: white !important;*/
-  opacity:1;
+  opacity: 1;
 }
 #swipeContainer .fa-caret-up:before {
   /*border: 1px solid #e3e3e32e;  */
@@ -142,10 +142,8 @@ body {
   background-color: #fff;
   color: #1c75c0;
 }
-
 .swiper-container h4:hover .complete-page {
-background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
- 
+  background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
   background-size: 15px;
   font-size: 13px;
 }
@@ -253,7 +251,7 @@ background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
   padding-right: 20px !important;
 }
 .submenu {
- /* background-color: #1a5f97ba;*/
+  /* background-color: #1a5f97ba;*/
   padding-left: 30px !important;
 }
 #shareOptions, #toolsOptions {
@@ -306,13 +304,9 @@ background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
   margin-top: -1px;
   padding-left: 3px;
 }
-
-.main-menu-top-div h4:first-child {   
- 
-}
-
-.main-menu-top-div h4:hover {   
- background-color: transparent!important;
+.main-menu-top-div h4:first-child {}
+.main-menu-top-div h4:hover {
+  background-color: transparent !important;
 }
 #menuUrl {
   font-family: "Open Sans", sans-serif;
@@ -327,15 +321,13 @@ background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: /*152px*/204px;
-  border:1px solid transparent !important;
+  width: /*152px*/ 204px;
+  border: 1px solid transparent !important;
   outline: none
-  
 }
 #menuUrl:hover {
-background:none !important;
+  background: none !important;
 }
-
 #menuTs {
   font-family: "Open Sans", sans-serif;
   font-size: 12px;
@@ -434,9 +426,9 @@ a#closeSpecPopUp {
   text-decoration: none !important;
   color: red !important;
 }
-
-.day-version-div {outline: 1px solid red}
-
+.day-version-div {
+  outline: 1px solid red
+}
 @media screen and (max-width: 959px) { /* desktop */
   .headerMenuText, .headerOptionsText {
     display: none
@@ -444,7 +436,7 @@ a#closeSpecPopUp {
   .background-top-curve {
     z-index: -1;
     margin-top: -58px;
-}
+  }
 }
 @media screen and (min-width: 960px) { /* desktop */
   .swiper-container h4, .swiper-container #expandPage {
@@ -474,20 +466,17 @@ a#closeSpecPopUp {
     text-decoration: underline;
     display: inline-block;
   }
-  
-  .swiper-slide .main-menu-top-div h4 {  
-  border:1px solid transparent !important;  
+  .swiper-slide .main-menu-top-div h4 {
+    border: 1px solid transparent !important;
   }
-  
   .swiper-slide .main-menu-top-div h4:hover {
-  background-color: none !important;
-  border: 1px solid transparent !important;
+    background-color: none !important;
+    border: 1px solid transparent !important;
   }
-  
   .menu {
     width: 100%;
-    min-width: /*200px*/280px;
-    max-width: /*200px*/280px;
+    min-width: /*200px*/ 280px;
+    max-width: /*200px*/ 280px;
     background-color: #1c75c0;
     color: #fff;
     z-index: 0;
@@ -495,8 +484,8 @@ a#closeSpecPopUp {
   }
   .replayMenu {
     width: 100%;
-    min-width: /*220px*/260px;
-    max-width: /*220px*/260px;
+    min-width: /*220px*/ 260px;
+    max-width: /*220px*/ 260px;
     background-color: #1c75c0;
     color: #fff;
     z-index: 0;
@@ -541,20 +530,21 @@ a#closeSpecPopUp {
     }
   }
   @media screen and (min-width:960px) {
-   body#homepage-landing .headerMenuText, body#homeImages .headerMenuText, .headerMenuText  {
+    body#homepage-landing .headerMenuText, body#homeImages .headerMenuText, .headerMenuText {
       display: block;
       position: absolute;
       top: 2.5px;
       left: 13px;
       font-size: 0.6em;
       padding: 0 10px;
-      border: 1px solid transparent;
       border-radius: 5px;
       margin: 0;
       transition: 0.5s;
-     color: white;
-    background-color: transparent;
-    border: 1px solid white;
+      color: white;
+      background-color: transparent;
+      border: 1px solid white;
+      width: 54px;
+      height: 32px;
     }
     @media screen and (min-width:960px) {
       .headerOptionsText {
@@ -564,10 +554,9 @@ a#closeSpecPopUp {
         border-radius: 5px;
         margin: 9px -8px 0 0;
         transition: 0.5s;
-        
-       color: white;
-    background-color: transparent;
-    border: 1px solid white;
+        color: white;
+        background-color: transparent;
+        border: 1px solid white;
       }
       .headerOptionsText {
         display: block;
@@ -580,24 +569,22 @@ a#closeSpecPopUp {
       }
     }
     .headerMenuText:hover, .headerOptionsText:hover {
-     color: #1c75c0;
+      color: #1c75c0;
       border: 1px solid white;
       background-color: white;
     }
-    
     .headerMenuText:active, .headerOptionsText:active {
-     color: #fff;
-     border: 1px solid #033f72 !important;
-     background-color:#033f72 !important;
+      color: #fff;
+      border: 1px solid #033f72 !important;
+      background-color: #033f72 !important;
     }
-    
     @media screen and (max-width: 959px) /* Tablet */ {
       #wb_iframe_div {
         left: auto;
       }
       .url-search-iframe-container {
         /*display: none;*/
-          }
+      }
     }
     .headerUrl {
       margin-right: 10px;
@@ -624,29 +611,23 @@ a#closeSpecPopUp {
       margin: 11px 0 0 0;
       transition: 0.5s;
     }
-    
     .tableVersionsText:active {
       display: block;
-      background
-      color: #fff !important;
-      background-color:#033f72 !important;
+      background color: #fff !important;
+      background-color: #033f72 !important;
     }
-.url-search-iframe-container #listVersionsText {         
-
-           
+    .url-search-iframe-container #listVersionsText {
       color: white;
       border: 1px solid white;
       background-color: transparent;
-}
-
-.url-search-iframe-container #tableVersionsText:hover {  
+    }
+    .url-search-iframe-container #tableVersionsText:hover {
       color: #1c75c0;
       border: 1px solid white;
       background-color: #fff;
-}
-
-.url-search-iframe-container #listVersionsText:active {  
+    }
+    .url-search-iframe-container #listVersionsText:active {
       color: #fff;
       border: #033f72 !important;
       background-color: #033f72 !important;
-}
+    }
