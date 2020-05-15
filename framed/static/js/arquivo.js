@@ -394,7 +394,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                    for(var prop in theMetadata[obj]){
 		                        if(theMetadata[obj][prop] === '') continue; /*do not show empty fields*/
 		                        if(theMetadata[obj].hasOwnProperty(prop)){
-		                          if(theMetadata[obj][prop].startsWith('http')){
+		                          if(typeof(theMetadata[obj][prop]) === 'string' && theMetadata[obj][prop].startsWith('http')){
 		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="'+theMetadata[obj][prop]+'">' + theMetadata[obj][prop] + '</a></p>';    
 		                          }
 		                          else if(prop == "collection"){
