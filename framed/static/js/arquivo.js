@@ -666,7 +666,6 @@ var ARQUIVO = ARQUIVO || (function(){
 	    sendEventToAnalytics: function(eventCategory, eventAction, eventLabel) {
 	    	eventLabel = eventLabel || "arquivo.pt/" + _ts + '/' +_url;
         	ga("send", "event", eventCategory, eventAction, eventLabel );
-        	ARQUIVO.updatePageOnUrlSearch
 	    },
 
 		isReplayWithOldBrowsers : function() {
