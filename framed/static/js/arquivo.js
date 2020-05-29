@@ -26,6 +26,11 @@ var ARQUIVO = ARQUIVO || (function(){
         	_host_prefix = host_prefix;
         	_patching = patching;
         	_replayWithOldBrowsers = replayWithOldBrowsers;
+
+        	// fallback when pywb don't call the updateInfo function after the list of versions iframe.
+        	window.addEventListener("load", function(event) {
+        		ARQUIVO.updatePageOnUrlSearch(_url, _ts);
+        	});
         },
 
         /**
