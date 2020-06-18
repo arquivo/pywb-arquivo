@@ -278,12 +278,12 @@ body {
   /* line-height: 30px;
     padding-bottom: 8px;*/
   padding-top: 10px;
-  background-color: /*#252525*/ /*#000*/ #1c75c0;
+  background-color: #033f72 !important;
   line-height: 30px;
   padding-bottom: 8px;
 }
 .logo-main {
-  max-height: 30px margin: 0 auto;
+  max-height: 30px;
 }
 .main-menu, .main-menu:active, .main-menu:hover {
   color: white;
@@ -460,6 +460,7 @@ a#closeSpecPopUp {
     font-size: 0.9em;
     font-weight: lighter;
     display: block;
+    background-color: #033f72 !important;
   }
   .background-top-curve p a {
     color: white;
@@ -475,9 +476,9 @@ a#closeSpecPopUp {
   }
   .menu {
     width: 100%;
-    min-width: /*200px*/ 280px;
-    max-width: /*200px*/ 280px;
-    background-color: #1c75c0;
+    min-width: 200px /*280px*/;
+    max-width: 200px /*280px*/;
+    background-color: #033f72 !important;
     color: #fff;
     z-index: 0;
     overflow-y: auto;
@@ -486,7 +487,7 @@ a#closeSpecPopUp {
     width: 100%;
     min-width: /*220px*/ 260px;
     max-width: /*220px*/ 260px;
-    background-color: #1c75c0;
+    background-color: #033f72 !important;
     color: #fff;
     z-index: 0;
     overflow-y: auto;
@@ -541,7 +542,7 @@ a#closeSpecPopUp {
       margin: 0;
       transition: 0.5s;
       color: white;
-      background-color: transparent;
+      background-color: #1c75c0;
       border: 1px solid white;
       width: 54px;
       height: 32px;
@@ -549,13 +550,12 @@ a#closeSpecPopUp {
     @media screen and (min-width:960px) {
       .headerOptionsText {
         font-size: 13px !important;
-        padding: 0 10px;
-        border: 1px solid transparent;
+        padding: 0 10px;       
         border-radius: 5px;
         margin: 9px -8px 0 0;
         transition: 0.5s;
         color: white;
-        background-color: transparent;
+        background-color: #1c75c0;
         border: 1px solid white;
       }
       .headerOptionsText {
