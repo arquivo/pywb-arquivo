@@ -26,6 +26,11 @@ var ARQUIVO = ARQUIVO || (function(){
         	_host_prefix = host_prefix;
         	_patching = patching;
         	_replayWithOldBrowsers = replayWithOldBrowsers;
+
+        	// fallback when pywb don't call the updateInfo function after the list of versions iframe.
+        	window.addEventListener("load", function(event) {
+        		ARQUIVO.updatePageOnUrlSearch(_url, _ts);
+        	});
         },
 
         /**
@@ -394,7 +399,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                    for(var prop in theMetadata[obj]){
 		                        if(theMetadata[obj][prop] === '') continue; /*do not show empty fields*/
 		                        if(theMetadata[obj].hasOwnProperty(prop)){
-		                          if(theMetadata[obj][prop].startsWith('http')){
+		                          if(typeof(theMetadata[obj][prop]) === 'string' && theMetadata[obj][prop].startsWith('http')){
 		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="'+theMetadata[obj][prop]+'">' + theMetadata[obj][prop] + '</a></p>';    
 		                          }
 		                          else if(prop == "collection"){
@@ -666,7 +671,6 @@ var ARQUIVO = ARQUIVO || (function(){
 	    sendEventToAnalytics: function(eventCategory, eventAction, eventLabel) {
 	    	eventLabel = eventLabel || "arquivo.pt/" + _ts + '/' +_url;
         	ga("send", "event", eventCategory, eventAction, eventLabel );
-        	ARQUIVO.updatePageOnUrlSearch
 	    },
 
 		isReplayWithOldBrowsers : function() {
