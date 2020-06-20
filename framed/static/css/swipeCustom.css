@@ -42,7 +42,7 @@ body {
   width: 100%;
   min-width: 320px;
   max-width: 320px;
-  background-color: #1c75c0;
+  background-color: #033f72;
   color: #fff;
   z-index: 0;
   overflow-y: auto;
@@ -54,7 +54,7 @@ body {
   width: 100%;
   min-width: 320px;
   max-width: 320px;
-  background-color: #1c75c0;
+  background-color: #033f72;
   color: #fff;
   z-index: 0;
   overflow-y: auto;
@@ -106,25 +106,26 @@ body {
 }
 #swipeContainer .fa-caret-down:before {
   content: "\f0d7";
-  font-size: 1.1em;
-  padding: 4px 7px 3px 7px;
+  font-size: /*1.1em*/0.9em;
+  padding: 4px 6px 3px 6px;
   border-radius: 50px;
   margin-top: 3px !important;
   position: relative;
   top: 0px;
   right: -4px;
-  background-color: /*#c0c0c096*/ /*#c0c0c069*/ #c0c0c024;
-  /*color: white !important;*/
+  background-color: /*#c0c0c096*/ /*#c0c0c069*/ #1A598D;
+  color: white !important;
   opacity: 1;
 }
 #swipeContainer .fa-caret-up:before {
   /*border: 1px solid #e3e3e32e;  */
-  font-size: 1.1em;
-  padding: 4px 7px 3px 7px;
+  font-size: 0.9em;
+  padding: 2px 6px 5px 6px;
   border-radius: 50px;
   margin-top: 3px !important;
   position: relative;
-  background-color: /*#c0c0c096*/ /*#c0c0c069*/ #c0c0c024;
+  background-color: /*#c0c0c096*/ /*#c0c0c069*/ #1A598D;
+  color: white !important;
   top: -2px;
   right: -4px;
 }
@@ -140,7 +141,7 @@ body {
 }
 .menu h4:hover, .menu ha:active, .swiper-container h4:hover, .swiper-container h4:active, .swiper-container #expandPage:hover, .swiper-container #expandPage:active {
   background-color: #fff;
-  color: #1c75c0;
+  color: /*#1c75c0*/ #033f72;
 }
 .swiper-container h4:hover .complete-page {
   background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
@@ -509,12 +510,14 @@ a#closeSpecPopUp {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    background-color: #033f72;
   }
   .url-search-iframe-container iframe {
     width: 100%;
     height: 88%;
     margin-top: 50px;
     border: none;
+    background-color: #033f72;
   }
   @media screen and (max-width:960px) {
     .headerMenuText {
@@ -602,7 +605,7 @@ a#closeSpecPopUp {
     .tableVersionsText {
       display: block;
       position: absolute;
-      top: 0.5px;
+      top: -13.5px;
       left: 13px;
       font-size: 0.6em;
       padding: 0 10px;
@@ -610,10 +613,10 @@ a#closeSpecPopUp {
       border-radius: 5px;
       margin: 11px 0 0 0;
       transition: 0.5s;
+      background-color: #1c75c0;
     }
     .tableVersionsText:active {
       display: block;
-      background color: #fff !important;
       background-color: #033f72 !important;
     }
     .url-search-iframe-container #listVersionsText {
