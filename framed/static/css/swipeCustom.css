@@ -511,6 +511,7 @@ a#closeSpecPopUp {
     box-sizing: border-box;    
     background-color: #033f72;
     border-top: 1px solid #ffffff2b;
+    padding-top: 17px;
   }
   .url-search-iframe-container iframe {
     width: 100%;
