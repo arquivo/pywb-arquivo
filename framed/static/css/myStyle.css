@@ -406,13 +406,13 @@ h4 .fa-list {
   margin-right: -3px;
 }
 #replayWithOldBrowsers h4 {
-  background: url(../img/old-browser-icon.svg) no-repeat 20px 20.6px;
+  background: url(../img/old-browser-icon.svg) no-repeat 20px 18.6px;
   background-size: 16px;
   padding-left: 45px;
 }
 
 #replayWithOldBrowsers h4:hover {
-  background: white url(../img/old-browser-icon-blue.svg) no-repeat 20px 20.6px;
+  background: white url(../img/old-browser-icon-blue.svg) no-repeat 20px 18.6px;
   background-size: 16px;
   padding-left: 45px;
 }
