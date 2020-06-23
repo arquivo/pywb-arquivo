@@ -121,7 +121,7 @@
 .modalOptions {
   background-color: #1c75c0 !important;
   border: 1px solid #1c75c0 !important;
-  transition: background-color 0.2s ease 0s;
+  /*transition: background-color 0.2s ease 0s;*/
   color: white !important;
 }
 .modalOptions:hover {
