@@ -107,7 +107,7 @@ body {
 #swipeContainer .fa-caret-down:before {
   content: "\f0d7";
   font-size: /*1.1em*/0.9em;
-  padding: 3px 6px 2px 6px;
+  padding: 4px 6px 3px 6px;
   border-radius: 50px;
   margin-top: 3px !important;
   position: relative;
@@ -120,7 +120,7 @@ body {
 #swipeContainer .fa-caret-up:before {
   /*border: 1px solid #e3e3e32e;  */
   font-size: 0.9em;
-  padding: 1px 6px 4px 6px;
+  padding: 2px 6px 5px 6px;
   border-radius: 50px;
   margin-top: 3px !important;
   position: relative;
@@ -143,9 +143,10 @@ body {
   background-color: #fff;
   color: /*#1c75c0*/ #033f72;
 }
-  .swiper-container h4:hover .complete-page {
-    background: url(../img/reconstruct-blue.svg) no-repeat 0px 3px;
-    background-size: 15px; 
+.swiper-container h4:hover .complete-page {
+  background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
+  background-size: 15px;
+  font-size: 13px;
 }
 /*Start Menu Button*/
 .bar {
