@@ -518,8 +518,7 @@ a#closeSpecPopUp {
     height: calc(100% - 68px);
     margin-top: 68px;
     border: none;
-    background-color: #033f72;
-    outline:1px solid red
+    background-color: #033f72;    
   }
   @media screen and (max-width:960px) {
     .headerMenuText {
