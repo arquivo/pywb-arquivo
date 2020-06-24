@@ -78,7 +78,7 @@ body {
   display: none;
 }
 #swiperWrapper {
-  background-color: #1c75c0;
+  background-color: /*#1c75c0*/#033f72 ;
 }
 .menu h4 {
   font-family: Roboto, "Open Sans", sans-serif !important;
@@ -504,21 +504,23 @@ a#closeSpecPopUp {
     display: block;
     position: absolute;
     top: 84px;
-    width: 200px;
-    height: 100%;
+    width: 200px;    
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;    
     background-color: #033f72;
     border-top: 1px solid #ffffff2b;
     padding-top: 17px;
+    /*height: calc(100vh - 17vh);*/
+    /*height: 82%;*/
+    height: auto
   }
   .url-search-iframe-container iframe {
-    width: 100%;
-    height: calc(100% - 68px);
+    width: 100%;    
     margin-top: 68px;
     border: none;
-    background-color: #033f72;    
+    background-color: #033f72;     
+    height: calc(100vh - 33vh);
   }
   @media screen and (max-width:960px) {
     .headerMenuText {
