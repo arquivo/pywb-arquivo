@@ -144,7 +144,7 @@ body {
   color: /*#1c75c0*/ #033f72;
 }
   .swiper-container h4:hover .complete-page {
-    background: url(../img/reconstruct-blue.svg) no-repeat 0px 3px;
+    background: url(../img/reconstruct-blue.svg) no-repeat 0px 0px;
     background-size: 15px; 
 }
 /*Start Menu Button*/
@@ -205,7 +205,6 @@ body {
 .menu a {
   color: white;
   text-decoration: none;
-  border
 }
 .menu h4:active, .swiper-container h4:active {
   background: rgba(255, 255, 255, 0.2) !important;
