@@ -12,13 +12,14 @@ var ARQUIVO = ARQUIVO || (function(){
 	var _screenshotEndpoint;
 	var _host_prefix;
 	var _replayWithOldBrowsers;
+	var _arquivoWebAppUrl;
 
 	function isEmpty(val){
 	    return (val === undefined || val == null || val.length <= 0) ? true : false;
 	}
 
     return {
-        init : function(host_prefix, static_path, screenshotEndpoint, patching, buildUrlSuffix, replayWithOldBrowsers) {
+        init : function(host_prefix, static_path, screenshotEndpoint, patching, buildUrlSuffix, replayWithOldBrowsers, arquivoWebAppUrl) {
         	_buildUrlSuffix = buildUrlSuffix;
 			_static_path = static_path;
 			this.loadLanguage();
@@ -26,6 +27,7 @@ var ARQUIVO = ARQUIVO || (function(){
         	_host_prefix = host_prefix;
         	_patching = patching;
         	_replayWithOldBrowsers = replayWithOldBrowsers;
+        	_arquivoWebAppUrl = arquivoWebAppUrl;
 
         	// fallback when pywb don't call the updateInfo function after the list of versions iframe.
         	window.addEventListener("load", function(event) {
@@ -251,7 +253,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#headerUrl').attr('href', _url).attr('title', _url).html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
 			$('#headerTimestamp').html(ARQUIVO.formatTimestampToPresentation(_ts));
 			$('#menuTs').html(ARQUIVO.formatTimestampToPresentation(_ts)); /*update menu ts*/
-			$('#tableVersionsSideLink').attr('href', _host_prefix + "/search.jsp?typeShow=table&query=" + this.formatURLForPresentation(_url) );
+			$('#tableVersionsSideLink').attr('href', _arquivoWebAppUrl + "/page/search?typeShow=table&query=" + this.formatURLForPresentation(_url) );
 			$('#a_reconstruct').attr('href', this.getPatchingPageURL());
 			$('#replayWithOldBrowsers').attr('href', this.getReplayWithOldBrowsersURL());
 			
@@ -326,13 +328,13 @@ var ARQUIVO = ARQUIVO || (function(){
 			  '			<button class="clean-button" onclick="ARQUIVO.copyLink();"><h4><i class="fa fa-link padding-right-menu-icon" aria-hidden="true"></i> '+Content.copyLink+'</h4></button>' +
   					   '<button class="clean-button" id="pagesMenu" onclick="ARQUIVO.pagesClick();"><h4><i class="fa fa-globe padding-right-menu-icon" aria-hidden="true"></i> '+Content.pages+'<i id="pagesCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></button>'+	 			  
       				   '<div id="pageOptions">'+
-              ' 			<a href="/index.jsp?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'NewSearchClick\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
-              ' 			<a href="//'+_hostname+'/advanced.jsp?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AdvancedSearchClick\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              ' 			<a href="'+_arquivoWebAppUrl+'/page/search?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'NewSearchClick\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 			<a href="'+_arquivoWebAppUrl+'/page/advanced/search?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AdvancedSearchClick\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               		   '</div>'+
 			  		   '<button class="clean-button" id="imagesMenu" onclick="ARQUIVO.imagesClick();"><h4><i class="fa fa-image padding-right-menu-icon" aria-hidden="true"></i> '+Content.images+'<i id="imagesCarret" class="fa iCarret shareCarret pull-right fa-caret-down" aria-hidden="true"></i></h4></button>'+
       				   '<div id="imageOptions">'+
-              ' 			<a href="/images.jsp?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'NewImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
-              ' 			<a href="/advancedImages.jsp?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AdvancedImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
+              ' 			<a href="'+_arquivoWebAppUrl+'/image/search?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'NewImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
+              ' 			<a href="'+_arquivoWebAppUrl+'/image/advanced/search?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AdvancedImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               		   '</div>'+                
               '		 	<a href="'+Content.aboutHref+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AboutClick\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
               '		</div>' ); 			
