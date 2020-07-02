@@ -6,3 +6,12 @@ One software component, that is responsible for the reproduction of preserved pa
 
 This repository contains Arquivo.pt's branding customizations for our instance of pywb.
 
+
+## Docker
+
+Run using docker compose:
+```bash
+docker-compose up
+```
+
+For production you need to review the uwsgi.ini and config.yaml files.
