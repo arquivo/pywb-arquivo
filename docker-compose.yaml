@@ -11,3 +11,12 @@ services:
       context: unframed
     ports:
       - 8082:8082
+  pywb-arquivo-save:
+    build:
+      context: save
+    ports:
+      - 8586:8586
+    volumes:
+      - ./collections:/app/collections
+
+

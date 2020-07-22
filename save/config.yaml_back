@@ -1,0 +1,51 @@
+#collections_root: collections
+
+collections:
+    # auto management collection
+    save: 
+       archive_paths: archive
+       index_paths: indexes 
+
+    live: $live
+
+    save_source:
+        sequence:
+            -
+                index: collections/save/indexes/
+                archive_paths:
+                    - collections/save/archive/
+                name: save_resources
+            - 
+                index: $live
+                name: live
+
+recorder:
+   source_coll: save_source
+   rollover_size: 100000000
+   rollover_idle_secs: 600
+   filename_template: save-{timestamp}-{hostname}-{random}.warc.gz
+   source_filter: live
+
+# framed_replay: true
+# redirect_to_exact: true
+# enable_auto_fetch: true
+
+# This depend on the source code.
+# head_insert_html: head_insert.html
+# frame_insert_html: frame_insert.html
+# error_html: error.html
+# not_found_html: not_found.html
+
+# debug: true
+# autoindex: 30
+
+#############
+
+#banner_html: banner_blank.html
+
+framed_replay: false
+redirect_to_exact: true
+enable_auto_fetch: true
+autoindex: 30
+
+debug: true
