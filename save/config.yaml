@@ -1,0 +1,54 @@
+collections:
+  live: $live
+
+recorder: live
+
+# collections_root: /home/ibranco/projects/arquivo/pywb-arquivo/save/collections
+
+# collections:
+#     # auto management collection
+#     patching:
+#        archive_paths: archive
+#        index_paths: indexes 
+    
+#     # collection to be used as patching source
+#     patching_source:
+#         sequence:
+#             -
+#                 index: /home/ibranco/projects/arquivo/pywb-arquivo/save/collections/patching/indexes/
+#                 archive_paths:
+#                     - /home/ibranco/projects/arquivo/pywb-arquivo/save/collections/patching/archive/
+#                 name: patching_resources
+#             -
+#                 index: $live
+#                 name: live
+
+# recorder:
+#    source_coll: patching_source
+#    rollover_size: 100000000
+#    rollover_idle_secs: 600
+#    filename_template: patching-{timestamp}-{hostname}-{random}.warc.gz
+#    source_filter: live|save
+
+#search_location: {{ search_location }}
+
+# banner_html: banner_blank.html
+
+# framed_replay: false
+# redirect_to_exact: true
+# enable_auto_fetch: true
+# autoindex: 30
+
+# debug: True
+
+collections:
+  live: $live
+
+recorder: live
+
+# recorder:
+#   source_coll: live
+#   rollover_size: 100000000
+#   rollover_idle_secs: 600
+#   filename_template: my-warc-{timestamp}-{hostname}-{random}.warc.gz
+#   source_filter: live
