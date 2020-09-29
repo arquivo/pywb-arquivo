@@ -1,1 +1,3 @@
 */venv
+save/collections/save/archive/*.warc.gz
+save/collections/save/indexes/autoindex.cdxj
