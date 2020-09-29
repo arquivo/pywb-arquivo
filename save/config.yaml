@@ -1,10 +1,6 @@
 collections:
   live: $live
 
-  save:
-    archive_paths: archive
-    index_paths: indexes
-
 framed_replay: false
 redirect_to_exact: true
 enable_auto_fetch: true
@@ -16,5 +12,11 @@ recorder:
    source_coll: live
    rollover_size: 100000000
    rollover_idle_secs: 600
-   filename_template: savepage-{timestamp}-{hostname}-{random}.warc.gz
+   filename_template: live-{timestamp}-{hostname}-{random}.warc.gz
    source_filter: live
+
+# This depend on the source code.
+#head_insert_html: head_insert.html
+#frame_insert_html: frame_insert.html
+# error_html: error.html
+# not_found_html: not_found.html

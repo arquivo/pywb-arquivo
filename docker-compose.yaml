@@ -17,6 +17,6 @@ services:
     ports:
       - 8586:8586
     volumes:
-      - ./collections:/app/collections
+      - ./save/collections:/app/collections
 
 

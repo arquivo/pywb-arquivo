@@ -8,7 +8,10 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy everything else the current folder has on a different docker stage
-COPY . .
+COPY static .
+COPY templates .
+COPY config.yaml .
+COPY uwsgi.ini .
 
 # Expose the http port
 ARG HTTP_PORT=8586
