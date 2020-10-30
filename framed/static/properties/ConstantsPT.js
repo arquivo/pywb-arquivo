@@ -112,7 +112,7 @@ Content = {
     saveAsImage: "Guardar esta p&aacute;gina como imagem?",
     completeThisPage: "Completar esta p&aacute;gina?",
     leavingArquivo: "Vai sair do Arquivo.pt para outro servi&ccedil;o",
-    leavingArquivoToReplayWithOldBrowsers: "Vai sair do Arquivo.pt para o servi&ccedil;o oldweb.today",
+    leavingArquivoToReplayWithOldBrowsers: "Vai sair do Arquivo.pt para o <a id=\"OldWebTodayOutlink\" href=\"http://oldweb.today/\" target=\"_blank\">oldweb.today</a>",
     toBeCompleted: "Esta p&aacute;gina porder&aacute; ser completada com informa&ccedil;&atilde;o em falta.",
     helpHref:"http://sobre.arquivo.pt/pt/ajuda/",
     expandPage:"Ecr&atilde; inteiro",
