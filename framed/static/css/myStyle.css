@@ -87,6 +87,11 @@
   border: none !important;
   font-weight: normal !important;
 }
+a#OldWebTodayOutlink {
+  text-decoration: none !important;
+  color: black !important;
+  border: none !important;
+}
 .modalReplay a, .modalReplay a:hover, .modalReplay a:visited, .modalReplay a:active {
   text-decoration: underline;
   color: white;
