@@ -15,3 +15,4 @@ docker-compose up
 ```
 
 For production you need to review the uwsgi.ini and config.yaml files.
+
