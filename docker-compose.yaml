@@ -4,7 +4,7 @@ services:
   pywb-arquivo-framed:
     build:
       context: framed
-    ports: 
+    ports:
       - 8081:8081
   pywb-arquivo-unframed:
     build:
@@ -18,5 +18,10 @@ services:
       - 8586:8586
     volumes:
       - ./save/collections:/app/collections
-
-
+  pywb-arquivo-patching:
+    build:
+      context: patching
+    ports:
+      - 8083:8083
+    volumes:
+      - ./patching/collections:/app/collections
