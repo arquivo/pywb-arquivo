@@ -8,19 +8,17 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy everything else the current folder has on a different docker stage
-COPY templates .
-COPY config.yaml .
-COPY uwsgi.ini .
+COPY . .
 
 # Expose the http port
-ARG HTTP_PORT=8586
+ARG HTTP_PORT=8083
 ENV HTTP_PORT $HTTP_PORT
 EXPOSE $HTTP_PORT
 
-# Expose the socket port
-ARG SOCKET_PORT=8283
-ENV SOCKET_PORT $SOCKET_PORT
-EXPOSE $SOCKET_PORT
+# Expose the socker port
+ARG SOCKER_PORT=8485
+ENV SOCKER_PORT $SOCKER_PORT
+EXPOSE $SOCKER_PORT
 
 # Startup uwsgi
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
