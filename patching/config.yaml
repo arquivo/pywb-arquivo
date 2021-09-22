@@ -1,0 +1,35 @@
+collections_root: /app/collections
+
+collections:
+  patching:
+    archive_paths: archive
+    index_paths: indexes
+
+  patching_source:
+    sequence:
+      -
+        index: /app/collections/patching/indexes/
+        archive_paths:
+          - /app/collections/patching/archive/
+        name: patching_resources
+      -
+        index: memento+https://web.archive.org/web/
+        name: ia
+        timeout: 5 # default
+      -
+        index: $live
+        name: live
+
+recorder:
+   source_coll: patching_source
+   rollover_size: 100000000
+   rollover_idle_secs: 600
+   filename_template: patching-{timestamp}-{hostname}-{random}.warc.gz
+   source_filter: live|ia
+
+framed_replay: false
+redirect_to_exact: true
+enable_auto_fetch: true
+autoindex: 30
+
+debug: True
