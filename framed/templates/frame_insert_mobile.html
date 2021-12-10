@@ -1,0 +1,150 @@
+{% set buildUrlSuffix = ( '?build=' + metadata.build ) if metadata.build is defined else '' %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta property="og:image" content="{{ host_prefix }}/img/logoFace.png">
+  <meta property="og:image:alt" content="Arquivo.pt">
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ wb_prefix }}{{ wb_url.timestamp }}/{{ url }}">
+  
+  <script>
+    wbinfo = {}
+    wbinfo.prefix = "{{ wb_prefix }}";
+    wbinfo.capture_url = "{{ url }}";
+    wbinfo.timestamp = "{{ wb_url.timestamp }}";
+    ts = "{{ wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
+    wbinfo.is_frame = true;
+    wbinfo.frame_mod = "{{ options.frame_mod }}";
+    wbinfo.replay_mod = "{{ options.replay_mod }}";
+  </script>  
+<style>
+html, body
+{
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  overflow: hidden;
+}
+</style>
+<!-- Google Analytics-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-21825027-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<meta name="viewport" content="initial-scale=1,minimum-scale=0.1, maximum-scale=10">
+<meta name="theme-color" content="#033f72">
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#033f72">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script src="{{ static_prefix }}/@ionic/core/dist/ionic.js"></script>
+
+<link rel='stylesheet' href='{{ static_prefix }}/css/default_banner.css'/>
+<link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.css"/>
+<link rel="stylesheet" href="{{ static_prefix }}/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="{{ static_prefix }}/css/ionicons.css">
+
+<!-- Google fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto&amp;display&equals;swap" rel="stylesheet" />
+
+<script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
+<script src="{{ static_prefix }}/js/bootstrap.min.js"></script>
+<!-- Slider -->
+<link rel="stylesheet" href="{{ static_prefix }}/css/swiper.min.css">
+<link rel="stylesheet" href="{{ static_prefix }}/css/swipeCustom.css{{ buildUrlSuffix }}">
+<!-- End Slider Right -->
+<script src="{{ static_prefix }}/js/uglipop.min.js"></script>
+<!-- simple plugin modals confirmation popups -->
+<script src="{{ static_prefix }}/js/js.cookie.js"></script>
+<!-- Plugin for cookie to choose language-->
+<link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
+<!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
+<script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
+<script type="text/javascript">
+  ARQUIVO.init("{{ host_prefix }}", "{{ static_prefix }}", "{{ metadata.screenshot_endpoint }}", "{{ metadata.patching }}", "{{ buildUrlSuffix }}", "{{ metadata.replayWithOldBrowsers }}", "{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}");
+</script>
+
+<title>Arquivo.pt</title>
+
+<script src="{{ static_prefix }}/wb_frame.js"></script>
+
+<script>
+var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
+                               "prefix": "{{ wb_prefix }}",
+                               "request_ts": "{{ wb_url.timestamp }}",
+                               "iframe": "#replay_iframe"});
+ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
+</script>
+</head>
+
+<body style="margin: 0px; padding: 0px;">
+
+<!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
+  <script> ARQUIVO.beforeIframe(); /*Load Arquivo specific code before iframe*/</script>
+  <div id="wb_iframe_div">
+    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >
+    </iframe>
+
+  </div>
+
+  <!-- url search -->
+  <script>
+    // add event listener thar receive messages from url search iframe.
+    if (window.addEventListener) {
+      window.addEventListener("message", onMessage, false);        
+    } else if (window.attachEvent) {
+      window.attachEvent("onmessage", onMessage, false);
+    }
+    // generic function that receive multiple messages from url search iframe and calls different king on functions.
+    function onMessage(event) {
+      // Check sender origin to be trusted
+      if (!event.isTrusted) return;
+      var data = event.data;
+
+      if (typeof data.wb_type !== 'undefined') {
+        if (data.wb_type == "load" || data.wb_type == "replace-url") {
+          ARQUIVO.updateInfo(data.url, data.ts);
+        }
+      } else {
+        if (data.func == 'urlSearchClickOnVersion') {
+          ARQUIVO.urlSearchClickOnVersion(data.message);
+        }
+      }
+    }
+  </script>
+  <div class="url-search-iframe-container">
+    <a id="tableVersionsSideLink" class="tableVersionsSideLink" href="#"><span id="tableVersionsText" class="tableVersionsText"></span></a>
+    <script type="text/javascript">$('#tableVersionsText').html(Content.table);</script>
+
+    <!-- onload="ARQUIVO.resizeIframe(this)" -->
+    <iframe
+      name="url_search_iframe" 
+      id="url_search_iframe"
+      allowFullScreen="true"
+      src="{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}/url/search/{{ url }}"></iframe>
+  </div>
+  <!-- scripts slider right menu -->
+  <script src="{{ static_prefix }}/js/swiper.min.js"></script>
+  <script>
+    ARQUIVO.afterIframe();
+  </script>
+
+
+  <div id = "loadingAnimation" class="noprint">
+    <h1 class="noprint"><i class="fa fa-circle-o-notch fa-spin noprint" ></i></h1>
+  </div>
+  <div class="maskLoading noprint" style=""></div>
+</body>
+</html>

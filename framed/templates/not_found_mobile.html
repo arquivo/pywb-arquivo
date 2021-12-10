@@ -1,0 +1,81 @@
+<script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
+<script src="{{ static_prefix }}/js/uglipop.min.js"></script>
+<link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.css"></script>
+<link rel="stylesheet" href="{{ static_prefix }}/css/Style.css"></script>
+<link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css">
+<script src="{{ static_prefix }}/resources/js/bootstrap.min.js"></script>
+<meta name="viewport" content="initial-scale=0.99,minimum-scale=0.1, maximum-scale=10">
+<link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-21825027-1', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<script type="text/javascript">
+document.write("<script src="+ "{{ wb_prefix }}"+"static\/resources\/js\/js.cookie.js"+ "><\/script>");
+</script> <!-- Plugin for cookie to choose language-->
+<script>
+	var language = localStorage.language;
+	if( language == 'EN'){
+		document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/ConstantsEN.js"><\/script>');
+	}
+	else{
+		document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix}}/properties/ConstantsPT.js"><\/script>');
+	}
+</script>
+<script type="text/javascript">
+var tokens = window.location.toString().split('/');
+theURL = '';
+var i;
+for( i = 5; i<tokens.length; i ++){
+	if(i == 5){
+		theURL = tokens[i];
+	}
+	else{
+		theURL= theURL + "/" + tokens[i];
+	}
+}
+
+document.write('<div id="pageIsNotArchived"><a href="///?l='+ Content.language +'"><img src="{{ static_prefix }}/img/logo.svg" class="imgClass" /></a>');
+
+document.write('<h2 align="center" class="notArchived">'+ Content.notArchived+'</h2>'); 
+
+document.write('<div class="myButtonStyle text-center" >'+
+               '	<a id="otherArchives" class="greyFont" role="button" onclick="">'+Content.otherArchives+
+               '	</a>'+
+               '</div></div>');
+
+$('#otherArchives').on('click', function(e){
+
+            /*ga('send', 'event', 'ReplayBarFunctions', 'Search Other Archives Click', 'http://arquivo.pt/'+_ts+'/'+_url);*/
+            uglipop({
+              class:'modalReplay noprint', //styling class for Modal
+              source:'html',
+              content:'<h4 class="modalTitleComplete"><i class="fa fa-print" aria-hidden="true"></i> '+Content.otherArchives+'</h4><p class="modalparagraph last">'+Content.leavingArquivo+'</p>'+
+                      '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
+            });
+    /*Closing popup*/            
+    $('#cancelPopup').on('click', function(e){
+        ga('send', 'event', 'Not Found', 'Other Archives Cancel', 'arquivo.pt/'+tokens[4]+'/'+theURL);
+        $('#uglipop_content_fixed').fadeOut();
+        $('#uglipop_overlay').fadeOut('fast');
+    });
+    /*Confirm searching other archives*/
+    $('#searchOtherArchives').on('click', function(e){
+        ga('send', 'event', 'Not Found', 'Other Archives Confirm', 'arquivo.pt/'+tokens[4]+'/'+theURL);
+        window.open('https://web.archive.org/web/'+tokens[4]+'/'+theURL);
+        $('#uglipop_overlay').fadeOut('fast');
+    });  
+
+});
+
+// hide replay option when on not archived page
+window.parent.document.getElementById("replayMenuButton").style.display = "none";
+
+</script>
+    
