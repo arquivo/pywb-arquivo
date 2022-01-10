@@ -42,10 +42,10 @@ var ARQUIVO = ARQUIVO || (function(){
         	return 'https://web.archive.org/web/' +_ts + '/' + _url;
         },
         getPatchingPageURL : function() {
-        	return '/noFrame/patching/record/' + _ts + '/' + _url;
+        	return '/services/complete-page?url=' + _url + '&timestamp=' + _ts ;
         },
         getReplayWithOldBrowsersURL : function () {
-        	return 'http://oldweb.today/firefox/' + _ts + '/' + _url;
+        	return 'http://oldweb.today?browser=ff10' + '#' + 'https://arquivo.pt/noFrame/replay/' + _ts + '/' + _url;
         },
         
         /*
@@ -336,8 +336,9 @@ var ARQUIVO = ARQUIVO || (function(){
               ' 			<a href="'+_arquivoWebAppUrl+'/image/search?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'NewImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.newSearch+'</h4></a>' +
               ' 			<a href="'+_arquivoWebAppUrl+'/image/advanced/search?l='+Content.language+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AdvancedImageSearchClick\');"><h4 class="submenu"><i class="fa fa-search-plus right-7" aria-hidden="true"></i> '+Content.advancedSearch+'</h4></a>' +
               		   '</div>'+                
+              '         <a href="'+Content.recordHref+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'RecordClick\');"><h4><i class="fa fa-video-camera" aria-hidden="true"></i>'+Content.recordPages+'</h4></a>'+
               '		 	<a href="'+Content.aboutHref+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'AboutClick\');"><h4><i class="fa fa-info-circle right-10" aria-hidden="true"></i> '+Content.about+'</h4></a>'+
-              '		</div>' ); 			
+			  '		</div>' ); 			
  		},
 
  		attachScreenshotModal: function(){
@@ -405,7 +406,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="'+theMetadata[obj][prop]+'">' + theMetadata[obj][prop] + '</a></p>';    
 		                          }
 		                          else if(prop == "collection"){
-		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="https://archive.org/details/portuguese-web-archive?sin=&and[]='+ theMetadata[obj][prop] +'&and[]=subject%3A%22pwacrawlid%3A'+ theMetadata[obj][prop] +'%22&and[]=collection%3A%22portuguese-web-archive%22">' + theMetadata[obj][prop] + '</a></p>';
+		                            metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: <a target=_blank href="https://arquivo.pt/colecoes">' + theMetadata[obj][prop] + '</a></p>';
 		                          }
 		                          else{
 		                           metadataResponse += '<p class="modalparagraph"><strong>'+prop + '</strong>: ' + theMetadata[obj][prop] + '</p>';
@@ -656,13 +657,13 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 
 			function doUpdate(iframeId, url, timestamp) {
-		    	const ifrm_el = document.getElementById(iframeId);
-		    	if (ifrm_el) {
-			    	const ifrm_win = getIframeWindow(ifrm_el);
-			    	if (ifrm_win && ifrm_win.replacePageAndHighlightTimestamp) { // the function could be not defined because the iframe could be starting up.
-			    		ifrm_win.replacePageAndHighlightTimestamp(url, timestamp);
-			    	}
-		    	}
+		    	// const ifrm_el = document.getElementById(iframeId);
+		    	// if (ifrm_el) {
+			    // 	const ifrm_win = getIframeWindow(ifrm_el);
+			    // 	if (ifrm_win && ifrm_win.replacePageAndHighlightTimestamp) { // the function could be not defined because the iframe could be starting up.
+			    // 		ifrm_win.replacePageAndHighlightTimestamp(url, timestamp);
+			    // 	}
+		    	// }
 			}
 			doUpdate("url_search_iframe", url, timestamp);
 	    },
