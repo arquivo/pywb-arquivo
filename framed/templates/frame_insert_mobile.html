@@ -54,6 +54,8 @@ html, body
 <link rel="stylesheet" href="{{ static_prefix }}/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css">
 
+<link rel="stylesheet" href="{{ static_prefix }}/css/replayLeftNav.css">
+
 <link rel="stylesheet" href="{{ static_prefix }}/css/ionicons.css">
 
 <!-- Google fonts -->
@@ -72,6 +74,7 @@ html, body
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
 <!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
 <script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
+<script src="{{ static_prefix }}/js/replayLeftNav.js{{ buildUrlSuffix }}"></script>
 <script type="text/javascript">
   ARQUIVO.init("{{ host_prefix }}", "{{ static_prefix }}", "{{ metadata.screenshot_endpoint }}", "{{ metadata.patching }}", "{{ buildUrlSuffix }}", "{{ metadata.replayWithOldBrowsers }}", "{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}");
 </script>
@@ -114,7 +117,7 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
       var data = event.data;
 
       if (typeof data.wb_type !== 'undefined') {
-        if (data.wb_type == "load" || data.wb_type == "replace-url") {
+        if (data.wb_type == "load" || data.wb_type == "replace-url" || data.wb_type == "unload") {
           ARQUIVO.updateInfo(data.url, data.ts);
         }
       } else {
@@ -123,17 +126,47 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
         }
       }
     }
+
+    
+      // adding an 'unload' event message to be able to quickly react to changes in context.
+      // The 'unload' event message follows wb messages format.
+      const iframe = document.getElementById('replay_iframe');
+      function unloadHandler(e) {
+        // Timeout needed because the URL changes immediately after
+        // the `unload` event is dispatched.
+        setTimeout(function () {
+          let splitUrl = iframe.contentWindow.location.href.split('mp_/');
+          if (splitUrl.length < 2) {
+            return;
+          }
+          let message = {
+            url: splitUrl.filter((x, i) => { return i > 0 }).join('mp_/'),
+            ts: splitUrl[0].split('/').pop(),
+            wb_type: 'unload'
+          };
+          window.postMessage(message);
+        }, 0);
+      };
+      function attachUnload() {
+        // Remove the unloadHandler in case it was already attached.
+        // Otherwise, the change will be dispatched twice.
+        iframe.contentWindow.removeEventListener("unload", unloadHandler);
+        iframe.contentWindow.addEventListener("unload", unloadHandler);
+      }
+      iframe.addEventListener("load", attachUnload);
+
   </script>
   <div class="url-search-iframe-container">
     <a id="tableVersionsSideLink" class="tableVersionsSideLink" href="#"><span id="tableVersionsText" class="tableVersionsText"></span></a>
     <script type="text/javascript">$('#tableVersionsText').html(Content.table);</script>
 
+    <div id="replay-left-nav"></div>
     <!-- onload="ARQUIVO.resizeIframe(this)" -->
-    <iframe
+    <!-- <iframe
       name="url_search_iframe" 
       id="url_search_iframe"
       allowFullScreen="true"
-      src="{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}/url/search/{{ url }}"></iframe>
+      src="{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}/url/search/{{ url }}"></iframe> -->
   </div>
   <!-- scripts slider right menu -->
   <script src="{{ static_prefix }}/js/swiper.min.js"></script>

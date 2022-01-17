@@ -253,7 +253,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			$('#headerUrl').attr('href', _url).attr('title', _url).html(this.formatURLForPresentation(_url)); // add url of the page on header without protocol neither www.
 			$('#headerTimestamp').html(ARQUIVO.formatTimestampToPresentation(_ts));
 			$('#menuTs').html(ARQUIVO.formatTimestampToPresentation(_ts)); /*update menu ts*/
-			$('#tableVersionsSideLink').attr('href', _arquivoWebAppUrl + "/page/search?typeShow=table&query=" + this.formatURLForPresentation(_url) );
+			$('#tableVersionsSideLink').attr('href', _arquivoWebAppUrl + "/page/search?viewMode=table&query=" + this.formatURLForPresentation(_url) );
 			$('#a_reconstruct').attr('href', this.getPatchingPageURL());
 			$('#replayWithOldBrowsers').attr('href', this.getReplayWithOldBrowsersURL());
 			
@@ -657,16 +657,34 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 
 			function doUpdate(iframeId, url, timestamp) {
-		    	// const ifrm_el = document.getElementById(iframeId);
-		    	// if (ifrm_el) {
-			    // 	const ifrm_win = getIframeWindow(ifrm_el);
-			    // 	if (ifrm_win && ifrm_win.replacePageAndHighlightTimestamp) { // the function could be not defined because the iframe could be starting up.
-			    // 		ifrm_win.replacePageAndHighlightTimestamp(url, timestamp);
-			    // 	}
-		    	// }
+				// https://arquivo.pt/partials/replay-nav?url=http%3A%2F%2Fwww.sapo.pt%2F&timestamp=20080314154859
+				const ajaxUrl = '/partials/replay-nav?url=' + url + '&timestamp=' + timestamp;
+				$.ajax({
+					url: ajaxUrl,
+					error: function () {
+						printLoading = false;
+						console.log('error fetching timestamps');
+					},
+					type: 'GET',
+					success: function (data) {
+						const element = $(data);
+						element.find('#replay-table').remove();
+						element.find('#replay-list').remove();
+						$('#replay-left-nav').html('').append(element);
+					},
+				});
+
+
+				// const ifrm_el = document.getElementById(iframeId);
+				// if (ifrm_el) {
+				// 	const ifrm_win = getIframeWindow(ifrm_el);
+				// 	if (ifrm_win && ifrm_win.replacePageAndHighlightTimestamp) { // the function could be not defined because the iframe could be starting up.
+				// 		ifrm_win.replacePageAndHighlightTimestamp(url, timestamp);
+				// 	}
+				// }
 			}
 			doUpdate("url_search_iframe", url, timestamp);
-	    },
+		},
 
 	    /**
 	     * Send event to google analytics where the eventLabel by default is like arquivo.pt/<timestamp>/<url>
