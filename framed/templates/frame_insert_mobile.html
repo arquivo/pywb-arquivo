@@ -114,7 +114,7 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
       var data = event.data;
 
       if (typeof data.wb_type !== 'undefined') {
-        if (data.wb_type == "load" || data.wb_type == "replace-url") {
+        if (data.wb_type == "load" || data.wb_type == "replace-url" || data.wb_type == "unload") {
           ARQUIVO.updateInfo(data.url, data.ts);
         }
       } else {
@@ -123,6 +123,35 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
         }
       }
     }
+
+    
+      // adding an 'unload' event message to be able to quickly react to changes in context.
+      // The 'unload' event message follows wb messages format.
+      const iframe = document.getElementById('replay_iframe');
+      function unloadHandler(e) {
+        // Timeout needed because the URL changes immediately after
+        // the `unload` event is dispatched.
+        setTimeout(function () {
+          let splitUrl = iframe.contentWindow.location.href.split('mp_/');
+          if (splitUrl.length < 2) {
+            return;
+          }
+          let message = {
+            url: splitUrl.filter((x, i) => { return i > 0 }).join('mp_/'),
+            ts: splitUrl[0].split('/').pop(),
+            wb_type: 'unload'
+          };
+          window.postMessage(message);
+        }, 0);
+      };
+      function attachUnload() {
+        // Remove the unloadHandler in case it was already attached.
+        // Otherwise, the change will be dispatched twice.
+        iframe.contentWindow.removeEventListener("unload", unloadHandler);
+        iframe.contentWindow.addEventListener("unload", unloadHandler);
+      }
+      iframe.addEventListener("load", attachUnload);
+
   </script>
   <div class="url-search-iframe-container">
     <a id="tableVersionsSideLink" class="tableVersionsSideLink" href="#"><span id="tableVersionsText" class="tableVersionsText"></span></a>
