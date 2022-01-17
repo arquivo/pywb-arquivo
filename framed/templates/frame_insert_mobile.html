@@ -54,6 +54,8 @@ html, body
 <link rel="stylesheet" href="{{ static_prefix }}/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css">
 
+<link rel="stylesheet" href="{{ static_prefix }}/css/replayLeftNav.css">
+
 <link rel="stylesheet" href="{{ static_prefix }}/css/ionicons.css">
 
 <!-- Google fonts -->
@@ -72,6 +74,7 @@ html, body
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
 <!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
 <script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
+<script src="{{ static_prefix }}/js/replayLeftNav.js{{ buildUrlSuffix }}"></script>
 <script type="text/javascript">
   ARQUIVO.init("{{ host_prefix }}", "{{ static_prefix }}", "{{ metadata.screenshot_endpoint }}", "{{ metadata.patching }}", "{{ buildUrlSuffix }}", "{{ metadata.replayWithOldBrowsers }}", "{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}");
 </script>
@@ -157,6 +160,7 @@ ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
     <a id="tableVersionsSideLink" class="tableVersionsSideLink" href="#"><span id="tableVersionsText" class="tableVersionsText"></span></a>
     <script type="text/javascript">$('#tableVersionsText').html(Content.table);</script>
 
+    <div id="replay-left-nav"></div>
     <!-- onload="ARQUIVO.resizeIframe(this)" -->
     <!-- <iframe
       name="url_search_iframe" 

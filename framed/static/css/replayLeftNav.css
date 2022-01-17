@@ -1,0 +1,107 @@
+#replay-left-nav h4 {
+    display: none;
+}
+
+#replay-left-nav section {
+    margin-top: 45px;
+    font-family: Arial, sans-serif, Helvetica;
+    font-size: 12px;
+}
+
+#replay-left-nav li {
+    border-top: 1px solid #e3e3e32e;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+    list-style: none;
+    color: white;
+}
+
+#replay-left-nav section ul>li a:hover {
+    color: #033f72;
+    background-color: white;
+}
+
+#replay-left-nav section ul>li a {
+    justify-content: space-between;
+}
+
+#replay-left-nav section ul>li a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 0px 14px;
+    line-height: 41.6px;
+}
+
+#replay-left-nav .accordion-left-menu:after, #replay-left-nav .accordion-replay-left-menu-year:after,
+#replay-left-nav .accordion-replay-left-menu-month:after, #replay-left-nav .accordion-replay-left-menu-day:after {
+    top: 5px;
+}
+
+.accordion-left-menu:after, .accordion-replay-left-menu-year:after, .accordion-replay-left-menu-month:after, .accordion-replay-left-menu-day:after {
+    content: url(../img/button-a-down.svg);
+    float: right;
+    font-size: 0.9em;
+    position: relative;
+    right: 2px;
+    font-weight: normal;
+    top: 4px;
+}
+
+#replay-left-nav section ul {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    line-height: 2.6em;
+    text-align: left;
+    list-style: none;
+    color: white;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+#replay-left-nav section ul>li:first-child {
+    border-top: 1px solid #e3e3e32e;
+}
+
+#replay-left-nav section ul>li {
+    border-top: 1px solid #e3e3e32e;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgba(227, 227, 227, 0.18);
+    display: block;
+}
+
+#replay-left-nav section {
+    scrollbar-color: #1c75c0 #00324b;
+    scrollbar-width: thin;
+}
+
+
+/* Chrome, Opera, Edge, Safari scroll bar for replay and images modal */
+
+/* Replay left nav scroll bar */
+
+#replay-left-nav section::-webkit-scrollbar {
+    width: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #00324b;
+}
+
+#replay-left-nav section::-webkit-scrollbar-track {
+    background: #00324b !important;
+}
+
+#replay-left-nav section::-webkit-scrollbar-thumb {
+    background-color: #1c75c0;
+}
+
+#replay-left-nav li.date-selected a {
+    background-color: #00324b;
+}
