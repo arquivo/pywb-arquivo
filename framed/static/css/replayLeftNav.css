@@ -51,6 +51,7 @@
     right: 2px;
     font-weight: normal;
     top: 4px;
+    display: inherit;
 }
 
 #replay-left-nav section ul {
@@ -104,4 +105,16 @@
 
 #replay-left-nav li.date-selected a {
     background-color: #00324b;
+}
+
+@media (min-width: 0px) and (max-width: 959px){
+
+    #replay-left-nav {
+        display: none;
+    }
+    
+    #replay-left-nav section ul>li a {
+        display: none;
+    }
+
 }
