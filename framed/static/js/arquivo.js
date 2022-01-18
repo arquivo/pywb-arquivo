@@ -658,7 +658,9 @@ var ARQUIVO = ARQUIVO || (function(){
 
 			function doUpdate(iframeId, url, timestamp) {
 				// https://arquivo.pt/partials/replay-nav?url=http%3A%2F%2Fwww.sapo.pt%2F&timestamp=20080314154859
-				const ajaxUrl = '/partials/replay-nav?url=' + url + '&timestamp=' + timestamp;
+				const l = localStorage.language == 'EN' ? 'en' : 'pt';
+
+				const ajaxUrl = '/partials/replay-nav?url=' + url + '&timestamp=' + timestamp + '&l=' + l;
 				$.ajax({
 					url: ajaxUrl,
 					error: function () {
