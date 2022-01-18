@@ -505,7 +505,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 			var hour = timestamp.substring(8,10);
 			var minute = timestamp.substring(10,12);
-			return day+" "+Content.months[month]+" "+Content.at+" "+hour+":"+minute+", "+year;
+
+			return day+" "+Content.months[month]+" "+Content.at+" "+hour+"h"+minute+", "+year;
 		},
 		getDatets: function(){
 		              var year = ts.substring(0, 4);
