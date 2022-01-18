@@ -505,7 +505,8 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 			var hour = timestamp.substring(8,10);
 			var minute = timestamp.substring(10,12);
-			return day+" "+Content.months[month]+" "+Content.at+" "+hour+":"+minute+", "+year;
+
+			return day+" "+Content.months[month]+" "+Content.at+" "+hour+"h"+minute+", "+year;
 		},
 		getDatets: function(){
 		              var year = ts.substring(0, 4);
@@ -658,7 +659,9 @@ var ARQUIVO = ARQUIVO || (function(){
 
 			function doUpdate(iframeId, url, timestamp) {
 				// https://arquivo.pt/partials/replay-nav?url=http%3A%2F%2Fwww.sapo.pt%2F&timestamp=20080314154859
-				const ajaxUrl = '/partials/replay-nav?url=' + url + '&timestamp=' + timestamp;
+				const l = localStorage.language == 'EN' ? 'en' : 'pt';
+
+				const ajaxUrl = '/partials/replay-nav?url=' + url + '&timestamp=' + timestamp + '&l=' + l;
 				$.ajax({
 					url: ajaxUrl,
 					error: function () {
