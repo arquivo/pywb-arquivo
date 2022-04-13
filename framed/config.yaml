@@ -13,6 +13,7 @@ head_insert_html: head_insert_mobile.html
 frame_insert_html: frame_insert_mobile.html
 error_html: error_mobile.html
 not_found_html: not_found_mobile.html
+banner_html: banner_blank.html
 
 
 framed_replay: true
