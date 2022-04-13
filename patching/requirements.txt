@@ -1,2 +1,2 @@
-git+https://github.com/webrecorder/pywb.git@v-2.5.0
+git+https://github.com/webrecorder/pywb.git@v-2.6.6
 uWSGI==2.0.18
