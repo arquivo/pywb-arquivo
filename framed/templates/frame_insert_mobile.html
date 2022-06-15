@@ -13,7 +13,7 @@
   <script>
     wbinfo = {}
     wbinfo.prefix = "{{ wb_prefix }}";
-    wbinfo.capture_url = "{{ url }}";
+    wbinfo.capture_url = "{{ url|safe }}";
     wbinfo.timestamp = "{{ wb_url.timestamp }}";
     ts = "{{ wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
     wbinfo.is_frame = true;
@@ -84,11 +84,11 @@ html, body
 <script src="{{ static_prefix }}/wb_frame.js"></script>
 
 <script>
-var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
+var cframe = new ContentFrame({"url": wbinfo.capture_url + window.location.hash,
                                "prefix": "{{ wb_prefix }}",
                                "request_ts": "{{ wb_url.timestamp }}",
                                "iframe": "#replay_iframe"});
-ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
+ARQUIVO.updateInfo(wbinfo.capture_url, "{{ wb_url.timestamp }}");
 </script>
 </head>
 
