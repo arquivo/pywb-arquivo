@@ -125,7 +125,7 @@ Content = {
     pages:"Pages",
     about:"About",
     copyLink:"Copy link",
-    linkCopied:"Link copied!",  
+    linkCopied:"Link copied",  
     images: "Images",  
     options: "Options",
     bug: "https://sobre.arquivo.pt/en/contact/?your-subject=Problem%20in%20arquivo.pt&your-message=",
