@@ -1,134 +1,92 @@
 {% set buildUrlSuffix = ( '?build=' + metadata.build ) if metadata.build is defined else '' %}
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta property="og:image" content="{{ host_prefix }}/img/logoFace.png">
-  <meta property="og:image:alt" content="Arquivo.pt">
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="{{ wb_prefix }}{{ wb_url.timestamp }}/{{ url }}">
-  
   <script>
     wbinfo = {}
     wbinfo.prefix = "{{ wb_prefix }}";
-    wbinfo.capture_url = "{{ url }}";
+    wbinfo.capture_url = "{{ url|safe }}";
     wbinfo.timestamp = "{{ wb_url.timestamp }}";
     ts = "{{ wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
     wbinfo.is_frame = true;
     wbinfo.frame_mod = "{{ options.frame_mod }}";
     wbinfo.replay_mod = "{{ options.replay_mod }}";
-  </script>  
-<style>
-html, body
-{
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  overflow: hidden;
-}
-    .banner {
-      background: #033f72;
+  </script>
+
+  <title>SavePageNow by Arquivo.pt</title>
+
+  <script src="{{ static_prefix }}/wb_frame.js"></script>
+
+  <script>
+    var cframe = new ContentFrame({
+      "url": wbinfo.capture_url + window.location.hash,
+      "prefix": "{{ wb_prefix }}",
+      "request_ts": "{{ wb_url.timestamp }}",
+      "iframe": "#replay_iframe"
+    });
+
+    // add event listener thar receive messages from url search iframe.
+    if (window.addEventListener) {
+      window.addEventListener("message", onMessage, false);
+    } else if (window.attachEvent) {
+      window.attachEvent("onmessage", onMessage, false);
+    }
+    // generic function that receive multiple messages from url search iframe and calls different king on functions.
+    function onMessage(event) {
+      // Check sender origin to be trusted
+      if (!event.isTrusted) return;
+      var data = event.data;
+
+      if (typeof data.wb_type !== 'undefined') {
+        if (data.wb_type == "load" || data.wb_type == "replace-url" || data.wb_type == "unload") {
+          ARQUIVO.updateInfo(data.url, data.ts);
+        }
+      } else {
+        if (data.func == 'urlSearchClickOnVersion') {
+          ARQUIVO.urlSearchClickOnVersion(data.message);
+        }
+      }
     }
 
-    .banner__content {
-      padding: 6px;
-      max-width: 500px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
+
+    // adding an 'unload' event message to be able to quickly react to changes in context.
+    // The 'unload' event message follows wb messages format.
+    const iframe = document.getElementById('replay_iframe');
+    function unloadHandler(e) {
+      // Timeout needed because the URL changes immediately after
+      // the `unload` event is dispatched.
+      setTimeout(function () {
+        let splitUrl = iframe.contentWindow.location.href.split('mp_/');
+        if (splitUrl.length < 2) {
+          return;
+        }
+        let message = {
+          url: splitUrl.filter((x, i) => { return i > 0 }).join('mp_/'),
+          ts: splitUrl[0].split('/').pop(),
+          wb_type: 'unload'
+        };
+        window.postMessage(message);
+      }, 0);
+    };
+    function attachUnload() {
+      // Remove the unloadHandler in case it was already attached.
+      // Otherwise, the change will be dispatched twice.
+      iframe.contentWindow.removeEventListener("unload", unloadHandler);
+      iframe.contentWindow.addEventListener("unload", unloadHandler);
     }
-
-    .banner__text {
-      flex-grow: 1;
-      line-height: 1.4;
-      font-family: "Quicksand", sans-serif;
-      text-align:center;
-    }
-
-    .banner__close {
-      background: #1c75c0;
-      border-radius: 5px;
-      width: 60px;
-      height: 31px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .banner__text,
-    .banner__close > span {
-      color: #ffffff;
-    }
-
-    #logo-arquivo {
-      max-height: 60px;
-    }
-    
-    #sobre-arquivo-link {
-      text-decoration:none;
-      color: #ffffff;
-    }	
-
-</style>
-<script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
-<script src="{{ static_prefix }}/js/bootstrap.min.js"></script>
-<!-- Slider -->
-<link rel="stylesheet" href="{{ static_prefix }}/css/swiper.min.css">
-<link rel="stylesheet" href="{{ static_prefix }}/css/swipeCustom.css{{ buildUrlSuffix }}">
-<!-- End Slider Right -->
-<script src="{{ static_prefix }}/js/uglipop.min.js"></script>
-<!-- simple plugin modals confirmation popups -->
-<script src="{{ static_prefix }}/js/js.cookie.js"></script>
-<!-- Plugin for cookie to choose language-->
-<link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
-<!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
-<script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
-<script type="text/javascript">
-  ARQUIVO.init("{{ host_prefix }}", "{{ static_prefix }}", "{{ metadata.screenshot_endpoint }}", "{{ metadata.patching }}", "{{ buildUrlSuffix }}", "{{ metadata.replayWithOldBrowsers }}", "{{ metadata.arquivoweb_app_url if metadata.arquivoweb_app_url is defined else '' }}");
-</script>
-
-<title>Arquivo.pt</title>
-
-<script src="{{ static_prefix }}/wb_frame.js"></script>
-
-<script>
-var cframe = new ContentFrame({"url": "{{ url }}" + window.location.hash,
-                               "prefix": "{{ wb_prefix }}",
-                               "request_ts": "{{ wb_url.timestamp }}",
-                               "iframe": "#replay_iframe"});
-ARQUIVO.updateInfo("{{ url }}", "{{ wb_url.timestamp }}");
-</script>
+    iframe.addEventListener("load", attachUnload);
+  </script>
 </head>
 
 <body style="margin: 0px; padding: 0px;">
 
-<!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
-  <div class="banner">
-    <div class="banner__content">
-      <div class="banner__text">
-        <a id="logo-arquivo-link" href="/">
-          <img id="logo-arquivo" src="/img/arquivo-logo-white.svg" alt="Arquivo.pt">
-       </a>
-      Save Page Now
-      <div>
-      Navegue para ir gravando as p&aacute;ginas
-      </div>
-      <div>
-      <button class="banner__close" type="button">
-        <span class="material-icons">
-          <a id="sobre-arquivo-link" href="https://preprod.sobre.arquivo.pt/pt/savepagenow/">Concluir</a>
-        </span>
-      </button>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div id="wb_iframe_div" style="width:100%; height:100%;">
-    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" style="overflow:hidden;height:100%;width:100%">
+  <div id="wb_iframe_div">
+    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless"
+      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">
     </iframe>
 
   </div>
 </body>
+
 </html>
