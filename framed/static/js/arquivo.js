@@ -661,7 +661,7 @@ var ARQUIVO = ARQUIVO || (function(){
 				// https://arquivo.pt/partials/replay-nav?url=http%3A%2F%2Fwww.sapo.pt%2F&timestamp=20080314154859
 				const l = localStorage.language == 'EN' ? 'en' : 'pt';
 
-				const ajaxUrl = '/partials/replay-nav?url=' + url + '&timestamp=' + timestamp + '&l=' + l;
+				const ajaxUrl = '/partials/replay-nav?url=' + encodeURIComponent( url ) + '&timestamp=' + timestamp + '&l=' + l;
 				$.ajax({
 					url: ajaxUrl,
 					error: function () {
