@@ -26,56 +26,51 @@
       "iframe": "#replay_iframe"
     });
 
-    // add event listener thar receive messages from url search iframe.
-    if (window.addEventListener) {
-      window.addEventListener("message", onMessage, false);
-    } else if (window.attachEvent) {
-      window.attachEvent("onmessage", onMessage, false);
-    }
-    // generic function that receive multiple messages from url search iframe and calls different king on functions.
-    function onMessage(event) {
-      // Check sender origin to be trusted
-      if (!event.isTrusted) return;
-      var data = event.data;
+    if (window.parent != window) {
+      // Damn it internet explorer...
+      let eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+      let messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
-      if (typeof data.wb_type !== 'undefined') {
-        if (data.wb_type == "load" || data.wb_type == "replace-url" || data.wb_type == "unload") {
-          ARQUIVO.updateInfo(data.url, data.ts);
+      window[eventMethod](messageEvent, (e) => {
+        let key = e.message ? "message" : "data";
+        // Only relay messages from pywb
+        if (e[key] && e[key].wb_type) {
+          window.parent.postMessage(e[key], "*");
         }
-      } else {
-        if (data.func == 'urlSearchClickOnVersion') {
-          ARQUIVO.urlSearchClickOnVersion(data.message);
-        }
+      }, true);
+
+      // adding an 'unload' event message to be able to quickly react to changes in context.
+      // The 'unload' event message follows wb messages format.
+      const iframe = document.getElementById('replay_iframe');
+      function unloadHandler(e) {
+        // Timeout needed because the URL changes immediately after
+        // the `unload` event is dispatched.
+        setTimeout(function () {
+          let splitUrl = iframe.contentWindow.location.href.split('mp_/');
+          if (splitUrl.length < 2) {
+            return;
+          }
+          let message = {
+            url: splitUrl.filter((x, i) => { return i > 0 }).join('mp_/'),
+            ts: splitUrl[0].split('/').pop(),
+            wb_type: 'unload'
+          };
+          window.postMessage(message);
+        }, 0);
+      };
+      function attachUnload() {
+        // Remove the unloadHandler in case it was already attached.
+        // Otherwise, the change will be dispatched twice.
+        iframe.contentWindow.removeEventListener("unload", unloadHandler);
+        iframe.contentWindow.addEventListener("unload", unloadHandler);
       }
+      iframe.addEventListener("load", attachUnload);
+
     }
 
-
-    // adding an 'unload' event message to be able to quickly react to changes in context.
-    // The 'unload' event message follows wb messages format.
-    const iframe = document.getElementById('replay_iframe');
-    function unloadHandler(e) {
-      // Timeout needed because the URL changes immediately after
-      // the `unload` event is dispatched.
-      setTimeout(function () {
-        let splitUrl = iframe.contentWindow.location.href.split('mp_/');
-        if (splitUrl.length < 2) {
-          return;
-        }
-        let message = {
-          url: splitUrl.filter((x, i) => { return i > 0 }).join('mp_/'),
-          ts: splitUrl[0].split('/').pop(),
-          wb_type: 'unload'
-        };
-        window.postMessage(message);
-      }, 0);
-    };
-    function attachUnload() {
-      // Remove the unloadHandler in case it was already attached.
-      // Otherwise, the change will be dispatched twice.
-      iframe.contentWindow.removeEventListener("unload", unloadHandler);
-      iframe.contentWindow.addEventListener("unload", unloadHandler);
+    function resizeIframe(obj) {
+      obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
     }
-    iframe.addEventListener("load", attachUnload);
   </script>
 </head>
 
@@ -83,7 +78,8 @@
 
   <div id="wb_iframe_div">
     <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless"
-      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent">
+      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" onload="resizeIframe(this)"
+      style="width:100%;height:1000px;overflow:hidden">
     </iframe>
 
   </div>
