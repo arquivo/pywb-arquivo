@@ -67,22 +67,14 @@
       iframe.addEventListener("load", attachUnload);
 
     }
-
-    function resizeIframe(obj) {
-      obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
-    }
   </script>
 </head>
 
-<body style="margin: 0px; padding: 0px;">
-
-  <div id="wb_iframe_div">
+<body style="margin: 0px; padding: 0px; border: 0px;">
     <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless"
-      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" onload="resizeIframe(this)"
-      style="width:100%;height:1000px;overflow:hidden">
+      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent"
+      style="width:100%;height:calc(100vh - 5px);overflow:hidden;border: 0px;padding: 0;margin: 0;">
     </iframe>
-
-  </div>
 </body>
 
 </html>
