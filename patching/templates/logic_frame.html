@@ -17,6 +17,15 @@
   <title>SavePageNow by Arquivo.pt</title>
 
   <script src="{{ static_prefix }}/wb_frame.js"></script>
+</head>
+
+<body style="margin: 0px; padding: 0px; border: 0px;">
+    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless"
+      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent"
+      style="width:100%;height:calc(100vh - 5px);overflow:hidden;border: 0px;padding: 0;margin: 0;">
+    </iframe>
+
+    
 
   <script>
     var cframe = new ContentFrame({
@@ -68,13 +77,6 @@
 
     }
   </script>
-</head>
-
-<body style="margin: 0px; padding: 0px; border: 0px;">
-    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless"
-      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent"
-      style="width:100%;height:calc(100vh - 5px);overflow:hidden;border: 0px;padding: 0;margin: 0;">
-    </iframe>
 </body>
 
 </html>
