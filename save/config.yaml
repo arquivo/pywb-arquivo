@@ -1,13 +1,15 @@
 collections:
   live: $live
 
-framed_replay: false
+frame_insert_html: frame_insert_mobile.html
+banner_html: banner_blank.html
+
+framed_replay: true
 redirect_to_exact: true
 enable_auto_fetch: true
 autoindex: 30
 
 debug: True
-
 recorder:
    source_coll: live
    rollover_size: 100000000

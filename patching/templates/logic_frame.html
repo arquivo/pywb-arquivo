@@ -1,0 +1,82 @@
+{% set buildUrlSuffix = ( '?build=' + metadata.build ) if metadata.build is defined else '' %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script>
+    wbinfo = {}
+    wbinfo.prefix = "{{ wb_prefix }}";
+    wbinfo.capture_url = "{{ url|safe }}";
+    wbinfo.timestamp = "{{ wb_url.timestamp }}";
+    ts = "{{ wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
+    wbinfo.is_frame = true;
+    wbinfo.frame_mod = "{{ options.frame_mod }}";
+    wbinfo.replay_mod = "{{ options.replay_mod }}";
+  </script>
+
+  <title>SavePageNow by Arquivo.pt</title>
+
+  <script src="{{ static_prefix }}/wb_frame.js"></script>
+</head>
+
+<body style="margin: 0px; padding: 0px; border: 0px;">
+    <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless"
+      frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent"
+      style="width:100%;height:calc(100vh - 5px);overflow:hidden;border: 0px;padding: 0;margin: 0;">
+    </iframe>
+
+    
+
+  <script>
+    var cframe = new ContentFrame({
+      "url": wbinfo.capture_url + window.location.hash,
+      "prefix": "{{ wb_prefix }}",
+      "request_ts": "{{ wb_url.timestamp }}",
+      "iframe": "#replay_iframe"
+    });
+
+    if (window.parent != window) {
+      // Damn it internet explorer...
+      let eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+      let messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+      window[eventMethod](messageEvent, (e) => {
+        let key = e.message ? "message" : "data";
+        // Only relay messages from pywb
+        if (e[key] && e[key].wb_type) {
+          window.parent.postMessage(e[key], "*");
+        }
+      }, true);
+
+      // adding an 'unload' event message to be able to quickly react to changes in context.
+      // The 'unload' event message follows wb messages format.
+      const iframe = document.getElementById('replay_iframe');
+      function unloadHandler(e) {
+        // Timeout needed because the URL changes immediately after
+        // the `unload` event is dispatched.
+        setTimeout(function () {
+          let splitUrl = iframe.contentWindow.location.href.split('mp_/');
+          if (splitUrl.length < 2) {
+            return;
+          }
+          let message = {
+            url: splitUrl.filter((x, i) => { return i > 0 }).join('mp_/'),
+            ts: splitUrl[0].split('/').pop(),
+            wb_type: 'unload'
+          };
+          window.postMessage(message);
+        }, 0);
+      };
+      function attachUnload() {
+        // Remove the unloadHandler in case it was already attached.
+        // Otherwise, the change will be dispatched twice.
+        iframe.contentWindow.removeEventListener("unload", unloadHandler);
+        iframe.contentWindow.addEventListener("unload", unloadHandler);
+      }
+      iframe.addEventListener("load", attachUnload);
+
+    }
+  </script>
+</body>
+
+</html>
