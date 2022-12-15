@@ -8,6 +8,7 @@ collections:
       screenshot_endpoint: https://preprod.arquivo.pt/screenshot
     #  build: hash_or_timestamp  # optional configuration to force browsers use the correct version of each js or css file.
       replayWithOldBrowsers: false
+      googleAnalyticsToken: G-6VRZXCHDJ1
     
 head_insert_html: head_insert_mobile.html
 frame_insert_html: frame_insert_mobile.html
