@@ -263,8 +263,10 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
-
-			ga('send', 'pageview'); /*New page*/
+			gtag('event', 'page_view', {
+				page_title: title,
+				page_location: _url  
+			  });
  		},
  		createSlideMenu: function(){
 
@@ -695,6 +697,10 @@ var ARQUIVO = ARQUIVO || (function(){
 	    sendEventToAnalytics: function(eventCategory, eventAction, eventLabel) {
 	    	eventLabel = eventLabel || "arquivo.pt/" + _ts + '/' +_url;
         	ga("send", "event", eventCategory, eventAction, eventLabel );
+			gtag("event", eventCategory, {
+				"action": eventAction, 
+				"label": eventLabel 
+			} );
 	    },
 
 		isReplayWithOldBrowsers : function() {

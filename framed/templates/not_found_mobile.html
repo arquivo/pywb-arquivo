@@ -1,3 +1,4 @@
+{% set googleAnalyticsToken = 'G-6VRZXCHDJ1' %}
 <script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
 <script src="{{ static_prefix }}/js/uglipop.min.js"></script>
 <link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.css"></script>
@@ -6,15 +7,15 @@
 <script src="{{ static_prefix }}/resources/js/bootstrap.min.js"></script>
 <meta name="viewport" content="initial-scale=0.99,minimum-scale=0.1, maximum-scale=10">
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
+<!-- starts Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsToken }}"></script>
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-21825027-1', 'auto');
-    ga('send', 'pageview');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '{{ googleAnalyticsToken }}');
 </script>
+<!-- ends Google Analytics 4-->
 
 <script type="text/javascript">
 document.write("<script src="+ "{{ wb_prefix }}"+"static\/resources\/js\/js.cookie.js"+ "><\/script>");
@@ -52,22 +53,28 @@ document.write('<div class="myButtonStyle text-center" >'+
 
 $('#otherArchives').on('click', function(e){
 
-            /*ga('send', 'event', 'ReplayBarFunctions', 'Search Other Archives Click', 'http://arquivo.pt/'+_ts+'/'+_url);*/
+            /*gtag('event', 'ReplayBarFunctions', { "action": 'Search Other Archives Click', "label": 'http://arquivo.pt/'+_ts+'/'+_url } );*/
             uglipop({
               class:'modalReplay noprint', //styling class for Modal
               source:'html',
               content:'<h4 class="modalTitleComplete"><i class="fa fa-print" aria-hidden="true"></i> '+Content.otherArchives+'</h4><p class="modalparagraph last">'+Content.leavingArquivo+'</p>'+
-                      '<div class="row"><a id="searchOtherArchives" onclick="ga(\'send\', \'event\', \'ReplayBarFunctions\', \'PrintMenuConfirm\', \'arquivo.pt/'+tokens[4]+'/'+theURL+'\');" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
+                      '<div class="row"><a id="searchOtherArchives" onclick="gtag(\'event\', \'ReplayBarFunctions\', { "action":\'Search Other Archives Click\', "label": \'arquivo.pt/'+tokens[4]+'/'+theURL+'\' } );" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'
             });
     /*Closing popup*/            
     $('#cancelPopup').on('click', function(e){
-        ga('send', 'event', 'Not Found', 'Other Archives Cancel', 'arquivo.pt/'+tokens[4]+'/'+theURL);
+        gtag("event", 'Not Found', {
+            "type": 'Other Archives Cancel', 
+            "url": 'arquivo.pt/'+tokens[4]+'/'+theURL 
+        } );
         $('#uglipop_content_fixed').fadeOut();
         $('#uglipop_overlay').fadeOut('fast');
     });
     /*Confirm searching other archives*/
     $('#searchOtherArchives').on('click', function(e){
-        ga('send', 'event', 'Not Found', 'Other Archives Confirm', 'arquivo.pt/'+tokens[4]+'/'+theURL);
+        gtag("event", 'Not Found', {
+            "type": 'Other Archives Confirm', 
+            "url": 'arquivo.pt/'+tokens[4]+'/'+theURL 
+        } );
         window.open('https://web.archive.org/web/'+tokens[4]+'/'+theURL);
         $('#uglipop_overlay').fadeOut('fast');
     });  
