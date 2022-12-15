@@ -1,5 +1,4 @@
 {% set buildUrlSuffix = ( '?build=' + metadata.build ) if metadata.build is defined else '' %}
-{% set googleAnalyticsToken = 'G-6VRZXCHDJ1' %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,12 +31,12 @@ html, body
 }
 </style>
 <!-- starts Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsToken }}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ metadata.googleAnalyticsToken }}"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '{{ googleAnalyticsToken }}');
+gtag('config', '{{ metadata.googleAnalyticsToken }}');
 </script>
 <!-- ends Google Analytics 4-->
 <meta name="viewport" content="initial-scale=1,minimum-scale=0.1, maximum-scale=10">
