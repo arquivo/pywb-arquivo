@@ -1,4 +1,3 @@
-{% set googleAnalyticsToken = 'G-6VRZXCHDJ1' %}
 <script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
 <script src="{{ static_prefix }}/js/uglipop.min.js"></script>
 <link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.css"></script>
@@ -8,12 +7,12 @@
 <meta name="viewport" content="initial-scale=0.99,minimum-scale=0.1, maximum-scale=10">
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
 <!-- starts Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsToken }}"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ metadata.googleAnalyticsToken }}"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', '{{ googleAnalyticsToken }}');
+gtag('config', '{{ metadata.googleAnalyticsToken }}');
 </script>
 <!-- ends Google Analytics 4-->
 
