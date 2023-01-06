@@ -263,9 +263,9 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
-			gtag('event', 'page_view', {
-				page_title: title,
-				page_location: _url  
+			gtag('event', 'wayback_view', {
+				wayback_page_title: title,
+				wayback_page_location: _url  
 			  });
  		},
  		createSlideMenu: function(){
