@@ -42,7 +42,7 @@ var ARQUIVO = ARQUIVO || (function(){
         	return 'https://web.archive.org/web/' +_ts + '/' + _url;
         },
         getPatchingPageURL : function() {
-        	return '/services/complete-page?url=' + _url + '&timestamp=' + _ts ;
+        	return '/services/complete-page?url=' + encodeURIComponent(_url) + '&timestamp=' + _ts ;
         },
         getReplayWithOldBrowsersURL : function () {
         	return 'http://oldweb.today?browser=ff10' + '#' + 'https://arquivo.pt/noFrame/replay/' + _ts + '/' + _url;
@@ -263,9 +263,9 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
-			gtag('event', 'page_view', {
-				page_title: title,
-				page_location: _url  
+			gtag('event', 'wayback_view', {
+				wayback_page_title: title,
+				wayback_page_location: _url  
 			  });
  		},
  		createSlideMenu: function(){
