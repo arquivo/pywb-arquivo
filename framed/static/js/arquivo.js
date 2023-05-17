@@ -52,7 +52,12 @@ var ARQUIVO = ARQUIVO || (function(){
          * Choose language and load corresponding Constants
          */
 		loadLanguage: function(){
-			var language = localStorage.language;
+			var language = $.cookie('i18n');
+			if(!!language){
+				language = language.split('_')[0].toUpperCase();
+				localStorage.language = language;
+			}
+			language = localStorage.language;
 			language = language == 'EN' ? 'EN' : 'PT';
 			_language = language.toLowerCase();
 		    document.write('<script type="text/javascript" language="JavaScript" src="'+_static_path+'/properties/Constants'+language+'.js'+_buildUrlSuffix+'"><\/script>');
@@ -135,7 +140,6 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachPrintModal();
 			this.iframeResize();
 			this.createSlideMenu();
-			this.attachLanguageChange();
 			this.attachShare();
 			this.attachTools();
 			this.attachMoreInfoModal();
@@ -326,7 +330,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  		   	 '<h4>&nbsp;</h4>'+
 			  	         '<button href="#" onclick="ARQUIVO.goToContent()" class="close-functions clean-button-no-fill">&#10005;</button>' +
 			  	       '</div>'+
-              '		 	<a id="changeLanguage" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\');"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
+              '		 	<a id="changeLanguage" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'ChangeLanguageTo'+Content.otherLanguage+'Click\');" href="/switchlang?l='+Content.language.toLowerCase()+'"><h4><i class="fa fa-flag right-6" aria-hidden="true"></i> '+Content.otherLanguageExtended+'</h4></a>'+
 			  '			<button class="clean-button" onclick="ARQUIVO.copyLink();"><h4><i class="fa fa-link padding-right-menu-icon" aria-hidden="true"></i> '+Content.copyLink+'</h4></button>' +
   					   '<button class="clean-button" id="pagesMenu" onclick="ARQUIVO.pagesClick();"><h4><i class="fa fa-globe padding-right-menu-icon" aria-hidden="true"></i> '+Content.pages+'<i id="pagesCarret" class="fa fa-caret-down iCarret shareCarret pull-right" aria-hidden="true"></i></h4></button>'+	 			  
       				   '<div id="pageOptions">'+
@@ -476,25 +480,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		                  '-ms-transform': 'translate(-50%, -50%)'
 		  });
 		},
-			 		 	 
- 		attachLanguageChange: function(){
-		  $('#changeLanguage').on('click', function(e){
-		    ARQUIVO.setLang(Content.otherLanguage);
-		  }); 	 			
- 		},
- 		/*Choose language*/
-		setLang: function(lang) {
-		    if(lang == 'EN')
-		     {
-		     	localStorage.setItem('language', 'EN');
-		        window.location.reload();
-		     }
-		    else //default language Portuguesez
-		    {
-		        localStorage.setItem('language', 'PT');   
-		        window.location.reload();
-		    }
-		},
+		
 		/**
 		 * Returns current timestamp in short form such as '2 Nov 10:24, 2015'
 		 */

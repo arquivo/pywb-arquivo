@@ -1,11 +1,4 @@
 {% set buildUrlSuffix = ( '?build=' + metadata.build ) if metadata.build is defined else '' %}
-{# Language cookie must be read from the server since it's an HttpOnly cookie #}
-{% set cookieLanguage = [] %}
-{% for cookie in env.HTTP_COOKIE.split(';') %}
-  {% if cookie.split('=')[0].strip() == 'i18n' %}
-     {% if cookieLanguage.append(cookie.split('=')[1].strip().split('_')[0].upper()) %} {% endif %}
-  {% endif %}
-{% endfor %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,9 +72,6 @@ gtag('config', '{{ metadata.googleAnalyticsToken }}');
 <!-- Plugin for cookie to choose language-->
 <link rel="shortcut icon" href="/img/logo-16.png" type="image/x-icon">
 <!-- Arquivo.pt specific functions and js code, such as loading constants, cookies -->
-{% if cookieLanguage|length > 0  %}
-<script>localStorage.language = "{{ cookieLanguage[0] }}";</script>
-{% endif %}
 <script src="{{ static_prefix }}/js/arquivo.js{{ buildUrlSuffix }}"></script>
 <script src="{{ static_prefix }}/js/replayLeftNav.js{{ buildUrlSuffix }}"></script>
 <script type="text/javascript">
