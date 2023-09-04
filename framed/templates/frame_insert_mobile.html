@@ -111,12 +111,17 @@ ARQUIVO.updateInfo(wbinfo.capture_url, "{{ wb_url.timestamp }}");
     }
     // generic function that receive multiple messages from url search iframe and calls different king on functions.
     function onMessage(event) {
+      const linkToOwnArchiveRegex = /^(https?:\/\/)?[^\/]*arquivo\.pt\/wayback/;
+      
       // Check sender origin to be trusted
       if (!event.isTrusted) return;
       var data = event.data;
 
       if (typeof data.wb_type !== 'undefined') {
         if (data.wb_type == "load" || data.wb_type == "replace-url" || data.wb_type == "unload") {
+          if(linkToOwnArchiveRegex.test(data.url)){ // Prevent replay-ception (replay within a replay), in that case force redirection 
+            window.location.href = data.url; 
+          }
           ARQUIVO.updateInfo(data.url, data.ts);
         }
       } else {
