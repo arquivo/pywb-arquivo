@@ -2,7 +2,7 @@
 <script>
 {% set urlsplit = cdx.url | urlsplit %}
   wbinfo = {};
-  wbinfo.top_url = "{{ top_url }}";
+  wbinfo.top_url = "{{ top_url|safe }}";
 {% if is_framed %}
   // Fast Top-Frame Redirect
   if (window == window.top && wbinfo.top_url) {
