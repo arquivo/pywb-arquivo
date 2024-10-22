@@ -54,6 +54,13 @@
 <script src='{{ static_prefix }}/vidrw.js'> </script>
 {% endif %}
 
+<script src="{{ static_prefix }}/js/ruffle/ruffle.js"></script>
+<script>
+window.RufflePlayer.config.autoplay = "on";
+window.RufflePlayer.config.unmuteOverlay = "hidden";
+</script>
+
+
 {{ banner_html }}
 
 <!-- End WB Insert -->
