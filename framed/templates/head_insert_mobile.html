@@ -2,7 +2,7 @@
 <script>
 {% set urlsplit = cdx.url | urlsplit %}
   wbinfo = {};
-  wbinfo.top_url = "{{ top_url }}";
+  wbinfo.top_url = "{{ top_url|safe }}";
 {% if is_framed %}
   // Fast Top-Frame Redirect
   if (window == window.top && wbinfo.top_url) {
@@ -53,6 +53,13 @@
 {% if config.enable_flash_video_rewrite %}
 <script src='{{ static_prefix }}/vidrw.js'> </script>
 {% endif %}
+
+<script src="{{ static_prefix }}/js/ruffle/ruffle.js"></script>
+<script>
+window.RufflePlayer.config.autoplay = "on";
+window.RufflePlayer.config.unmuteOverlay = "hidden";
+</script>
+
 
 {{ banner_html }}
 
