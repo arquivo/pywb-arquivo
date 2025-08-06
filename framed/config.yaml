@@ -1,16 +1,50 @@
 collections:
-  wayback: 
+  
+  # The reason that we have 'wayback' as collection is to have the same URL has our production environment.
+  # So we have for example:
+  #   http://localhost:8081/wayback/19990125085708/http://fccn.pt:80/
+  wayback:
+    
+    # Example of configuration to use local cdx indexes and an arcproxy server.
+    # index_paths: /data/indexes_cdx
+    # archive_paths:
+    #   - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+
+    # Example that use Arquivo.pt production environment with Memento API
     index_group:
-      arquivo: memento+https://arquivo.pt/wayback/
+      arquivo_memento: memento+https://arquivo.pt/wayback/
+    
+    # Example that use Arquivo.pt production environment with CDX API
+    # index_group:
+    #   arquivo_cdx: cdx+http://arquivo.pt/wayback/cdx
+
+
     timeout: 30
+
+    # This is a collection of variables that the html templates can use.
     metadata:
-    #  arquivoweb_app_url: https://preprod.arquivo.pt  # to use the preprod environment
-      arquivoweb_app_url: http://localhost:8080  # to use the localhost development
-      screenshot_endpoint: https://preprod.arquivo.pt/screenshot
+      #
+      # Example to use the production environment
+      #
+      arquivoweb_app_url: https://arquivo.pt
+
+      #
+      # Example to use the preprod environment
+      #
+      # arquivoweb_app_url: https://preprod.arquivo.pt
+
+      #
+      # Example to use the localhost development environment
+      #
+      # arquivoweb_app_url: http://localhost:3000
+      
+      # Example that use production environment for screenshots
+      screenshot_endpoint: https://arquivo.pt/screenshot
     #  build: hash_or_timestamp  # optional configuration to force browsers use the correct version of each js or css file.
       replayWithOldBrowsers: false
       googleAnalyticsToken: G-6VRZXCHDJ1
-    
+
+# Templates
 head_insert_html: head_insert_mobile.html
 frame_insert_html: frame_insert_mobile.html
 error_html: error_mobile.html
