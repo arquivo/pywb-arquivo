@@ -6,11 +6,13 @@ services:
       context: framed
     ports:
       - 8081:8081
+    network_mode: host
   pywb-arquivo-unframed:
     build:
       context: unframed
     ports:
       - 8082:8082
+    network_mode: host
   pywb-arquivo-save:
     build:
       context: save
@@ -18,6 +20,7 @@ services:
       - 8586:8586
     volumes:
       - ./save/collections:/app/collections
+    network_mode: host
   pywb-arquivo-patching:
     build:
       context: patching
@@ -25,3 +28,4 @@ services:
       - 8083:8083
     volumes:
       - ./patching/collections:/app/collections
+    network_mode: host
