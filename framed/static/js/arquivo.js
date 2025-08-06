@@ -42,7 +42,7 @@ var ARQUIVO = ARQUIVO || (function(){
         	return 'https://web.archive.org/web/' +_ts + '/' + _url;
         },
         getPatchingPageURL : function() {
-        	return '/services/complete-page?url=' + encodeURIComponent(_url) + '&timestamp=' + _ts ;
+        	return _arquivoWebAppUrl+'/services/complete-page?url=' + encodeURIComponent(_url) + '&timestamp=' + _ts ;
         },
         getReplayWithOldBrowsersURL : function () {
         	return 'http://oldweb.today?browser=ff10' + '#' + 'https://arquivo.pt/noFrame/replay/' + _ts + '/' + _url;
@@ -649,7 +649,7 @@ var ARQUIVO = ARQUIVO || (function(){
 				// https://arquivo.pt/partials/replay-nav?url=http%3A%2F%2Fwww.sapo.pt%2F&timestamp=20080314154859
 				const l = localStorage.language == 'EN' ? 'en' : 'pt';
 
-				const ajaxUrl = '/partials/replay-nav?url=' + encodeURIComponent( url ) + '&timestamp=' + timestamp + '&l=' + l;
+				const ajaxUrl = _arquivoWebAppUrl+'/partials/replay-nav?url=' + encodeURIComponent( url ) + '&timestamp=' + timestamp + '&l=' + l;
 				$.ajax({
 					url: ajaxUrl,
 					error: function () {
