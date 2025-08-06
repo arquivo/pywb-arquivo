@@ -1,4 +1,3 @@
-version: "3"
 
 services:
   pywb-arquivo-framed:
@@ -6,12 +5,16 @@ services:
       context: framed
     ports:
       - 8081:8081
+    volumes:
+      - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
     network_mode: host
   pywb-arquivo-unframed:
     build:
       context: unframed
     ports:
       - 8082:8082
+    volumes:
+      - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
     network_mode: host
   pywb-arquivo-save:
     build:
@@ -19,6 +22,7 @@ services:
     ports:
       - 8586:8586
     volumes:
+      - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
       - ./save/collections:/app/collections
     network_mode: host
   pywb-arquivo-patching:
@@ -27,5 +31,6 @@ services:
     ports:
       - 8083:8083
     volumes:
+      - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
       - ./patching/collections:/app/collections
     network_mode: host
