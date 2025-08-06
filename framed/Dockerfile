@@ -5,7 +5,7 @@ WORKDIR /app
 
 # copy requirements and install them using pip
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 
 # copy everything else the current folder has on a different docker stage
 COPY . .
