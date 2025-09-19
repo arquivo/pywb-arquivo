@@ -1,2 +1,3 @@
 git+https://github.com/webrecorder/pywb.git@v-2.6.6
 uWSGI==2.0.18
+greenlet==1.1.3
