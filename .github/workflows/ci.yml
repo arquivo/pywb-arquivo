@@ -40,8 +40,8 @@ jobs:
           context: ${{ matrix.service}}/.
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/pywb-arquivo-${{ matrix.service}}:${{ github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/pywb-arquivo-${{ matrix.service}}:${{ env.SHORT_SHA }}
+            arquivo/pywb-arquivo-${{ matrix.service}}:${{ github.ref_name }}
+            arquivo/pywb-arquivo-${{ matrix.service}}:${{ env.SHORT_SHA }}
 
       - name: Logout from Docker Hub
         run: docker logout
