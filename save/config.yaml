@@ -15,6 +15,7 @@ recorder:
 
 banner_html: banner_blank.html
 error_html: not_found_mobile.html
+not_found_html: not_found_mobile.html
 
 # This depend on the source code.
 #head_insert_html: head_insert.html
