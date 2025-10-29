@@ -65,6 +65,7 @@ Content = {
     firstSuggestion:"Use o <a id='archiveNow'>ArchivePageNow</a> para gravar a p&#225gina em falta",
     secondSuggestion:"<a id='suggestToArquivo'>Sugira</a> a p&#225gina para que seja arquivada",
     thirdSuggestion:"Pesquise <a id='otherArchives'>outros arquivos web</a>",
+    shortSuggestion:"Sugerimos que verifique o endere&#xE7;o web.",
     archivePageNowURL:"https://arquivo.pt/archivepagenow",
     suggestURL:"https://arquivo.pt/sugerir",
     otherArchivesURL:"https://web.archive.org/web",
