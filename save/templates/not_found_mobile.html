@@ -1,32 +1,57 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-PT" lang="pt-PT"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% set static_prefix = static_prefix ~ "/_/save" %}
+<!doctype html>
+<html lang="pt">
+
+<head>
     <title>Página não encontrada (404) - Arquivo.pt</title>
-    
-    
-    <meta http-equiv="Content-Language" content="pt-PT">
-    <meta name="Keywords" content="erro, 404, arquivo, web, português, portuguesa, Portugal">
-    <meta name="Description" content="A página procurada não foi encontrada no Arquivo.">
-    <link rel="shortcut icon" href="https://arquivo.pt/img/logo-16.png" type="/image/x-icon">
-    <link rel="stylesheet" title="Estilo principal" type="text/css" href="./new_files/style.css" media="all">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ static_prefix }}/img/Favicon.ico">
+    <link rel="stylesheet" href="{{ static_prefix }}/css/404Style.min.css">
+    <!-- <link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.min.css">
+    <link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css"> -->
+    <meta charset="utf-8" />
+    <meta name="Keywords" content="Web, archive, search, portuguese, Portugal, homepage" />
+    <meta name="Description" content="A página procurada não foi encontrada no Arquivo.pt" />
+    <!-- starts social media meta data -->
+    <meta property="og:title" content="Página não encontrada (404) - Arquivo.pt" />
+    <meta property="og:description" content="A página procurada não foi encontrada no Arquivo.pt" />
+    <meta property="og:image" content="img/logoFace.png" />
+    <meta property="og:image:alt" content="Arquivo.pt">
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:type" content="website" />
+    <!-- ends social media meta data -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
+    <script src="{{ static_prefix }}/js/uglipop.min.js"></script> -->
+    <!-- starts javascript files, Google Font and CSS links -->
+    <!-- starts css styles links -->
+    <script>
+        const cookies = Object.fromEntries(document.cookie.split('; ').map(c => c.split('=')));
+        let language = cookies.i18n;
+        if (!!language) {
+            language = language.split('_')[0].toUpperCase();
+            localStorage.language = language;
+        }
+        language = localStorage.language;
+        language = language == 'EN' ? 'EN' : 'PT';
+        _language = language.toLowerCase();
+        document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/Constants' + language + '.min.js"><\/script>');
+    </script>
+
 </head>
-<body>
-    <div>
-        <div id="main">
-            <div id="header">
-            <div id="info-texto-termos">
-                <h1>Não conseguimos encontrar a página.</h1>
-                <h2>Pedimos desculpa por este imprevisto.</h2>
-            </div>
-    </div>
-            <div id="conteudo-erro">
-                <p>
-                </p><ul>
-                    
-                    <li><a href="https://sobre.arquivo.pt/contacto">Avise-nos do problema </a> </li>    
-                    <li><a href="/">Volte à página inicial</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</body></html>
+
+<!-- starts document body content -->
+
+<body id="arquivo-404" class="arquivo-404-cl">
+    <script type="text/javascript">
+
+        document.write('<div id="pageIsNotArchived"><a href="///?l=' + Content.language + '"><img src="{{ static_prefix }}/img/logoFace.png" class="imgClass" /></a>');
+        document.write('<h3>' + Content.notArchived + '</h3>');
+
+    </script>
+
+</body>
+<!-- ends document body content -->
+
+</html>
