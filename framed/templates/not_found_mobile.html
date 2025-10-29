@@ -43,14 +43,14 @@ for( i = 5; i<tokens.length; i ++){
 	}
 }
 
-document.write('<div id="pageIsNotArchived"><a href="///?l='+ Content.language +'"><img src="{{ static_prefix }}/img/logo.svg" class="imgClass" /></a>');
-
-document.write('<h2 align="center" class="notArchived">'+ Content.notArchived+'</h2>'); 
-
-document.write('<div class="myButtonStyle text-center" >'+
-               '	<a id="otherArchives" class="greyFont" role="button" onclick="">'+Content.otherArchives+
-               '	</a>'+
-               '</div></div>');
+document.write('<div id="pageIsNotArchived"><a href="///?l='+ Content.language +'"><img src="{{ static_prefix }}/img/logoFace.png" class="imgClass" /></a>');
+document.write('<h3>'+Content.notArchived+'</h3>');
+document.write('<ul>');
+    document.write('<li class="list-title">&#x2192; '+Content.weSuggest+'</li>');
+    document.write('<li class="fix-padding">'+Content.firstSuggestion+'</li>');
+    document.write('<li>'+Content.secondSuggestion+'</li>');
+    document.write('<li>'+Content.thirdSuggestion+'</li>');
+document.write('</ul>');
 
 $('#otherArchives').on('click', function(e){
 
@@ -76,10 +76,16 @@ $('#otherArchives').on('click', function(e){
             "type": 'Other Archives Confirm', 
             "url": 'arquivo.pt/'+tokens[4]+'/'+theURL 
         } );
-        window.open('https://web.archive.org/web/'+tokens[4]+'/'+theURL);
+        window.open(Content.otherArchivesURL+'/'+tokens[4]+'/'+theURL);
         $('#uglipop_overlay').fadeOut('fast');
     });  
-
+    
+});
+$('#archiveNow').on('click', function(e){
+    window.open(Content.archivePageNowURL);
+});
+$('#suggestToArquivo').on('click', function(e){
+    window.open(Content.suggestURL);
 });
 
 // hide replay option when on not archived page
