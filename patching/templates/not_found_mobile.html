@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+    <title>Página não encontrada (404) - Arquivo.pt</title>
+    <link rel="icon" href="{{ static_prefix }}/img/Favicon.ico">
+    <link rel="stylesheet" href="{{ static_prefix }}/css/404Style.min.css">
+    <!-- <link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.min.css">
+    <link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css"> -->
+    <meta charset="utf-8" />
+    <meta name="Keywords" content="Web, archive, search, portuguese, Portugal, homepage" />
+    <meta name="Description" content="A página procurada não foi encontrada no Arquivo.pt" />
+    <!-- starts social media meta data -->
+    <meta property="og:title" content="Página não encontrada (404) - Arquivo.pt" />
+    <meta property="og:description" content="A página procurada não foi encontrada no Arquivo.pt" />
+    <meta property="og:image" content="img/logoFace.png" />
+    <meta property="og:image:alt" content="Arquivo.pt">
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:type" content="website" />
+    <!-- ends social media meta data -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="{{ static_prefix }}/js/jquery-latest.min.js"></script>
+    <script src="{{ static_prefix }}/js/uglipop.min.js"></script> -->
+    <!-- starts javascript files, Google Font and CSS links -->
+    <!-- starts css styles links -->
+    <script>
+        const cookies = Object.fromEntries(document.cookie.split('; ').map(c => c.split('=')));
+        let language = cookies.i18n;
+        if (!!language) {
+            language = language.split('_')[0].toUpperCase();
+            localStorage.language = language;
+        }
+        language = localStorage.language;
+        language = language == 'EN' ? 'EN' : 'PT';
+        _language = language.toLowerCase();
+        document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/Constants' + language + '.min.js"><\/script>');
+    </script>
+
+</head>
+
+<!-- starts document body content -->
+
+<body id="arquivo-404" class="arquivo-404-cl">
+    <script type="text/javascript">
+
+        document.write('<div id="pageIsNotArchived"><a href="///?l=' + Content.language + '"><img src="{{ static_prefix }}/img/logoFace.png" class="imgClass" /></a>');
+        document.write('<h3>' + Content.notArchived + '</h3>');
+
+    </script>
+
+</body>
+<!-- ends document body content -->
+
+</html>

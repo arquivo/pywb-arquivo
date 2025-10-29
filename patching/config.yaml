@@ -27,6 +27,8 @@ recorder:
    filename_template: patching-{timestamp}-{hostname}-{random}.warc.gz
    source_filter: live|ia
 
+not_found_html: not_found_mobile.html
+
 framed_replay: false
 redirect_to_exact: true
 enable_auto_fetch: true
