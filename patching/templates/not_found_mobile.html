@@ -4,8 +4,8 @@
 <head>
     <title>Página não encontrada (404) - Arquivo.pt</title>
     <link rel="icon" href="{{ static_prefix }}/img/Favicon.ico">
-    <link rel="stylesheet" href="{{ static_prefix }}/css/404Style.min.css">
-    <!-- <link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.min.css">
+    <link rel="stylesheet" href="{{ static_prefix }}/css/404Style.css">
+    <!-- <link rel="stylesheet" href="{{ static_prefix }}/css/myStyle.css">
     <link rel="stylesheet" href="{{ static_prefix }}/css/bootstrap.min.css"> -->
     <meta charset="utf-8" />
     <meta name="Keywords" content="Web, archive, search, portuguese, Portugal, homepage" />
@@ -35,7 +35,7 @@
         language = localStorage.language;
         language = language == 'EN' ? 'EN' : 'PT';
         _language = language.toLowerCase();
-        document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/Constants' + language + '.min.js"><\/script>');
+        document.write('<script type="text/javascript" language="JavaScript" src="{{ static_prefix }}/properties/Constants' + language + '.js"><\/script>');
     </script>
 
 </head>
