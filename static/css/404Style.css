@@ -97,8 +97,8 @@
 /* Portrait */
 @media screen and (orientation:portrait) {
     #pageIsNotArchived {
-        margin: 41vh auto !important;
-        max-width: 354px;
+        margin: 40px auto !important;
+        max-width: 400px;
     }
 
     #pageIsNotArchived img {
