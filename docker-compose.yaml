@@ -7,6 +7,7 @@ services:
       - 8081:8081
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
+      - ./static:/app/static
     network_mode: host
   pywb-arquivo-unframed:
     build:
@@ -15,6 +16,7 @@ services:
       - 8082:8082
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
+      - ./static:/app/static
     network_mode: host
   pywb-arquivo-save:
     build:
@@ -24,6 +26,7 @@ services:
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
       - ./save/collections:/app/collections
+      - ./static:/app/collections/save/static
     network_mode: host
   pywb-arquivo-patching:
     build:
@@ -33,4 +36,5 @@ services:
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
       - ./patching/collections:/app/collections
+      - ./static:/app/static
     network_mode: host
