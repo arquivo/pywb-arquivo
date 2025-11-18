@@ -7,6 +7,9 @@ services:
       - 8081:8081
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
+    configs:
+      - source: framed_config
+        target: /app/config.yaml
     network_mode: host
   pywb-arquivo-unframed:
     build:
@@ -15,6 +18,9 @@ services:
       - 8082:8082
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
+    configs:
+      - source: unframed_config
+        target: /app/config.yaml      
     network_mode: host
   pywb-arquivo-save:
     build:
@@ -24,13 +30,30 @@ services:
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
       - ./save/collections:/app/collections
+    configs:
+      - source: save_config
+        target: /app/config.yaml
     network_mode: host
   pywb-arquivo-patching:
     build:
       context: patching
     ports:
       - 8083:8083
+    configs:
+      - source: patching_config
+        target: /app/config.yaml
     volumes:
       - ${CDX_FOLDER:-/data/indexes_cdx}:/data/indexes_cdx
       - ./patching/collections:/app/collections
     network_mode: host
+
+# Define the configs to be used by the services
+configs:
+  framed_config:
+    file: ./framed/config.yaml
+  unframed_config:
+    file: ./unframed/config.yaml
+  save_config:
+    file: ./save/config.yaml
+  patching_config:
+    file: ./patching/config.yaml
