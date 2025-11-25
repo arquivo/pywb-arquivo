@@ -47,6 +47,17 @@ services:
       - ./patching/collections:/app/collections
     network_mode: host
 
+  # Uncomment if you are testing the Redis integration
+  # Need if arc/warc filename to URL mapping is stored in redis
+  #
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     - ./redis_data:/data
+  #   network_mode: host
+
 # Define the configs to be used by the services
 configs:
   framed_config:

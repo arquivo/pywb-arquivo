@@ -7,10 +7,60 @@ collections:
     
     # Example of configuration to use local cdx indexes and an arcproxy server.
     # index_paths: /data/indexes_cdx
-    # archive_paths:
-    #   - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+    # index_paths:
+      # - /data/replay_indexes_zipnum-small/
+      # file:///data/indexes_cdx/
+      # /data/indexes_cdx/
+    
+    # Example to configure zipnum index with shard resolver
+    #
+    # index:
+    #   type: zipnum
+    #   path: /data/indexes_cdx/awp.idx
 
+      # Omit shard_index_loc to use the default LocMapResolver
+      # This will look for awp.loc in the same directory as awp.idx
+      # The .loc file should contain tab-delimited entries like:
+      # awp-0.cdx.gz	awp-0.cdx.gz
+      # awp-1.cdx.gz	awp-1.cdx.gz
+      # 
+      # Relative paths in the .loc file are resolved relative to the .loc file's directory
+      # This loads all shard mappings into memory (~1.5MB for 20K shards)
+
+      # Use LocPrefixResolver to construct shard paths by appending shard names to a prefix
+      # This avoids loading a .loc file into memory, which is ideal for large numbers of shards
+      # shard_index_loc:
+        # Regex pattern to match against the directory path of the .idx file
+        # '(.*)' captures the entire directory path: /data/indexes_cdx/
+        # match: '(.*)'
+        
+        # Replacement pattern using the captured group
+        # '\1' refers to the captured directory path from the match pattern
+        # When a shard name like 'awp-12345.cdx.gz' is needed, it becomes:
+        # /data/indexes_cdx/ + awp-12345.cdx.gz = /data/indexes_cdx/awp-12345.cdx.gz
+        # replace: '\1'
+      
+      # Optional: Maximum number of CDX blocks to load per query (default: 10)
+      # Higher values = more memory usage but potentially fewer disk reads
+      # max_blocks: 1000
+      
+      # Optional: How often to check if the index files have been modified (in minutes)
+      # Only relevant when using LocMapResolver with a .loc file (default: 10)
+      # reload_interval: 1440
+
+    # archive_paths:
+      # ArcProxy server to fetch archived content
+      #
+      # - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+      
+      # Format: redis://[host]:[port]/[db]/[key_template]
+      # The resolver will use HGET pathindex:branchA <filename> to get the full path
+      #
+      # - redis://localhost:6379/0/pathindex:branchA
+
+    # Development example using Arquivo.pt production environment
     # Example that use Arquivo.pt production environment with Memento API
+    #
     index_group:
       arquivo_memento: memento+https://arquivo.pt/wayback/
     
@@ -54,5 +104,5 @@ banner_html: banner_blank.html
 
 framed_replay: true
 redirect_exact: true
-debug: True
+debug: true
 
