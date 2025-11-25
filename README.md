@@ -6,6 +6,13 @@ One software component, that is responsible for the reproduction of preserved pa
 
 This repository contains [Arquivo.pt](https://arquivo.pt)'s branding customizations for our instance of pywb.
 
+## Development workflow
+
+This repository uses the simplified two-branch workflow.
+
+* `master` for production-ready branch
+* `development` for new features
+
 ## Instances
 
 We use different pywb instances for a different proposes.
