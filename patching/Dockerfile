@@ -1,11 +1,11 @@
-FROM python:3.9.23
+FROM python:3.9.25
 
 # base location for application source code
 WORKDIR /app
 
-# copy requirements and install them using pip
+# copy requirements and install them using pip (without cache to avoid stale deps)
 COPY requirements.txt .
-RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # copy everything else the current folder has on a different docker stage
 COPY . .
