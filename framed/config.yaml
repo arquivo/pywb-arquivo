@@ -1,8 +1,5 @@
 collections:
-  
-  # The reason that we have 'wayback' as collection is to have the same URL has our production environment.
-  # So we have for example:
-  #   http://localhost:8081/wayback/19990125085708/http://fccn.pt:80/
+
   wayback:
     
     # Example of configuration to use local cdx indexes and an arcproxy server.
@@ -62,7 +59,7 @@ collections:
     # Example that use Arquivo.pt production environment with Memento API
     #
     index_group:
-      arquivo_memento: memento+https://arquivo.pt/wayback/
+      arquivo_memento: memento+https://preprod.arquivo.pt/wayback/
     
     # Example that use Arquivo.pt production environment with CDX API
     # index_group:
@@ -76,7 +73,7 @@ collections:
       #
       # Example to use the production environment
       #
-      arquivoweb_app_url: https://arquivo.pt
+      arquivoweb_app_url: http://localhost:3000
 
       #
       # Example to use the preprod environment
@@ -95,14 +92,14 @@ collections:
       googleAnalyticsToken: G-6VRZXCHDJ1
 
 # Templates
-head_insert_html: head_insert_mobile.html
+head_insert_html: head_insert_arquivo.html
 frame_insert_html: frame_insert_mobile.html
 error_html: error_mobile.html
 not_found_html: not_found_mobile.html
 banner_html: banner_blank.html
 
 
-framed_replay: true
+framed_replay: false
 redirect_exact: true
 debug: true
 
