@@ -92,7 +92,9 @@ collections:
       screenshot_endpoint: https://arquivo.pt/screenshot
     #  build: hash_or_timestamp  # optional configuration to force browsers use the correct version of each js or css file.
       replayWithOldBrowsers: false
-      googleAnalyticsToken: G-6VRZXCHDJ1
+      googleTagManagerId: GTM-5SZHXPRP
+      googleTagManagerAuth: pgtJh7tfoefN-N0UMQ5kzQ
+      googleTagManagerPreview: env-2
 
 # Templates
 head_insert_html: head_insert_mobile.html

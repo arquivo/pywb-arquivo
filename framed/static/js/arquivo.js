@@ -267,10 +267,12 @@ var ARQUIVO = ARQUIVO || (function(){
 			}
 
 			ARQUIVO.updatePageOnUrlSearch(url, ts);
-			gtag('event', 'wayback_view', {
-				wayback_page_title: title,
-				wayback_page_location: _url  
-			  });
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				"event": 'wayback_view',
+				"wayback_page_title": title,
+				"wayback_page_location": _url
+			});
  		},
  		createSlideMenu: function(){
 
@@ -678,14 +680,17 @@ var ARQUIVO = ARQUIVO || (function(){
 		},
 
 	    /**
-	     * Send event to google analytics where the eventLabel by default is like arquivo.pt/<timestamp>/<url>
+	     * Send event to google tag manager where the eventLabel by default is like arquivo.pt/<timestamp>/<url>
 	     */
 	    sendEventToAnalytics: function(eventCategory, eventAction, eventLabel) {
 	    	eventLabel = eventLabel || "arquivo.pt/" + _ts + '/' +_url;
-			gtag("event", eventCategory, {
-				"action": eventAction, 
-				"label": eventLabel 
-			} );
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				"event": 'replay_interaction',
+				"event_category": eventCategory,
+				"event_action": eventAction,
+				"event_label": eventLabel
+			});
 	    },
 
 		isReplayWithOldBrowsers : function() {
