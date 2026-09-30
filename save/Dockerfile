@@ -7,6 +7,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Patch warcio's brotli decompressor: brotli.Decompressor uses .process() not .decompress()
+COPY patch_brotli.py /tmp/patch_brotli.py
+RUN python3 /tmp/patch_brotli.py && rm /tmp/patch_brotli.py
+
 # copy everything else the current folder has on a different docker stage
 COPY templates .
 COPY config.yaml .

@@ -6,7 +6,7 @@ collections:
   wayback:
     
     # Example of configuration to use local cdx indexes and an arcproxy server.
-    # index_paths: /data/indexes_cdx
+    index_paths: /data/indexes_cdx
     # index_paths:
       # - /data/replay_indexes_zipnum-small/
       # file:///data/indexes_cdx/
@@ -48,10 +48,10 @@ collections:
       # Only relevant when using LocMapResolver with a .loc file (default: 10)
       # reload_interval: 1440
 
-    # archive_paths:
+    archive_paths:
       # ArcProxy server to fetch archived content
       #
-      # - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
+      - http://p85.arquivo.pt:8080/arcproxy/arcproxy/
       
       # Format: redis://[host]:[port]/[db]/[key_template]
       # The resolver will use HGET pathindex:branchA <filename> to get the full path
@@ -61,8 +61,8 @@ collections:
     # Development example using Arquivo.pt production environment
     # Example that use Arquivo.pt production environment with Memento API
     #
-    index_group:
-      arquivo_memento: memento+https://arquivo.pt/wayback/
+    # index_group:
+    #   arquivo_memento: memento+https://arquivo.pt/wayback/
     
     # Example that use Arquivo.pt production environment with CDX API
     # index_group:
@@ -105,4 +105,8 @@ banner_html: banner_blank.html
 framed_replay: true
 redirect_exact: true
 debug: true
+
+# Custom fuzzy-matching rules (copy of pywb's bundled rules.yaml with a fix for
+# the youtube get_video_info rule - see rules.yaml for details).
+rules_file: ./rules.yaml
 
