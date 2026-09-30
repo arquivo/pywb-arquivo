@@ -38,6 +38,12 @@ If you want to just run the `framed` pywb instance:
 docker compose build && docker compose run pywb-arquivo-framed
 ```
 
+Or on a single command:
+
+```bash
+docker compose run --build pywb-arquivo-save
+```
+
 ## Development using uv
 
 Install a compatible Python version, activate a virtual environment and install requirements.
