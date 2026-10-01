@@ -30,15 +30,14 @@ html, body
   overflow: hidden;
 }
 </style>
-<!-- starts Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ metadata.googleAnalyticsToken }}"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '{{ metadata.googleAnalyticsToken }}');
-</script>
-<!-- ends Google Analytics 4-->
+<!-- starts Google Tag Manager -->
+{% set gtmEnvParams = ('&gtm_auth=' + metadata.googleTagManagerAuth + '&gtm_preview=' + metadata.googleTagManagerPreview + '&gtm_cookies_win=x') if (metadata.googleTagManagerAuth is defined and metadata.googleTagManagerPreview is defined) else '' %}
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl+'{{ gtmEnvParams }}';f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','{{ metadata.googleTagManagerId }}');</script>
+<!-- ends Google Tag Manager -->
 <meta name="viewport" content="initial-scale=1,minimum-scale=0.1, maximum-scale=10">
 <meta name="theme-color" content="#033f72">
 <!-- Windows Phone -->
@@ -92,6 +91,11 @@ ARQUIVO.updateInfo(wbinfo.capture_url, "{{ wb_url.timestamp }}");
 </head>
 
 <body style="margin: 0px; padding: 0px;">
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ metadata.googleTagManagerId }}{{ gtmEnvParams }}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
   <script> ARQUIVO.beforeIframe(); /*Load Arquivo specific code before iframe*/</script>
