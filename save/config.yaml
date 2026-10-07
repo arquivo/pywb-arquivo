@@ -22,3 +22,6 @@ not_found_html: not_found_mobile.html
 #frame_insert_html: frame_insert.html
 # error_html: error.html
 # not_found_html: not_found.html
+
+# Block requests to Arquivo.pt internal infrastructure and private networks
+live_url_filter: pywb_arquivo.live_url_filter:is_url_allowed

@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY templates .
 COPY config.yaml .
 COPY uwsgi.ini .
+COPY --from=pywb_arquivo . pywb_arquivo/
 
 # Expose the http port
 ARG HTTP_PORT=8586

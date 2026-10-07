@@ -9,6 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # copy everything else the current folder has on a different docker stage
 COPY . .
+COPY --from=pywb_arquivo . pywb_arquivo/
 
 # Expose the http port
 ARG HTTP_PORT=8083

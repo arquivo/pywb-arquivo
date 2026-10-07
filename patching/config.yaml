@@ -35,3 +35,6 @@ enable_auto_fetch: true
 autoindex: 30
 
 debug: True
+
+# Block requests to Arquivo.pt internal infrastructure and private networks
+live_url_filter: pywb_arquivo.live_url_filter:is_url_allowed
