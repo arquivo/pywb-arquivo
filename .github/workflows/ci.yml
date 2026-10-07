@@ -14,7 +14,25 @@ on:
       - development
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Run tests
+        run: |
+          pip install pytest mock urllib3==1.26.9
+          python -m pytest tests
+
   build-and-push:
+    needs: test
     runs-on: ubuntu-latest
 
     strategy:
@@ -57,6 +75,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.service}}/.
+          build-contexts: pywb_arquivo=./pywb_arquivo
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

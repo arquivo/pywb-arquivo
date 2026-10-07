@@ -25,6 +25,8 @@ services:
   pywb-arquivo-save:
     build:
       context: save
+      additional_contexts:
+        pywb_arquivo: ./pywb_arquivo
     ports:
       - 8586:8586
     volumes:
@@ -37,6 +39,8 @@ services:
   pywb-arquivo-patching:
     build:
       context: patching
+      additional_contexts:
+        pywb_arquivo: ./pywb_arquivo
     ports:
       - 8083:8083
     configs:

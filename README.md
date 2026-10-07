@@ -24,6 +24,25 @@ We use different pywb instances for a different proposes.
 | patching           | 8586 | Wayback that tries to fill missing resources by harvesting from other sources |
 | save               | 8083 | Wayback that archives a live page                                             |
 
+## Live web requests filter
+
+The `save` and `patching` instances fetch pages from the live web and from other web archives.
+To prevent them from requesting (and recording) Arquivo.pt internal infrastructure, they use a
+pywb [fork](https://github.com/arquivo/pywb/tree/arquivo-2.9.0-live-url-filter) with the
+`live_url_filter` config option, set to [`pywb_arquivo.live_url_filter`](pywb_arquivo/live_url_filter.py).
+It blocks requests to hosts that resolve to private or other non public addresses, to `arquivo.pt`
+and its subdomains, and to the Arquivo.pt public networks.
+
+The blocked domains and addresses can be changed with the comma separated `PYWB_LIVE_BLOCKED_DOMAINS`
+and `PYWB_LIVE_BLOCKED_NETWORKS` (IPs or CIDRs) environment variables.
+
+Run its tests with:
+
+```bash
+uv pip install pytest mock urllib3==1.26.9
+python -m pytest tests
+```
+
 ## Development using docker
 
 Build and run using docker compose:

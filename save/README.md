@@ -25,8 +25,10 @@ Run it with:
 
 ```bash
 wb-manager init save
-uwsgi --ini uwsgi.ini
+PYTHONPATH=.. uwsgi --ini uwsgi.ini
 ```
+
+The `PYTHONPATH` makes the [`pywb_arquivo`](../pywb_arquivo) package, used by the `live_url_filter`, available.
 
 # Capture a page using
 
