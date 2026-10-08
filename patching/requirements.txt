@@ -1,6 +1,6 @@
 # pywb 2.9.0 with the live_url_filter config option
 # https://github.com/arquivo/pywb/tree/arquivo-2.9.0-live-url-filter
-pywb @ git+https://github.com/arquivo/pywb.git@7fa88bd2ab39277b47b9d438855c6b3ebbcbb733
+pywb @ git+https://github.com/arquivo/pywb.git@c275d79258375808638644ee3e41ccb0a76cc6d0
 uWSGI==2.0.30
 greenlet==2.0.2
 
