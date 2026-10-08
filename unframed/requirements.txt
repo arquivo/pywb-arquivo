@@ -6,3 +6,8 @@ greenlet==2.0.2
 urllib3==1.26.9
 zope.event==4.5.0
 zope.interface==5.4.0
+
+# warcio 1.8.1 with brotli and zstd decompression fixes
+# (webrecorder/warcio#205, #206, #207), until a warcio release includes them
+warcio @ git+https://github.com/arquivo/warcio@70e06e11356c7785072dc74d1863b21a36746a3c
+zstandard==0.25.0
