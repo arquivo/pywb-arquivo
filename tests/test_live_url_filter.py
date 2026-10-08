@@ -47,6 +47,8 @@ def live_cdx(url):
     'http://arquivo.pt.example.com/',
     'http://194.210.235.64/',
     'http://[2001:690:a00:103a::1]/',
+    # NAT64 of a public address
+    'http://[64:ff9b::5db8:d70e]/',
 ])
 def test_allowed(url):
     assert is_url_allowed(url, live_cdx(url)) is True
@@ -80,6 +82,13 @@ def test_allowed(url):
     'http://[::ffff:7f00:1]/',
     'http://[2002:0a00:0001::1]/',
     'http://[64:ff9b::a00:1]/',
+    'http://[64:ff9b:1::a00:1]/',
+    'http://[::127.0.0.1]/',
+    'http://[::10.0.0.1]/',
+    'http://[::5db8:d70e]/',
+    'http://[::ffff:0:a00:1]/',
+    'http://[::ffff:0:5db8:d70e]/',
+    'http://[4000::1]/',
     # host names resolving to private addresses
     'http://private.example.com/',
     'http://mixed.example.com/',
