@@ -18,8 +18,11 @@ The blocked domains and networks can be changed with the comma separated
 ``PYWB_LIVE_BLOCKED_DOMAINS`` and ``PYWB_LIVE_BLOCKED_NETWORKS`` environment
 variables.
 
-This does not protect against DNS rebinding, as pywb resolves the host again
-when connecting, so it should be complemented by network egress rules.
+pywb resolves the host again when connecting, so a DNS rebinding domain could
+get past this check. Importing this module also installs
+:mod:`pywb_arquivo.live_connect_guard`, which checks the address again when
+pywb connects to the live web or to a remote web archive, and only connects
+to an allowed one. It can be disabled with ``PYWB_LIVE_CONNECT_GUARD=false``.
 """
 import ipaddress
 import os
@@ -27,6 +30,8 @@ import socket
 
 from urllib3.exceptions import LocationParseError
 from urllib3.util import parse_url
+
+from pywb_arquivo import live_connect_guard
 
 
 DEFAULT_BLOCKED_DOMAINS = 'arquivo.pt'
@@ -126,3 +131,7 @@ def _is_ip_blocked(addr):
         return True
 
     return any(ip in network for network in BLOCKED_NETWORKS)
+
+
+# check the address again when pywb connects, against DNS rebinding
+live_connect_guard.install(_is_ip_blocked)
