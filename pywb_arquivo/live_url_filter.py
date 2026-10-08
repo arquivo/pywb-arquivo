@@ -119,4 +119,10 @@ def _is_ip_blocked(addr):
     if not ip.is_global or ip.is_multicast:
         return True
 
+    # is_global is True for some reserved IPv6 forms that embed an IPv4
+    # address, like the deprecated IPv4-compatible ::a.b.c.d or the
+    # IPv4-translated ::ffff:0:a.b.c.d, the NAT64 embedded address was checked
+    if ip.is_reserved and ip not in NAT64_NETWORK:
+        return True
+
     return any(ip in network for network in BLOCKED_NETWORKS)
