@@ -36,10 +36,17 @@ and its subdomains, and to the Arquivo.pt public networks.
 The blocked domains and addresses can be changed with the comma separated `PYWB_LIVE_BLOCKED_DOMAINS`
 and `PYWB_LIVE_BLOCKED_NETWORKS` (IPs or CIDRs) environment variables.
 
+As pywb resolves the host again when connecting, the filter alone doesn't protect against DNS rebinding.
+So it also installs [`pywb_arquivo.live_connect_guard`](pywb_arquivo/live_connect_guard.py), which checks
+the resolved address when pywb connects to the live web or to a remote web archive, and only connects to
+an allowed one. Other requests, like loading WARC records over http or the recorder calls to `localhost`,
+are not changed. It can be disabled with `PYWB_LIVE_CONNECT_GUARD=false`.
+See [docs/ssrf-dns-rebinding.md](docs/ssrf-dns-rebinding.md).
+
 Run its tests with:
 
 ```bash
-uv pip install pytest mock urllib3==1.26.9
+uv pip install "$(grep '^pywb @' save/requirements.txt)" urllib3==1.26.9 'setuptools<81' pytest mock
 python -m pytest tests
 ```
 
