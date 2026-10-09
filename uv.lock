@@ -464,7 +464,7 @@ wheels = [
 [[package]]
 name = "pywb"
 version = "2.10.0"
-source = { git = "https://github.com/webrecorder/pywb.git?rev=cb571d3b9e662fa39fde780d2519b07602afb73e#cb571d3b9e662fa39fde780d2519b07602afb73e" }
+source = { git = "https://github.com/webrecorder/pywb.git?rev=6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a#6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a" }
 dependencies = [
     { name = "brotlipy" },
     { name = "fakeredis" },
@@ -507,7 +507,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pywb", git = "https://github.com/webrecorder/pywb.git?rev=cb571d3b9e662fa39fde780d2519b07602afb73e" },
+    { name = "pywb", git = "https://github.com/webrecorder/pywb.git?rev=6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a" },
     { name = "uwsgi", specifier = ">=2.0.31" },
 ]
 
@@ -668,11 +668,15 @@ wheels = [
 
 [[package]]
 name = "webassets"
-version = "2.0"
+version = "3.0.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c1/c4/2da869584205c064614535cc626defa493b98f0d114e8f4741c99800000e/webassets-2.0.tar.gz", hash = "sha256:167132337677c8cedc9705090f6d48da3fb262c8e0b2773b29f3352f050181cd", size = 288016, upload-time = "2019-12-20T17:37:24.981Z" }
+dependencies = [
+    { name = "pyyaml" },
+    { name = "zope-dottedname" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/71/48/49c092aa2fab2f30ee82183422f6f82c0c924e8aa99324e9645472cf5562/webassets-3.0.0.tar.gz", hash = "sha256:0520e5fd6fbcc012f486fefc61b966474da8fc1b35b0569a9ec2cb0782f1607a", size = 295280, upload-time = "2025-08-17T13:03:59.875Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ce/7c/be5d23512974c5843e94aacec163fc31539e91d1e740dd9b886f7714f9d1/webassets-2.0-py3-none-any.whl", hash = "sha256:a31a55147752ba1b3dc07dee0ad8c8efff274464e08bbdb88c1fd59ffd552724", size = 142873, upload-time = "2019-12-20T17:37:28.577Z" },
+    { url = "https://files.pythonhosted.org/packages/5a/f7/0565bdcc8ce3854eab608bb6ae8dd98d9e407db4fd0dd9f2460e7d293af2/webassets-3.0.0-py3-none-any.whl", hash = "sha256:6d9249f8ce0b2f81b4dac7a8d2084c486579f846b1157b3b66027a4ef5863cf8", size = 142611, upload-time = "2025-08-17T13:03:58.207Z" },
 ]
 
 [[package]]
@@ -686,14 +690,14 @@ wheels = [
 
 [[package]]
 name = "werkzeug"
-version = "3.1.7"
+version = "3.1.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markupsafe" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b5/43/76ded108b296a49f52de6bac5192ca1c4be84e886f9b5c9ba8427d9694fd/werkzeug-3.1.7.tar.gz", hash = "sha256:fb8c01fe6ab13b9b7cdb46892b99b1d66754e1d7ab8e542e865ec13f526b5351", size = 875700, upload-time = "2026-03-24T01:08:07.687Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a4/34/4dd12fc8bb7d61c91467ec3efe415ffa7d5456f799954b40c5bbaeae470e/werkzeug-3.1.9.tar.gz", hash = "sha256:55ca7c70a75689be937aa27f8ff4b018f06ff4838fc73045560bf0f5a1291060", size = 940188, upload-time = "2026-09-27T18:33:41.637Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7f/b2/0bba9bbb4596d2d2f285a16c2ab04118f6b957d8441566e1abb892e6a6b2/werkzeug-3.1.7-py3-none-any.whl", hash = "sha256:4b314d81163a3e1a169b6a0be2a000a0e204e8873c5de6586f453c55688d422f", size = 226295, upload-time = "2026-03-24T01:08:06.133Z" },
+    { url = "https://files.pythonhosted.org/packages/a1/38/df03f564f43cec2684823f3cccae1a652ee7face1cbaa76fb223096e64d7/werkzeug-3.1.9-py3-none-any.whl", hash = "sha256:6392e50c78460ba618e5b21f08a71f59c99ce99cdc6cf6e3dd7e6ccca8754fab", size = 228700, upload-time = "2026-09-27T18:33:39.685Z" },
 ]
 
 [[package]]
@@ -707,6 +711,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/86/44/c52ccfc68fb7a46ec824d11bc99dcf3eb161c93e7bf31f04091c54f62d9b/wsgiprox-1.5.2.tar.gz", hash = "sha256:3a97f6f8d51122aa5e3a1c6c8c73a84a15a3f9b69f312a3aae8bef9b52a8da85", size = 17619, upload-time = "2019-03-19T21:24:49.333Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/74/1e/285621fcdca5399a1a74095bf9d10e1492ddce5626654a82cb7319b3fd91/wsgiprox-1.5.2-py2.py3-none-any.whl", hash = "sha256:8dab64cef38ff39d525d246bc1b34b5a378c1476be7127ef79c85c29ab92765c", size = 20906, upload-time = "2019-03-19T21:24:47.571Z" },
+]
+
+[[package]]
+name = "zope-dottedname"
+version = "7.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/31/09/0bb0b869870a1278eae0bddd1217a9f9ccf0992bfd0d6c982159a9af6a17/zope_dottedname-7.1.tar.gz", hash = "sha256:b4f5d69c91c6e61a07e95f65f221d4c66de5b10755b8d50df6fc69584df7f3b8", size = 18594, upload-time = "2026-03-02T07:36:01.175Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/35/e0/d8ecb3b8ea87679f75040373c5412199a2f02619ddcbe2a58901d59c625f/zope_dottedname-7.1-py3-none-any.whl", hash = "sha256:6d1f5b13634c18c37d8420bc5aac2faaab1b0aca4790bf35cdc456004a100596", size = 5987, upload-time = "2026-03-02T07:35:59.7Z" },
 ]
 
 [[package]]
