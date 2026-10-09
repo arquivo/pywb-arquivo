@@ -1,7 +1,7 @@
 import socket
 
 import pytest
-from mock import patch
+from unittest.mock import patch
 
 from pywb_arquivo import live_url_filter
 from pywb_arquivo.live_url_filter import is_url_allowed
