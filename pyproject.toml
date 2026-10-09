@@ -6,6 +6,7 @@ requires-python = "==3.14.*"
 dependencies = [
     "pywb",
     "uwsgi>=2.0.31",
+    "uwsgitop>=0.12",
 ]
 
 [dependency-groups]
