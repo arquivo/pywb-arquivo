@@ -7,7 +7,7 @@ from io import BytesIO
 
 import pytest
 import requests
-from mock import patch
+from unittest.mock import patch
 from urllib3 import PoolManager
 from urllib3.exceptions import ConnectTimeoutError, NewConnectionError
 from urllib3.poolmanager import pool_classes_by_scheme
