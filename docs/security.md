@@ -27,12 +27,11 @@ domains, eg. `http://<public-ip-hex>.7f000001.rbndr.us/`.
 
 ## Fix 1: `live_url_filter`, check the url before the request
 
-`save` and `patching` use a pywb
-[fork](https://github.com/arquivo/pywb/tree/arquivo-2.9.0-live-url-filter)
-with the `live_url_filter` config option (proposed upstream in
-[webrecorder/pywb#1032](https://github.com/webrecorder/pywb/pull/1032)),
+`save` and `patching` use the pywb `live_url_filter` config option (added
+upstream in [webrecorder/pywb#1032](https://github.com/webrecorder/pywb/pull/1032)),
 set on their `config.yaml` to
-[`pywb_arquivo.live_url_filter`](../pywb_arquivo/live_url_filter.py):
+[`pywb_arquivo.live_url_filter`](../pywb_arquivo/live_url_filter.py),
+see [live_url_filter.md](live_url_filter.md) for the details:
 
 ```yaml
 live_url_filter: pywb_arquivo.live_url_filter:is_url_allowed
@@ -92,9 +91,9 @@ blocked message up to 4 times.
   connection check doesn't apply. None is set on `save` or `patching`.
 - `youtube-dl` / `yt-dlp` makes its own requests after the filter check of the
   video info url. It is not installed on `save`.
-- `live_connect_guard` relies on urllib3 1.26 internals (`_new_conn`,
-  `_dns_host`), so it must be checked again when the `urllib3==1.26.9` pin
-  changes.
+- `live_connect_guard` relies on urllib3 2 internals (`_new_conn`,
+  `_dns_host`), so it must be checked again when urllib3 is upgraded on the
+  [`uv.lock`](../uv.lock).
 
 Network level egress rules on the servers are an additional layer, managed
 outside this repository.
@@ -114,6 +113,5 @@ outside this repository.
   is recorded, which confirms the test reproduces the attack.
 
 ```bash
-uv pip install "$(grep '^pywb @' save/requirements.txt)" urllib3==1.26.9 'setuptools<81' pytest mock
-python -m pytest tests
+uv run pytest
 ```
