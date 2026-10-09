@@ -4,14 +4,12 @@ description: This workflow builds and pushes Docker images
 on:
   push:
     branches:
-      - master
-      - development
+      - main
     tags:
       - '*'
   pull_request:
     branches:
-      - master
-      - development
+      - main
 
 jobs:
   test:
@@ -51,7 +49,7 @@ jobs:
             type=schedule
             type=ref,event=branch
             type=ref,event=pr
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/development' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
