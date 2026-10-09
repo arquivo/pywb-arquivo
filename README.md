@@ -86,3 +86,13 @@ CDX_FOLDER=/my-folder-to/indexes_cdx docker compose run pywb-arquivo-framed
 
 For production you need to review the `uwsgi.ini` and `config.yaml` files.
 
+## Monitoring
+
+Each instance enables the uWSGI stats server on the `/tmp/uwsgi-stats.sock` unix socket (change it with the
+`STATS_SOCKET` environment variable), so it isn't reachable from the network. To monitor the uWSGI workers
+directly inside the docker container, run [uwsgitop](https://github.com/xrmx/uwsgitop):
+
+```bash
+docker compose exec pywb-arquivo-framed uwsgitop /tmp/uwsgi-stats.sock
+```
+
