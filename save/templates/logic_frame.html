@@ -5,13 +5,13 @@
 <head>
   <script>
     wbinfo = {}
-    wbinfo.prefix = "{{ wb_prefix }}";
-    wbinfo.capture_url = "{{ url|safe }}";
-    wbinfo.timestamp = "{{ wb_url.timestamp }}";
-    ts = "{{ wb_url.timestamp }}"; //TODO:: maybe in the future remove this variable and use only the above
+    wbinfo.prefix = {{ wb_prefix | tojson }};
+    wbinfo.capture_url = {{ url | tojson }};
+    wbinfo.timestamp = {{ wb_url.timestamp | tojson }};
+    ts = {{ wb_url.timestamp | tojson }}; //TODO:: maybe in the future remove this variable and use only the above
     wbinfo.is_frame = true;
-    wbinfo.frame_mod = "{{ options.frame_mod }}";
-    wbinfo.replay_mod = "{{ options.replay_mod }}";
+    wbinfo.frame_mod = {{ options.frame_mod | tojson }};
+    wbinfo.replay_mod = {{ options.replay_mod | tojson }};
   </script>
 
   <title>ArchivePageNow by Arquivo.pt</title>
@@ -30,8 +30,8 @@
   <script>
     var cframe = new ContentFrame({
       "url": wbinfo.capture_url + window.location.hash,
-      "prefix": "{{ wb_prefix }}",
-      "request_ts": "{{ wb_url.timestamp }}",
+      "prefix": {{ wb_prefix | tojson }},
+      "request_ts": {{ wb_url.timestamp | tojson }},
       "iframe": "#replay_iframe"
     });
 
