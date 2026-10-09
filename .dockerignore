@@ -1,0 +1,4 @@
+# the repository root is only used as the uv_project build context
+*
+!pyproject.toml
+!uv.lock

@@ -3,6 +3,8 @@ services:
   pywb-arquivo-framed:
     build:
       context: framed
+      additional_contexts:
+        uv_project: .
     ports:
       - 8081:8081
     volumes:
@@ -14,6 +16,8 @@ services:
   pywb-arquivo-unframed:
     build:
       context: unframed
+      additional_contexts:
+        uv_project: .
     ports:
       - 8082:8082
     volumes:
@@ -26,6 +30,7 @@ services:
     build:
       context: save
       additional_contexts:
+        uv_project: .
         pywb_arquivo: ./pywb_arquivo
     ports:
       - 8586:8586
@@ -40,6 +45,7 @@ services:
     build:
       context: patching
       additional_contexts:
+        uv_project: .
         pywb_arquivo: ./pywb_arquivo
     ports:
       - 8083:8083
