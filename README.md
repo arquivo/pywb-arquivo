@@ -35,8 +35,19 @@ See [docs/security.md](docs/security.md) for the issue, both fixes and their con
 Run the tests with:
 
 ```bash
-uv pip install "$(grep '^pywb @' save/requirements.txt)" urllib3==1.26.9 'setuptools<81' pytest mock
-python -m pytest tests
+uv run pytest
+```
+
+## Dependencies
+
+All the pywb instances share the same Python version and dependencies, defined on the
+[`pyproject.toml`](pyproject.toml) and locked on the [`uv.lock`](uv.lock) using [uv](https://docs.astral.sh/uv/).
+pywb is installed from a [webrecorder/pywb](https://github.com/webrecorder/pywb) commit.
+
+To upgrade the dependencies, change the `pyproject.toml` if needed and run:
+
+```bash
+uv lock --upgrade
 ```
 
 ## Development using docker
@@ -55,12 +66,11 @@ docker compose build && docker compose run pywb-arquivo-framed
 
 ## Development using uv
 
-Install a compatible Python version, activate a virtual environment and install requirements.
+Create the virtual environment with the locked dependencies and activate it.
 
 ```bash
-uv venv --seed venv -p python3.9.23
-. venv/bin/activate
-uv pip install -r requirements.txt
+uv sync
+. .venv/bin/activate
 ```
 
 ## Local cdx files
