@@ -30,7 +30,8 @@ The `save` and `patching` instances fetch urls chosen by their users, from the l
 web archives. To prevent them from requesting (and recording) Arquivo.pt internal infrastructure, they
 check the url before each request ([`live_url_filter`](pywb_arquivo/live_url_filter.py)) and the address
 when connecting, against DNS rebinding ([`live_connect_guard`](pywb_arquivo/live_connect_guard.py)).
-See [docs/security.md](docs/security.md) for the issue, both fixes and their configuration.
+See [docs/security.md](docs/security.md) for the issue, both fixes and their configuration, and
+[docs/live_url_filter.md](docs/live_url_filter.md) for the details of the url filter.
 
 Run the tests with:
 
