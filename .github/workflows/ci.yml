@@ -75,7 +75,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.service}}/.
-          build-contexts: pywb_arquivo=./pywb_arquivo
+          build-contexts: |
+            uv_project=.
+            pywb_arquivo=./pywb_arquivo
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

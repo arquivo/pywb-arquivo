@@ -1,0 +1,26 @@
+[project]
+name = "pywb-arquivo"
+version = "0.1.0"
+description = "Arquivo.pt pywb instances"
+requires-python = "==3.14.*"
+dependencies = [
+    "pywb",
+    "uwsgi>=2.0.31",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.uv]
+# not a python package, only the dependencies of the pywb instances
+package = false
+
+[tool.uv.sources]
+# pywb main (after 2.10.0), with the live_url_filter config option (#1032)
+pywb = { git = "https://github.com/webrecorder/pywb.git", rev = "cb571d3b9e662fa39fde780d2519b07602afb73e" }
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
