@@ -19,7 +19,7 @@ package = false
 
 [tool.uv.sources]
 # pywb main (after 2.10.0), with the live_url_filter config option (#1032)
-pywb = { git = "https://github.com/webrecorder/pywb.git", rev = "cb571d3b9e662fa39fde780d2519b07602afb73e" }
+pywb = { git = "https://github.com/webrecorder/pywb.git", rev = "6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a" }
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
