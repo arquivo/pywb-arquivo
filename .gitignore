@@ -2,6 +2,8 @@
 .venv
 save/collections/save/archive/*.warc.gz
 save/collections/save/indexes/autoindex.cdxj
+patching/collections/patching/archive/*.warc.gz
+patching/collections/patching/indexes/autoindex.cdxj
 redis_data/
 
 *.pyc
