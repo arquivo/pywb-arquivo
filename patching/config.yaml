@@ -1,10 +1,9 @@
+# The patching collection, where the patched resources are recorded, isn't
+# configured on collections: pywb only records into the collections found on
+# collections_root, using its archive and indexes folders.
 collections_root: /app/collections
 
 collections:
-  patching:
-    archive_paths: archive
-    index_paths: indexes
-
   patching_source:
     sequence:
       -
