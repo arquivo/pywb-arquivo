@@ -2,6 +2,8 @@ name: Build and Push Docker Images
 description: This workflow builds and pushes Docker images
 
 on:
+  # manual runs publish images of any branch, e.g. for A/B testing
+  workflow_dispatch:
   push:
     branches:
       - main
