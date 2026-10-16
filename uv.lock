@@ -463,8 +463,8 @@ wheels = [
 
 [[package]]
 name = "pywb"
-version = "2.10.0"
-source = { git = "https://github.com/webrecorder/pywb.git?rev=6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a#6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a" }
+version = "2.11.0b1"
+source = { git = "https://github.com/arquivo/pywb.git?rev=2adc42c0faf32eb275b09295da59cc7982220af7#2adc42c0faf32eb275b09295da59cc7982220af7" }
 dependencies = [
     { name = "brotlipy" },
     { name = "fakeredis" },
@@ -508,7 +508,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pywb", git = "https://github.com/webrecorder/pywb.git?rev=6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a" },
+    { name = "pywb", git = "https://github.com/arquivo/pywb.git?rev=2adc42c0faf32eb275b09295da59cc7982220af7" },
     { name = "uwsgi", specifier = ">=2.0.31" },
     { name = "uwsgitop", specifier = ">=0.12" },
 ]
