@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Arquivo.pt pywb instances"
 requires-python = "==3.14.*"
 dependencies = [
+    "lmdb>=3.0.0",
     "pywb",
     "uwsgi>=2.0.31",
     "uwsgitop>=0.12",

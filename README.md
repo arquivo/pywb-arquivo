@@ -82,6 +82,19 @@ If you prefer to use your local cdx files you need to change the pywb instance `
 CDX_FOLDER=/my-folder-to/indexes_cdx docker compose run pywb-arquivo-framed
 ```
 
+## LMDB path index (PoC)
+
+The `framed` and `unframed` instances can resolve the WARC file locations with an LMDB database, one
+named database per branch, loaded from the TSV path indexes, instead of the TSV files:
+
+```yaml
+archive_paths:
+  - lmdb:///data/warcIndex/pathindex.lmdb?db=branchA
+  - lmdb:///data/warcIndex/pathindex.lmdb?db=branchB
+```
+
+See [docs/lmdb_path_index.md](docs/lmdb_path_index.md) to load the TSV files and to run the benchmark.
+
 ## Production
 
 For production you need to review the `uwsgi.ini` and `config.yaml` files.
