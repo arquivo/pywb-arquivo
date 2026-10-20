@@ -108,3 +108,9 @@ framed_replay: true
 redirect_exact: true
 debug: true
 
+# Index cache, used when the uWSGI cache "pywb-index" is configured on uwsgi.ini.
+# These are the defaults; "index_cache: false" disables it.
+# index_cache:
+#   ttl: 60              # seconds a url is kept in the cache
+#   max_captures: 1000   # urls with more captures are not cached
+#   uwsgi_cache: pywb-index
