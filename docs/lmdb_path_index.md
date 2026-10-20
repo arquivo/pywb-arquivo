@@ -97,23 +97,27 @@ docker compose mounts `WARC_INDEX_FOLDER` (default: `/data/warcIndex`) on `/data
 
 ## Benchmark
 
-[`pywb_arquivo/path_index_benchmark.py`](../pywb_arquivo/path_index_benchmark.py) compares both path
-indexes, with the TSV files and an LMDB environment loaded from them:
+[`pywb_arquivo/path_index_benchmark.py`](../pywb_arquivo/path_index_benchmark.py) compares the path
+indexes, with the TSV files, an LMDB environment loaded from them and, optionally, the Redis hashes of
+pywb's `RedisResolver`, loaded from them with `path-index-to-redis` (replay-cdxj-indexing-tools):
 
 ```bash
 python -m pywb_arquivo.path_index_benchmark run \
     --tsv /data/warcIndex/branchA/AWP1.tsv --tsv /data/warcIndex/branchA/AWP2.tsv \
     --lmdb 'lmdb:///data/warcIndex/pathindex.lmdb?db=branchA' \
+    --redis redis://localhost:6379/0/pathindex:branchA \
     --workers 1,4,16 --json results.json
 
 # the same, after dropping the index files from the page cache
 python -m pywb_arquivo.path_index_benchmark run --cold ...
 ```
 
-It samples WARC file names from the TSV files (plus 10% missing ones), checks that both return the same
-paths, and resolves them on forked worker processes, as pywb does: the first path of the first resolver
-with paths. It reports the latency percentiles, the throughput of all the workers, the CPU time,
-major page faults and block reads per lookup, and how much of the index files is on the page cache.
+It samples WARC file names from the TSV files (plus 10% missing ones), checks that the others return the
+same paths as the TSV files (only the first one for Redis, which keeps a single path per WARC file), and
+resolves them on forked worker processes, as pywb does: the first path of the first resolver with paths.
+It reports the latency percentiles, the throughput of all the workers, the CPU time, major page faults
+and block reads per lookup, and how much of the index files is on the page cache. For Redis, it also
+reports the CPU time of the Redis server per lookup, and its memory.
 
 `generate` writes a sorted synthetic TSV path index, to try it without the real ones:
 
@@ -130,35 +134,58 @@ The other branch is the same path index with a different server on each url, the
 The `archive_paths` order of pywb was used: `branchA` and then `branchB`, for both the TSV files and
 the LMDB named databases of a single environment.
 
-| | TSV | LMDB |
-|---|--:|--:|
-| size of both branches | 4.5 GiB (2 files) | 5.2 GiB (1 `data.mdb`, 2 named databases) |
-| load of each branch | | 22 to 24 s, 0.6 GiB max RSS |
-| `--dry-run` of one collection (440 k WARC files) | | 1.5 s |
+Redis 7.2 ran on the same laptop, on localhost, in memory only (no persistence), with a hash per
+branch (`pathindex:branchA` and `pathindex:branchB`) loaded with `path-index-to-redis`.
 
-* Both returned the same paths for all the 22000 sampled WARC file names, 2000 of them missing.
+| | TSV | LMDB | Redis |
+|---|--:|--:|--:|
+| size of both branches | 4.5 GiB (2 files) | 5.2 GiB (1 `data.mdb`, 2 named databases) | 6.1 GiB of RAM, always resident |
+| load of each branch | | 19 to 24 s, 0.6 GiB max RSS | 125 s (`path-index-to-redis`) |
+| `--dry-run` of one collection (440 k WARC files) | | 1.5 s | |
 
-| page cache | workers | resolver | lookups/s | p50 µs | p95 µs | p99 µs | CPU µs/lookup | page cache MiB |
-|---|--:|---|--:|--:|--:|--:|--:|--:|
-| warm | 1 | TSV | 4,071 | 220.1 | 454.5 | 498.9 | 245.0 | 3,851 |
-| warm | 1 | LMDB | 248,467 | 3.1 | 6.6 | 11.4 | 3.7 | 125 |
-| warm | 4 | TSV | 10,710 | 242.1 | 498.9 | 847.1 | 313.7 | 3,851 |
-| warm | 4 | LMDB | 544,891 | 3.9 | 10.3 | 17.5 | 5.4 | 125 |
-| warm | 16 | TSV | 10,617 | 865.3 | 4232.2 | 7793.7 | 853.6 | 3,851 |
-| warm | 16 | LMDB | 858,998 | 8.5 | 18.0 | 27.3 | 10.3 | 125 |
-| cold | 1 | TSV | 1,435 | 467.5 | 1952.3 | 3258.1 | 531.1 | 2,497 |
-| cold | 1 | LMDB | 9,928 | 87.7 | 259.9 | 394.6 | 40.1 | 85 |
-| cold | 4 | TSV | 7,041 | 418.4 | 1450.1 | 2616.3 | 490.6 | 2,885 |
-| cold | 4 | LMDB | 90,849 | 10.0 | 181.8 | 290.0 | 18.2 | 122 |
-| cold | 16 | TSV | 8,333 | 982.8 | 6232.4 | 12295.6 | 939.6 | 2,910 |
-| cold | 16 | LMDB | 348,578 | 12.7 | 150.2 | 423.3 | 18.1 | 125 |
+* LMDB returned the same paths as the TSV files for all the 22000 sampled WARC file names, 2000 of them
+  missing. Redis returned a different first path for 103 of them (0.5%), all WARC files on more than
+  one line of the TSV files with different paths: `path-index-to-redis` stores only the first path of
+  each line, so the last line wins, and pywb has no other path of that branch to try.
 
-* Warm, an LMDB lookup takes 3 to 9 µs (p50) against 220 to 870 µs with the TSV files, 60 to 100
-  times faster, with 60 to 85 times less CPU. The TSV throughput stops growing after 4 workers.
-* With 16 workers the TSV p99 is 7.8 ms warm and 12.3 ms cold, LMDB 27 µs warm and 0.4 ms cold.
-* Cold, the 20000 lookups bring 2.5 to 2.9 GiB of the TSV files to the page cache, LMDB 0.1 GiB.
-  The warm `page cache MiB` of the TSV files includes what the conversion and the sampling read.
-* The `branchB` TSV file and database are only read for the missing WARC files, as on pywb.
+| page cache | workers | resolver | lookups/s | p50 µs | p95 µs | p99 µs | CPU µs/lookup | Redis server CPU µs/lookup | page cache MiB |
+|---|--:|---|--:|--:|--:|--:|--:|--:|--:|
+| warm | 1 | TSV | 5,174 | 171.9 | 362.2 | 414.0 | 192.5 | - | 4,636 |
+| warm | 1 | LMDB | 200,772 | 3.6 | 9.1 | 14.8 | 4.4 | - | 5,303 |
+| warm | 1 | Redis | 12,739 | 64.8 | 177.7 | 302.4 | 51.6 | 32.5 | - |
+| warm | 4 | TSV | 11,612 | 204.5 | 489.0 | 905.5 | 284.0 | - | 4,636 |
+| warm | 4 | LMDB | 393,296 | 5.3 | 12.9 | 21.8 | 6.6 | - | 5,303 |
+| warm | 4 | Redis | 80,019 | 43.9 | 87.2 | 118.4 | 37.3 | 10.3 | - |
+| warm | 16 | TSV | 11,960 | 797.5 | 4013.0 | 7339.6 | 760.6 | - | 4,636 |
+| warm | 16 | LMDB | 682,544 | 9.5 | 20.4 | 30.9 | 11.5 | - | 5,303 |
+| warm | 16 | Redis | 71,865 | 202.7 | 394.5 | 554.8 | 52.1 | 13.8 | - |
+| cold | 1 | TSV | 1,302 | 549.2 | 2030.5 | 3494.6 | 589.5 | - | 2,497 |
+| cold | 1 | LMDB | 8,751 | 99.3 | 291.9 | 471.7 | 46.7 | - | 85 |
+| cold | 1 | Redis | 13,941 | 62.6 | 155.2 | 241.8 | 47.5 | 29.8 | - |
+| cold | 4 | TSV | 6,056 | 425.2 | 1715.5 | 3059.7 | 576.6 | - | 2,886 |
+| cold | 4 | LMDB | 80,059 | 11.8 | 209.2 | 355.7 | 22.9 | - | 122 |
+| cold | 4 | Redis | 103,555 | 32.2 | 67.5 | 139.9 | 27.0 | 7.8 | - |
+| cold | 16 | TSV | 11,213 | 804.5 | 4170.7 | 7124.0 | 816.3 | - | 2,910 |
+| cold | 16 | LMDB | 465,859 | 10.3 | 135.8 | 381.0 | 14.7 | - | 125 |
+| cold | 16 | Redis | 71,705 | 201.4 | 392.5 | 557.0 | 53.2 | 13.9 | - |
+
+* Warm, an LMDB lookup takes 4 to 10 µs (p50), Redis 44 to 203 µs and the TSV files 172 to 798 µs:
+  LMDB is 40 to 85 times faster than the TSV files and 8 to 21 times faster than Redis, which is 3 to 5
+  times faster than the TSV files.
+* CPU per lookup, with the Redis server's: LMDB 4 to 12 µs, Redis 48 to 84 µs, TSV 190 to 760 µs.
+* With 16 workers, LMDB does 680 k lookups/s, Redis 72 k and the TSV files 12 k. Redis stops growing
+  after 4 workers: its single thread uses a whole core (14 µs × 72 k lookups/s), and every lookup is a
+  round trip to it, here on localhost; on another server, each lookup also pays the network latency.
+  The TSV throughput also stops growing after 4 workers.
+* With 16 workers the p99 is 31 µs warm and 0.4 ms cold with LMDB, 0.55 ms with Redis, and 7.3 ms warm
+  and 7.1 ms cold with the TSV files.
+* Cold doesn't change Redis, which keeps everything in memory. LMDB reads its pages on the first lookups:
+  with a single worker it is slower than Redis (p50 99 µs against 63 µs), with 4 workers its p99 is
+  higher (356 µs against 140 µs), with 16 workers it is faster again. The 20000 lookups bring 0.1 GiB
+  of LMDB to the page cache, and 2.5 to 2.9 GiB of the TSV files.
+* Redis keeps both branches in memory all the time (6.1 GiB), LMDB only the pages used, which the
+  kernel can reclaim. The warm `page cache MiB` includes what the loading and the sampling read.
+* The `branchB` TSV file, database and hash are only read for the missing WARC files, as on pywb.
 
 ### Results with synthetic path indexes
 
