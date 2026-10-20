@@ -187,6 +187,59 @@ branch (`pathindex:branchA` and `pathindex:branchB`) loaded with `path-index-to-
   kernel can reclaim. The warm `page cache MiB` includes what the loading and the sampling read.
 * The `branchB` TSV file, database and hash are only read for the missing WARC files, as on pywb.
 
+#### Conclusions
+
+Compared with the TSV files, the change of each one (warm: the index files already on the page cache;
+cold: dropped from it before the run; the Redis CPU includes the Redis server's):
+
+| page cache | workers | resolver | p50 | p99 | lookups/s | CPU/lookup |
+|---|--:|---|--:|--:|--:|--:|
+| warm | 1 | Redis | −62% | −27% | +146% | −56% |
+| warm | 1 | LMDB | −98% | −96% | +3,780% | −98% |
+| warm | 4 | Redis | −79% | −87% | +589% | −83% |
+| warm | 4 | LMDB | −97% | −98% | +3,287% | −98% |
+| warm | 16 | Redis | −75% | −92% | +501% | −91% |
+| warm | 16 | LMDB | −99% | −99.6% | +5,607% | −98.5% |
+| cold | 1 | Redis | −89% | −93% | +971% | −87% |
+| cold | 1 | LMDB | −82% | −87% | +572% | −92% |
+| cold | 4 | Redis | −92% | −95% | +1,610% | −94% |
+| cold | 4 | LMDB | −97% | −88% | +1,222% | −96% |
+| cold | 16 | Redis | −75% | −92% | +539% | −92% |
+| cold | 16 | LMDB | −99% | −95% | +4,054% | −98% |
+
+LMDB compared with Redis:
+
+| page cache | workers | p50 | p95 | p99 | lookups/s | CPU/lookup |
+|---|--:|--:|--:|--:|--:|--:|
+| warm | 1 | 18 × faster (−94%) | −95% | −95% | 16 × (+1,476%) | 19 × less (−95%) |
+| warm | 4 | 8 × faster (−88%) | −85% | −82% | 5 × (+392%) | 7 × less (−86%) |
+| warm | 16 | 21 × faster (−95%) | −95% | −94% | 9.5 × (+850%) | 6 × less (−83%) |
+| cold | 1 | 1.6 × slower (+59%) | +88% | +95% | −37% | −40% |
+| cold | 4 | 2.7 × faster (−63%) | +210% | +154% | −23% | −34% |
+| cold | 16 | 20 × faster (−95%) | −65% | −32% | 6.5 × (+550%) | −78% |
+
+| | TSV | Redis | LMDB |
+|---|---|---|---|
+| size of both branches | 4.5 GiB of files | 6.1 GiB (+35%), always in memory | 5.2 GiB (+15%), only the pages used on the page cache |
+| load of each branch | | 125 s | 19 to 24 s (6 times faster than Redis) |
+| same first path as the TSV files | | 99.5% | 100% |
+| scaling | stops after 4 workers (12 k lookups/s) | stops after 4 workers, single server thread (72 k lookups/s) | 683 k lookups/s with 16 workers |
+| service | none, files on the server | a separate service, a round trip per lookup | none, a file on the server |
+
+* LMDB is the fastest path index. With the index on the page cache, the usual state of a busy server,
+  it takes 96 to 99.6% less time and CPU per lookup than the TSV files, and 82 to 95% less than Redis:
+  5 to 21 times faster than Redis, with 5 to 16 times its throughput and 6 to 19 times less CPU.
+* Redis is 3 to 5 times faster than the TSV files, but keeps both branches in memory all the time,
+  saturates its single thread after 4 workers, and loses the other paths of the WARC files on more than
+  one line of the TSV files.
+* Redis is only better right after the page cache is dropped, with 1 worker and, on the p95 and p99,
+  with 4 workers: it keeps everything in memory, while LMDB reads its pages from disk on the first
+  lookups. With 16 workers, LMDB is faster even then.
+* Redis ran on the same laptop: a Redis on another server adds the network latency to each lookup, so
+  the difference would be bigger.
+* These results are from a laptop, with one real branch and a simulated second one; they still have to be
+  confirmed on the server, with the real path indexes of both branches and the real number of workers.
+
 ### Results with synthetic path indexes
 
 Run on a laptop (Intel i5-1345U, 12 threads, 30 GiB RAM, NVMe SSD), with synthetic sorted TSV path
