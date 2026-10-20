@@ -58,6 +58,14 @@ collections:
       #
       # - redis://localhost:6379/0/pathindex:branchA
 
+      # LMDB path index, one named database per branch, loaded from the TSV path
+      # indexes with pywb_arquivo.lmdb_path_index (see docs/lmdb_path_index.md).
+      # Each one is independent, the branchB database is only used when the WARC
+      # file isn't found, or can't be loaded, using the branchA database.
+      #
+      # - lmdb:///data/warcIndex/pathindex.lmdb?db=branchA
+      # - lmdb:///data/warcIndex/pathindex.lmdb?db=branchB
+
     # Development example using Arquivo.pt production environment
     # Example that use Arquivo.pt production environment with Memento API
     #
