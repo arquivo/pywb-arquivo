@@ -105,6 +105,6 @@ banner_html: banner_blank.html
 
 
 framed_replay: true
-redirect_exact: true
+redirect_to_exact: true
 debug: true
 
