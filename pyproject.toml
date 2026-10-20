@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "Arquivo.pt pywb instances"
 requires-python = "==3.14.*"
 dependencies = [
+    # faster decompression of the ZipNum index blocks, used by pywb if installed
+    "isal",
     "pywb",
     "uwsgi>=2.0.31",
     "uwsgitop>=0.12",
@@ -19,8 +21,10 @@ dev = [
 package = false
 
 [tool.uv.sources]
-# pywb main (after 2.10.0), with the live_url_filter config option (#1032)
-pywb = { git = "https://github.com/webrecorder/pywb.git", rev = "6bd72e9b1d16a9f1d60c5cd28f78ad2a084afb5a" }
+# pywb main (2.11.0b1), with the live_url_filter config option (#1032),
+# the faster closest lookups (#1045, #1047, #1053), the uWSGI index cache (#1052)
+# and the isal ZipNum decompression (#1050)
+pywb = { git = "https://github.com/webrecorder/pywb.git", rev = "5c0bcf0956beda6be5a5cdb925e5e1e8337cdf7e" }
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

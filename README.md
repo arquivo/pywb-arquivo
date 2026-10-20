@@ -86,6 +86,18 @@ CDX_FOLDER=/my-folder-to/indexes_cdx docker compose run pywb-arquivo-framed
 
 For production you need to review the `uwsgi.ini` and `config.yaml` files.
 
+## Performance
+
+The `framed` and `unframed` instances keep the captures read from the index for a url in a uWSGI cache, `pywb-index`,
+shared by all the workers, for 60 seconds. The request that follows a `redirect_to_exact` redirect, the lookup of the
+original of a revisit and the cdx/timemap queries for the same url then don't read the index again. It is only used for
+local indexes (CDX(J) files, folders of them and ZipNum), and captures added to an index can take up to 60 seconds to be
+found. The cache uses 128 MB of shared memory for up to 20000 urls; change it with the `INDEX_CACHE` environment
+variable, a uWSGI [`cache2`](https://uwsgi-docs.readthedocs.io/en/latest/Caching.html) value named `pywb-index`, or
+disable it with `index_cache: false` on the `config.yaml`. See "Index Cache (uWSGI)" on the pywb docs.
+
+ZipNum index blocks are decompressed with [isal](https://pypi.org/project/isal/), about 2.5 times faster than `zlib`.
+
 ## Monitoring
 
 Each instance enables the uWSGI stats server on the `/tmp/uwsgi-stats.sock` unix socket (change it with the
@@ -94,5 +106,12 @@ directly inside the docker container, run [uwsgitop](https://github.com/xrmx/uws
 
 ```bash
 docker compose exec pywb-arquivo-framed uwsgitop /tmp/uwsgi-stats.sock
+```
+
+The `caches` section of the stats shows the items, hits, misses and full counters of the `pywb-index` cache
+(`--connect-and-read` writes the stats to stderr):
+
+```bash
+docker compose exec pywb-arquivo-framed uwsgi --connect-and-read /tmp/uwsgi-stats.sock 2>&1
 ```
 
