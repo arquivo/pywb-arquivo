@@ -18,6 +18,10 @@ collections:
     #   type: zipnum
     #   path: /data/indexes_cdx/awp.idx
 
+      # Optional: read the .idx from an LMDB named database loaded from it, instead of the .idx file,
+      # see docs/lmdb_zipnum_index.md. The shards and the .loc file are used as before.
+      # lmdb: lmdb:///data/indexes_cdx/idx.lmdb?db=awp
+
       # Omit shard_index_loc to use the default LocMapResolver
       # This will look for awp.loc in the same directory as awp.idx
       # The .loc file should contain tab-delimited entries like:

@@ -73,12 +73,7 @@ class LMDBPathIndexResolver:
     @classmethod
     def from_uri(cls, uri):
         """Create a resolver from a ``lmdb:///path/to/env?db=name`` uri."""
-        parts = urlsplit(uri)
-        if parts.scheme != SCHEME or parts.netloc or not parts.path:
-            raise ValueError('Invalid LMDB path index, expected lmdb:///path/to/env?db=name: ' + uri)
-
-        db_names = parse_qs(parts.query).get('db')
-        return cls(unquote(parts.path), db_names[-1] if db_names else None)
+        return cls(*parse_uri(uri))
 
     def __call__(self, filename, cdx):
         key = filename.encode('utf-8')
@@ -136,6 +131,17 @@ class LMDBPathIndexResolver:
 
     def __repr__(self):
         return "LMDBPathIndexResolver('{0}', db='{1}')".format(self.env_path, self.db_name or '')
+
+
+def parse_uri(uri):
+    """The environment path and the named database (or None) of a
+    ``lmdb:///path/to/env?db=name`` uri."""
+    parts = urlsplit(uri)
+    if parts.scheme != SCHEME or parts.netloc or not parts.path:
+        raise ValueError('Invalid LMDB uri, expected lmdb:///path/to/env?db=name: ' + uri)
+
+    db_names = parse_qs(parts.query).get('db')
+    return unquote(parts.path), db_names[-1] if db_names else None
 
 
 def get_environment(env_path):

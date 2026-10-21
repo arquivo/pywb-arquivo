@@ -95,6 +95,20 @@ archive_paths:
 
 See [docs/lmdb_path_index.md](docs/lmdb_path_index.md) to load the TSV files and to run the benchmark.
 
+## LMDB ZipNum secondary index (PoC)
+
+A `zipnum` index can read its secondary index (`.idx`) from an LMDB database loaded from the `.idx`
+file, instead of the binary search over the file; the shards and the `.loc` file are used as before:
+
+```yaml
+index:
+  type: zipnum
+  path: /data/indexes_cdx/RAQ2019/RAQ2019.idx
+  lmdb: lmdb:///data/indexes_cdx/idx.lmdb?db=RAQ2019
+```
+
+See [docs/lmdb_zipnum_index.md](docs/lmdb_zipnum_index.md) to load the `.idx`, the benchmark and its results.
+
 ## Production
 
 For production you need to review the `uwsgi.ini` and `config.yaml` files.
