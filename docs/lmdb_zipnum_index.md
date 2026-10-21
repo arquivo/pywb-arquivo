@@ -317,6 +317,11 @@ The exact p50 at 1000 lines per block varied between 1.5 and 2.7 ms on repeated 
 
 ### Conclusions
 
+**The LMDB `.idx` is only beneficial for block sizes smaller than 3000 lines.** Its lookups are faster
+at any size, and they grow less than the `.idx` file's with the size of the `.idx`. But with blocks of
+3000 lines, decompressing and parsing the blocks takes 97% or more of a query; with smaller blocks the
+`.idx` is bigger and the blocks cheaper, so the `.idx` becomes a significant part of the queries.
+
 * **`.idx` lookups**: LMDB is 2.7 to 4.4 times faster than the `.idx` file (p50) on the RAQ2019 `.idx`
   (1.4 to 8.4 MiB), and 5.1 to 7.9 times on the production-sized ones (1.8 to 10.6 GiB), with 2 to 4 times
   less CPU. With 16 workers, warm, its p99 is 38 to 121 µs against 0.3 to 3.2 ms on RAQ2019, and 0.2 to
