@@ -87,6 +87,7 @@ Content = {
     table: "Tabela",
     completePage: "Completar a p&#225gina",
     completePageUsingPatchingConfirmationMessage: "Vamos tentar completar a p&aacute;gina com recursos externos",
+    completePageWebAccessNotice: "<strong>Acesso &agrave; Web atual:</strong> Esta funcionalidade pode consultar a Internet e outros arquivos para recuperar recursos em falta e melhorar a reprodu&ccedil;&atilde;o da p&aacute;gina arquivada. Os conte&uacute;dos recuperados poder&atilde;o integrar o acervo do Arquivo.pt.",
     downloadTitle: "Guardar como Imagem",
     downloadPopup: "Guardar p&#225gina inteira como imagem?",
     downloadMessage: "Guardar",
@@ -141,5 +142,11 @@ Content = {
     header: {
         menu: "Menu",
         options: "Op&ccedil;&#245;es",
+    },
+    cookieNotice: {
+        text: "Durante a reprodu&ccedil;&atilde;o de p&aacute;ginas arquivadas, o c&oacute;digo original dessas p&aacute;ginas pode gerar cookies. Esses cookies s&atilde;o associados ao dom&iacute;nio arquivo.pt e s&atilde;o usados exclusivamente para reprodu&ccedil;&atilde;o fiel das p&aacute;ginas. Para saber mais consulte a nossa ",
+        linkText: "Pol&iacute;tica de Cookies",
+        linkUrl: "https://arquivo.pt/cookies-politica",
+        close: "Fechar",
     },
 };

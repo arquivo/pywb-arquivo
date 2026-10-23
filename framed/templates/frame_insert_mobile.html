@@ -99,6 +99,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Overwriting pywb set_state function in order to properly update our toolbar when iframe changes-->
   <script> ARQUIVO.beforeIframe(); /*Load Arquivo specific code before iframe*/</script>
+
+  <div id="cookieNotice" class="cookie-notice noprint">
+    <span class="cookie-notice-text" id="cookieNoticeText"></span>
+    <button type="button" id="cookieNoticeClose" class="cookie-notice-close">&times;</button>
+  </div>
+
   <div id="wb_iframe_div">
     <iframe name="replay_iframe" id="replay_iframe" src="{{ wb_prefix + embed_url }}" seamless="seamless" frameborder="0" scrolling="yes" class="wb_iframe noprint" target="_parent" >
     </iframe>

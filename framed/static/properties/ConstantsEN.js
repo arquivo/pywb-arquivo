@@ -86,7 +86,8 @@ Content = {
     otherArchives: "Search in other archives",
     table: "Table",
     completePage: "Complete page", 
-    completePageUsingPatchingConfirmationMessage: "We will try to complete the page with resources from other web archives",
+    completePageUsingPatchingConfirmationMessage: "We'll try to complete the page with resources from other web archives",
+    completePageWebAccessNotice: "<strong>Live Web Access:</strong> This feature may query the Internet and other archives to retrieve missing resources and improve the replay of the archived page. Retrieved content may become part of the Arquivo.pt collection.",
     downloadTitle: "Download full page screenshot",
     downloadPopup: "Download screenshot of this page?",    
     downloadMessage: "Download",
@@ -141,5 +142,11 @@ Content = {
     header: {
         menu: "Menu",
         options: "Options",
+    },
+    cookieNotice: {
+        text: "While replaying archived pages, the original code of those pages may generate cookies. These cookies are associated with the arquivo.pt domain and are only ever used to faithfully replay the pages. To learn more, see our ",
+        linkText: "Cookies Policy",
+        linkUrl: "https://arquivo.pt/cookies-policy",
+        close: "Close",
     },
 };

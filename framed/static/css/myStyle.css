@@ -32,6 +32,53 @@ body::-webkit-scrollbar-thumb {
   background: white;
 }
 
+.cookie-notice {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 32px 6px 16px;
+  background-color: white;
+  color: black;
+  font-family: Roboto, "Open Sans", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  border-top: 1px solid #1c75c0;
+  border-bottom: 1px solid #1c75c0;
+}
+
+.cookie-notice a {
+  color: #1c75c0;
+  text-decoration: underline;
+}
+
+.cookie-notice-close {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #1c75c0;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.cookie-notice-close:hover {
+  color: #033f72;
+}
+
+/* Match the #wb_iframe_div breakpoint so the notice only covers the replay, not the left-side versions nav */
+@media screen and (min-width: 960px) {
+  .cookie-notice {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+}
+
 #replay_iframe {
   margin-top: -8px;
   padding: 0 0px;
@@ -125,6 +172,8 @@ a#OldWebTodayOutlink {
 .modalReplay .row {
   margin: 0px 6px -3px 6px !important;
   padding-top: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .modalReplay .leftAnchor {
@@ -158,6 +207,7 @@ a#OldWebTodayOutlink {
 .modalTitleComplete {
   padding: 5px 20px 5px 39px !important;
   FONT-SIZE: 17px;
+  display: inline-block;
 }
 
 .PageSpec h4.modalTitle {
@@ -203,6 +253,16 @@ h4 .fa-list {
   margin-bottom: 0px !important;
 }
 
+.modalReplay .modalparagraph.webAccessNotice {
+  max-width: 459px;
+  padding-top: 4px;
+  padding-left: 6%;
+  padding-right: 6%;
+  font-size: 10px;
+  text-align: justify;
+  color: #2a2a2a;
+}
+
 .modalReplay .modalOptions {
   padding-top: 7px;
   padding-bottom: 7px;
@@ -210,7 +270,6 @@ h4 .fa-list {
   border-radius: 5px;
   margin: 0 10px;
   width: 43%;
-  float: left;
   margin-bottom: 11px;
   border: none;
   text-decoration: none !important;
