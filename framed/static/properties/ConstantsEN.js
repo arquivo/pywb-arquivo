@@ -87,7 +87,7 @@ Content = {
     table: "Table",
     completePage: "Complete page", 
     completePageUsingPatchingConfirmationMessage: "We'll try to complete the page with resources from other web archives",
-    completePageWebAccessNotice: "<strong>Current Web Access:</strong> This feature may query the Internet and other archives to retrieve missing resources and improve the replay of the archived page. Retrieved content may become part of the Arquivo.pt collection.",
+    completePageWebAccessNotice: "<strong>Live Web Access:</strong> This feature may query the Internet and other archives to retrieve missing resources and improve the replay of the archived page. Retrieved content may become part of the Arquivo.pt collection.",
     downloadTitle: "Download full page screenshot",
     downloadPopup: "Download screenshot of this page?",    
     downloadMessage: "Download",
