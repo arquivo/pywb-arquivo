@@ -142,4 +142,10 @@ Content = {
         menu: "Menu",
         options: "Options",
     },
+    cookieNotice: {
+        text: "While replaying archived pages, the original code of those pages may generate cookies. These cookies are associated with the arquivo.pt domain and are only ever used to faithfully replay the pages. To learn more, see our ",
+        linkText: "Cookies Policy",
+        linkUrl: "https://arquivo.pt/cookies-policy",
+        close: "Close",
+    },
 };

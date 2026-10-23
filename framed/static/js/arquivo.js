@@ -145,6 +145,32 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachMoreInfoModal();
 			this.attachCompletepage();
 			this.attachKeyBoardEvent();
+			this.attachCookieNotice();
+ 		},
+ 		attachCookieNotice: function(){
+ 			var cookieName = 'cookieNoticeDismissed';
+ 			var notice = document.getElementById('cookieNotice');
+ 			if (!notice) return;
+
+ 			var textEl = document.getElementById('cookieNoticeText');
+ 			if (textEl) {
+ 				textEl.innerHTML = Content.cookieNotice.text+'<a href="'+Content.cookieNotice.linkUrl+'" target="_blank" rel="noopener">'+Content.cookieNotice.linkText+'</a>.';
+ 			}
+ 			var closeBtn = document.getElementById('cookieNoticeClose');
+ 			if (closeBtn) {
+ 				closeBtn.setAttribute('aria-label', Content.cookieNotice.close);
+ 				closeBtn.setAttribute('title', Content.cookieNotice.close);
+ 			}
+
+ 			if ($.cookie(cookieName)) {
+ 				notice.style.display = 'none';
+ 				return;
+ 			}
+ 			$('#cookieNoticeClose').on('click', function(){
+ 				notice.style.display = 'none';
+ 				$.cookie(cookieName, '1', { expires: 1, path: '/' });
+ 				window.dispatchEvent(new Event('resize')); // re-run resizeIframe (bound in iframeResize) now that the notice no longer takes up space
+ 			});
  		},
  		goToContent: function(){
  			const mySwiper = document.querySelector('.swiper-container').swiper;
