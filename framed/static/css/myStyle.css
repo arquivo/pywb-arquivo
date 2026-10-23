@@ -172,6 +172,8 @@ a#OldWebTodayOutlink {
 .modalReplay .row {
   margin: 0px 6px -3px 6px !important;
   padding-top: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .modalReplay .leftAnchor {
@@ -205,6 +207,7 @@ a#OldWebTodayOutlink {
 .modalTitleComplete {
   padding: 5px 20px 5px 39px !important;
   FONT-SIZE: 17px;
+  display: inline-block;
 }
 
 .PageSpec h4.modalTitle {
@@ -250,6 +253,16 @@ h4 .fa-list {
   margin-bottom: 0px !important;
 }
 
+.modalReplay .modalparagraph.webAccessNotice {
+  max-width: 459px;
+  padding-top: 4px;
+  padding-left: 6%;
+  padding-right: 6%;
+  font-size: 10px;
+  text-align: justify;
+  color: #2a2a2a;
+}
+
 .modalReplay .modalOptions {
   padding-top: 7px;
   padding-bottom: 7px;
@@ -257,7 +270,6 @@ h4 .fa-list {
   border-radius: 5px;
   margin: 0 10px;
   width: 43%;
-  float: left;
   margin-bottom: 11px;
   border: none;
   text-decoration: none !important;

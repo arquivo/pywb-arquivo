@@ -195,6 +195,7 @@ var ARQUIVO = ARQUIVO || (function(){
  			ARQUIVO.sendEventToAnalytics('ReplayBarFunctions', 'Complete Page');
 
 		  	var message = this.isPatching() ? Content.completePageUsingPatchingConfirmationMessage : Content.leavingArquivo;
+		  	var webAccessNotice = this.isPatching() ? '<p class="modalparagraph last webAccessNotice">'+Content.completePageWebAccessNotice+'</p>' : '';
 
 		  	var classModalTitle = "";
 		  	if(_language === 'pt')
@@ -205,6 +206,7 @@ var ARQUIVO = ARQUIVO || (function(){
 		      class:'modalReplay noprint', //styling class for Modal
 		      source:'html',
 		      content: '<h4 class="modalTitleComplete" id="'+classModalTitle+'">'+message+'</h4>' +
+		              webAccessNotice +
 		              '<div class="row"><a id="completePage" class="col-xs-6 text-center leftAnchor modalOptions">OK</a><a id="cancelPopup" class="col-xs-6 text-center modalOptions">'+Content.cancel+'</a></div>'});               
 		  	this.attachCompletepage();
 		  	this.attachClosePopup();

@@ -87,6 +87,7 @@ Content = {
     table: "Tabela",
     completePage: "Completar a p&#225gina",
     completePageUsingPatchingConfirmationMessage: "Vamos tentar completar a p&aacute;gina com recursos externos",
+    completePageWebAccessNotice: "<strong>Acesso &agrave; Web atual:</strong> Esta funcionalidade pode consultar a Internet e outros arquivos para recuperar recursos em falta e melhorar a reprodu&ccedil;&atilde;o da p&aacute;gina arquivada. Os conte&uacute;dos recuperados poder&atilde;o integrar o acervo do Arquivo.pt.",
     downloadTitle: "Guardar como Imagem",
     downloadPopup: "Guardar p&#225gina inteira como imagem?",
     downloadMessage: "Guardar",
