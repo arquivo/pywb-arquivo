@@ -158,6 +158,7 @@ var ARQUIVO = ARQUIVO || (function(){
  			}
  			var closeBtn = document.getElementById('cookieNoticeClose');
  			if (closeBtn) {
+ 				closeBtn.textContent = Content.cookieNotice.close;
  				closeBtn.setAttribute('aria-label', Content.cookieNotice.close);
  				closeBtn.setAttribute('title', Content.cookieNotice.close);
  			}
