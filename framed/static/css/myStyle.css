@@ -38,18 +38,18 @@ body::-webkit-scrollbar-thumb {
   width: 100%;
   box-sizing: border-box;
   padding: 6px 32px 6px 16px;
-  background-color: white;
-  color: black;
+  background-color: #033f72;
+  color: white;
   font-family: Roboto, "Open Sans", sans-serif;
   font-size: 13px;
   line-height: 1.4;
   text-align: center;
-  border-top: 1px solid #1c75c0;
-  border-bottom: 1px solid #1c75c0;
+  border-top: 1px solid #2d5f8a;
 }
 
-.cookie-notice a {
-  color: #1c75c0;
+#cookieNotice a,
+#cookieNotice a:hover {
+  color: white;
   text-decoration: underline;
 }
 
@@ -60,7 +60,7 @@ body::-webkit-scrollbar-thumb {
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #1c75c0;
+  color: white;
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
@@ -68,7 +68,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .cookie-notice-close:hover {
-  color: #033f72;
+  color: #67b5d1;
 }
 
 /* Match the #wb_iframe_div breakpoint so the notice only covers the replay, not the left-side versions nav */
@@ -76,6 +76,14 @@ body::-webkit-scrollbar-thumb {
   .cookie-notice {
     margin-left: 200px;
     width: calc(100% - 200px);
+    margin-top: -8px;
+  }
+}
+
+/* Crop the lighter-blue sliver that .background-top-curve leaves exposed above the notice on mobile */
+@media screen and (max-width: 959px) {
+  #cookieNotice {
+    margin-top: -8px;
   }
 }
 
