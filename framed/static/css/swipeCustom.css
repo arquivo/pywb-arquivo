@@ -460,6 +460,7 @@ a#closeSpecPopUp {
     font-weight: lighter;
     display: block;
     background-color: #033f72 !important;
+    margin-bottom: 7px;
   }
   .background-top-curve p a {
     color: white;
