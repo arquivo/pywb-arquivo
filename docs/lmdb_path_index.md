@@ -76,6 +76,9 @@ python -m pywb_arquivo.lmdb_path_index stats --env /data/warcIndex/pathindex.lmd
   As LMDB keeps the previous versions until no one can read them, repeating `--drop` (or updating most
   of the WARC files) grows `data.mdb` up to about 3 times the size of the database, then the free
   space is reused. LMDB doesn't shrink the file, `mdb_copy -c` writes a compacted copy.
+  Replace the environment directory with the copy only when no load is running, and restart the
+  `framed` and `unframed` instances afterwards: the workers keep the replaced files open, so they would
+  keep reading the old version, without any error, and never see the following loads.
 * Only one load can write to an environment at a time, the others wait for it.
 * The lines are parsed like pywb's `PathIndexResolver`: the paths of consecutive lines of the same WARC
   file are joined, lines without paths are skipped. A WARC file on more than one file keeps the paths of
@@ -89,7 +92,12 @@ WSGI application, used by the `framed` and `unframed` `uwsgi.ini` instead of `py
 docker compose mounts `WARC_INDEX_FOLDER` (default: `/data/warcIndex`) on `/data/warcIndex`.
 
 * pywb opens the environment read only, but it needs write access to `lock.mdb`, where LMDB keeps
-  track of its readers, so it reads a consistent version while the loader writes.
+  track of its readers, so it reads a consistent version while the loader writes. The loader needs it
+  too. uWSGI runs as root on the containers, so check that the `WARC_INDEX_FOLDER` volume isn't mounted
+  read only or on an NFS share with `root_squash`, and run the first load, that creates `lock.mdb`, as
+  the user of the following loads. Without write access, the environment can't be opened: each worker
+  logs a `not available` warning every 60 s and skips the `lmdb://` resolvers, using only the next
+  `archive_paths` entries.
 * The environment is opened on the first lookup of each uWSGI worker, as LMDB can't be used after
   `fork()` and it can only be opened once per process. All the resolvers of a worker share it.
 * The data is read through the memory map, from the OS page cache, shared by all the workers and
