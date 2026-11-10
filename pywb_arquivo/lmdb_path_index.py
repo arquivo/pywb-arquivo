@@ -132,6 +132,13 @@ def load(env_path, db_name, paths, pattern=None, drop=False, dry_run=False,
 
     env = lmdb.open(env_path, map_size=map_size, max_dbs=MAX_DBS, readahead=False)
     try:
+        # free the reader slots of killed pywb workers, LMDB only does it when no other process
+        # has the environment open: they would keep the old versions of the database, growing
+        # data.mdb, and fill the reader table
+        stale = env.reader_check()
+        if stale:
+            print('cleared {0} stale readers'.format(stale), file=out)
+
         db = env.open_db(name)
         with env.begin(write=True, db=db) as txn:
             return _load_files(txn, db, files, drop, False, out)

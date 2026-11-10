@@ -1,4 +1,6 @@
 import io
+import subprocess
+import sys
 
 import lmdb
 import pytest
@@ -99,6 +101,47 @@ def test_load_drop_recreates_only_its_database(tmp_path, env_path):
     assert (stats.dropped, stats.added) == (2, 1)
     assert read_db(env_path, 'branchA') == {'a.warc.gz': '/new/a.warc.gz'}
     assert read_db(env_path, 'branchB') == {'a.warc.gz': '/old/a.warc.gz', 'old.warc.gz': '/old/old.warc.gz'}
+
+
+def start_reader(env_path, read):
+    """Open the environment on another process, like a pywb worker, reading or not."""
+    code = ('import lmdb, sys\n'
+            'env = lmdb.open(sys.argv[1], readonly=True, max_dbs=8)\n'
+            'txn = env.begin() if sys.argv[2] == "read" else None\n'
+            'print("opened", flush=True)\n'
+            'sys.stdin.read()\n')
+    reader = subprocess.Popen([sys.executable, '-c', code, env_path, 'read' if read else 'open'],
+                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    assert reader.stdout.readline() == 'opened\n'
+    return reader
+
+
+def stop_reader(reader):
+    reader.kill()
+    reader.wait()
+    reader.stdin.close()
+    reader.stdout.close()
+
+
+def test_load_clears_the_readers_of_killed_processes(tmp_path, env_path):
+    tsv = write(tmp_path / 'AWP1.tsv', 'a\t/a\n')
+    load(env_path, 'branchA', [tsv], out=io.StringIO())
+
+    # a pywb worker killed during a lookup keeps its reader slot, and the old version of the database,
+    # while the other workers keep the environment open (otherwise LMDB resets the reader table)
+    worker = start_reader(env_path, read=False)
+    try:
+        stop_reader(start_reader(env_path, read=True))
+
+        out = io.StringIO()
+        load(env_path, 'branchA', [tsv], out=out)
+        assert out.getvalue().startswith('cleared 1 stale readers\n')
+
+        out = io.StringIO()
+        load(env_path, 'branchA', [tsv], out=out)
+        assert 'stale readers' not in out.getvalue()
+    finally:
+        stop_reader(worker)
 
 
 def test_load_dry_run_does_not_create_the_environment(tmp_path, env_path):

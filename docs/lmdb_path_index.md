@@ -80,6 +80,9 @@ python -m pywb_arquivo.lmdb_path_index stats --env /data/warcIndex/pathindex.lmd
   `framed` and `unframed` instances afterwards: the workers keep the replaced files open, so they would
   keep reading the old version, without any error, and never see the following loads.
 * Only one load can write to an environment at a time, the others wait for it.
+* Before writing, the load frees the reader slots left on `lock.mdb` by killed pywb workers (eg. a crash or
+  uWSGI killing a stuck worker), and prints `cleared N stale readers`. Until then, each one keeps the version
+  of the database it was reading, so its free space isn't reused.
 * The lines are parsed like pywb's `PathIndexResolver`: the paths of consecutive lines of the same WARC
   file are joined, lines without paths are skipped. A WARC file on more than one file keeps the paths of
   the last one. The TSV files must be sorted, like for `PathIndexResolver`, the unsorted lines are counted.
