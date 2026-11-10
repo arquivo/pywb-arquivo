@@ -1,4 +1,5 @@
 import io
+import re
 import subprocess
 import sys
 
@@ -220,6 +221,80 @@ def test_load_requires_a_named_database(tmp_path, env_path):
         load(env_path, '', [write(tmp_path / 'AWP1.tsv', 'a\t/a\n')])
 
 
+def db_exists(env_path, db_name):
+    env = lmdb.open(env_path, readonly=True, max_dbs=8)
+    try:
+        env.open_db(db_name.encode('utf-8'), create=False)
+        return True
+    except lmdb.NotFoundError:
+        return False
+    finally:
+        env.close()
+
+
+@pytest.mark.parametrize('tsvs, duplicate, duplicate_files', [
+    # on two files
+    (['a\t/1/a\nb\t/1/b\n', 'b\t/2/b\nc\t/2/c\n'], 'b', [0, 1]),
+    # on non-consecutive lines of a file
+    (['a\t/1/a\nb\t/1/b\na\t/2/a\n'], 'a', [0, 0]),
+    # the same lines on two files
+    (['a\t/1/a\n', 'a\t/1/a\n'], 'a', [0, 1]),
+])
+@pytest.mark.parametrize('dry_run', [False, True])
+def test_load_fails_on_warc_files_loaded_more_than_once(tmp_path, env_path, tsvs, duplicate, duplicate_files,
+                                                        dry_run):
+    load(env_path, 'branchA', [write(tmp_path / 'old.tsv', 'a\t/old/a\n')], out=io.StringIO())
+    files = [write(tmp_path / 'AWP{0}.tsv'.format(i), text) for i, text in enumerate(tsvs)]
+    error = 'WARC files on more than one file, or on non-consecutive lines, nothing was loaded: {0} ({1})'.format(
+        duplicate, ', '.join(files[i] for i in duplicate_files))
+
+    for drop in (False, True):
+        with pytest.raises(ValueError, match=re.escape(error) + '$'):
+            load(env_path, 'branchA', files, drop=drop, dry_run=dry_run, out=io.StringIO())
+    with pytest.raises(ValueError):
+        load(env_path, 'branchB', files, dry_run=dry_run, out=io.StringIO())
+
+    assert read_db(env_path, 'branchA') == {'a': '/old/a'}
+    assert not db_exists(env_path, 'branchB')
+
+
+def test_load_shows_the_first_warc_files_loaded_more_than_once(tmp_path, env_path, monkeypatch):
+    monkeypatch.setattr(lmdb_path_index, 'MAX_DUPLICATED_HASHES', 20)
+    text = ''.join('{0:03d}\t/{0:03d}\n'.format(i) for i in range(500))
+    files = [write(tmp_path / 'AWP1.tsv', text), write(tmp_path / 'AWP2.tsv', text)]
+
+    with pytest.raises(ValueError) as error:
+        load(env_path, 'branchA', files, out=io.StringIO())
+
+    names = str(error.value).partition(': ')[2]
+    assert names.endswith(', ...')
+    assert names.count(' (') == lmdb_path_index.MAX_REPORTED
+
+
+def test_warc_files_with_the_same_hash_are_not_duplicates(tmp_path):
+    tsv = write(tmp_path / 'AWP1.tsv', 'a\t/a\nb\t/b\n')
+
+    # as if a and b had the same hash
+    assert lmdb_path_index._find_duplicates([tsv], {hash(b'a'), hash(b'b')}) == {}
+
+
+@pytest.mark.parametrize('dry_run', [False, True])
+def test_load_strict_fails_if_paths_would_be_replaced(tmp_path, env_path, dry_run):
+    load(env_path, 'branchA', [write(tmp_path / 'AWP1.tsv', 'a\t/old/a\nb\t/b\n')], out=io.StringIO())
+    awp1 = write(tmp_path / 'AWP1.tsv', 'a\t/new/a\nb\t/b\nc\t/c\n')
+
+    with pytest.raises(ValueError, match='^--strict: the paths of 1 WARC files would be replaced, nothing was loaded: a$'):
+        load(env_path, 'branchA', [awp1], strict=True, dry_run=dry_run, out=io.StringIO())
+    assert read_db(env_path, 'branchA') == {'a': '/old/a', 'b': '/b'}
+
+    # new and unchanged WARC files, or a recreated database, don't fail
+    awp2 = write(tmp_path / 'AWP2.tsv', 'b\t/b\nc\t/c\n')
+    stats = load(env_path, 'branchA', [awp2], strict=True, dry_run=dry_run, out=io.StringIO())
+    assert (stats.added, stats.unchanged) == (1, 1)
+    stats = load(env_path, 'branchA', [awp1], strict=True, drop=True, dry_run=dry_run, out=io.StringIO())
+    assert (stats.added, stats.updated) == (3, 0)
+
+
 def test_main_load_and_stats(tmp_path, env_path, capsys):
     tsv = write(tmp_path / 'AWP1.tsv', 'a\t/a\nb\t/b\n')
 
@@ -237,6 +312,15 @@ def test_main_reports_errors(tmp_path, env_path, capsys):
     assert main(['load', '--env', env_path, '--db', 'branchA', str(tmp_path / 'missing.tsv')]) == 1
     assert main(['load', '--env', env_path, '--db', 'branchA', '--pattern', '(', str(tmp_path)]) == 1
     assert 'error:' in capsys.readouterr().err
+
+    tsv = write(tmp_path / 'AWP1.tsv', 'a\t/a\n')
+    assert main(['load', '--env', env_path, '--db', 'branchA', tsv, tsv]) == 1
+    assert 'error: WARC files on more than one file' in capsys.readouterr().err
+
+    assert main(['load', '--env', env_path, '--db', 'branchA', tsv]) == 0
+    write(tmp_path / 'AWP1.tsv', 'a\t/new/a\n')
+    assert main(['load', '--env', env_path, '--db', 'branchA', '--strict', tsv]) == 1
+    assert 'error: --strict: the paths of 1 WARC files would be replaced' in capsys.readouterr().err
 
 
 def test_main_reports_a_full_map(tmp_path, env_path, capsys, monkeypatch):
