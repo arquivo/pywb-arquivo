@@ -1,5 +1,13 @@
 collections:
-  live: $live
+  # pywb only gives a timeout to the requests of an index_group: with a plain
+  # `live: $live`, a live request on a keep-alive connection the network
+  # dropped hangs until the kernel gives up, ~15 min. The timeout is of the
+  # connect and of each read, and a timed out GET is retried up to 3 times.
+  # The index_group key is the source name the recorder source_filter matches.
+  live:
+    index_group:
+      live: $live
+    timeout: 15
 
 frame_insert_html: logic_frame.html
 framed_replay: true

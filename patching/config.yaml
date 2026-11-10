@@ -11,12 +11,19 @@ collections:
         archive_paths:
           - /app/collections/patching/archive/
         name: patching_resources
+      # pywb only gives a timeout to the requests of an index_group, it ignores
+      # the timeout of a plain `index:`. The timeout is of the connect and of
+      # each read, and a timed out GET is retried up to 3 times.
+      # The index_group keys are the source names the recorder source_filter matches.
       -
-        index: memento+https://web.archive.org/web/
+        index_group:
+          ia: memento+https://web.archive.org/web/
+        timeout: 5
         name: ia
-        timeout: 5 # default
       -
-        index: $live
+        index_group:
+          live: $live
+        timeout: 5
         name: live
 
 recorder:
