@@ -35,7 +35,7 @@ from dataclasses import dataclass
 
 import lmdb
 
-from pywb_arquivo.lmdb_path_resolver import MAX_DBS, MAX_KEY_SIZE
+from pywb_arquivo.lmdb_path_resolver import MAX_DBS, MAX_KEY_SIZE, MAX_READERS
 
 
 GIB = 1024 ** 3
@@ -130,7 +130,7 @@ def load(env_path, db_name, paths, pattern=None, drop=False, dry_run=False,
     if dry_run:
         return _load_dry_run(env_path, name, files, drop, out)
 
-    env = lmdb.open(env_path, map_size=map_size, max_dbs=MAX_DBS, readahead=False)
+    env = lmdb.open(env_path, map_size=map_size, max_dbs=MAX_DBS, max_readers=MAX_READERS, readahead=False)
     try:
         # free the reader slots of killed pywb workers, LMDB only does it when no other process
         # has the environment open: they would keep the old versions of the database, growing
@@ -150,7 +150,7 @@ def _load_dry_run(env_path, name, files, drop, out):
     if not os.path.exists(os.path.join(env_path, 'data.mdb')):
         return _load_files(None, None, files, drop, True, out)
 
-    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS, readahead=False)
+    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS, max_readers=MAX_READERS, readahead=False)
     try:
         try:
             db = env.open_db(name, create=False)
@@ -200,7 +200,7 @@ def _load_files(txn, db, files, drop, dry_run, out):
 def stats(env_path, out=None):
     """Print the number of entries of each named database of ``env_path``."""
     out = out or sys.stdout
-    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS)
+    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS, max_readers=MAX_READERS)
     try:
         with env.begin() as txn:
             names = [key for key, _ in txn.cursor()]

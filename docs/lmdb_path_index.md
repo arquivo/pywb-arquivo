@@ -80,9 +80,9 @@ python -m pywb_arquivo.lmdb_path_index stats --env /data/warcIndex/pathindex.lmd
   `framed` and `unframed` instances afterwards: the workers keep the replaced files open, so they would
   keep reading the old version, without any error, and never see the following loads.
 * Only one load can write to an environment at a time, the others wait for it.
-* Before writing, the load frees the reader slots left on `lock.mdb` by killed pywb workers (eg. a crash or
-  uWSGI killing a stuck worker), and prints `cleared N stale readers`. Until then, each one keeps the version
-  of the database it was reading, so its free space isn't reused.
+* Before writing, the load frees the reader slots left on `lock.mdb` by killed pywb workers (eg. a
+  crash or uWSGI killing a stuck worker), and prints `cleared N stale readers`. Until then, each one
+  keeps the version of the database it was reading, so its free space isn't reused.
 * The lines are parsed like pywb's `PathIndexResolver`: the paths of consecutive lines of the same WARC
   file are joined, lines without paths are skipped. A WARC file on more than one file keeps the paths of
   the last one. The TSV files must be sorted, like for `PathIndexResolver`, the unsorted lines are counted.
@@ -94,13 +94,19 @@ The `lmdb://` resolver is added to pywb by the [`pywb_arquivo.wayback`](../pywb_
 WSGI application, used by the `framed` and `unframed` `uwsgi.ini` instead of `pywb.apps.wayback`.
 docker compose mounts `WARC_INDEX_FOLDER` (default: `/data/warcIndex`) on `/data/warcIndex`.
 
+* The environment must be on a local file system: LMDB doesn't support network file systems, like NFS,
+  as `lock.mdb` and the memory map are shared through the page cache of the server.
 * pywb opens the environment read only, but it needs write access to `lock.mdb`, where LMDB keeps
   track of its readers, so it reads a consistent version while the loader writes. The loader needs it
   too. uWSGI runs as root on the containers, so check that the `WARC_INDEX_FOLDER` volume isn't mounted
-  read only or on an NFS share with `root_squash`, and run the first load, that creates `lock.mdb`, as
-  the user of the following loads. Without write access, the environment can't be opened: each worker
-  logs a `not available` warning every 60 s and skips the `lmdb://` resolvers, using only the next
-  `archive_paths` entries.
+  read only, and run the first load, that creates `lock.mdb`, as the user of the following loads.
+  Without write access, the environment can't be opened: each worker logs a `not available` warning
+  every 60 s and skips the `lmdb://` resolvers, using only the next `archive_paths` entries.
+* The reader table of `lock.mdb` has 1024 slots (`MAX_READERS`, LMDB's default is 126), shared by the
+  uWSGI workers of all the pywb instances of the server, each one using up to 2 slots, the loader and
+  the slots of killed workers, until the next load. `stats` shows the slots used so far and the size of
+  the table (`readers=used/size`). The table is only grown by a process that opens the environment
+  while no other has it open, eg. the first load or after restarting pywb with no load running.
 * The environment is opened on the first lookup of each uWSGI worker, as LMDB can't be used after
   `fork()` and it can only be opened once per process. All the resolvers of a worker share it.
 * The data is read through the memory map, from the OS page cache, shared by all the workers and

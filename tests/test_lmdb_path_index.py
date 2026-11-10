@@ -7,6 +7,7 @@ import pytest
 
 from pywb_arquivo import lmdb_path_index
 from pywb_arquivo.lmdb_path_index import LoadStats, iter_path_index, load, main
+from pywb_arquivo.lmdb_path_resolver import MAX_READERS
 
 
 @pytest.fixture
@@ -142,6 +143,18 @@ def test_load_clears_the_readers_of_killed_processes(tmp_path, env_path):
         assert 'stale readers' not in out.getvalue()
     finally:
         stop_reader(worker)
+
+
+def test_load_grows_the_reader_table(tmp_path, env_path):
+    # an environment created with the LMDB default size, eg. by another tool
+    lmdb.open(env_path).close()
+
+    load(env_path, 'branchA', [write(tmp_path / 'AWP1.tsv', 'a\t/a\n')], out=io.StringIO())
+
+    out = io.StringIO()
+    lmdb_path_index.stats(env_path, out=out)
+    assert MAX_READERS > 126
+    assert '/{0}\n'.format(MAX_READERS) in out.getvalue()
 
 
 def test_load_dry_run_does_not_create_the_environment(tmp_path, env_path):

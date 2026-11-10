@@ -45,6 +45,11 @@ MAX_DBS = 64
 # LMDB default max key size, in bytes
 MAX_KEY_SIZE = 511
 
+# size of the reader table of lock.mdb (LMDB default: 126), shared by the processes of all the pywb
+# instances of the server, each one using up to 2 slots, the loader and the slots of killed workers,
+# until the next load. Only grown by a process that opens the environment while no other has it open
+MAX_READERS = 1024
+
 # seconds to wait before trying again to open a missing environment or database
 RETRY_INTERVAL = 60
 
@@ -161,7 +166,8 @@ def get_environment(env_path):
 
         # lock: needed to read a consistent snapshot while the loader writes
         # readahead: disabled as lookups are random reads
-        env = lmdb.open(env_path, readonly=True, lock=True, readahead=False, max_dbs=MAX_DBS)
+        env = lmdb.open(env_path, readonly=True, lock=True, readahead=False, max_dbs=MAX_DBS,
+                        max_readers=MAX_READERS)
         _environments[env_path] = (pid, env)
         return env
 

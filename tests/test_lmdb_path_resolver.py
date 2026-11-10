@@ -6,6 +6,7 @@ import subprocess
 import sys
 from io import BytesIO
 
+import lmdb
 import pytest
 from warcio.statusandheaders import StatusAndHeaders
 from warcio.warcwriter import WARCWriter
@@ -160,6 +161,16 @@ def test_named_databases_are_independent(tmp_path, env_path):
 
     # both share the same environment
     assert len(lmdb_path_resolver._environments) == 1
+
+
+def test_grows_the_reader_table(tmp_path, env_path):
+    # an environment created with the LMDB default size, eg. by another tool
+    lmdb.open(env_path).close()
+    resolver = LMDBPathIndexResolver(env_path)
+
+    assert resolver('a.warc.gz', {}) == []
+    assert lmdb_path_resolver.MAX_READERS > 126
+    assert lmdb_path_resolver.get_environment(env_path).info()['max_readers'] == lmdb_path_resolver.MAX_READERS
 
 
 def test_sees_the_updates_of_the_loader(tmp_path, env_path):
