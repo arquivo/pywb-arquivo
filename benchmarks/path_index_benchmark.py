@@ -3,9 +3,10 @@
 optionally, of a Redis path index (pywb's ``RedisResolver``).
 
 Run it on the server with the real path indexes, after loading them with
-:mod:`pywb_arquivo.lmdb_path_index`::
+:mod:`pywb_arquivo.lmdb_path_index`, from the root of a checkout of this
+repository, as it isn't on the pywb images::
 
-    python -m pywb_arquivo.path_index_benchmark run \\
+    python -m benchmarks.path_index_benchmark run \\
         --tsv /data/warcIndex/branchA/AWP1.tsv --tsv /data/warcIndex/branchA/AWP2.tsv \\
         --lmdb 'lmdb:///data/warcIndex/pathindex.lmdb?db=branchA' --workers 1,4,16
 
@@ -14,7 +15,7 @@ resolver, with the hashes loaded by ``path-index-to-redis`` (replay-cdxj-indexin
 
 Or generate a synthetic sorted TSV path index to try it::
 
-    python -m pywb_arquivo.path_index_benchmark generate --size 1 /tmp/bench/AWP.tsv
+    python -m benchmarks.path_index_benchmark generate --size 1 /tmp/bench/AWP.tsv
 
 Each implementation resolves the same random sample of WARC file names (with
 some missing ones), like pywb: each resolver is tried in order until one
@@ -350,7 +351,7 @@ def generate(args):
 
 
 def main(args=None):
-    parser = argparse.ArgumentParser(prog='python -m pywb_arquivo.path_index_benchmark',
+    parser = argparse.ArgumentParser(prog='python -m benchmarks.path_index_benchmark',
                                      description='Benchmark the TSV, the LMDB and the Redis path indexes.')
     commands = parser.add_subparsers(dest='command', required=True)
 

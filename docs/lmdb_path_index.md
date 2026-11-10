@@ -119,19 +119,20 @@ docker compose mounts `WARC_INDEX_FOLDER` (default: `/data/warcIndex`) on `/data
 
 ## Benchmark
 
-[`pywb_arquivo/path_index_benchmark.py`](../pywb_arquivo/path_index_benchmark.py) compares the path
+[`benchmarks/path_index_benchmark.py`](../benchmarks/path_index_benchmark.py) compares the path
 indexes, with the TSV files, an LMDB environment loaded from them and, optionally, the Redis hashes of
-pywb's `RedisResolver`, loaded from them with `path-index-to-redis` (replay-cdxj-indexing-tools):
+pywb's `RedisResolver`, loaded from them with `path-index-to-redis` (replay-cdxj-indexing-tools).
+It isn't on the pywb images, run it from the root of a checkout of this repository:
 
 ```bash
-python -m pywb_arquivo.path_index_benchmark run \
+python -m benchmarks.path_index_benchmark run \
     --tsv /data/warcIndex/branchA/AWP1.tsv --tsv /data/warcIndex/branchA/AWP2.tsv \
     --lmdb 'lmdb:///data/warcIndex/pathindex.lmdb?db=branchA' \
     --redis redis://localhost:6379/0/pathindex:branchA \
     --workers 1,4,16 --json results.json
 
 # the same, after dropping the index files from the page cache
-python -m pywb_arquivo.path_index_benchmark run --cold ...
+python -m benchmarks.path_index_benchmark run --cold ...
 ```
 
 It samples WARC file names from the TSV files (plus 10% missing ones), checks that the others return the
@@ -144,7 +145,7 @@ reports the CPU time of the Redis server per lookup, and its memory.
 `generate` writes a sorted synthetic TSV path index, to try it without the real ones:
 
 ```bash
-python -m pywb_arquivo.path_index_benchmark generate --size 1 /tmp/bench/AWP.tsv
+python -m benchmarks.path_index_benchmark generate --size 1 /tmp/bench/AWP.tsv
 ```
 
 ### Results with a real path index
