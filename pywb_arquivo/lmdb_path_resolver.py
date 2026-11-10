@@ -105,14 +105,7 @@ class LMDBPathIndexResolver:
 
         env, db = opened
         try:
-            try:
-                with env.begin(db=db) as txn:
-                    return txn.get(key)
-            except lmdb.MapResizedError:
-                # the loader grew the database map, adopt the new size
-                env.set_mapsize(0)
-                with env.begin(db=db) as txn:
-                    return txn.get(key)
+            return _adopting_map_size(env, lambda: _lookup(env, db, key))
         except lmdb.Error as e:
             # skip this resolver, pywb doesn't handle the resolver errors
             self._fail('lookup failed', e, env)
@@ -131,7 +124,7 @@ class LMDBPathIndexResolver:
         try:
             env = get_environment(self.env_path)
             name = self.db_name.encode('utf-8') if self.db_name else None
-            db = env.open_db(name, create=False) if name else None
+            db = _adopting_map_size(env, lambda: env.open_db(name, create=False)) if name else None
         except lmdb.Error as e:
             # a missing named database doesn't affect the other ones
             self._fail('not available', e, None if isinstance(e, lmdb.NotFoundError) else env)
@@ -152,6 +145,21 @@ class LMDBPathIndexResolver:
 
     def __repr__(self):
         return "LMDBPathIndexResolver('{0}', db='{1}')".format(self.env_path, self.db_name or '')
+
+
+def _lookup(env, db, key):
+    with env.begin(db=db) as txn:
+        return txn.get(key)
+
+
+def _adopting_map_size(env, func):
+    """Call ``func``, that starts a transaction, again after adopting the new
+    size of the map, if the loader grew it."""
+    try:
+        return func()
+    except lmdb.MapResizedError:
+        env.set_mapsize(0)
+        return func()
 
 
 def get_environment(env_path):

@@ -113,6 +113,7 @@ docker compose mounts `WARC_INDEX_FOLDER` (default: `/data/warcIndex`) on `/data
   while no other has it open, eg. the first load or after restarting pywb with no load running.
 * The environment is opened on the first lookup of each uWSGI worker, as LMDB can't be used after
   `fork()` and it can only be opened once per process. All the resolvers of a worker share it.
+  A load with a bigger `--map-size` doesn't need a restart, the workers adopt it on the next lookup.
 * The data is read through the memory map, from the OS page cache, shared by all the workers and
   pywb instances of the server. Only the pages used by the lookups are read.
 

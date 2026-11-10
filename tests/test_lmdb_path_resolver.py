@@ -173,7 +173,7 @@ def test_grows_the_reader_table(tmp_path, env_path):
     assert lmdb_path_resolver.get_environment(env_path).info()['max_readers'] == lmdb_path_resolver.MAX_READERS
 
 
-def test_sees_the_updates_of_the_loader(tmp_path, env_path):
+def test_sees_the_updates_of_the_loader(tmp_path, env_path, caplog):
     load_tsv(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/old/a.warc.gz\n', map_size=1024 * 1024)
     resolver = LMDBPathIndexResolver(env_path, 'branchA')
     assert resolver('a.warc.gz', {}) == ['/old/a.warc.gz']
@@ -186,6 +186,25 @@ def test_sees_the_updates_of_the_loader(tmp_path, env_path):
     assert resolver('a.warc.gz', {}) == ['/new/a.warc.gz']
     assert resolver('00039999.warc.gz', {}) == ['/data/{0}/00039999.warc.gz'.format('x' * 400)]
     assert lmdb_path_resolver.get_environment(env_path).info()['map_size'] == 1024 ** 3
+    # the new size is adopted on the lookup, without an error
+    assert caplog.text == ''
+
+
+def test_opens_a_database_after_the_loader_grows_the_map(tmp_path, env_path, caplog):
+    load_tsv(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/branchA/a.warc.gz\n', map_size=1024 * 1024)
+    load_tsv(env_path, 'branchB', tmp_path / 'B.tsv', 'a.warc.gz\t/branchB/a.warc.gz\n', map_size=1024 * 1024)
+    resolver_a = LMDBPathIndexResolver(env_path, 'branchA')
+    resolver_b = LMDBPathIndexResolver(env_path, 'branchB')
+    assert resolver_a('a.warc.gz', {}) == ['/branchA/a.warc.gz']
+
+    big = ''.join('{0:08d}.warc.gz\t/data/{1}/{0:08d}.warc.gz\n'.format(i, 'x' * 400) for i in range(40000))
+    load_tsv_process(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/branchA/a.warc.gz\n' + big,
+                     '--map-size', '1')
+
+    # branchB is first used after the map grew
+    assert resolver_b('a.warc.gz', {}) == ['/branchB/a.warc.gz']
+    assert resolver_a('00039999.warc.gz', {}) == ['/data/{0}/00039999.warc.gz'.format('x' * 400)]
+    assert caplog.text == ''
 
 
 def lookup_in_worker(resolver, names, queue):
