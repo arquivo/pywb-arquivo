@@ -146,11 +146,22 @@ def test_load_clears_the_readers_of_killed_processes(tmp_path, env_path):
         stop_reader(worker)
 
 
-def test_load_grows_the_reader_table(tmp_path, env_path):
+def test_load_grows_the_reader_table(tmp_path, env_path, monkeypatch):
     # an environment created with the LMDB default size, eg. by another tool
     lmdb.open(env_path).close()
+    lmdb_open = lmdb.open
+    sizes = []
 
+    def open_env(*args, **kwargs):
+        env = lmdb_open(*args, **kwargs)
+        sizes.append(env.info()['max_readers'])
+        return env
+
+    # the size of the load itself, stats grows the table too
+    monkeypatch.setattr(lmdb, 'open', open_env)
     load(env_path, 'branchA', [write(tmp_path / 'AWP1.tsv', 'a\t/a\n')], out=io.StringIO())
+    monkeypatch.undo()
+    assert sizes == [MAX_READERS]
 
     out = io.StringIO()
     lmdb_path_index.stats(env_path, out=out)
