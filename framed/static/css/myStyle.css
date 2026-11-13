@@ -32,6 +32,66 @@ body::-webkit-scrollbar-thumb {
   background: white;
 }
 
+.cookie-notice {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 100px 6px 16px;
+  background-color: #033f72;
+  color: white;
+  font-family: Roboto, "Open Sans", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  border-top: 1px solid #2d5f8a;
+}
+
+#cookieNotice a,
+#cookieNotice a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.cookie-notice-close {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background-color: #1c75c0;
+  border: 1px solid #1c75c0;
+  border-radius: 4px;
+  color: white;
+  font-family: Roboto, "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1;
+  cursor: pointer;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.cookie-notice-close:hover {
+  background-color: white;
+  color: #1c75c0;
+}
+
+/* Match the #wb_iframe_div breakpoint so the notice only covers the replay, not the left-side versions nav */
+@media screen and (min-width: 960px) {
+  .cookie-notice {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+    margin-top: -8px;
+  }
+}
+
+/* Crop the lighter-blue sliver that .background-top-curve leaves exposed above the notice on mobile */
+@media screen and (max-width: 959px) {
+  #cookieNotice {
+    margin-top: -8px;
+  }
+}
+
 #replay_iframe {
   margin-top: -8px;
   padding: 0 0px;
@@ -125,6 +185,8 @@ a#OldWebTodayOutlink {
 .modalReplay .row {
   margin: 0px 6px -3px 6px !important;
   padding-top: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .modalReplay .leftAnchor {
@@ -158,6 +220,7 @@ a#OldWebTodayOutlink {
 .modalTitleComplete {
   padding: 5px 20px 5px 39px !important;
   FONT-SIZE: 17px;
+  display: inline-block;
 }
 
 .PageSpec h4.modalTitle {
@@ -203,6 +266,16 @@ h4 .fa-list {
   margin-bottom: 0px !important;
 }
 
+.modalReplay .modalparagraph.webAccessNotice {
+  max-width: 459px;
+  padding-top: 4px;
+  padding-left: 6%;
+  padding-right: 6%;
+  font-size: 10px;
+  text-align: justify;
+  color: #2a2a2a;
+}
+
 .modalReplay .modalOptions {
   padding-top: 7px;
   padding-bottom: 7px;
@@ -210,7 +283,6 @@ h4 .fa-list {
   border-radius: 5px;
   margin: 0 10px;
   width: 43%;
-  float: left;
   margin-bottom: 11px;
   border: none;
   text-decoration: none !important;

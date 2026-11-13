@@ -6,6 +6,7 @@ import subprocess
 import sys
 from io import BytesIO
 
+import lmdb
 import pytest
 from warcio.statusandheaders import StatusAndHeaders
 from warcio.warcwriter import WARCWriter
@@ -140,9 +141,11 @@ def test_missing_environment_and_database(tmp_path, env_path, monkeypatch, caplo
     resolver_a._retry_at = 0
     assert resolver_a('a.warc.gz', {}) == ['/branchA/a.warc.gz']
 
-    # a missing branchB database doesn't affect branchA
+    # a missing branchB database doesn't affect branchA, nor its environment
+    env = lmdb_path_resolver.get_environment(env_path)
     assert resolver_b('a.warc.gz', {}) == []
     assert resolver_a('a.warc.gz', {}) == ['/branchA/a.warc.gz']
+    assert lmdb_path_resolver.get_environment(env_path) is env
 
 
 def test_named_databases_are_independent(tmp_path, env_path):
@@ -160,7 +163,17 @@ def test_named_databases_are_independent(tmp_path, env_path):
     assert len(lmdb_path_resolver._environments) == 1
 
 
-def test_sees_the_updates_of_the_loader(tmp_path, env_path):
+def test_grows_the_reader_table(tmp_path, env_path):
+    # an environment created with the LMDB default size, eg. by another tool
+    lmdb.open(env_path).close()
+    resolver = LMDBPathIndexResolver(env_path)
+
+    assert resolver('a.warc.gz', {}) == []
+    assert lmdb_path_resolver.MAX_READERS > 126
+    assert lmdb_path_resolver.get_environment(env_path).info()['max_readers'] == lmdb_path_resolver.MAX_READERS
+
+
+def test_sees_the_updates_of_the_loader(tmp_path, env_path, caplog):
     load_tsv(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/old/a.warc.gz\n', map_size=1024 * 1024)
     resolver = LMDBPathIndexResolver(env_path, 'branchA')
     assert resolver('a.warc.gz', {}) == ['/old/a.warc.gz']
@@ -173,6 +186,25 @@ def test_sees_the_updates_of_the_loader(tmp_path, env_path):
     assert resolver('a.warc.gz', {}) == ['/new/a.warc.gz']
     assert resolver('00039999.warc.gz', {}) == ['/data/{0}/00039999.warc.gz'.format('x' * 400)]
     assert lmdb_path_resolver.get_environment(env_path).info()['map_size'] == 1024 ** 3
+    # the new size is adopted on the lookup, without an error
+    assert caplog.text == ''
+
+
+def test_opens_a_database_after_the_loader_grows_the_map(tmp_path, env_path, caplog):
+    load_tsv(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/branchA/a.warc.gz\n', map_size=1024 * 1024)
+    load_tsv(env_path, 'branchB', tmp_path / 'B.tsv', 'a.warc.gz\t/branchB/a.warc.gz\n', map_size=1024 * 1024)
+    resolver_a = LMDBPathIndexResolver(env_path, 'branchA')
+    resolver_b = LMDBPathIndexResolver(env_path, 'branchB')
+    assert resolver_a('a.warc.gz', {}) == ['/branchA/a.warc.gz']
+
+    big = ''.join('{0:08d}.warc.gz\t/data/{1}/{0:08d}.warc.gz\n'.format(i, 'x' * 400) for i in range(40000))
+    load_tsv_process(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/branchA/a.warc.gz\n' + big,
+                     '--map-size', '1')
+
+    # branchB is first used after the map grew
+    assert resolver_b('a.warc.gz', {}) == ['/branchB/a.warc.gz']
+    assert resolver_a('00039999.warc.gz', {}) == ['/data/{0}/00039999.warc.gz'.format('x' * 400)]
+    assert caplog.text == ''
 
 
 def lookup_in_worker(resolver, names, queue):
@@ -293,7 +325,49 @@ def test_lookup_errors_skip_the_resolver(tmp_path, env_path, caplog):
     resolver = LMDBPathIndexResolver(env_path, 'branchA')
     assert resolver('a.warc.gz', {}) == ['/data/a.warc.gz']
 
-    lmdb_path_resolver.get_environment(env_path).close()
+    env = lmdb_path_resolver.get_environment(env_path)
+    env.close()
 
     assert resolver('a.warc.gz', {}) == []
     assert 'lookup failed' in caplog.text
+
+    # retried only after the retry interval, with the environment opened again
+    assert resolver('a.warc.gz', {}) == []
+    resolver._retry_at = 0
+    assert resolver('a.warc.gz', {}) == ['/data/a.warc.gz']
+    assert lmdb_path_resolver.get_environment(env_path) is not env
+
+
+def test_lookup_errors_open_the_environment_again_for_the_other_resolvers(tmp_path, env_path, caplog):
+    load_tsv(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/branchA/a.warc.gz\n')
+    load_tsv(env_path, 'branchB', tmp_path / 'B.tsv', 'a.warc.gz\t/branchB/a.warc.gz\n')
+    resolver_a = LMDBPathIndexResolver(env_path, 'branchA')
+    resolver_b = LMDBPathIndexResolver(env_path, 'branchB')
+    assert resolver_a('a.warc.gz', {}) == ['/branchA/a.warc.gz']
+    assert resolver_b('a.warc.gz', {}) == ['/branchB/a.warc.gz']
+
+    lmdb_path_resolver.get_environment(env_path).close()
+
+    # branchA fails and closes the environment, branchB opens it again
+    assert resolver_a('a.warc.gz', {}) == []
+    assert resolver_b('a.warc.gz', {}) == ['/branchB/a.warc.gz']
+    assert caplog.text.count('lookup failed') == 1
+
+    # and branchA uses it after the retry interval
+    resolver_a._retry_at = 0
+    assert resolver_a('a.warc.gz', {}) == ['/branchA/a.warc.gz']
+    assert len(lmdb_path_resolver._environments) == 1
+
+
+def test_errors_opening_a_database_open_the_environment_again(tmp_path, env_path, caplog):
+    load_tsv(env_path, 'branchA', tmp_path / 'A.tsv', 'a.warc.gz\t/data/a.warc.gz\n')
+    env = lmdb_path_resolver.get_environment(env_path)
+    env.close()
+
+    resolver = LMDBPathIndexResolver(env_path, 'branchA')
+    assert resolver('a.warc.gz', {}) == []
+    assert 'not available' in caplog.text
+
+    resolver._retry_at = 0
+    assert resolver('a.warc.gz', {}) == ['/data/a.warc.gz']
+    assert lmdb_path_resolver.get_environment(env_path) is not env

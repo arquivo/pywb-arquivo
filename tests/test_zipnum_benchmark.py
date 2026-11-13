@@ -5,7 +5,8 @@ import time
 
 import pytest
 
-from pywb_arquivo import lmdb_path_resolver, zipnum_benchmark
+from benchmarks import zipnum_benchmark
+from pywb_arquivo import lmdb_path_resolver
 from pywb_arquivo.lmdb_zipnum_index import load
 from tests.zipnum_test_utils import build_zipnum, cdxj_line
 

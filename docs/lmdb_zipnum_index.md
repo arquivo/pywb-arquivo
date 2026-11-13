@@ -111,19 +111,20 @@ last line, as the binary search does.
 
 ## Benchmark
 
-[`pywb_arquivo/zipnum_benchmark.py`](../pywb_arquivo/zipnum_benchmark.py) runs the same queries with
-the `.idx` file and with LMDB, on forked worker processes like the uWSGI workers:
+[`benchmarks/zipnum_benchmark.py`](../benchmarks/zipnum_benchmark.py) runs the same queries with
+the `.idx` file and with LMDB, on forked worker processes like the uWSGI workers. It isn't on the pywb
+images, run it from the root of a checkout of this repository:
 
 ```bash
-python -m pywb_arquivo.zipnum_benchmark run --idx /data/indexes_cdx/RAQ2019/RAQ2019.idx \
+python -m benchmarks.zipnum_benchmark run --idx /data/indexes_cdx/RAQ2019/RAQ2019.idx \
     --lmdb 'lmdb:///data/indexes_cdx/idx.lmdb?db=RAQ2019' --cdxj /data/indexes_cdx/RAQ2019.cdxj \
     --workers 1,4,16 --json results.json
 
 # the same, after dropping the .idx, LMDB and shards from the page cache
-python -m pywb_arquivo.zipnum_benchmark run --cold ...
+python -m benchmarks.zipnum_benchmark run --cold ...
 
 # only the .idx lookups, without the shards
-python -m pywb_arquivo.zipnum_benchmark run --idx-only ...
+python -m benchmarks.zipnum_benchmark run --idx-only ...
 ```
 
 * The urlkeys are sampled from the CDXJ files of the ZipNum (`--cdxj`), or from the `.idx`, plus 10% of
@@ -140,7 +141,7 @@ python -m pywb_arquivo.zipnum_benchmark run --idx-only ...
 of CDXJ files, with fake shards, to time only the `.idx` (`--idx-only`):
 
 ```bash
-python -m pywb_arquivo.zipnum_benchmark generate --lines 6500000 --block-size 3000 \
+python -m benchmarks.zipnum_benchmark generate --lines 6500000 --block-size 3000 \
     --cdxj /data/indexes_cdx/RAQ2019.cdxj --cdxj /data/indexes_cdx/SAWP5.cdxj /data/bench/big-3000.idx
 ```
 

@@ -21,27 +21,38 @@ the tab separated list of its paths::
 
 Loading adds the new WARC files and replaces the paths of the existing ones,
 keeping the other WARC files of the database, so it can be run once for each
-updated collection. ``--drop`` empties the database first.
+updated collection. ``--drop`` empties the database first, ``--strict`` fails
+instead of replacing paths.
 
 Each run is a single LMDB write transaction, the pywb instances keep reading
 the previous version of the database until it is committed, even with
-``--drop``. Other databases of the same environment are not changed.
+``--drop``. Other databases of the same environment are not changed. A WARC
+file on more than one TSV file, or on non-consecutive lines, fails the load.
 """
 import argparse
 import os
 import re
 import sys
+from array import array
+from collections import Counter
 from dataclasses import dataclass
 
 import lmdb
 
-from pywb_arquivo.lmdb_path_resolver import MAX_DBS, MAX_KEY_SIZE
+from pywb_arquivo.lmdb_path_resolver import MAX_DBS, MAX_KEY_SIZE, MAX_READERS
 
 
 GIB = 1024 ** 3
 
 # LMDB reserves the address space but only uses the disk space of the data
 DEFAULT_MAP_SIZE_GIB = 64
+
+# max WARC file names shown on the errors
+MAX_REPORTED = 10
+
+# max hashes of the WARC file names loaded more than once that are looked up on the TSV files, enough
+# to show the first ones, as different names with the same hash are very rare
+MAX_DUPLICATED_HASHES = 1000
 
 
 @dataclass
@@ -63,6 +74,47 @@ class LoadStats:
 
     def __str__(self):
         return ', '.join('{0}={1}'.format(name, getattr(self, name)) for name in self.__dataclass_fields__)
+
+
+class _KeyHashes:
+    """The hashes of the WARC file names of a load, to find the ones loaded
+    more than once. 8 bytes per name, against about 100 bytes on a set of the
+    names (1.4 GiB for the 14.6 M WARC files of a branch)."""
+
+    def __init__(self):
+        self._buckets = [array('q') for _ in range(256)]
+
+    def add(self, key):
+        h = hash(key)
+        self._buckets[h & 255].append(h)
+
+    def duplicated(self, limit):
+        """Return the hashes added more than once, stopping after ``limit`` of them."""
+        hashes = set()
+        for bucket in self._buckets:
+            if len(set(bucket)) != len(bucket):
+                hashes.update(h for h, count in Counter(bucket).items() if count > 1)
+                if len(hashes) >= limit:
+                    break
+        return hashes
+
+
+def _find_duplicates(files, hashes):
+    """Return the WARC file names with one of the ``hashes`` that are on more
+    than one file, or on non-consecutive lines, with the files of each one."""
+    found = {}
+    if hashes:
+        for path in files:
+            with open(path, 'rb') as reader:
+                for key, _ in iter_path_index(reader, LoadStats()):
+                    if hash(key) in hashes:
+                        found.setdefault(key, []).append(path)
+    # the other ones have the same hash of a different name
+    return {key: paths for key, paths in found.items() if len(paths) > 1}
+
+
+def _first(items):
+    return ', '.join(items[:MAX_REPORTED]) + (', ...' if len(items) > MAX_REPORTED else '')
 
 
 def find_files(paths, pattern=None):
@@ -116,10 +168,15 @@ def iter_path_index(reader, stats):
         yield key, value
 
 
-def load(env_path, db_name, paths, pattern=None, drop=False, dry_run=False,
+def load(env_path, db_name, paths, pattern=None, drop=False, dry_run=False, strict=False,
          map_size=DEFAULT_MAP_SIZE_GIB * GIB, out=None):
     """Load the TSV path indexes of ``paths`` into the ``db_name`` database
-    of the ``env_path`` LMDB environment, and return the :class:`LoadStats`."""
+    of the ``env_path`` LMDB environment, and return the :class:`LoadStats`.
+
+    Raise ``ValueError``, without changing the database, if a WARC file is on
+    more than one file, or on non-consecutive lines, or, if ``strict``, if the
+    paths of a WARC file already on the database would be replaced.
+    """
     if not db_name:
         raise ValueError('The LMDB named database is required')
 
@@ -128,37 +185,47 @@ def load(env_path, db_name, paths, pattern=None, drop=False, dry_run=False,
     out = out or sys.stdout
 
     if dry_run:
-        return _load_dry_run(env_path, name, files, drop, out)
+        return _load_dry_run(env_path, name, files, drop, strict, out)
 
-    env = lmdb.open(env_path, map_size=map_size, max_dbs=MAX_DBS, readahead=False)
+    env = lmdb.open(env_path, map_size=map_size, max_dbs=MAX_DBS, max_readers=MAX_READERS, readahead=False)
     try:
-        db = env.open_db(name)
-        with env.begin(write=True, db=db) as txn:
-            return _load_files(txn, db, files, drop, False, out)
+        # free the reader slots of killed pywb workers, LMDB only does it when no other process
+        # has the environment open: they would keep the old versions of the database, growing
+        # data.mdb, and fill the reader table
+        stale = env.reader_check()
+        if stale:
+            print('cleared {0} stale readers'.format(stale), file=out)
+
+        with env.begin(write=True) as txn:
+            # created on the load transaction, a failed load doesn't create it
+            db = env.open_db(name, txn=txn)
+            return _load_files(txn, db, files, drop, False, strict, out)
     finally:
         env.close()
 
 
-def _load_dry_run(env_path, name, files, drop, out):
+def _load_dry_run(env_path, name, files, drop, strict, out):
     if not os.path.exists(os.path.join(env_path, 'data.mdb')):
-        return _load_files(None, None, files, drop, True, out)
+        return _load_files(None, None, files, drop, True, strict, out)
 
-    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS, readahead=False)
+    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS, max_readers=MAX_READERS, readahead=False)
     try:
         try:
             db = env.open_db(name, create=False)
         except lmdb.NotFoundError:
-            return _load_files(None, None, files, drop, True, out)
+            return _load_files(None, None, files, drop, True, strict, out)
 
         with env.begin(db=db) as txn:
-            return _load_files(txn, db, files, drop, True, out)
+            return _load_files(txn, db, files, drop, True, strict, out)
     finally:
         env.close()
 
 
-def _load_files(txn, db, files, drop, dry_run, out):
+def _load_files(txn, db, files, drop, dry_run, strict, out):
     total = LoadStats()
     prefix = '[dry-run] ' if dry_run else ''
+    hashes = _KeyHashes()
+    replaced = []
 
     if drop and txn:
         total.dropped = txn.stat(db)['entries']
@@ -170,8 +237,9 @@ def _load_files(txn, db, files, drop, dry_run, out):
         stats = LoadStats(files=1)
         with open(path, 'rb') as reader:
             for key, value in iter_path_index(reader, stats):
+                hashes.add(key)
                 stats.keys += 1
-                old = txn.get(key) if txn and not (drop and dry_run) else None
+                old = txn.get(key, db=db) if txn and not (drop and dry_run) else None
                 if old is None:
                     stats.added += 1
                 elif old == value:
@@ -179,12 +247,24 @@ def _load_files(txn, db, files, drop, dry_run, out):
                     continue
                 else:
                     stats.updated += 1
+                    if strict and len(replaced) <= MAX_REPORTED:
+                        replaced.append(key)
 
                 if not dry_run:
-                    txn.put(key, value)
+                    txn.put(key, value, db=db)
 
         print('{0}{1}: {2}'.format(prefix, path, stats), file=out)
         total += stats
+
+    # checked before committing, a failed load doesn't change the database
+    duplicates = _find_duplicates(files, hashes.duplicated(MAX_DUPLICATED_HASHES))
+    if duplicates:
+        raise ValueError('WARC files on more than one file, or on non-consecutive lines, nothing was loaded: '
+                         + _first(['{0} ({1})'.format(key.decode('utf-8', 'replace'), ', '.join(paths))
+                                   for key, paths in duplicates.items()]))
+    if strict and total.updated:
+        raise ValueError('--strict: the paths of {0} WARC files would be replaced, nothing was loaded: {1}'.format(
+            total.updated, _first([key.decode('utf-8', 'replace') for key in replaced])))
 
     print('{0}total: {1}'.format(prefix, total), file=out)
     return total
@@ -193,7 +273,8 @@ def _load_files(txn, db, files, drop, dry_run, out):
 def stats(env_path, out=None):
     """Print the number of entries of each named database of ``env_path``."""
     out = out or sys.stdout
-    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS)
+    # map_size 0: the size of the environment, set by the loads, instead of the py-lmdb default
+    env = lmdb.open(env_path, readonly=True, map_size=0, max_dbs=MAX_DBS, max_readers=MAX_READERS)
     try:
         with env.begin() as txn:
             names = [key for key, _ in txn.cursor()]
@@ -223,6 +304,8 @@ def main(args=None):
     load_parser.add_argument('--drop', '--recreate', action='store_true',
                              help='empty the database before loading')
     load_parser.add_argument('--dry-run', action='store_true', help="show what would change, don't write")
+    load_parser.add_argument('--strict', action='store_true',
+                             help='fail, without writing, if the paths of a WARC file on the database would change')
     load_parser.add_argument('--pattern', help='regex that the names of the files of a directory must fully match')
     load_parser.add_argument('--map-size', type=int, default=DEFAULT_MAP_SIZE_GIB,
                              help='max size of the LMDB environment in GiB (default: %(default)s)')
@@ -235,7 +318,7 @@ def main(args=None):
     try:
         if args.command == 'load':
             load(args.env, args.db, args.paths, pattern=args.pattern, drop=args.drop,
-                 dry_run=args.dry_run, map_size=args.map_size * GIB)
+                 dry_run=args.dry_run, strict=args.strict, map_size=args.map_size * GIB)
         else:
             stats(args.env)
     except (OSError, ValueError, re.error, lmdb.Error) as e:

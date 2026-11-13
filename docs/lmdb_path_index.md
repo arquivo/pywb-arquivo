@@ -65,6 +65,7 @@ python -m pywb_arquivo.lmdb_path_index stats --env /data/warcIndex/pathindex.lmd
 | `--env` | LMDB environment directory |
 | `--db` | named database, eg. `branchA` |
 | `--dry-run` | show what would change without writing, it doesn't need write access |
+| `--strict` | fail, without writing, if the paths of a WARC file already on the database would change (eg. to check that a new collection doesn't have WARC files of other collections) |
 | `--drop` (`--recreate`) | empty the named database before loading, to remove the WARC files that aren't on the TSV files anymore |
 | `--pattern` | regex that the names of the files of the directories must fully match, eg. `'AWP.*\.tsv'` (default: all the files) |
 | `--map-size` | max size of the environment in GiB (default: 64), only the used space takes disk space |
@@ -76,10 +77,19 @@ python -m pywb_arquivo.lmdb_path_index stats --env /data/warcIndex/pathindex.lmd
   As LMDB keeps the previous versions until no one can read them, repeating `--drop` (or updating most
   of the WARC files) grows `data.mdb` up to about 3 times the size of the database, then the free
   space is reused. LMDB doesn't shrink the file, `mdb_copy -c` writes a compacted copy.
+  Replace the environment directory with the copy only when no load is running, and restart the
+  `framed` and `unframed` instances afterwards: the workers keep the replaced files open, so they would
+  keep reading the old version, without any error, and never see the following loads.
 * Only one load can write to an environment at a time, the others wait for it.
+* Before writing, the load frees the reader slots left on `lock.mdb` by killed pywb workers (eg. a
+  crash or uWSGI killing a stuck worker), and prints `cleared N stale readers`. Until then, each one
+  keeps the version of the database it was reading, so its free space isn't reused.
 * The lines are parsed like pywb's `PathIndexResolver`: the paths of consecutive lines of the same WARC
-  file are joined, lines without paths are skipped. A WARC file on more than one file keeps the paths of
-  the last one. The TSV files must be sorted, like for `PathIndexResolver`, the unsorted lines are counted.
+  file are joined, lines without paths are skipped. The TSV files must be sorted, like for
+  `PathIndexResolver`, the unsorted lines are counted.
+* A WARC file on more than one TSV file of a load, or on non-consecutive lines, fails the load, without
+  changing the database, showing the first ones and their files. They are found with the hashes of the
+  WARC file names, 8 bytes each (about 120 MiB for a branch).
 * WARC file names longer than 511 bytes (the LMDB key size limit) are skipped.
 
 ## Running on pywb
@@ -88,28 +98,41 @@ The `lmdb://` resolver is added to pywb by the [`pywb_arquivo.wayback`](../pywb_
 WSGI application, used by the `framed` and `unframed` `uwsgi.ini` instead of `pywb.apps.wayback`.
 docker compose mounts `WARC_INDEX_FOLDER` (default: `/data/warcIndex`) on `/data/warcIndex`.
 
+* The environment must be on a local file system: LMDB doesn't support network file systems, like NFS,
+  as `lock.mdb` and the memory map are shared through the page cache of the server.
 * pywb opens the environment read only, but it needs write access to `lock.mdb`, where LMDB keeps
-  track of its readers, so it reads a consistent version while the loader writes.
+  track of its readers, so it reads a consistent version while the loader writes. The loader needs it
+  too. uWSGI runs as root on the containers, so check that the `WARC_INDEX_FOLDER` volume isn't mounted
+  read only, and run the first load, that creates `lock.mdb`, as the user of the following loads.
+  Without write access, the environment can't be opened: each worker logs a `not available` warning
+  every 60 s and skips the `lmdb://` resolvers, using only the next `archive_paths` entries.
+* The reader table of `lock.mdb` has 1024 slots (`MAX_READERS`, LMDB's default is 126), shared by the
+  uWSGI workers of all the pywb instances of the server, each one using up to 2 slots, the loader and
+  the slots of killed workers, until the next load. `stats` shows the slots used so far and the size of
+  the table (`readers=used/size`). The table is only grown by a process that opens the environment
+  while no other has it open, eg. the first load or after restarting pywb with no load running.
 * The environment is opened on the first lookup of each uWSGI worker, as LMDB can't be used after
   `fork()` and it can only be opened once per process. All the resolvers of a worker share it.
+  A load with a bigger `--map-size` doesn't need a restart, the workers adopt it on the next lookup.
 * The data is read through the memory map, from the OS page cache, shared by all the workers and
   pywb instances of the server. Only the pages used by the lookups are read.
 
 ## Benchmark
 
-[`pywb_arquivo/path_index_benchmark.py`](../pywb_arquivo/path_index_benchmark.py) compares the path
+[`benchmarks/path_index_benchmark.py`](../benchmarks/path_index_benchmark.py) compares the path
 indexes, with the TSV files, an LMDB environment loaded from them and, optionally, the Redis hashes of
-pywb's `RedisResolver`, loaded from them with `path-index-to-redis` (replay-cdxj-indexing-tools):
+pywb's `RedisResolver`, loaded from them with `path-index-to-redis` (replay-cdxj-indexing-tools).
+It isn't on the pywb images, run it from the root of a checkout of this repository:
 
 ```bash
-python -m pywb_arquivo.path_index_benchmark run \
+python -m benchmarks.path_index_benchmark run \
     --tsv /data/warcIndex/branchA/AWP1.tsv --tsv /data/warcIndex/branchA/AWP2.tsv \
     --lmdb 'lmdb:///data/warcIndex/pathindex.lmdb?db=branchA' \
     --redis redis://localhost:6379/0/pathindex:branchA \
     --workers 1,4,16 --json results.json
 
 # the same, after dropping the index files from the page cache
-python -m pywb_arquivo.path_index_benchmark run --cold ...
+python -m benchmarks.path_index_benchmark run --cold ...
 ```
 
 It samples WARC file names from the TSV files (plus 10% missing ones), checks that the others return the
@@ -122,7 +145,7 @@ reports the CPU time of the Redis server per lookup, and its memory.
 `generate` writes a sorted synthetic TSV path index, to try it without the real ones:
 
 ```bash
-python -m pywb_arquivo.path_index_benchmark generate --size 1 /tmp/bench/AWP.tsv
+python -m benchmarks.path_index_benchmark generate --size 1 /tmp/bench/AWP.tsv
 ```
 
 ### Results with a real path index

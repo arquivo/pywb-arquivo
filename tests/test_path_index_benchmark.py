@@ -6,7 +6,7 @@ import redis
 from pywb.warcserver.resource.pathresolvers import RedisResolver
 
 from pywb_arquivo.lmdb_path_index import load
-from pywb_arquivo.path_index_benchmark import index_files, main, make_resolvers, page_cache_bytes, possible_paths
+from benchmarks.path_index_benchmark import index_files, main, make_resolvers, page_cache_bytes, possible_paths
 
 
 class FakeRedis:

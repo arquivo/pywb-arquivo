@@ -4,7 +4,7 @@ file (pywb's ``ZipNumIndexSource``) and on LMDB (``LMDBZipNumIndexSource``).
 Run it on the server with a ZipNum, after loading its ``.idx`` with
 :mod:`pywb_arquivo.lmdb_zipnum_index`::
 
-    python -m pywb_arquivo.zipnum_benchmark run --idx /data/zipnum/RAQ2019/RAQ2019.idx \\
+    python -m benchmarks.zipnum_benchmark run --idx /data/zipnum/RAQ2019/RAQ2019.idx \\
         --lmdb 'lmdb:///data/zipnum/idx.lmdb?db=RAQ2019' --workers 1,4,16
 
 The urlkeys of the queries are sampled from the ``.idx``, or from the CDXJ
@@ -19,7 +19,7 @@ Each query is timed in two parts: the lookups on the ``.idx`` (pywb's
 without its shards, eg. one of the size of the production indexes made with
 ``generate``::
 
-    python -m pywb_arquivo.zipnum_benchmark generate --lines 6500000 --block-size 3000 \\
+    python -m benchmarks.zipnum_benchmark generate --lines 6500000 --block-size 3000 \\
         --cdxj /data/indexes_cdx/RAQ2019.cdxj --cdxj /data/indexes_cdx/SAWP5.cdxj /data/bench/big-3000.idx
 
 It reports the latency of the queries (p50, p95, p99) and of their ``.idx``
@@ -47,9 +47,9 @@ from pywb.warcserver.index.cdxobject import CDXObject
 from pywb.warcserver.index.query import CDXQuery
 from pywb.warcserver.index.zipnum import ZipNumIndexSource
 
+from benchmarks.path_index_benchmark import drop_page_cache, mib, page_cache_bytes, percentile
 from pywb_arquivo.lmdb_path_resolver import close_environments
 from pywb_arquivo.lmdb_zipnum import LMDBZipNumIndexSource
-from pywb_arquivo.path_index_benchmark import drop_page_cache, mib, page_cache_bytes, percentile
 
 
 # appended to the urlkeys of the missing queries
@@ -411,7 +411,7 @@ def generate(args):
 
 
 def main(args=None):
-    parser = argparse.ArgumentParser(prog='python -m pywb_arquivo.zipnum_benchmark',
+    parser = argparse.ArgumentParser(prog='python -m benchmarks.zipnum_benchmark',
                                      description='Benchmark the ZipNum .idx on the file and on LMDB.')
     commands = parser.add_subparsers(dest='command', required=True)
 
