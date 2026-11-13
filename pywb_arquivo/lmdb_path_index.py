@@ -273,7 +273,8 @@ def _load_files(txn, db, files, drop, dry_run, strict, out):
 def stats(env_path, out=None):
     """Print the number of entries of each named database of ``env_path``."""
     out = out or sys.stdout
-    env = lmdb.open(env_path, readonly=True, max_dbs=MAX_DBS, max_readers=MAX_READERS)
+    # map_size 0: the size of the environment, set by the loads, instead of the py-lmdb default
+    env = lmdb.open(env_path, readonly=True, map_size=0, max_dbs=MAX_DBS, max_readers=MAX_READERS)
     try:
         with env.begin() as txn:
             names = [key for key, _ in txn.cursor()]

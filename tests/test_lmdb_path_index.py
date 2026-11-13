@@ -315,6 +315,8 @@ def test_main_load_and_stats(tmp_path, env_path, capsys):
 
     out = capsys.readouterr().out
     assert 'total: files=1, lines=2, skipped=0, unsorted=0, keys=2, added=2' in out
+    # the size of the environment, grown by the last load
+    assert 'map_size={0} '.format(lmdb_path_index.DEFAULT_MAP_SIZE_GIB * 1024 ** 3) in out
     assert 'branchA: entries=2' in out
     assert 'branchB: entries=2' in out
 
