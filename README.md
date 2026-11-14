@@ -40,7 +40,7 @@ uv run pytest
 
 All the pywb instances share the same Python version (3.14) and dependencies, defined on the
 [`pyproject.toml`](pyproject.toml) and locked on the [`uv.lock`](uv.lock) using [uv](https://docs.astral.sh/uv/).
-pywb is installed from a [webrecorder/pywb](https://github.com/webrecorder/pywb) commit.
+pywb is installed from its [PyPI](https://pypi.org/project/pywb/) release.
 
 To upgrade the dependencies, change the `pyproject.toml` if needed and run:
 
