@@ -7,7 +7,7 @@ dependencies = [
     # faster decompression of the ZipNum index blocks, used by pywb if installed
     "isal",
     "lmdb>=3.0.0",
-    "pywb",
+    "pywb>=2.11.1",
     "uwsgi>=2.0.31",
     "uwsgitop>=0.12",
 ]
@@ -20,13 +20,6 @@ dev = [
 [tool.uv]
 # not a python package, only the dependencies of the pywb instances
 package = false
-
-[tool.uv.sources]
-# pywb main (2.11.0b1), with the live_url_filter config option (#1032),
-# the faster closest lookups (#1045, #1047, #1053), the uWSGI index cache (#1052),
-# the isal ZipNum decompression (#1050) and the small read buffer of the index
-# files (#1049)
-pywb = { git = "https://github.com/webrecorder/pywb.git", rev = "5c0bcf0956beda6be5a5cdb925e5e1e8337cdf7e" }
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
