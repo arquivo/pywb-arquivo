@@ -27,7 +27,8 @@ instead of replacing paths.
 Each run is a single LMDB write transaction, the pywb instances keep reading
 the previous version of the database until it is committed, even with
 ``--drop``. Other databases of the same environment are not changed. A WARC
-file on more than one TSV file, or on non-consecutive lines, fails the load.
+file on more than one TSV file, or on non-consecutive lines, is shown as a
+warning and keeps the paths of the last one.
 """
 import argparse
 import os
@@ -173,9 +174,10 @@ def load(env_path, db_name, paths, pattern=None, drop=False, dry_run=False, stri
     """Load the TSV path indexes of ``paths`` into the ``db_name`` database
     of the ``env_path`` LMDB environment, and return the :class:`LoadStats`.
 
-    Raise ``ValueError``, without changing the database, if a WARC file is on
-    more than one file, or on non-consecutive lines, or, if ``strict``, if the
-    paths of a WARC file already on the database would be replaced.
+    A WARC file on more than one file, or on non-consecutive lines, is shown
+    as a warning and keeps the paths of the last one. Raise ``ValueError``,
+    without changing the database, if ``strict`` and the paths of a WARC file
+    already on the database would be replaced.
     """
     if not db_name:
         raise ValueError('The LMDB named database is required')
@@ -256,12 +258,14 @@ def _load_files(txn, db, files, drop, dry_run, strict, out):
         print('{0}{1}: {2}'.format(prefix, path, stats), file=out)
         total += stats
 
-    # checked before committing, a failed load doesn't change the database
+    # only reported, the paths of the last file (or line) replace the previous ones; strict is checked
+    # before committing, a failed load doesn't change the database
     duplicates = _find_duplicates(files, hashes.duplicated(MAX_DUPLICATED_HASHES))
     if duplicates:
-        raise ValueError('WARC files on more than one file, or on non-consecutive lines, nothing was loaded: '
-                         + _first(['{0} ({1})'.format(key.decode('utf-8', 'replace'), ', '.join(paths))
-                                   for key, paths in duplicates.items()]))
+        print('{0}warning: WARC files on more than one file, or on non-consecutive lines, the paths of the last '
+              'one were loaded: {1}'.format(prefix, _first(['{0} ({1})'.format(
+                  key.decode('utf-8', 'replace'), ', '.join(paths)) for key, paths in duplicates.items()])),
+              file=out)
     if strict and total.updated:
         raise ValueError('--strict: the paths of {0} WARC files would be replaced, nothing was loaded: {1}'.format(
             total.updated, _first([key.decode('utf-8', 'replace') for key in replaced])))
