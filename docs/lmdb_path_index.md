@@ -87,9 +87,10 @@ python -m pywb_arquivo.lmdb_path_index stats --env /data/warcIndex/pathindex.lmd
 * The lines are parsed like pywb's `PathIndexResolver`: the paths of consecutive lines of the same WARC
   file are joined, lines without paths are skipped. The TSV files must be sorted, like for
   `PathIndexResolver`, the unsorted lines are counted.
-* A WARC file on more than one TSV file of a load, or on non-consecutive lines, fails the load, without
-  changing the database, showing the first ones and their files. They are found with the hashes of the
-  WARC file names, 8 bytes each (about 120 MiB for a branch).
+* A WARC file on more than one TSV file of a load (eg. on two collections), or on non-consecutive lines,
+  doesn't stop the load: it keeps the paths of the last file (or line), and the first ones are shown with
+  their files on a `warning:` line. They are found with the hashes of the WARC file names, 8 bytes each
+  (about 120 MiB for a branch).
 * WARC file names longer than 511 bytes (the LMDB key size limit) are skipped.
 
 ## Running on pywb
