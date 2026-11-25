@@ -123,6 +123,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			  ' 			<h5 id="menuTs">'+ this.formatTimestampToPresentation(_ts) +'</h5>' + 			                             
 			  '			</div>'+
 			  '			<a href="'+_arquivoWebAppUrl+'/page/search?l='+Content.language+'&query='+encodeURIComponent(_url)+'" onclick="ARQUIVO.sendEventToAnalytics(\'ReplayBarFunctions\', \'ListVersionsClick\');"><h4><i class="fa fa-list" aria-hidden="true"></i> '+Content.allVersions+'</h4></a>'+ 						                      
+			  '			<a href="#" id="searchOnSiteOption" role="button" aria-haspopup="dialog"><h4><i class="fa fa-search right-7" aria-hidden="true"></i> '+Content.searchOnSite+'</h4></a>'+
 			  ' 		<a href="#" id="a_moreinfo" title="'+Content.moreInfoIcon+'"><h4><i class="fa fa-info-circle right-9" aria-hidden="true"></i> '+Content.moreInfoIcon+'</h4></a>'+			  
               ' 		<a id="screenshotOption"><h4><i class="fa fa-camera right-5" aria-hidden="true"></i> '+Content.saveImage+'</h4></a>' +
 			  '	 		<a id="printOption"><h4><i class="fa fa-print right-7" aria-hidden="true"></i> '+Content.print+'</h4></a>'+
@@ -143,6 +144,7 @@ var ARQUIVO = ARQUIVO || (function(){
 			this.attachShare();
 			this.attachTools();
 			this.attachMoreInfoModal();
+			this.attachSearchOnSiteModal();
 			this.attachCompletepage();
 			this.attachKeyBoardEvent();
 			this.attachCookieNotice();
@@ -484,6 +486,104 @@ var ARQUIVO = ARQUIVO || (function(){
        		$('#a_moreinfo').on('click', function(e){         
         		ARQUIVO.moreInfoModal();        
       		});    			
+		},
+		attachSearchOnSiteModal: function(){
+			$('#searchOnSiteOption').on('click', function(e){
+				e.preventDefault();
+				ARQUIVO.searchOnSiteModal();
+			});
+		},
+		// host of the page shown in the replay, without a leading www. (unless that leaves a bare top-level domain)
+		getSearchOnSiteHost: function(url){
+			try {
+				return new URL(url).hostname.replace(/^www\.(?=[^.]+\.)/, '');
+			} catch (e) {
+				return '';
+			}
+		},
+		// type is 'page' or 'image'; the site: term goes first so that a site: typed by the user does not replace it
+		getSearchOnSiteURL: function(type, site, terms, includeSubdomains){
+			var query = 'site:' + (includeSubdomains ? '*.' : '') + site + ' ' + terms;
+			return _arquivoWebAppUrl + '/' + type + '/search?l=' + Content.language + '&q=' + encodeURIComponent(query);
+		},
+		searchOnSiteModal: function(){
+			ARQUIVO.sendEventToAnalytics('ReplayBarFunctions', 'SearchOnSiteClick');
+			var site = this.getSearchOnSiteHost(_url);
+			if (!site) return;
+			// subdomains of an IP address do not exist
+			var isIpAddress = /^\[|^[\d.]+$/.test(site);
+
+			uglipop({
+				class:'modalReplay searchOnSiteModal noprint', //styling class for Modal
+				source:'html',
+				content:'<form id="searchOnSiteForm" role="dialog" aria-modal="true" aria-labelledby="searchOnSiteTitle">'+
+						'<h4 class="modalTitle" id="searchOnSiteTitle"><i class="fa fa-search" aria-hidden="true"></i> '+Content.searchOnSite+' <strong class="searchOnSiteHost"></strong></h4>'+
+						'<label for="searchOnSiteTerms">'+Content.searchOnSiteTerms+'</label>'+
+						'<input type="search" id="searchOnSiteTerms" autocomplete="off">'+
+						(isIpAddress ? '' :
+						'<div class="searchOnSiteSubdomains">'+
+							'<input type="checkbox" id="searchOnSiteSubdomains" aria-describedby="searchOnSiteSubdomainsHint">'+
+							'<label for="searchOnSiteSubdomains">'+Content.searchOnSiteIncludeSubdomains+'</label>'+
+							'<p id="searchOnSiteSubdomainsHint">'+Content.searchOnSiteSubdomainsHint+'<span class="searchOnSiteHint"></span></p>'+
+						'</div>')+
+						'<div class="row">'+
+							'<button type="submit" id="searchOnSitePages" class="col-xs-6 text-center modalOptions" disabled>'+Content.pages+'</button>'+
+							'<button type="button" id="searchOnSiteImages" class="col-xs-6 text-center modalOptions" disabled>'+Content.images+'</button>'+
+						'</div>'+
+						'<button type="button" id="searchOnSiteCancel">'+Content.cancel+'</button>'+
+						'</form>'});
+			// the host is set as text, never as HTML
+			$('#searchOnSiteForm .searchOnSiteHost').text(site);
+			$('#searchOnSiteForm .searchOnSiteHint').text('.' + site);
+
+			var $form = $('#searchOnSiteForm');
+			var $terms = $('#searchOnSiteTerms');
+			var $buttons = $('#searchOnSitePages, #searchOnSiteImages');
+			var search = function(type, action){
+				var terms = $.trim($terms.val());
+				if (!terms) return;
+				ARQUIVO.sendEventToAnalytics('ReplayBarFunctions', action);
+				window.location.href = ARQUIVO.getSearchOnSiteURL(type, site, terms, $('#searchOnSiteSubdomains').is(':checked'));
+			};
+
+			$terms.on('input', function(){
+				$buttons.prop('disabled', !$.trim($terms.val()));
+			});
+			// Enter in the input submits the form, which runs the Pages search
+			$form.on('submit', function(e){
+				e.preventDefault();
+				search('page', 'SearchOnSitePagesClick');
+			});
+			$('#searchOnSiteImages').on('click', function(){
+				search('image', 'SearchOnSiteImagesClick');
+			});
+			$('#searchOnSiteCancel').on('click', ARQUIVO.closeSearchOnSiteModal);
+			// uglipop hides itself on a click on the overlay
+			$('#uglipop_overlay_wrapper').off('click.searchOnSite').on('click.searchOnSite', ARQUIVO.closeSearchOnSiteModal);
+			// Escape is handled here so that it closes only the modal, not the replay menu, and Tab stays inside the modal
+			$form.on('keydown', function(e){
+				if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
+					e.stopPropagation();
+					ARQUIVO.closeSearchOnSiteModal();
+				} else if (e.key === 'Tab' || e.keyCode === 9) {
+					var focusable = $form.find('input, button:not(:disabled)');
+					var first = focusable.first()[0];
+					var last = focusable.last()[0];
+					if (e.shiftKey && document.activeElement === first) {
+						e.preventDefault();
+						last.focus();
+					} else if (!e.shiftKey && document.activeElement === last) {
+						e.preventDefault();
+						first.focus();
+					}
+				}
+			});
+			$terms.focus();
+		},
+		closeSearchOnSiteModal: function(){
+			$('#uglipop_overlay_wrapper').off('click.searchOnSite');
+			ARQUIVO.closeUglipop();
+			$('#searchOnSiteOption').focus();
 		},
 		attachRemoveModal: function(){
 		       $('#removeModal').on('click', function(e){    
